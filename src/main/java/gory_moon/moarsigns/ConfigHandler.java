@@ -1,8 +1,5 @@
 package gory_moon.moarsigns;
 
-import gory_moon.moarsigns.lib.Info;
-import net.minecraftforge.common.Configuration;
-
 import java.io.File;
 
 public class ConfigHandler {
@@ -10,7 +7,7 @@ public class ConfigHandler {
 
     public ConfigHandler(File file) {
 
-        Configuration config = new Configuration(file);
+        /*Configuration config = new Configuration(file);
 
         config.load();
 
@@ -23,7 +20,7 @@ public class ConfigHandler {
         Info.DEBUG_ITEM_ID = config.getItem(Info.DEBUG_ITEM_KEY, Info.DEBUG_ITEM_DEFAULT_ID).getInt() - 256;
         Info.NUGGET_ITEM_ID = config.getItem(Info.NUGGET_ITEM_KEY, Info.NUGGET_ITEM_DEFAULT_ID).getInt() - 256;
 
-        config.save();
+        config.save();*/
 
 
     }

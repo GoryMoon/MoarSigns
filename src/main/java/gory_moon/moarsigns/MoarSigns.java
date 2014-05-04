@@ -7,15 +7,12 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
 import gory_moon.moarsigns.items.Items;
 import gory_moon.moarsigns.lib.ModInfo;
-import gory_moon.moarsigns.network.ClientPacketHandler;
-import gory_moon.moarsigns.network.ServerPacketHandler;
+import gory_moon.moarsigns.network.PacketPipeline;
 import gory_moon.moarsigns.proxy.CommonProxy;
 import gory_moon.moarsigns.util.SignInitialization;
 import gory_moon.moarsigns.util.Signs;
@@ -23,12 +20,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,13 +37,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = {ModInfo.CHANNEL_C}, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = {ModInfo.CHANNEL_S}, packetHandler = ServerPacketHandler.class))
 public class MoarSigns {
 
     @Instance(ModInfo.ID)
     public static MoarSigns instance;
 
     public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
+    public static final PacketPipeline packetPipeline = new PacketPipeline();
+    public static Logger logger;
 
     @SidedProxy(clientSide = ModInfo.CLIENTPROXY, serverSide = ModInfo.COMMONPROXY)
     public static CommonProxy proxy;
@@ -53,7 +54,7 @@ public class MoarSigns {
     public ArrayList<Signs> signsWood;
     public ArrayList<Signs> signsMetal;
     private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
-    public static HashMap<String, Icon> icons = new HashMap<String, Icon>();
+    public static HashMap<String, IIcon> icons = new HashMap<String, IIcon>();
     public static HashMap<String, ItemStack> craftingMats = new HashMap<String, ItemStack>();
 
     @EventHandler
@@ -63,6 +64,7 @@ public class MoarSigns {
         signsMetal = new ArrayList<Signs>();
 
         proxy.readSigns();
+        logger = LogManager.getLogger("MoarSigns");
 
         Blocks.init();
         Items.init();
@@ -71,16 +73,18 @@ public class MoarSigns {
     @EventHandler
     public void load(FMLInitializationEvent event) {
         proxy.initRenderers();
-        LanguageRegistry.instance().addStringLocalization("itemGroup.moarSigns", "MoarSigns");
+        packetPipeline.initalise();
+
     }
 
     @EventHandler
     public void modsLoaded(FMLPostInitializationEvent event) {
         setupSigns();
 
-        NetworkRegistry.instance().registerGuiHandler(this, new GuiHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
         Items.registerRecipes();
+        packetPipeline.postInitialise();
     }
 
     public ResourceLocation getResourceLocation(String s, boolean isMetal) {
@@ -157,16 +161,16 @@ public class MoarSigns {
                 for (Signs.Material unloc: sign.material) {
                     if (unloc.unlocalizedName.equals(unlocalized)) {
                         if (stack.getItem() instanceof ItemBlock) {
-                            unloc.matId = stack.itemID;
+                            unloc.matId = Item.getIdFromItem(stack.getItem());
                             unloc.matMeta = stack.getItemDamage();
                         } else {
                             for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, stack);}
                             ItemStack stack1 = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
                             if (stack1 != null) {
-                                unloc.matId = stack1.itemID;
+                                unloc.matId = Item.getIdFromItem(stack1.getItem());
                                 unloc.matMeta = stack1.getItemDamage();
                             } else {
-                                unloc.matId = stack.itemID;
+                                unloc.matId = Item.getIdFromItem(stack.getItem());
                                 unloc.matMeta = stack.getItemDamage();
                             }
                             for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, null);}
@@ -190,16 +194,16 @@ public class MoarSigns {
                 for (Signs.Material unloc : sign.material) {
                     if (unloc.unlocalizedName.equals(unlocalized)) {
                         if (stack.getItem() instanceof ItemBlock) {
-                            unloc.matId = stack.itemID;
+                            unloc.matId = Item.getIdFromItem(stack.getItem());
                             unloc.matMeta = stack.getItemDamage();
                         } else {
                             for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, stack);}
                             ItemStack stack1 = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
                             if (stack1 != null) {
-                                unloc.matId = stack1.itemID;
+                                unloc.matId = Item.getIdFromItem(stack1.getItem());
                                 unloc.matMeta = stack1.getItemDamage();
                             } else {
-                                unloc.matId = stack.itemID;
+                                unloc.matId = Item.getIdFromItem(stack.getItem());
                                 unloc.matMeta = stack.getItemDamage();
                             }
                             for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, null);}

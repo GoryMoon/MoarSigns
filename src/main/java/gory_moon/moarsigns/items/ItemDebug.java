@@ -1,9 +1,9 @@
 package gory_moon.moarsigns.items;
 
-import cpw.mods.fml.common.network.FMLNetworkHandler;
+import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.lib.Info;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,14 +12,13 @@ import net.minecraft.world.World;
 
 public class ItemDebug extends Item {
 
-    public ItemDebug(int id) {
-        super(id);
+    public ItemDebug() {
         setCreativeTab(MoarSigns.instance.tabMS);
-        setUnlocalizedName("moarsigns.debug.item");
+        setUnlocalizedName("moarsign.debug");
     }
 
     @Override
-    public void registerIcons(IconRegister register) {
+    public void registerIcons(IIconRegister register) {
         itemIcon = register.registerIcon(Info.TEXTURE_LOCATION + ":" + "debug_item");
     }
 

@@ -1,7 +1,7 @@
 package gory_moon.moarsigns.util;
 
 import cpw.mods.fml.common.Loader;
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -21,17 +21,18 @@ public class SignInitialization {
         }
 
         if (vanillaStack != null) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 6; i++) {
                 vanillaStack.setItemDamage(i);
                 materials.put(vanillaStack.getUnlocalizedName(), vanillaStack.copy());
             }
         }
 
+
         //Modded
         if (Loader.isModLoaded("Natura")) {
             ItemStack stack = null;
             for (ItemStack planks: loadedPlanks) {
-                if (planks.getUnlocalizedName().equals("eucalyptusNPlanks")) {
+                if (planks.getUnlocalizedName().equals("block.eucalyptus.NPlanks")) {
                     stack = planks.copy();
                     break;
                 }
@@ -71,17 +72,16 @@ public class SignInitialization {
         }
 
         if (Loader.isModLoaded("BiomesOPlenty")) {
-
             ItemStack stack = null;
             for (ItemStack planks: loadedPlanks) {
-                if (planks.getUnlocalizedName().equals("tile.bop.planks.acaciaPlank")) {
+                if (planks.getUnlocalizedName().equals("tile.planks.sacredoakPlank")) {
                     stack = planks.copy();
                     break;
                 }
             }
 
             if (stack != null) {
-                for (int i = 0; i < 14; i++) {
+                for (int i = 0; i < 15; i++) {
                     stack.setItemDamage(i);
                     materials.put(stack.getUnlocalizedName(), stack.copy());
                 }
@@ -92,12 +92,14 @@ public class SignInitialization {
     public static void addMetalMaterial(HashMap<String, ItemStack> materials, ArrayList<ItemStack> ingots) {
 
         //Vanilla
-        ItemStack iron = new ItemStack(Item.ingotIron);
-        ItemStack gold = new ItemStack(Item.ingotGold);
-        ItemStack diamond = new ItemStack(Item.diamond);
+        ItemStack iron = new ItemStack(Items.iron_ingot);
+        ItemStack gold = new ItemStack(Items.gold_ingot);
+        ItemStack diamond = new ItemStack(Items.diamond);
+        ItemStack emerald = new ItemStack(Items.emerald);
         materials.put(iron.getUnlocalizedName(), iron);
         materials.put(gold.getUnlocalizedName(), gold);
         materials.put(diamond.getUnlocalizedName(), diamond);
+        materials.put(emerald.getUnlocalizedName(), emerald);
 
         //Modded
         for (ItemStack stack: ingots) {

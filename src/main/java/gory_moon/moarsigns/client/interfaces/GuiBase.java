@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.RenderHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class GuiBase extends GuiScreen {
@@ -18,10 +17,9 @@ public class GuiBase extends GuiScreen {
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
             int k = 0;
-            Iterator iterator = par1List.iterator();
 
-            while (iterator.hasNext()) {
-                String s = (String)iterator.next();
+            for (Object aPar1List : par1List) {
+                String s = (String) aPar1List;
                 int l = font.getStringWidth(s);
 
                 if (l > k) {

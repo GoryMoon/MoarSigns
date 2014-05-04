@@ -33,7 +33,7 @@ public class GuiHandler implements IGuiHandler {
                         setInventorySlotContents(i, null);
                     }else{
                         itemstack = itemstack.splitStack(j);
-                        onInventoryChanged();
+                        markDirty();
                     }
                 }
 
@@ -57,16 +57,16 @@ public class GuiHandler implements IGuiHandler {
                     itemstack.stackSize = getInventoryStackLimit();
                 }
 
-                onInventoryChanged();
+                markDirty();
             }
 
             @Override
-            public String getInvName() {
+            public String getInventoryName() {
                 return "DummyInventory";
             }
 
             @Override
-            public boolean isInvNameLocalized() {
+            public boolean hasCustomInventoryName() {
                 return false;
             }
 
@@ -76,7 +76,7 @@ public class GuiHandler implements IGuiHandler {
             }
 
             @Override
-            public void onInventoryChanged() {
+            public void markDirty() {
 
             }
 
@@ -86,12 +86,12 @@ public class GuiHandler implements IGuiHandler {
             }
 
             @Override
-            public void openChest() {
+            public void openInventory() {
 
             }
 
             @Override
-            public void closeChest() {
+            public void closeInventory() {
 
             }
 

@@ -33,7 +33,7 @@ public class GuiDebug extends GuiContainer {
         blockInWorld = ID == 0;
 
         if (blockInWorld) {
-            block = Block.blocksList[world.getBlockId(x,y,z)];
+            block = world.getBlock(x, y, z);
             infoArea = new GuiRectangle(8, 10, 160, 20);
         } else {
             infoArea = new GuiRectangle(31, 10, 137, 19);
@@ -86,8 +86,8 @@ public class GuiDebug extends GuiContainer {
             if (!blockInWorld && Un.length() >= 23) un = Un.substring(0, 20) + "...";
             else if (blockInWorld && Un.length() >= 15) un = Un.substring(0, 13) + "...";
 
-            fontRenderer.drawString("UN: " + un, x, y1, 0x404040);
-            fontRenderer.drawString("Meta: " + meta, x, y2, 0x404040);
+            fontRendererObj.drawString("UN: " + un, x, y1, 0x404040);
+            fontRendererObj.drawString("Meta: " + meta, x, y2, 0x404040);
 
             infoArea.drawString(this, par1, par2, GuiColor.YELLOW + "Unlocalized Name: " + Un + "\n" + GuiColor.LIGHTBLUE + "Meta: " + meta);
 
@@ -104,7 +104,7 @@ public class GuiDebug extends GuiContainer {
     }
 
     public void drawHoverString(List<String> lst, int x, int y) {
-        drawHoveringText(lst, x, y, fontRenderer);
+        drawHoveringText(lst, x, y, fontRendererObj);
     }
 
 }

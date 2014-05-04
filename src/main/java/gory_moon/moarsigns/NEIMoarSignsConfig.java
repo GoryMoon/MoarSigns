@@ -4,16 +4,17 @@ import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.items.Items;
+import net.minecraft.item.ItemStack;
 
 public class NEIMoarSignsConfig implements IConfigureNEI {
 
     @Override
     public void loadConfig() {
-        API.hideItem(Blocks.signStandingMetal.blockID);
-        API.hideItem(Blocks.signStandingWood.blockID);
-        API.hideItem(Blocks.signWallMetal.blockID);
-        API.hideItem(Blocks.signWallWood.blockID);
-        API.hideItem(Items.debug.itemID);
+        API.hideItem(new ItemStack(Blocks.signStandingMetal));
+        API.hideItem(new ItemStack(Blocks.signStandingWood));
+        API.hideItem(new ItemStack(Blocks.signWallMetal));
+        API.hideItem(new ItemStack(Blocks.signWallWood));
+        API.hideItem(new ItemStack(Items.debug));
     }
 
     @Override

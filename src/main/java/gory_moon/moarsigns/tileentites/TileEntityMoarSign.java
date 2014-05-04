@@ -3,10 +3,11 @@ package gory_moon.moarsigns.tileentites;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
-import gory_moon.moarsigns.network.ServerPacketHandler;
+import gory_moon.moarsigns.network.PacketSignMainInfo;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.ResourceLocation;
 
@@ -47,8 +48,8 @@ public class TileEntityMoarSign extends TileEntitySign {
             }
             if (!textureReq) {
                 textureReq = true;
-                int id = worldObj.getBlockId(xCoord, yCoord ,zCoord);
-                worldObj.addBlockEvent(xCoord, yCoord, zCoord, id,  0, 0);
+                Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
+                worldObj.addBlockEvent(xCoord, yCoord, zCoord, block,  0, 0);
             }
         }
     }
@@ -95,8 +96,10 @@ public class TileEntityMoarSign extends TileEntitySign {
 
     }
 
+    @Override
     public Packet getDescriptionPacket() {
-        return ServerPacketHandler.getTextureNamePacket(this);
+        MoarSigns.packetPipeline.sendToAll(new PacketSignMainInfo(texture_name, isMetal, activeMaterialIndex, materialId, materialMeta, fontSize, textOffset, signText, xCoord, yCoord, zCoord));
+        return null;
     }
 
     public boolean isEditable()
@@ -131,12 +134,12 @@ public class TileEntityMoarSign extends TileEntitySign {
     }
 
     @Override
-    public void func_142010_a(EntityPlayer par1EntityPlayer) {
+    public void func_145912_a(EntityPlayer par1EntityPlayer) {
         this.playerEditing = par1EntityPlayer;
     }
 
     @Override
-    public EntityPlayer func_142009_b() {
+    public EntityPlayer func_145911_b() {
         return this.playerEditing;
     }
 }

@@ -2,13 +2,14 @@ package gory_moon.moarsigns.client.interfaces;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.lib.Info;
-import gory_moon.moarsigns.network.ClientPacketHandler;
+import gory_moon.moarsigns.network.PacketSignUpdate;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ChatAllowedCharacters;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -19,14 +20,16 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class GuiMoarSign extends GuiBase {
 
-    private static final String allowedCharacters = ChatAllowedCharacters.allowedCharacters;
+    public static final String EDIT_SIGN_MESSAGE = "Edit sign message:";
+    public static final String FONT_SIZE = "Font Size";
+    public static final String TEXT_OFFSET = "Text Offset";
     private TileEntityMoarSign entitySign;
     private int updateCounter;
     private int editLine;
     private int rows = 4;
     private int maxLength = 15;
     private int minOffset = -1;
-    private Info.TextPos[] row;
+    private int[] row;
 
     private int size = 0;
 
@@ -46,8 +49,6 @@ public class GuiMoarSign extends GuiBase {
     private int OFFSET_X2 = width / 2 + 130 + SIZE_W;
     private int OFFSET_Y2 = 85 + SIZE_H;
 
-
-
     public GuiMoarSign(TileEntityMoarSign te) {
         entitySign = te;
     }
@@ -66,8 +67,8 @@ public class GuiMoarSign extends GuiBase {
         buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, "Done"));
         buttonList.add(new GuiButton(1, SIZE_X - 2, SIZE_Y - 24, 54, 20, "+"));
         buttonList.add(new GuiButton(2, SIZE_X - 2, SIZE_Y + 24, 54, 20, "-"));
-        buttonList.add(new GuiButton(3, this.width / 2 + 128, 95 - 34, 54, 20, "+"));
-        buttonList.add(new GuiButton(4, this.width / 2 + 128, 95 + 14, 54, 20, "-"));
+        buttonList.add(new GuiButton(3, OFFSET_X - 2, OFFSET_Y - 24, 54, 20, "+"));
+        buttonList.add(new GuiButton(4, OFFSET_X - 2, OFFSET_Y + 24, 54, 20, "-"));
         entitySign.setEditable(false);
     }
 
@@ -83,7 +84,7 @@ public class GuiMoarSign extends GuiBase {
             }
         }
 
-        ClientPacketHandler.sendSignUpdate(entitySign);
+        MoarSigns.packetPipeline.sendToServer(new PacketSignUpdate(entitySign.xCoord, entitySign.yCoord, entitySign.zCoord, entitySign.signText, entitySign.fontSize, entitySign.textOffset));
     }
 
     private void updateSize() {
@@ -92,12 +93,11 @@ public class GuiMoarSign extends GuiBase {
         maxLength = size > 17 ? 5: (size > 13 ? 6: (size > 10 ? 7: (size > 7 ? 8: (size > 4 ? 9: (size > 3 ? 11: (size > 1 ? 12: (size > 0 ? 13: 15)))))));
 
         row = Info.textPostion[size];
-        Info.TextPos lastRow = row[0];
-        minOffset = lastRow.offset;
+        minOffset = row[0];
 
         if(row.length > 1 && entitySign.textOffset > minOffset) {
             for (int i = 0; i < row.length; i++) {
-                if (entitySign.textOffset < row[i].offset) {
+                if (entitySign.textOffset < row[i]) {
                     rows = i;
                     break;
                 }
@@ -106,7 +106,6 @@ public class GuiMoarSign extends GuiBase {
             rows = 1;
             entitySign.textOffset = entitySign.textOffset < minOffset ? minOffset: entitySign.textOffset;
         }
-
     }
 
     @Override
@@ -118,7 +117,7 @@ public class GuiMoarSign extends GuiBase {
     protected void actionPerformed(GuiButton guiButton) {
         if (guiButton.enabled) {
             if (guiButton.id == 0) {
-                entitySign.onInventoryChanged();
+                entitySign.markDirty();
                 mc.thePlayer.closeScreen();
             }
             if (guiButton.id == 1) {
@@ -171,7 +170,7 @@ public class GuiMoarSign extends GuiBase {
             entitySign.signText[editLine] = entitySign.signText[editLine].substring(0, entitySign.signText[editLine].length() - 1);
         }
 
-        if (allowedCharacters.indexOf(typedChar) >= 0 && entitySign.signText[editLine].length() < maxLength) {
+        if (ChatAllowedCharacters.isAllowedCharacter(typedChar) && entitySign.signText[editLine].length() < maxLength) {
             entitySign.signText[editLine] = entitySign.signText[editLine] + typedChar;
         }
 
@@ -183,10 +182,9 @@ public class GuiMoarSign extends GuiBase {
     @Override
     public void drawScreen(int x, int y, float par3) {
 
-
         drawDefaultBackground();
         super.drawScreen(x, y, par3);
-        drawCenteredString(fontRenderer, "Edit sign message:", width / 2, 40, 16777215);
+        drawCenteredString(fontRendererObj, EDIT_SIGN_MESSAGE, width / 2, 40, 16777215);
         GL11.glColor4f(1, 1, 1, 1);
 
 
@@ -208,11 +206,11 @@ public class GuiMoarSign extends GuiBase {
 
         drawRect(OFFSET_X, OFFSET_Y, OFFSET_X2, OFFSET_Y2, -16777216);
 
-        drawCenteredString(fontRenderer, String.valueOf(entitySign.fontSize), width / 2 + 65 + 25, 95 - 3, 16777215);
-        drawCenteredString(fontRenderer, "Font Size", width / 2 + 65 + 25, 40, 16777215);
+        drawCenteredString(fontRendererObj, String.valueOf(entitySign.fontSize), width / 2 + 65 + 25, 95 - 3, 16777215);
+        drawCenteredString(fontRendererObj, FONT_SIZE, width / 2 + 65 + 25, 40, 16777215);
 
-        drawCenteredString(fontRenderer, String.valueOf(entitySign.textOffset), width / 2 + 130 + 25, 95 - 3, 16777215);
-        drawCenteredString(fontRenderer, "Text Offset", width / 2 + 158, 40, 16777215);
+        drawCenteredString(fontRendererObj, String.valueOf(entitySign.textOffset), width / 2 + 130 + 25, 95 - 3, 16777215);
+        drawCenteredString(fontRendererObj, TEXT_OFFSET, width / 2 + 158, 40, 16777215);
 
         GL11.glColor4f(1, 1, 1, 1);
 
@@ -247,7 +245,7 @@ public class GuiMoarSign extends GuiBase {
             entitySign.lineBeingEdited = editLine;
         }
 
-        TileEntityRenderer.instance.renderTileEntityAt(entitySign, -0.5D, -0.75D, -0.5D, 0.0F);
+        TileEntityRendererDispatcher.instance.renderTileEntityAt(entitySign, -0.5D, -0.75D, -0.5D, 0.0F);
         entitySign.lineBeingEdited = -1;
         GL11.glPopMatrix();
 
@@ -255,7 +253,7 @@ public class GuiMoarSign extends GuiBase {
             List<String> text = new ArrayList<String>();
             text.add("Text size can go from 0-20");
             text.add(GuiColor.GREEN + "Hold Shift to change with 10");
-            drawHoveringText(text, x, y, fontRenderer);
+            drawHoveringText(text, x, y, fontRendererObj);
         }
 
         if (OFFSET_X - 1 <= x && x <= OFFSET_X + OFFSET_W && OFFSET_Y - 1 <= y && y <= OFFSET_Y + OFFSET_H) {
@@ -265,7 +263,7 @@ public class GuiMoarSign extends GuiBase {
 
             text.add(GuiColor.GRAY + "Current lowest value is: " + GuiColor.CYAN + minOffset);
             text.add(GuiColor.GREEN + "Hold Shift to change with 10");
-            drawHoveringText(text, x, y, fontRenderer);
+            drawHoveringText(text, x, y, fontRendererObj);
         }
     }
 

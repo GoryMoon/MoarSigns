@@ -1,0 +1,9 @@
+itemGroup.moarSigns=MoarSigns
+item.moarsign.debug.name=Debug
+item.moarsign.diamond_nugget.name=Diamond Shard
+item.moarsign.iron_nugget.name=Iron Nugget
+item.moarsign.emerald_nugget.name=Emerald Shard
+item.moarsign.bronze_nugget_ic2.name=Bronze Nugget
+item.moarsign.copper_nugget_ic2.name=Copper Nugget
+item.moarsign.tin_nugget_ic2.name=Tin Nugget
+item.moarsign.silver_nugget_factorization.name=Silver Nugget
