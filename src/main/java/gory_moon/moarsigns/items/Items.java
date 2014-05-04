@@ -103,8 +103,14 @@ public class Items {
                                         OreDictionary.registerOre("nuggetTin", recNugget.copy());
                                     if (i == 5)
                                         OreDictionary.registerOre("nuggetSilver", recNugget.copy());
+                                    if (i == 6) {
+                                        ItemStack em = recNugget.copy();
+                                        em.stackSize = 1;
+                                        OreDictionary.registerOre("nuggetEmerald", em);
+                                    }
 
                                     GameRegistry.addShapelessRecipe(recNugget.copy(), new Object[]{mat});
+                                    GameRegistry.addShapedRecipe(mat, new Object[]{"xxx", "xxx", "xxx", 'x', recNugget.copy()});
                                     break;
                                 }
                             }
@@ -150,7 +156,7 @@ public class Items {
             ItemStack recipeResult = tmpRecipe.getRecipeOutput();
             if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
             {
-                System.out.println("[MoarSigns] Removing Recipe: " + recipes.get(scan) + " -> " + recipeResult);
+                MoarSigns.logger.info("Removing Recipe: " + recipes.get(scan) + " -> " + recipeResult);
                 recipes.remove(scan);
             }
         }

@@ -81,19 +81,19 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
         int maxLength = size > 17 ? 5: (size > 13 ? 6: (size > 10 ? 7: (size > 7 ? 8: (size > 4 ? 9: (size > 3 ? 11: (size > 1 ? 12: (size > 0 ? 13: 15)))))));
         int offset = tileentity.textOffset;
 
-        Info.TextPos[] row = Info.textPostion[((int) size)];
-        Info.TextPos lastRow = row[0];
+        int[] row = Info.textPostion[((int) size)];
+        int lastRow = row[0];
 
-        if(row.length > 1 && offset > lastRow.offset) {
+        if(row.length > 1 && offset > lastRow) {
             for (int i = 0; i < row.length; i++) {
-                if (offset < row[i].offset) {
+                if (offset < row[i]) {
                     rows = i;
                     break;
                 }
             }
         } else {
             rows = 1;
-            offset = tileentity.textOffset < lastRow.offset ? lastRow.offset: tileentity.textOffset;
+            offset = tileentity.textOffset < lastRow ? lastRow: tileentity.textOffset;
         }
 
         for (int j = 0; j < rows; ++j) {

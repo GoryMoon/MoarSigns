@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 @Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = {ModInfo.CHANNEL_C}, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = {ModInfo.CHANNEL_S}, packetHandler = ServerPacketHandler.class))
@@ -44,6 +45,7 @@ public class MoarSigns {
     public static MoarSigns instance;
 
     public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
+    public static Logger logger;
 
     @SidedProxy(clientSide = ModInfo.CLIENTPROXY, serverSide = ModInfo.COMMONPROXY)
     public static CommonProxy proxy;
@@ -61,6 +63,7 @@ public class MoarSigns {
         new ConfigHandler(event.getSuggestedConfigurationFile());
         signsWood = new ArrayList<Signs>();
         signsMetal = new ArrayList<Signs>();
+        logger = Logger.getLogger("MoarSigns");
 
         proxy.readSigns();
 

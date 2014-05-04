@@ -36,41 +36,32 @@ public class Info {
     public static int NUGGET_ITEM_ID;
     public static final int NUGGET_ITEM_DEFAULT_ID = 2272;
     public static final String NUGGET_ITEM_KEY = "NuggetItems";
-    public static final String[] NUGGET_ITEM_NAMES = {"Diamond Nugget", "Iron Nugget", "Bronze Nugget", "Copper Nugget", "Tin Nugget", "Silver Nugget"};
-    public static final String[] NUGGET_INGET_UNLOCS = {"item.diamond", "item.ingotIron", "itemIngotBronze", "itemIngotCopper", "itemIngotTin", "item.factorization:silver_ingot"};
+    public static final String[] NUGGET_ITEM_NAMES = {"Diamond Shard", "Iron Nugget", "Bronze Nugget", "Copper Nugget", "Tin Nugget", "Silver Nugget", "Emerald Shard"};
+    public static final String[] NUGGET_INGET_UNLOCS = {"item.diamond", "item.ingotIron", "itemIngotBronze", "itemIngotCopper", "itemIngotTin", "item.factorization:silver_ingot", "item.emerald"};
 
 
-    public static TextPos[][] textPostion = new TextPos[][] {
-            {new TextPos(-36), new TextPos(-26), new TextPos(-16), new TextPos(-6)},
-            {new TextPos(-31), new TextPos(-21), new TextPos(-11), new TextPos(-1)},
-            {new TextPos(-28), new TextPos(-18), new TextPos(-8)},
-            {new TextPos(-26), new TextPos(-16), new TextPos(-6)},
-            {new TextPos(-23), new TextPos(-13), new TextPos(-3)},
-
-            {new TextPos(-21), new TextPos(-11), new TextPos(-1)},
-            {new TextPos(-20), new TextPos(-10)},
-            {new TextPos(-18), new TextPos(-8)},
-            {new TextPos(-17), new TextPos(-7)},
-            {new TextPos(-16), new TextPos(-6)},
-            {new TextPos(-15), new TextPos(-5)},
-            {new TextPos(-14), new TextPos(-4)},
-            {new TextPos(-13), new TextPos(-3)},
-            {new TextPos(-11), new TextPos(-1)},
-            {new TextPos(-10), new TextPos(0)},
-            {new TextPos(-9)},
-            {new TextPos(-9)},
-            {new TextPos(-8)},
-            {new TextPos(-8)},
-            {new TextPos(-7)},
-            {new TextPos(-7)},
+    public static int[][] textPostion = new int[][] {
+            {-36, -26, -16, -6},
+            {-31, -21, -11, -1},
+            {-28, -18, -8},
+            {-26, -16, -6},
+            {-23, -13, -3},
+            {-21, -11, -1},
+            {-20, -10},
+            {-18, -8},
+            {-17, -7},
+            {-16, -6},
+            {-15, -5},
+            {-14, -4},
+            {-13, -3},
+            {-11, -1},
+            {-10, 0},
+            {-9},
+            {-9},
+            {-8},
+            {-8},
+            {-7},
+            {-7},
     };
-
-    public static class TextPos {
-        public int offset;
-
-        public TextPos( int offset) {
-            this.offset = offset;
-        }
-    }
 
 }

@@ -26,7 +26,7 @@ public class GuiMoarSign extends GuiBase {
     private int rows = 4;
     private int maxLength = 15;
     private int minOffset = -1;
-    private Info.TextPos[] row;
+    private int[] row;
 
     private int size = 0;
 
@@ -92,12 +92,11 @@ public class GuiMoarSign extends GuiBase {
         maxLength = size > 17 ? 5: (size > 13 ? 6: (size > 10 ? 7: (size > 7 ? 8: (size > 4 ? 9: (size > 3 ? 11: (size > 1 ? 12: (size > 0 ? 13: 15)))))));
 
         row = Info.textPostion[size];
-        Info.TextPos lastRow = row[0];
-        minOffset = lastRow.offset;
+        minOffset = row[0];
 
         if(row.length > 1 && entitySign.textOffset > minOffset) {
             for (int i = 0; i < row.length; i++) {
-                if (entitySign.textOffset < row[i].offset) {
+                if (entitySign.textOffset < row[i]) {
                     rows = i;
                     break;
                 }

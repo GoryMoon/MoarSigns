@@ -11,8 +11,8 @@ import java.util.List;
 
 public class ItemNugget extends Item {
 
-    public String[] nuggets = {"diamond_nugget", "iron_nugget", "bronze_nugget_ic2", "copper_nugget_ic2", "tin_nugget_ic2", "silver_nugget_factorization"};
-    public Boolean[] needed = {true, true, false, false, false, false};
+    public String[] nuggets = {"diamond_nugget", "iron_nugget", "bronze_nugget_ic2", "copper_nugget_ic2", "tin_nugget_ic2", "silver_nugget_factorization", "emerald_nugget"};
+    public Boolean[] needed = {true, true, false, false, false, false, true};
     private Icon[] icons = new Icon[nuggets.length];
 
     public ItemNugget(int id) {

@@ -31,7 +31,7 @@ public class BlockMoarSign extends BlockContainer {
         isFreestanding = freeStand;
         float f = 0.25F;
         float f1 = 1.0F;
-        this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f1, 0.5F + f);
+        setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f1, 0.5F + f);
     }
 
     @SideOnly(Side.CLIENT)
@@ -77,22 +77,22 @@ public class BlockMoarSign extends BlockContainer {
             float f2 = 0.0F;
             float f3 = 1.0F;
             float f4 = 0.125F;
-            this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+            setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 
             if (l == 2) {
-                this.setBlockBounds(f2, f, 1.0F - f4, f3, f1, 1.0F);
+                setBlockBounds(f2, f, 1.0F - f4, f3, f1, 1.0F);
             }
 
             if (l == 3) {
-                this.setBlockBounds(f2, f, 0.0F, f3, f1, f4);
+                setBlockBounds(f2, f, 0.0F, f3, f1, f4);
             }
 
             if (l == 4) {
-                this.setBlockBounds(1.0F - f4, f, f2, 1.0F, f1, f3);
+                setBlockBounds(1.0F - f4, f, f2, 1.0F, f1, f3);
             }
 
             if (l == 5) {
-                this.setBlockBounds(0.0F, f, f2, f4, f1, f3);
+                setBlockBounds(0.0F, f, f2, f4, f1, f3);
             }
         }
     }
@@ -129,41 +129,34 @@ public class BlockMoarSign extends BlockContainer {
 
         int i1 = worldObj.getBlockId(x, y, z);
 
-        if (i1 != 0)
-        {
+        if (i1 != 0) {
             Block block = Block.blocksList[i1];
             float f = 0.1F;
             double d0 = (double)x + worldObj.rand.nextDouble() * (block.getBlockBoundsMaxX() - block.getBlockBoundsMinX() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinX();
             double d1 = (double)y + worldObj.rand.nextDouble() * (block.getBlockBoundsMaxY() - block.getBlockBoundsMinY() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinY();
             double d2 = (double)z + worldObj.rand.nextDouble() * (block.getBlockBoundsMaxZ() - block.getBlockBoundsMinZ() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinZ();
 
-            if (side == 0)
-            {
+            if (side == 0) {
                 d1 = (double)y + block.getBlockBoundsMinY() - (double)f;
             }
 
-            if (side == 1)
-            {
+            if (side == 1) {
                 d1 = (double)y + block.getBlockBoundsMaxY() + (double)f;
             }
 
-            if (side == 2)
-            {
+            if (side == 2) {
                 d2 = (double)z + block.getBlockBoundsMinZ() - (double)f;
             }
 
-            if (side == 3)
-            {
+            if (side == 3)  {
                 d2 = (double)z + block.getBlockBoundsMaxZ() + (double)f;
             }
 
-            if (side == 4)
-            {
+            if (side == 4) {
                 d0 = (double)x + block.getBlockBoundsMinX() - (double)f;
             }
 
-            if (side == 5)
-            {
+            if (side == 5) {
                 d0 = (double)x + block.getBlockBoundsMaxX() + (double)f;
             }
 
@@ -201,7 +194,7 @@ public class BlockMoarSign extends BlockContainer {
     public void onNeighborBlockChange(World world, int x, int y, int z, int id) {
         boolean flag = false;
 
-        if (this.isFreestanding) {
+        if (isFreestanding) {
             if (!world.getBlockMaterial(x, y - 1, z).isSolid()) {
                 flag = true;
             }

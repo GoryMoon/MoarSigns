@@ -95,9 +95,11 @@ public class SignInitialization {
         ItemStack iron = new ItemStack(Item.ingotIron);
         ItemStack gold = new ItemStack(Item.ingotGold);
         ItemStack diamond = new ItemStack(Item.diamond);
+        ItemStack emerald = new ItemStack(Item.emerald);
         materials.put(iron.getUnlocalizedName(), iron);
         materials.put(gold.getUnlocalizedName(), gold);
         materials.put(diamond.getUnlocalizedName(), diamond);
+        materials.put(emerald.getUnlocalizedName(), emerald);
 
         //Modded
         for (ItemStack stack: ingots) {
