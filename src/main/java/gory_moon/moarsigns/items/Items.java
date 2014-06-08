@@ -3,16 +3,9 @@ package gory_moon.moarsigns.items;
 import cpw.mods.fml.common.registry.GameRegistry;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.lib.Info;
-import gory_moon.moarsigns.util.Signs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.ArrayList;
 
@@ -39,6 +32,8 @@ public class Items {
 
         removeRecipesWithResult(new ItemStack(net.minecraft.init.Items.sign, 3));
 
+        //TODO remake this with the registers
+        /*
         ArrayList<ItemStack> list = new ArrayList<ItemStack>();
         sign.getSubItemStacks(list);
         ArrayList<Signs> signs = (ArrayList<Signs>) MoarSigns.instance.getSignsWood().clone();
@@ -131,6 +126,7 @@ public class Items {
         }
 
         GameRegistry.addRecipe(new ShapedOreRecipe(generalSign, new Object[] {"###", "###", " X ", '#', "plankWood", 'X', net.minecraft.init.Items.stick}));
+        */
     }
 
 

@@ -16,9 +16,8 @@ public class PacketSignMainInfo extends AbstractPacket {
 
     public String texture;
     public boolean isMetal;
-    public int activeMaterialIndex;
-    public int id;
-    public int meta;
+    public String id;
+    public String meta;
 
     public boolean markDirty = true;
     public boolean skipChecks = false;
@@ -29,10 +28,9 @@ public class PacketSignMainInfo extends AbstractPacket {
     public PacketSignMainInfo() {
     }
 
-    public PacketSignMainInfo(String texture, boolean isMetal, int activeMaterialIndex, int id, int meta, int fontSize, int offset, String[] text, int posX, int posY, int posZ) {
+    public PacketSignMainInfo(String texture, boolean isMetal, String id, String meta, int fontSize, int offset, String[] text, int posX, int posY, int posZ) {
         this.texture = texture;
         this.isMetal = isMetal;
-        this.activeMaterialIndex = activeMaterialIndex;
         this.id = id;
         this.meta = meta;
         signUpdate.fontSize = fontSize;
@@ -50,9 +48,10 @@ public class PacketSignMainInfo extends AbstractPacket {
         } catch (IOException ignored) {}
 
         buffer.writeBoolean(isMetal);
-        buffer.writeInt(activeMaterialIndex);
-        buffer.writeInt(id);
-        buffer.writeInt(meta);
+        try {
+            PacketPipeline.writeString(id, buffer);
+            PacketPipeline.writeString(meta, buffer);
+        } catch (IOException ignored) {}
 
         signUpdate.encodeInto(ctx, buffer);
     }
@@ -64,9 +63,10 @@ public class PacketSignMainInfo extends AbstractPacket {
         } catch (IOException ignored) {}
 
         isMetal = buffer.readBoolean();
-        activeMaterialIndex = buffer.readInt();
-        id = buffer.readInt();
-        meta = buffer.readInt();
+        try {
+            id = PacketPipeline.readStringFromBuffer(30 + "_sign".length(), buffer);
+            meta = PacketPipeline.readStringFromBuffer(30 + "_sign".length(), buffer);
+        } catch (IOException ignored) {}
 
         signUpdate.decodeInto(ctx, buffer);
 
@@ -84,9 +84,8 @@ public class PacketSignMainInfo extends AbstractPacket {
                 if (skipChecks) sign = skipTileEntity;
 
                 sign.isMetal = isMetal;
-                sign.activeMaterialIndex = activeMaterialIndex;
-                sign.materialId = id;
-                sign.materialMeta = meta;
+                sign.materialName = id;
+                sign.materialPath = meta;
                 sign.fontSize = signUpdate.fontSize;
                 sign.textOffset = signUpdate.offset;
                 sign.setResourceLocation(texture);

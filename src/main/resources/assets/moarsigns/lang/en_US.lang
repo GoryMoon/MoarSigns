@@ -7,3 +7,18 @@ item.moarsign.bronze_nugget_ic2.name=Bronze Nugget
 item.moarsign.copper_nugget_ic2.name=Copper Nugget
 item.moarsign.tin_nugget_ic2.name=Tin Nugget
 item.moarsign.silver_nugget_factorization.name=Silver Nugget
+
+# Vanilla Sign
+item.moarsign.sign.oak_sign.name=Oak Sign
+item.moarsign.sign.spruce_sign.name=Spruce Sign
+item.moarsign.sign.birch_sign.name=Birch Sign
+item.moarsign.sign.jungle_sign.name=Jungle Sign
+item.moarsign.sign.acacia_sign.name=Acacia Sign
+item.moarsign.sign.big_oak_sign.name=Big Oak Sign
+item.moarsign.sign.iron_sign.name=Iron Sign
+item.moarsign.sign.gold_sign.name=Gold Sign
+item.moarsign.sign.diamond_sign.name=Diamond Sign
+item.moarsign.sign.emerald_sign.name=Emerald Sign
+
+# Mod Signs
+#item.moarsign.sign."path"."sign".name=

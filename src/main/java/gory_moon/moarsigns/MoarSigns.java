@@ -8,19 +8,20 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import gory_moon.moarsigns.api.MaterialInfo;
+import gory_moon.moarsigns.api.MaterialRegistry;
+import gory_moon.moarsigns.api.SignInfo;
+import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
 import gory_moon.moarsigns.items.Items;
 import gory_moon.moarsigns.lib.ModInfo;
 import gory_moon.moarsigns.network.PacketPipeline;
 import gory_moon.moarsigns.proxy.CommonProxy;
-import gory_moon.moarsigns.util.SignInitialization;
-import gory_moon.moarsigns.util.Signs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -30,29 +31,22 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
-@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION)
+@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = "after:*")
 public class MoarSigns {
 
     @Instance(ModInfo.ID)
     public static MoarSigns instance;
 
     public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
+    //TODO remake the packet system
     public static final PacketPipeline packetPipeline = new PacketPipeline();
     public static Logger logger;
 
     @SidedProxy(clientSide = ModInfo.CLIENTPROXY, serverSide = ModInfo.COMMONPROXY)
     public static CommonProxy proxy;
 
-    private ArrayList<Signs> tempWoodSigns;
-    private ArrayList<Signs> tempMetalSigns;
-    public ArrayList<Signs> signsWood;
-    public ArrayList<Signs> signsMetal;
     private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
     public static HashMap<String, IIcon> icons = new HashMap<String, IIcon>();
     public static HashMap<String, ItemStack> craftingMats = new HashMap<String, ItemStack>();
@@ -60,10 +54,7 @@ public class MoarSigns {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         new ConfigHandler(event.getSuggestedConfigurationFile());
-        signsWood = new ArrayList<Signs>();
-        signsMetal = new ArrayList<Signs>();
 
-        proxy.readSigns();
         logger = LogManager.getLogger("MoarSigns");
 
         Blocks.init();
@@ -75,12 +66,11 @@ public class MoarSigns {
         proxy.initRenderers();
         packetPipeline.initalise();
 
+        setupSigns();
     }
 
     @EventHandler
     public void modsLoaded(FMLPostInitializationEvent event) {
-        setupSigns();
-
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
         Items.registerRecipes();
@@ -98,34 +88,6 @@ public class MoarSigns {
         return location;
     }
 
-    public void loadFile(InputStream input) {
-        ArrayList<Signs> signs = null;
-        ArrayList<Signs> signs2 = null;
-
-        try {
-            ObjectInputStream in = new ObjectInputStream(input);
-
-            signs = (ArrayList<Signs>) in.readObject();
-            signs2 = (ArrayList<Signs>) in.readObject();
-
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                input.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (signs != null) this.tempWoodSigns = signs;
-        if (signs2 != null) this.tempMetalSigns = signs2;
-    }
-
     public void setupSigns() {
         ArrayList<ItemStack> planks = OreDictionary.getOres("plankWood");
 
@@ -136,12 +98,15 @@ public class MoarSigns {
         ingots.addAll(OreDictionary.getOres("ingotBronze"));
         ingots.addAll(OreDictionary.getOres("ingotSteel"));
 
-        HashMap<String, ItemStack> materials1 = new HashMap<String, ItemStack>();
-        HashMap<String, ItemStack> materials2 = new HashMap<String, ItemStack>();
+        SignInitialization.addWoodMaterial(planks);
+        SignInitialization.addMetalMaterial(ingots);
 
-        SignInitialization.addWoodMaterial(materials1, planks);
-        SignInitialization.addMetalMaterial(materials2, ingots);
-
+        Collections.sort(SignRegistry.getSignRegistry(), new Comparator<SignInfo>() {
+            @Override
+            public int compare(SignInfo o1, SignInfo o2) {
+                return (o1.isMetal && !o2.isMetal)? 1:((o1.isMetal) ? 0: -1);
+            }
+        });
 
         Container dummyContainer = new Container() {
             @Override
@@ -154,86 +119,20 @@ public class MoarSigns {
         };
         InventoryCrafting crafting = new InventoryCrafting(dummyContainer, 3, 3);
 
-        for (Signs sign: MoarSigns.instance.getTempWoodSigns()) {
-            for (ItemStack stack: materials1.values()) {
-                String unlocalized = stack.getUnlocalizedName();
+        for (Map.Entry<String, Set<MaterialInfo>> materialList: MaterialRegistry.materialRegistry.entrySet()) {
+            for (MaterialInfo material: materialList.getValue()) {
+                ItemStack stack = material.material;
 
-                for (Signs.Material unloc: sign.material) {
-                    if (unloc.unlocalizedName.equals(unlocalized)) {
-                        if (stack.getItem() instanceof ItemBlock) {
-                            unloc.matId = Item.getIdFromItem(stack.getItem());
-                            unloc.matMeta = stack.getItemDamage();
-                        } else {
-                            for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, stack);}
-                            ItemStack stack1 = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
-                            if (stack1 != null) {
-                                unloc.matId = Item.getIdFromItem(stack1.getItem());
-                                unloc.matMeta = stack1.getItemDamage();
-                            } else {
-                                unloc.matId = Item.getIdFromItem(stack.getItem());
-                                unloc.matMeta = stack.getItemDamage();
-                            }
-                            for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, null);}
-                        }
+                if (!(stack.getItem() instanceof ItemBlock)) {
+                    for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, stack);}
+                    ItemStack stack1 = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
+                    if (stack1 != null) {
+                        material.material = stack1;
                     }
+                    for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, null);}
                 }
-            }
-            for (int i = 0; i < sign.material.length; i++) {
-                Signs s = sign.clone();
-                if (sign.material[i].matId != 0) {
-                    s.activeMaterialIndex = i;
-                    MoarSigns.instance.signsWood.add(s);
-                }
+
             }
         }
-
-        for (Signs sign: MoarSigns.instance.getTempMetalSigns()) {
-            for (ItemStack stack: materials2.values()) {
-                String unlocalized = stack.getUnlocalizedName();
-
-                for (Signs.Material unloc : sign.material) {
-                    if (unloc.unlocalizedName.equals(unlocalized)) {
-                        if (stack.getItem() instanceof ItemBlock) {
-                            unloc.matId = Item.getIdFromItem(stack.getItem());
-                            unloc.matMeta = stack.getItemDamage();
-                        } else {
-                            for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, stack);}
-                            ItemStack stack1 = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
-                            if (stack1 != null) {
-                                unloc.matId = Item.getIdFromItem(stack1.getItem());
-                                unloc.matMeta = stack1.getItemDamage();
-                            } else {
-                                unloc.matId = Item.getIdFromItem(stack.getItem());
-                                unloc.matMeta = stack.getItemDamage();
-                            }
-                            for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, null);}
-                        }
-                    }
-                }
-            }
-            for (int i = 0; i < sign.material.length; i++) {
-                Signs s = sign.clone();
-                if (sign.material[i].matId != 0) {
-                    s.activeMaterialIndex = i;
-                    MoarSigns.instance.signsMetal.add(s);
-                }
-            }
-        }
-
-        MoarSigns.craftingMats = materials1;
-        MoarSigns.craftingMats.putAll(materials2);
-    }
-
-    public ArrayList<Signs> getSignsWood() {
-        return signsWood;
-    }
-    public ArrayList<Signs> getTempWoodSigns() {
-        return tempWoodSigns;
-    }
-    public ArrayList<Signs> getSignsMetal() {
-        return signsMetal;
-    }
-    public ArrayList<Signs> getTempMetalSigns() {
-        return tempMetalSigns;
     }
 }

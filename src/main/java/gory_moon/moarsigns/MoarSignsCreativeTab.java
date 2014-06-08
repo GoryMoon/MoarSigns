@@ -1,7 +1,8 @@
 package gory_moon.moarsigns;
 
+import gory_moon.moarsigns.api.SignInfo;
+import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.items.Items;
-import gory_moon.moarsigns.util.Signs;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,8 +15,8 @@ public class MoarSignsCreativeTab extends CreativeTabs {
 
     @Override
     public ItemStack getIconItemStack() {
-        Signs signs = MoarSigns.instance.getSignsWood().get(0);
-        return Items.sign.createMoarItemStack(signs.material[signs.activeMaterialIndex].path + signs.signName, false);
+        SignInfo info = SignRegistry.getSignRegistry().iterator().next();
+        return Items.sign.createMoarItemStack(info.material.path + info.itemName, false);
     }
 
     @Override

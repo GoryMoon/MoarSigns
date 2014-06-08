@@ -17,6 +17,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMoarSign.class, new MoarSignRenderer());
     }
 
+    /*
     @Override
     public void readSigns() {
         ResourceLocation location = new ResourceLocation("moarsigns", "info/signs.items");
@@ -28,5 +29,5 @@ public class ClientProxy extends CommonProxy {
         if (resource != null) {
             MoarSigns.instance.loadFile(resource.getInputStream());
         }
-    }
+    }*/
 }

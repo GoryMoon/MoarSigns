@@ -38,7 +38,6 @@ public class BlockMoarSign extends BlockContainer {
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-        System.out.println("X: " + x + ", Y: " + y + ", Z: " + z);
         Boolean s = !((TileEntityMoarSign) world.getTileEntity(x, y, z)).isMetal;
         return s ? Blocks.planks.getIcon(world, x, y, z, side): Blocks.iron_block.getIcon(world, x, y, z, side);
     }

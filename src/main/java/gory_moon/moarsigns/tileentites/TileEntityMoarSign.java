@@ -18,8 +18,8 @@ public class TileEntityMoarSign extends TileEntitySign {
     public int lineBeingEdited = -1;
     private boolean isEditable = true;
     public boolean isMetal = false;
-    public int materialId;
-    public int materialMeta;
+    public String materialName;
+    public String materialPath;
     public String texture_name;
     public int fontSize = 0;
     public int textOffset = 0;
@@ -31,10 +31,9 @@ public class TileEntityMoarSign extends TileEntitySign {
     private ResourceLocation resourceLocation;
 
     private boolean textureReq = false;
-    public int activeMaterialIndex;
     private int oldFontSize;
 
-
+    private final int NBT_VERSION = 1;
 
     @Override
     public void updateEntity() {
@@ -56,13 +55,13 @@ public class TileEntityMoarSign extends TileEntitySign {
 
     public void writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
+        compound.setInteger("nbtVersion", NBT_VERSION);
         for (int i = 0; i < 4; i++) {
             compound.setString("Text" + (i + 1), signText[i]);
         }
         compound.setBoolean("isMetal", isMetal);
-        compound.setInteger("activeMaterialIndex", activeMaterialIndex);
-        compound.setInteger("materialID", materialId);
-        compound.setInteger("materialMeta", materialMeta);
+        compound.setString("materialName", materialName);
+        compound.setString("materialPath", materialPath);
         compound.setString("texture", texture_name);
         compound.setInteger("fontSize", fontSize);
         compound.setInteger("textOffset", textOffset);
@@ -88,9 +87,13 @@ public class TileEntityMoarSign extends TileEntitySign {
             }
         }
         isMetal = compound.getBoolean("isMetal");
-        activeMaterialIndex = compound.getInteger("activeMaterialIndex");
-        materialId = compound.getInteger("materialID");
-        materialMeta = compound.getInteger("materialMeta");
+        if (compound.hasKey("nbtVersion")) {
+            materialName = compound.getString("materialName");
+            materialPath = compound.getString("materialPath");
+        } else {
+            materialName = "";
+            materialPath = "";
+        }
         texture_name = compound.getString("texture");
         textOffset = compound.getInteger("textOffset");
 
@@ -98,7 +101,7 @@ public class TileEntityMoarSign extends TileEntitySign {
 
     @Override
     public Packet getDescriptionPacket() {
-        MoarSigns.packetPipeline.sendToAll(new PacketSignMainInfo(texture_name, isMetal, activeMaterialIndex, materialId, materialMeta, fontSize, textOffset, signText, xCoord, yCoord, zCoord));
+        MoarSigns.packetPipeline.sendToAll(new PacketSignMainInfo(texture_name, isMetal, materialName, materialPath, fontSize, textOffset, signText, xCoord, yCoord, zCoord));
         return null;
     }
 

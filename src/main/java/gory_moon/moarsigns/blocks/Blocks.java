@@ -19,8 +19,8 @@ public class Blocks {
         signStandingWood = new BlockMoarSign(Material.wood, true).setStepSound(Block.soundTypeWood).setHardness(1.0F).setResistance(5.0F);
         signWallWood = new BlockMoarSign(Material.wood, false).setStepSound(Block.soundTypeWood).setHardness(1.0F).setResistance(5.0F);
 
-        signStandingMetal = new BlockMoarSign(Material.iron, true).setStepSound(Block.soundTypeWood).setHardness(2.0F).setResistance(10.0F);
-        signWallMetal = new BlockMoarSign(Material.iron, false).setStepSound(Block.soundTypeWood).setHardness(2.0F).setResistance(10.0F);
+        signStandingMetal = new BlockMoarSign(Material.iron, true).setStepSound(Block.soundTypeMetal).setHardness(2.0F).setResistance(10.0F);
+        signWallMetal = new BlockMoarSign(Material.iron, false).setStepSound(Block.soundTypeMetal).setHardness(2.0F).setResistance(10.0F);
 
         signStandingWood.setHarvestLevel("axe", 0);
         signWallWood.setHarvestLevel("axe", 0);

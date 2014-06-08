@@ -1,11 +1,12 @@
 package gory_moon.moarsigns.items;
 
 import gory_moon.moarsigns.MoarSigns;
+import gory_moon.moarsigns.api.SignInfo;
+import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.network.PacketOpenMoarSignsGui;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
-import gory_moon.moarsigns.util.Signs;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,8 +18,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ItemMoarSign extends Item {
 
@@ -31,22 +31,20 @@ public class ItemMoarSign extends Item {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName() + "." + getTextureFromNBT(stack.getTagCompound());
+        SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
+        return super.getUnlocalizedName() + ".sign." + (info.material.path.equals("")? "": info.material.path + ".") + getTextureFromNBT(stack.getTagCompound());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void registerIcons(IIconRegister register) {
-        ArrayList<Signs> signs = (ArrayList<Signs>) MoarSigns.instance.getTempWoodSigns().clone();
-        signs.addAll((ArrayList<Signs>)MoarSigns.instance.getTempMetalSigns().clone());
+        List<SignInfo> signRegistry = SignRegistry.getSignRegistry();
 
-        for (Signs s: signs) {
-            for (Signs.Material material: s.material) {
-                String path = material.path;
-                String loc = s.isMetal ? "metal/" : "wood/";
-                IIcon icon = register.registerIcon(Info.TEXTURE_LOCATION + ":" + loc + (path.equals("") ? "" : path.replace("\\", "/")) + s.itemTexture);
-                MoarSigns.icons.put((path.equals("") ? "" : path) + s.signName, icon);
-            }
+        for (SignInfo info: signRegistry) {
+            String path = info.material.path;
+            String loc = info.isMetal ? "metal/" : "wood/";
+            IIcon icon = register.registerIcon(Info.TEXTURE_LOCATION + ":" + loc + (path.equals("") ? "" : path.replace("\\", "/")) + info.itemName);
+            MoarSigns.icons.put((path.equals("") ? "" : path) + info.itemName, icon);
         }
     }
 
@@ -57,28 +55,28 @@ public class ItemMoarSign extends Item {
 
     @SuppressWarnings("unchecked")
     public void getSubItemStacks(List list) {
-        ArrayList<Signs> signs = (ArrayList<Signs>) MoarSigns.instance.getSignsWood().clone();
-        signs.addAll((ArrayList<Signs>)MoarSigns.instance.getSignsMetal().clone());
+        List<SignInfo> signRegistry = SignRegistry.getSignRegistry();
 
-        for (Signs s: signs) {
-            String path = s.material[s.activeMaterialIndex].path;
-            list.add(createMoarItemStack((path.equals("") ? "" : path) + s.signName, s.isMetal));
+        for (SignInfo info: signRegistry) {
+            String path = info.material.path;
+            list.add(createMoarItemStack(path + info.itemName, info.isMetal));
         }
     }
 
-    @Override
-    public String getItemStackDisplayName(ItemStack stack) {
-        Signs sign = getSignFromNBT(stack.getTagCompound());
-        return sign != null ? sign.itemName : "MoarSign";
+    public static
+    <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
+        List<T> list = new ArrayList<T>(c);
+        java.util.Collections.sort(list);
+        return list;
     }
 
     @Override
     public IIcon getIcon(ItemStack stack, int pass) {
-        Signs sign = getSignFromNBT(stack.getTagCompound());
-        if (sign == null) return MoarSigns.icons.get("oak_sign");
+        SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
+        if (info == null) return MoarSigns.icons.get("oak_sign");
 
-        String path = sign.material[sign.activeMaterialIndex].path;
-        return MoarSigns.icons.get((path.equals("") ? "" : path) + sign.signName);
+        String path = info.material.path;
+        return MoarSigns.icons.get((path.equals("") ? "" : path) + info.itemName);
     }
 
     @Override
@@ -94,23 +92,8 @@ public class ItemMoarSign extends Item {
         return itemStack;
     }
 
-    @SuppressWarnings("unchecked")
-    public Signs getSignFromNBT(NBTTagCompound nbt) {
-        ArrayList<Signs> signs = (ArrayList<Signs>) MoarSigns.instance.getSignsWood().clone();
-        signs.addAll((ArrayList<Signs>)MoarSigns.instance.getSignsMetal().clone());
-        String texture = getTextureFromNBTFull(nbt);
-
-        for (Signs s: signs) {
-            if ((s.material[s.activeMaterialIndex].path.replace("\\", "/") + s.signName).equals(texture)) {
-                return s;
-            }
-        }
-        return null;
-    }
-
     public String getTextureFromNBTFull(NBTTagCompound compound) {
-        String texture = compound.hasKey("SignTexture") ? compound.getString("SignTexture"): "";
-        return texture;
+        return compound.hasKey("SignTexture") ? compound.getString("SignTexture"): "";
     }
 
     public String getTextureFromNBT(NBTTagCompound compound) {
@@ -161,20 +144,20 @@ public class ItemMoarSign extends Item {
                 TileEntityMoarSign tileEntity = (TileEntityMoarSign)world.getTileEntity(x, y, z);
 
                 if (tileEntity != null) {
-                    Signs sign = Items.sign.getSignFromNBT(stack.getTagCompound());
                     String texture = getTextureFromNBTFull(stack.getTagCompound());
 
-                    if (sign == null) return false;
+                    SignInfo info = SignRegistry.get(texture);
+
+                    if (info == null) return false;
 
                     tileEntity.setResourceLocation(texture);
-                    tileEntity.isMetal = sign.isMetal;
-                    tileEntity.materialId = sign.material[sign.activeMaterialIndex].matId;
-                    tileEntity.materialMeta = sign.material[sign.activeMaterialIndex].matMeta;
-                    tileEntity.activeMaterialIndex = sign.activeMaterialIndex;
+                    tileEntity.isMetal = info.isMetal;
+                    tileEntity.materialName = info.material.materialName;
+                    tileEntity.materialPath = info.material.path;
                     tileEntity.func_145912_a(player);
 
-                    MoarSigns.packetPipeline.sendTo(new PacketOpenMoarSignsGui(texture, tileEntity.isMetal, tileEntity.activeMaterialIndex, tileEntity.materialId,
-                            tileEntity.materialMeta, tileEntity.fontSize, tileEntity.textOffset, new String[]{"", "", "", ""}, x, y, z), (EntityPlayerMP) player);
+                    MoarSigns.packetPipeline.sendTo(new PacketOpenMoarSignsGui(texture, tileEntity.isMetal, tileEntity.materialName,
+                            tileEntity.materialPath, tileEntity.fontSize, tileEntity.textOffset, new String[]{"", "", "", ""}, x, y, z), (EntityPlayerMP) player);
                 }
 
                 return true;

@@ -8,9 +8,9 @@
   "url": "",
   "updateUrl": "",
   "authors": ["Gory_Moon"],
-  "credits": "Vswe, for making his summer courses",
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["after:*"]
 }
 ]

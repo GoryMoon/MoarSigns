@@ -18,8 +18,8 @@ public class PacketOpenMoarSignsGui extends AbstractPacket {
     public PacketOpenMoarSignsGui() {
     }
 
-    public PacketOpenMoarSignsGui(String texture, boolean isMetal, int activeMaterialIndex, int id, int meta, int fontSize, int offset, String[] text, int posX, int posY, int posZ) {
-        mainInfo = new PacketSignMainInfo(texture, isMetal, activeMaterialIndex, id, meta, fontSize, offset, text, posX, posY, posZ);
+    public PacketOpenMoarSignsGui(String texture, boolean isMetal, String id, String meta, int fontSize, int offset, String[] text, int posX, int posY, int posZ) {
+        mainInfo = new PacketSignMainInfo(texture, isMetal,  id, meta, fontSize, offset, text, posX, posY, posZ);
     }
 
     @Override
