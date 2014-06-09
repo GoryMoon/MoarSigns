@@ -38,10 +38,10 @@ public class ItemMoarSign extends Item {
     @Override
     public void registerIcons(IconRegister register) {
         ArrayList<Signs> signs = (ArrayList<Signs>) MoarSigns.instance.getTempWoodSigns().clone();
-        signs.addAll((ArrayList<Signs>)MoarSigns.instance.getTempMetalSigns().clone());
+        signs.addAll((ArrayList<Signs>) MoarSigns.instance.getTempMetalSigns().clone());
 
-        for (Signs s: signs) {
-            for (Signs.Material material: s.material) {
+        for (Signs s : signs) {
+            for (Signs.Material material : s.material) {
                 String path = material.path;
                 String loc = s.isMetal ? "metal/" : "wood/";
                 Icon icon = register.registerIcon(Info.TEXTURE_LOCATION + ":" + loc + (path.equals("") ? "" : path.replace("\\", "/")) + s.itemTexture);
@@ -58,9 +58,9 @@ public class ItemMoarSign extends Item {
     @SuppressWarnings("unchecked")
     public void getSubItemStacks(List list) {
         ArrayList<Signs> signs = (ArrayList<Signs>) MoarSigns.instance.getSignsWood().clone();
-        signs.addAll((ArrayList<Signs>)MoarSigns.instance.getSignsMetal().clone());
+        signs.addAll((ArrayList<Signs>) MoarSigns.instance.getSignsMetal().clone());
 
-        for (Signs s: signs) {
+        for (Signs s : signs) {
             String path = s.material[s.activeMaterialIndex].path;
             list.add(createMoarItemStack((path.equals("") ? "" : path) + s.signName, s.isMetal));
         }
@@ -87,7 +87,7 @@ public class ItemMoarSign extends Item {
     }
 
     public ItemStack createMoarItemStack(String signName, boolean isMetal) {
-        ItemStack itemStack = new ItemStack(this.itemID, 1, (isMetal ? 1: 0));
+        ItemStack itemStack = new ItemStack(this.itemID, 1, (isMetal ? 1 : 0));
         NBTTagCompound compound = new NBTTagCompound("tag");
         compound.setString("SignTexture", signName.replace("\\", "/"));
         itemStack.setTagCompound(compound);
@@ -97,10 +97,10 @@ public class ItemMoarSign extends Item {
     @SuppressWarnings("unchecked")
     public Signs getSignFromNBT(NBTTagCompound nbt) {
         ArrayList<Signs> signs = (ArrayList<Signs>) MoarSigns.instance.getSignsWood().clone();
-        signs.addAll((ArrayList<Signs>)MoarSigns.instance.getSignsMetal().clone());
+        signs.addAll((ArrayList<Signs>) MoarSigns.instance.getSignsMetal().clone());
         String texture = getTextureFromNBTFull(nbt);
 
-        for (Signs s: signs) {
+        for (Signs s : signs) {
             if ((s.material[s.activeMaterialIndex].path.replace("\\", "/") + s.signName).equals(texture)) {
                 return s;
             }
@@ -109,12 +109,12 @@ public class ItemMoarSign extends Item {
     }
 
     public String getTextureFromNBTFull(NBTTagCompound compound) {
-        String texture = compound.hasKey("SignTexture") ? compound.getString("SignTexture"): "";
+        String texture = compound.hasKey("SignTexture") ? compound.getString("SignTexture") : "";
         return texture;
     }
 
     public String getTextureFromNBT(NBTTagCompound compound) {
-        String texture = compound.hasKey("SignTexture") ? compound.getString("SignTexture"): "";
+        String texture = compound.hasKey("SignTexture") ? compound.getString("SignTexture") : "";
         if (texture.contains("\\")) texture = texture.split("\\\\")[1];
         if (texture.contains("/")) texture = texture.split("/")[1];
         return texture;
@@ -149,8 +149,10 @@ public class ItemMoarSign extends Item {
             } else {
                 if (side == 1) {
                     int rotation = MathHelper.floor_double((double) ((player.rotationYaw + 180.0F) * 16.0F / 360.0F) + 0.5D) & 15;
-                    if (stack.getItemDamage() == 0) world.setBlock(x, y, z, Blocks.signStandingWood.blockID, rotation, 3);
-                    else if (stack.getItemDamage() == 1) world.setBlock(x, y, z, Blocks.signStandingMetal.blockID, rotation, 3);
+                    if (stack.getItemDamage() == 0)
+                        world.setBlock(x, y, z, Blocks.signStandingWood.blockID, rotation, 3);
+                    else if (stack.getItemDamage() == 1)
+                        world.setBlock(x, y, z, Blocks.signStandingMetal.blockID, rotation, 3);
 
                 } else {
                     if (stack.getItemDamage() == 0) world.setBlock(x, y, z, Blocks.signWallWood.blockID, side, 3);
@@ -158,7 +160,7 @@ public class ItemMoarSign extends Item {
                 }
 
                 if (!player.capabilities.isCreativeMode) --stack.stackSize;
-                TileEntityMoarSign tileEntity = (TileEntityMoarSign)world.getBlockTileEntity(x, y, z);
+                TileEntityMoarSign tileEntity = (TileEntityMoarSign) world.getBlockTileEntity(x, y, z);
 
                 if (tileEntity != null) {
                     tileEntity.setResourceLocation(getTextureFromNBTFull(stack.getTagCompound()));

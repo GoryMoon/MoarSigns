@@ -24,24 +24,6 @@ import java.io.IOException;
 
 public class ServerPacketHandler implements IPacketHandler {
 
-    @Override
-    public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
-        ByteArrayDataInput reader = ByteStreams.newDataInput(packet.data);
-        EntityPlayer entityPlayer = (EntityPlayer)player;
-
-        switch (PacketIDs.getID(reader.readByte())) {
-            case SIGN_TEXT_PACKET:
-
-                int fontSize = reader.readInt();
-                int offset = reader.readInt();
-                Packet130UpdateSign signPacket2 = new Packet130UpdateSign();
-                signPacket2.readPacketData(reader);
-
-                handleServerUpdateSign(signPacket2, (EntityPlayerMP) entityPlayer, fontSize, offset);
-                break;
-        }
-    }
-
     public static Packet250CustomPayload getTextureNamePacket(TileEntityMoarSign tileEntity) {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         DataOutputStream dataStream = new DataOutputStream(byteStream);
@@ -88,6 +70,24 @@ public class ServerPacketHandler implements IPacketHandler {
         }
     }
 
+    @Override
+    public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
+        ByteArrayDataInput reader = ByteStreams.newDataInput(packet.data);
+        EntityPlayer entityPlayer = (EntityPlayer) player;
+
+        switch (PacketIDs.getID(reader.readByte())) {
+            case SIGN_TEXT_PACKET:
+
+                int fontSize = reader.readInt();
+                int offset = reader.readInt();
+                Packet130UpdateSign signPacket2 = new Packet130UpdateSign();
+                signPacket2.readPacketData(reader);
+
+                handleServerUpdateSign(signPacket2, (EntityPlayerMP) entityPlayer, fontSize, offset);
+                break;
+        }
+    }
+
     public void handleServerUpdateSign(Packet130UpdateSign packet, EntityPlayerMP player, int fontSize, int offset) {
         player.func_143004_u();
         World world = player.worldObj;
@@ -122,7 +122,7 @@ public class ServerPacketHandler implements IPacketHandler {
                 int y = packet.yPosition;
                 int z = packet.zPosition;
 
-                TileEntityMoarSign tileentitysign1 = (TileEntityMoarSign)tileentity;
+                TileEntityMoarSign tileentitysign1 = (TileEntityMoarSign) tileentity;
                 System.arraycopy(packet.signLines, 0, tileentitysign1.signText, 0, 4);
                 tileentitysign1.fontSize = fontSize;
                 tileentitysign1.textOffset = offset;

@@ -33,7 +33,7 @@ public class Items {
         LanguageRegistry.addName(debug, "Debug");
 
         nugget = new ItemNugget(Info.NUGGET_ITEM_ID);
-        for(int i = 0; i < nugget.nuggets.length; i++) {
+        for (int i = 0; i < nugget.nuggets.length; i++) {
             LanguageRegistry.addName(new ItemStack(nugget, 1, i), Info.NUGGET_ITEM_NAMES[i]);
         }
 
@@ -60,11 +60,12 @@ public class Items {
             }
 
             @Override
-            public void onCraftMatrixChanged(IInventory par1IInventory) {}
+            public void onCraftMatrixChanged(IInventory par1IInventory) {
+            }
         };
         InventoryCrafting crafting = new InventoryCrafting(dummyContainer, 3, 3);
 
-        for (ItemStack stack: list) {
+        for (ItemStack stack : list) {
 
             ItemMoarSign sign = (ItemMoarSign) stack.getItem();
             String texture = sign.getTextureFromNBTFull(stack.getTagCompound());
@@ -77,7 +78,7 @@ public class Items {
                 continue;
             }
 
-            for (Signs s: signs) {
+            for (Signs s : signs) {
                 if ((s.material[s.activeMaterialIndex].path.replace("\\", "/") + s.signName).equals(texture)) {
 
                     String unlocName = s.material[s.activeMaterialIndex].unlocalizedName;
@@ -86,7 +87,7 @@ public class Items {
                     if (isMetal && mat != null && mat.getItem() != null) {
                         ItemStack recNugget = null;
                         if (!s.material[s.activeMaterialIndex].gotNugget) {
-                            for (int i = 0; i < Info.NUGGET_INGET_UNLOCS.length; i++){
+                            for (int i = 0; i < Info.NUGGET_INGET_UNLOCS.length; i++) {
 
                                 if (Info.NUGGET_INGET_UNLOCS[i].equals(unlocName)) {
                                     nugget.needed[i] = true;
@@ -131,9 +132,9 @@ public class Items {
                         }
 
                         stack.stackSize = 10;
-                        GameRegistry.addRecipe(stack, new Object[]{"XXX","XXX"," / ", 'X', mat, '/', Item.stick});
+                        GameRegistry.addRecipe(stack, new Object[]{"XXX", "XXX", " / ", 'X', mat, '/', Item.stick});
                     } else if (mat != null && mat.getItem() != null) {
-                        GameRegistry.addRecipe(stack, new Object[]{"XXX","XXX"," / ", 'X', mat, '/', Item.stick});
+                        GameRegistry.addRecipe(stack, new Object[]{"XXX", "XXX", " / ", 'X', mat, '/', Item.stick});
                     }
 
                     break;
@@ -141,21 +142,17 @@ public class Items {
             }
         }
 
-        GameRegistry.addRecipe(new ShapedOreRecipe(generalSign, new Object[] {"###", "###", " X ", '#', "plankWood", 'X', Item.stick}));
+        GameRegistry.addRecipe(new ShapedOreRecipe(generalSign, new Object[]{"###", "###", " X ", '#', "plankWood", 'X', Item.stick}));
     }
 
 
-
-    private static void removeRecipesWithResult(ItemStack resultItem)
-    {
+    private static void removeRecipesWithResult(ItemStack resultItem) {
         ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
 
-        for (int scan = 0; scan < recipes.size(); scan++)
-        {
+        for (int scan = 0; scan < recipes.size(); scan++) {
             IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
             ItemStack recipeResult = tmpRecipe.getRecipeOutput();
-            if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
-            {
+            if (ItemStack.areItemStacksEqual(resultItem, recipeResult)) {
                 MoarSigns.logger.info("Removing Recipe: " + recipes.get(scan) + " -> " + recipeResult);
                 recipes.remove(scan);
             }

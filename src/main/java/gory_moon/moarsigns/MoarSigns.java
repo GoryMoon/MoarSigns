@@ -43,20 +43,17 @@ public class MoarSigns {
 
     @Instance(ModInfo.ID)
     public static MoarSigns instance;
-
-    public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
     public static Logger logger;
-
     @SidedProxy(clientSide = ModInfo.CLIENTPROXY, serverSide = ModInfo.COMMONPROXY)
     public static CommonProxy proxy;
-
-    private ArrayList<Signs> tempWoodSigns;
-    private ArrayList<Signs> tempMetalSigns;
-    public ArrayList<Signs> signsWood;
-    public ArrayList<Signs> signsMetal;
-    private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
     public static HashMap<String, Icon> icons = new HashMap<String, Icon>();
     public static HashMap<String, ItemStack> craftingMats = new HashMap<String, ItemStack>();
+    private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
+    public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
+    public ArrayList<Signs> signsWood;
+    public ArrayList<Signs> signsMetal;
+    private ArrayList<Signs> tempWoodSigns;
+    private ArrayList<Signs> tempMetalSigns;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -90,7 +87,7 @@ public class MoarSigns {
         ResourceLocation location = textures.get(s);
 
         if (location == null) {
-            location = new ResourceLocation("moarsigns", "textures/entities/signs/" + (isMetal ? "metal/": "wood/") + s + ".png");
+            location = new ResourceLocation("moarsigns", "textures/entities/signs/" + (isMetal ? "metal/" : "wood/") + s + ".png");
             textures.put(s, location);
         }
 
@@ -112,8 +109,7 @@ public class MoarSigns {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 input.close();
             } catch (IOException e) {
@@ -149,21 +145,24 @@ public class MoarSigns {
             }
 
             @Override
-            public void onCraftMatrixChanged(IInventory par1IInventory) {}
+            public void onCraftMatrixChanged(IInventory par1IInventory) {
+            }
         };
         InventoryCrafting crafting = new InventoryCrafting(dummyContainer, 3, 3);
 
-        for (Signs sign: MoarSigns.instance.getTempWoodSigns()) {
-            for (ItemStack stack: materials1.values()) {
+        for (Signs sign : MoarSigns.instance.getTempWoodSigns()) {
+            for (ItemStack stack : materials1.values()) {
                 String unlocalized = stack.getUnlocalizedName();
 
-                for (Signs.Material unloc: sign.material) {
+                for (Signs.Material unloc : sign.material) {
                     if (unloc.unlocalizedName.equals(unlocalized)) {
                         if (stack.getItem() instanceof ItemBlock) {
                             unloc.matId = stack.itemID;
                             unloc.matMeta = stack.getItemDamage();
                         } else {
-                            for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, stack);}
+                            for (int i = 0; i < 9; i++) {
+                                crafting.setInventorySlotContents(i, stack);
+                            }
                             ItemStack stack1 = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
                             if (stack1 != null) {
                                 unloc.matId = stack1.itemID;
@@ -172,7 +171,9 @@ public class MoarSigns {
                                 unloc.matId = stack.itemID;
                                 unloc.matMeta = stack.getItemDamage();
                             }
-                            for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, null);}
+                            for (int i = 0; i < 9; i++) {
+                                crafting.setInventorySlotContents(i, null);
+                            }
                         }
                     }
                 }
@@ -186,8 +187,8 @@ public class MoarSigns {
             }
         }
 
-        for (Signs sign: MoarSigns.instance.getTempMetalSigns()) {
-            for (ItemStack stack: materials2.values()) {
+        for (Signs sign : MoarSigns.instance.getTempMetalSigns()) {
+            for (ItemStack stack : materials2.values()) {
                 String unlocalized = stack.getUnlocalizedName();
 
                 for (Signs.Material unloc : sign.material) {
@@ -196,7 +197,9 @@ public class MoarSigns {
                             unloc.matId = stack.itemID;
                             unloc.matMeta = stack.getItemDamage();
                         } else {
-                            for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, stack);}
+                            for (int i = 0; i < 9; i++) {
+                                crafting.setInventorySlotContents(i, stack);
+                            }
                             ItemStack stack1 = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
                             if (stack1 != null) {
                                 unloc.matId = stack1.itemID;
@@ -205,7 +208,9 @@ public class MoarSigns {
                                 unloc.matId = stack.itemID;
                                 unloc.matMeta = stack.getItemDamage();
                             }
-                            for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, null);}
+                            for (int i = 0; i < 9; i++) {
+                                crafting.setInventorySlotContents(i, null);
+                            }
                         }
                     }
                 }
@@ -226,12 +231,15 @@ public class MoarSigns {
     public ArrayList<Signs> getSignsWood() {
         return signsWood;
     }
+
     public ArrayList<Signs> getTempWoodSigns() {
         return tempWoodSigns;
     }
+
     public ArrayList<Signs> getSignsMetal() {
         return signsMetal;
     }
+
     public ArrayList<Signs> getTempMetalSigns() {
         return tempMetalSigns;
     }

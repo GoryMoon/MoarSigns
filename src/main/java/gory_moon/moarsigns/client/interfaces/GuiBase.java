@@ -11,17 +11,17 @@ import java.util.List;
 
 public class GuiBase extends GuiScreen {
 
-    public void drawHoveringText(List par1List, int par2, int par3, FontRenderer font) {
+    public void drawHoveringText(List<String> par1List, int par2, int par3, FontRenderer font) {
         if (!par1List.isEmpty()) {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             RenderHelper.disableStandardItemLighting();
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
             int k = 0;
-            Iterator iterator = par1List.iterator();
+            Iterator<String> iterator = par1List.iterator();
 
             while (iterator.hasNext()) {
-                String s = (String)iterator.next();
+                String s = iterator.next();
                 int l = font.getStringWidth(s);
 
                 if (l > k) {
@@ -60,7 +60,7 @@ public class GuiBase extends GuiScreen {
             this.drawGradientRect(i1 - 3, j1 + k1 + 2, i1 + k + 3, j1 + k1 + 3, j2, j2);
 
             for (int k2 = 0; k2 < par1List.size(); ++k2) {
-                String s1 = (String)par1List.get(k2);
+                String s1 = par1List.get(k2);
                 font.drawStringWithShadow(s1, i1, j1, -1);
 
                 if (k2 == 0) {

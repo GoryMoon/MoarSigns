@@ -28,10 +28,10 @@ public class GuiHandler implements IGuiHandler {
             public ItemStack decrStackSize(int i, int j) {
                 ItemStack itemstack = getStackInSlot(i);
 
-                if(itemstack != null) {
-                    if(itemstack.stackSize <= j) {
+                if (itemstack != null) {
+                    if (itemstack.stackSize <= j) {
                         setInventorySlotContents(i, null);
-                    }else{
+                    } else {
                         itemstack = itemstack.splitStack(j);
                         onInventoryChanged();
                     }
@@ -53,7 +53,7 @@ public class GuiHandler implements IGuiHandler {
             public void setInventorySlotContents(int i, ItemStack itemstack) {
                 stack = itemstack;
 
-                if(itemstack != null && itemstack.stackSize > getInventoryStackLimit()) {
+                if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()) {
                     itemstack.stackSize = getInventoryStackLimit();
                 }
 

@@ -4,7 +4,6 @@ import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.block.Block;
 import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -23,7 +22,7 @@ public class EntityDiggingFXMoarSigns extends EntityDiggingFX {
             if (item != null) {
                 setParticleIcon(item.getIcon(new ItemStack(item, 0, Mmeta), 0));
             } else {
-                setParticleIcon(sign.isMetal ? Block.blockIron.getIcon(side, meta): Block.planks.getIcon(side, meta));
+                setParticleIcon(sign.isMetal ? Block.blockIron.getIcon(side, meta) : Block.planks.getIcon(side, meta));
             }
         }
     }

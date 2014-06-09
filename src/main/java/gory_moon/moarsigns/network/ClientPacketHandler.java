@@ -23,10 +23,29 @@ import java.io.IOException;
 
 public class ClientPacketHandler implements IPacketHandler {
 
+    public static void sendSignUpdate(TileEntityMoarSign tileEntity) {
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        DataOutputStream dataStream = new DataOutputStream(byteStream);
+        try {
+
+            dataStream.writeByte((byte) PacketIDs.SIGN_TEXT_PACKET.getID());
+
+            dataStream.writeInt(tileEntity.fontSize);
+            dataStream.writeInt(tileEntity.textOffset);
+            Packet130UpdateSign packet = new Packet130UpdateSign(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.signText);
+            packet.writePacketData(dataStream);
+
+            PacketDispatcher.sendPacketToServer(PacketDispatcher.getPacket(ModInfo.CHANNEL_S, byteStream.toByteArray()));
+
+        } catch (IOException e) {
+            System.err.append("[MoarSigns]- Failed to send sign update packet");
+        }
+    }
+
     @Override
     public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
         ByteArrayDataInput reader = ByteStreams.newDataInput(packet.data);
-        EntityPlayer entityPlayer = (EntityPlayer)player;
+        EntityPlayer entityPlayer = (EntityPlayer) player;
 
         SignInfoPacket infoPacket = new SignInfoPacket();
 
@@ -53,27 +72,6 @@ public class ClientPacketHandler implements IPacketHandler {
 
     }
 
-
-
-    public static void sendSignUpdate(TileEntityMoarSign tileEntity) {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        DataOutputStream dataStream = new DataOutputStream(byteStream);
-        try {
-
-            dataStream.writeByte((byte) PacketIDs.SIGN_TEXT_PACKET.getID());
-
-            dataStream.writeInt(tileEntity.fontSize);
-            dataStream.writeInt(tileEntity.textOffset);
-            Packet130UpdateSign packet = new Packet130UpdateSign(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.signText);
-            packet.writePacketData(dataStream);
-
-            PacketDispatcher.sendPacketToServer(PacketDispatcher.getPacket(ModInfo.CHANNEL_S, byteStream.toByteArray()));
-
-        } catch (IOException e) {
-            System.err.append("[MoarSigns]- Failed to send sign update packet");
-        }
-    }
-
     public void handleUpdateSign(Packet130UpdateSign packet, SignInfoPacket infoPacket) {
         if (Minecraft.getMinecraft().theWorld.blockExists(packet.xPosition, packet.yPosition, packet.zPosition)) {
             TileEntity tileentity = Minecraft.getMinecraft().theWorld.getBlockTileEntity(packet.xPosition, packet.yPosition, packet.zPosition);
@@ -98,7 +96,7 @@ public class ClientPacketHandler implements IPacketHandler {
     }
 
     private void handleClientGuiPacket(Packet133TileEditorOpen open, EntityPlayer entityPlayer, SignInfoPacket infoPacket) {
-        int x  = open.field_142035_b, y = open.field_142036_c, z = open.field_142034_d;
+        int x = open.field_142035_b, y = open.field_142036_c, z = open.field_142034_d;
 
         TileEntity te = entityPlayer.worldObj.getBlockTileEntity(x, y, z);
         TileEntityMoarSign moarSign = null;

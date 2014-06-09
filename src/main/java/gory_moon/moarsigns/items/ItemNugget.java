@@ -36,7 +36,7 @@ public class ItemNugget extends Item {
 
     @Override
     public Icon getIconFromDamage(int dmg) {
-        return dmg >= 0 && dmg < nuggets.length ? icons[dmg]: null;
+        return dmg >= 0 && dmg < nuggets.length ? icons[dmg] : null;
     }
 
     @Override

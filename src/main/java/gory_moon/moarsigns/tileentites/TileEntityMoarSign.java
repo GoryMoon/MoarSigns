@@ -15,24 +15,20 @@ public class TileEntityMoarSign extends TileEntitySign {
     //public String[] signText = new String[] {"", "", "", ""};
 
     public int lineBeingEdited = -1;
-    private boolean isEditable = true;
     public boolean isMetal = false;
     public int materialId;
     public int materialMeta;
     public String texture_name;
     public int fontSize = 0;
     public int textOffset = 0;
-
+    public int activeMaterialIndex;
+    private boolean isEditable = true;
     private int rows = 4;
     private int maxLength = 15;
-
     private EntityPlayer playerEditing;
     private ResourceLocation resourceLocation;
-
     private boolean textureReq = false;
-    public int activeMaterialIndex;
     private int oldFontSize;
-
 
 
     @Override
@@ -41,14 +37,14 @@ public class TileEntityMoarSign extends TileEntitySign {
         if (worldObj.isRemote) {
 
             if (fontSize != oldFontSize) {
-                rows = fontSize > 16 ? 1: fontSize > 6 ? 2: fontSize > 1 ? 3 : 4;
-                maxLength = fontSize > 17 ? 5: fontSize > 13 ? 6: fontSize > 10 ? 7: fontSize > 7 ? 8: fontSize > 5 ? 9: fontSize > 4 ? 11: fontSize > 1 ? 12: fontSize > 0 ? 13: 15;
+                rows = fontSize > 16 ? 1 : fontSize > 6 ? 2 : fontSize > 1 ? 3 : 4;
+                maxLength = fontSize > 17 ? 5 : fontSize > 13 ? 6 : fontSize > 10 ? 7 : fontSize > 7 ? 8 : fontSize > 5 ? 9 : fontSize > 4 ? 11 : fontSize > 1 ? 12 : fontSize > 0 ? 13 : 15;
                 oldFontSize = fontSize;
             }
             if (!textureReq) {
                 textureReq = true;
-                int id = worldObj.getBlockId(xCoord, yCoord ,zCoord);
-                worldObj.addBlockEvent(xCoord, yCoord, zCoord, id,  0, 0);
+                int id = worldObj.getBlockId(xCoord, yCoord, zCoord);
+                worldObj.addBlockEvent(xCoord, yCoord, zCoord, id, 0, 0);
             }
         }
     }
@@ -72,8 +68,8 @@ public class TileEntityMoarSign extends TileEntitySign {
         super.readFromNBT(compound);
 
         fontSize = compound.getInteger("fontSize");
-        rows = fontSize > 16 ? 1: fontSize > 6 ? 2: fontSize > 1 ? 3 : 4;
-        maxLength = fontSize > 17 ? 5: fontSize > 13 ? 6: fontSize > 10 ? 7: fontSize > 7 ? 8: fontSize > 5 ? 9: fontSize > 4 ? 11: fontSize > 1 ? 12: fontSize > 0 ? 13: 15;
+        rows = fontSize > 16 ? 1 : fontSize > 6 ? 2 : fontSize > 1 ? 3 : 4;
+        maxLength = fontSize > 17 ? 5 : fontSize > 13 ? 6 : fontSize > 10 ? 7 : fontSize > 7 ? 8 : fontSize > 5 ? 9 : fontSize > 4 ? 11 : fontSize > 1 ? 12 : fontSize > 0 ? 13 : 15;
 
         for (int i = 0; i < 4; ++i) {
             signText[i] = compound.getString("Text" + (i + 1));
@@ -99,8 +95,7 @@ public class TileEntityMoarSign extends TileEntitySign {
         return ServerPacketHandler.getTextureNamePacket(this);
     }
 
-    public boolean isEditable()
-    {
+    public boolean isEditable() {
         return this.isEditable;
     }
 

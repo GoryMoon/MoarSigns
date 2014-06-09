@@ -31,21 +31,17 @@ public class GuiMoarSign extends GuiBase {
     private int size = 0;
 
     private int SIZE_W = 50;
-    private int SIZE_H = 20;
-
-    private int SIZE_X = width / 2 + 65;
-    private int SIZE_Y = 105 - SIZE_H;
     private int SIZE_X2 = width / 2 + 65 + SIZE_W;
+    private int OFFSET_X2 = width / 2 + 130 + SIZE_W;
+    private int SIZE_H = 20;
+    private int SIZE_Y = 105 - SIZE_H;
     private int SIZE_Y2 = 85 + SIZE_H;
-
+    private int OFFSET_Y = 105 - SIZE_H;
+    private int OFFSET_Y2 = 85 + SIZE_H;
+    private int SIZE_X = width / 2 + 65;
     private int OFFSET_W = 50;
     private int OFFSET_H = 20;
-
     private int OFFSET_X = width / 2 + 130;
-    private int OFFSET_Y = 105 - SIZE_H;
-    private int OFFSET_X2 = width / 2 + 130 + SIZE_W;
-    private int OFFSET_Y2 = 85 + SIZE_H;
-
 
 
     public GuiMoarSign(TileEntityMoarSign te) {
@@ -88,13 +84,13 @@ public class GuiMoarSign extends GuiBase {
 
     private void updateSize() {
         size = entitySign.fontSize;
-        rows = size > 15 ? 1: (size > 5 ? 2: (size > 1 ? 3 : 4));
-        maxLength = size > 17 ? 5: (size > 13 ? 6: (size > 10 ? 7: (size > 7 ? 8: (size > 4 ? 9: (size > 3 ? 11: (size > 1 ? 12: (size > 0 ? 13: 15)))))));
+        rows = size > 15 ? 1 : (size > 5 ? 2 : (size > 1 ? 3 : 4));
+        maxLength = size > 17 ? 5 : (size > 13 ? 6 : (size > 10 ? 7 : (size > 7 ? 8 : (size > 4 ? 9 : (size > 3 ? 11 : (size > 1 ? 12 : (size > 0 ? 13 : 15)))))));
 
         row = Info.textPostion[size];
         minOffset = row[0];
 
-        if(row.length > 1 && entitySign.textOffset > minOffset) {
+        if (row.length > 1 && entitySign.textOffset > minOffset) {
             for (int i = 0; i < row.length; i++) {
                 if (entitySign.textOffset < row[i]) {
                     rows = i;
@@ -103,7 +99,7 @@ public class GuiMoarSign extends GuiBase {
             }
         } else {
             rows = 1;
-            entitySign.textOffset = entitySign.textOffset < minOffset ? minOffset: entitySign.textOffset;
+            entitySign.textOffset = entitySign.textOffset < minOffset ? minOffset : entitySign.textOffset;
         }
 
     }
@@ -121,29 +117,29 @@ public class GuiMoarSign extends GuiBase {
                 mc.thePlayer.closeScreen();
             }
             if (guiButton.id == 1) {
-                entitySign.fontSize = isShiftKeyDown() ? entitySign.fontSize + 10: entitySign.fontSize + 1;
-                entitySign.fontSize = entitySign.fontSize + 1 > 20 ? 20: entitySign.fontSize;
+                entitySign.fontSize = isShiftKeyDown() ? entitySign.fontSize + 10 : entitySign.fontSize + 1;
+                entitySign.fontSize = entitySign.fontSize + 1 > 20 ? 20 : entitySign.fontSize;
                 updateSize();
 
-                if (editLine > rows-1) {
-                    editLine = rows-1;
+                if (editLine > rows - 1) {
+                    editLine = rows - 1;
                 }
 
             }
             if (guiButton.id == 2) {
-                entitySign.fontSize = isShiftKeyDown() ? entitySign.fontSize - 10: entitySign.fontSize - 1;
-                entitySign.fontSize = entitySign.fontSize - 1 < 0 ? 0: entitySign.fontSize;
+                entitySign.fontSize = isShiftKeyDown() ? entitySign.fontSize - 10 : entitySign.fontSize - 1;
+                entitySign.fontSize = entitySign.fontSize - 1 < 0 ? 0 : entitySign.fontSize;
                 updateSize();
             }
 
             if (guiButton.id == 3) {
-                entitySign.textOffset = isShiftKeyDown() ? entitySign.textOffset + 10: entitySign.textOffset + 1;
-                entitySign.textOffset = entitySign.textOffset + 1 > 0 ? 0: entitySign.textOffset;
+                entitySign.textOffset = isShiftKeyDown() ? entitySign.textOffset + 10 : entitySign.textOffset + 1;
+                entitySign.textOffset = entitySign.textOffset + 1 > 0 ? 0 : entitySign.textOffset;
                 updateSize();
             }
             if (guiButton.id == 4) {
-                entitySign.textOffset = isShiftKeyDown() ? entitySign.textOffset - 10: entitySign.textOffset - 1;
-                entitySign.textOffset = entitySign.textOffset - 1 < minOffset ? minOffset: entitySign.textOffset;
+                entitySign.textOffset = isShiftKeyDown() ? entitySign.textOffset - 10 : entitySign.textOffset - 1;
+                entitySign.textOffset = entitySign.textOffset - 1 < minOffset ? minOffset : entitySign.textOffset;
                 updateSize();
             }
         }
@@ -154,11 +150,11 @@ public class GuiMoarSign extends GuiBase {
 
 
         if (key == 200) {
-            editLine = rows > 1 ? (editLine - 1 < 0 ? rows - 1: editLine - 1): 0;
+            editLine = rows > 1 ? (editLine - 1 < 0 ? rows - 1 : editLine - 1) : 0;
         }
 
         if (key == 208 || key == 28 || key == 156) {
-            editLine = rows > 1 ? (editLine + 1 > rows - 1 ? 0: editLine + 1) : 0;
+            editLine = rows > 1 ? (editLine + 1 > rows - 1 ? 0 : editLine + 1) : 0;
         }
 
         updateSize();
@@ -174,7 +170,7 @@ public class GuiMoarSign extends GuiBase {
             entitySign.signText[editLine] = entitySign.signText[editLine] + typedChar;
         }
 
-        if (key == 1)  {
+        if (key == 1) {
             mc.thePlayer.closeScreen();
         }
     }
@@ -189,7 +185,6 @@ public class GuiMoarSign extends GuiBase {
         GL11.glColor4f(1, 1, 1, 1);
 
 
-
         if (SIZE_X - 1 <= x && x <= SIZE_X + SIZE_W && SIZE_Y - 1 <= y && y <= SIZE_Y + SIZE_H) {
             drawRect(SIZE_X - 1, SIZE_Y - 1, SIZE_X2 + 1, SIZE_Y2 + 1, -11250336);
         } else {
@@ -202,7 +197,7 @@ public class GuiMoarSign extends GuiBase {
         if (OFFSET_X - 1 <= x && x <= OFFSET_X + OFFSET_W && OFFSET_Y - 1 <= y && y <= OFFSET_Y + OFFSET_H) {
             drawRect(OFFSET_X - 1, OFFSET_Y - 1, OFFSET_X2 + 1, OFFSET_Y2 + 1, -11250336);
         } else {
-            drawRect(OFFSET_X - 1, OFFSET_Y - 1,OFFSET_X2 + 1, OFFSET_Y2 + 1, -6250336);
+            drawRect(OFFSET_X - 1, OFFSET_Y - 1, OFFSET_X2 + 1, OFFSET_Y2 + 1, -6250336);
         }
 
         drawRect(OFFSET_X, OFFSET_Y, OFFSET_X2, OFFSET_Y2, -16777216);
@@ -216,14 +211,14 @@ public class GuiMoarSign extends GuiBase {
         GL11.glColor4f(1, 1, 1, 1);
 
         GL11.glPushMatrix();
-        GL11.glTranslatef((float)(width / 2), 0.0F, 50.0F);
+        GL11.glTranslatef((float) (width / 2), 0.0F, 50.0F);
         float scale = 93.75F;
         GL11.glScalef(-scale, -scale, -scale);
         GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
         Block block = entitySign.getBlockType();
 
         if (block == Blocks.signStandingWood || block == Blocks.signStandingMetal) {
-            float rotation = (float)(entitySign.getBlockMetadata() * 360) / 16.0F;
+            float rotation = (float) (entitySign.getBlockMetadata() * 360) / 16.0F;
             GL11.glRotatef(rotation, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(0.0F, -1.0625F, 0.0F);
         } else {

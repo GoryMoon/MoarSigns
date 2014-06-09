@@ -21,7 +21,6 @@ public class Blocks {
         signWallWood = new BlockMoarSign(Info.SIGN_WALL_WOOD_ID, Material.wood, false).setStepSound(Block.soundWoodFootstep).setHardness(1.0F).setResistance(5.0F);
 
 
-
         signStandingMetal = new BlockMoarSign(Info.SIGN_STAND_METAL_ID, Material.iron, true).setStepSound(Block.soundMetalFootstep).setHardness(2.0F).setResistance(10.0F);
         signWallMetal = new BlockMoarSign(Info.SIGN_WALL_METAL_ID, Material.iron, false).setStepSound(Block.soundMetalFootstep).setHardness(2.0F).setResistance(10.0F);
 

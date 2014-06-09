@@ -14,6 +14,8 @@ import java.util.List;
 
 public class GuiDebug extends GuiContainer {
 
+    private static final ResourceLocation texture_item = new ResourceLocation("moarsigns", "textures/gui/debug_item.png");
+    private static final ResourceLocation texture_world = new ResourceLocation("moarsigns", "textures/gui/debug_block.png");
     private boolean blockInWorld;
     private World world;
     private int x;
@@ -33,7 +35,7 @@ public class GuiDebug extends GuiContainer {
         blockInWorld = ID == 0;
 
         if (blockInWorld) {
-            block = Block.blocksList[world.getBlockId(x,y,z)];
+            block = Block.blocksList[world.getBlockId(x, y, z)];
             infoArea = new GuiRectangle(8, 10, 160, 20);
         } else {
             infoArea = new GuiRectangle(31, 10, 137, 19);
@@ -43,14 +45,11 @@ public class GuiDebug extends GuiContainer {
         ySize = 116;
     }
 
-    private static final ResourceLocation texture_item = new ResourceLocation("moarsigns", "textures/gui/debug_item.png");
-    private static final ResourceLocation texture_world = new ResourceLocation("moarsigns", "textures/gui/debug_block.png");
-
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
         GL11.glColor4f(1, 1, 1, 1);
 
-        Minecraft.getMinecraft().getTextureManager().bindTexture(blockInWorld ? texture_world: texture_item);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(blockInWorld ? texture_world : texture_item);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
     }
@@ -65,7 +64,7 @@ public class GuiDebug extends GuiContainer {
         if (blockInWorld) {
             if (block != null) {
                 Un = block.getUnlocalizedName();
-                meta = world.getBlockMetadata(this.x,y,z);
+                meta = world.getBlockMetadata(this.x, y, z);
                 x = 10;
                 y1 = 12;
                 y2 = 20;

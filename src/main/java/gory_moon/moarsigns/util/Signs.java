@@ -1,12 +1,9 @@
 package gory_moon.moarsigns.util;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class Signs implements Serializable{
-
-    public Signs(String signName) {
-        this.signName = signName;
-    }
+public class Signs implements Serializable {
 
     public String signName;
     public String itemName;
@@ -14,6 +11,10 @@ public class Signs implements Serializable{
     public Material[] material;
     public boolean isMetal;
     public int activeMaterialIndex;
+
+    public Signs(String signName) {
+        this.signName = signName;
+    }
 
     @Override
     public String toString() {

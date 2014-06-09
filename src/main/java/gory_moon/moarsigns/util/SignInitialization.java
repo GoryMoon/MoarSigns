@@ -13,7 +13,7 @@ public class SignInitialization {
 
         // Vanilla
         ItemStack vanillaStack = null;
-        for (ItemStack planks: loadedPlanks) {
+        for (ItemStack planks : loadedPlanks) {
             if (planks.getUnlocalizedName().equals("tile.wood.oak")) {
                 vanillaStack = planks.copy();
                 break;
@@ -30,7 +30,7 @@ public class SignInitialization {
         //Modded
         if (Loader.isModLoaded("Natura")) {
             ItemStack stack = null;
-            for (ItemStack planks: loadedPlanks) {
+            for (ItemStack planks : loadedPlanks) {
                 if (planks.getUnlocalizedName().equals("eucalyptusNPlanks")) {
                     stack = planks.copy();
                     break;
@@ -49,9 +49,13 @@ public class SignInitialization {
             ItemStack stack1 = null;
             ItemStack stack2 = null;
 
-            for (ItemStack planks: loadedPlanks) {
-                if (stack1 == null && planks.getUnlocalizedName().equals("tile.for.planks.32767")) { stack1 = planks.copy(); }
-                if (stack2 == null && planks.getUnlocalizedName().equals("tile.for.planks2.32767")) { stack2 = planks.copy(); }
+            for (ItemStack planks : loadedPlanks) {
+                if (stack1 == null && planks.getUnlocalizedName().equals("tile.for.planks.32767")) {
+                    stack1 = planks.copy();
+                }
+                if (stack2 == null && planks.getUnlocalizedName().equals("tile.for.planks2.32767")) {
+                    stack2 = planks.copy();
+                }
                 if (stack1 != null && stack2 != null) break;
             }
 
@@ -73,7 +77,7 @@ public class SignInitialization {
         if (Loader.isModLoaded("BiomesOPlenty")) {
 
             ItemStack stack = null;
-            for (ItemStack planks: loadedPlanks) {
+            for (ItemStack planks : loadedPlanks) {
                 if (planks.getUnlocalizedName().equals("tile.bop.planks.acaciaPlank")) {
                     stack = planks.copy();
                     break;
@@ -102,7 +106,7 @@ public class SignInitialization {
         materials.put(emerald.getUnlocalizedName(), emerald);
 
         //Modded
-        for (ItemStack stack: ingots) {
+        for (ItemStack stack : ingots) {
             materials.put(stack.getUnlocalizedName(), stack);
         }
     }

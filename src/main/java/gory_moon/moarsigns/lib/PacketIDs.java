@@ -6,17 +6,16 @@ public enum PacketIDs {
     OPEN_GUI_PACKET,
     NONE;
 
-
-    public int getID() {
-        return ordinal();
-    }
-
     public static PacketIDs getID(byte b) {
-        for (PacketIDs id: values()) {
+        for (PacketIDs id : values()) {
             if (id.getID() == b) {
                 return id;
             }
         }
         return NONE;
+    }
+
+    public int getID() {
+        return ordinal();
     }
 }
