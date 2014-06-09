@@ -5,7 +5,8 @@ import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.lib.Info;
-import gory_moon.moarsigns.network.PacketOpenMoarSignsGui;
+import gory_moon.moarsigns.network.PacketHandler;
+import gory_moon.moarsigns.network.message.MessageSignMainInfo;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -32,6 +33,7 @@ public class ItemMoarSign extends Item {
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
+        if (info == null) return "dummy";
         return super.getUnlocalizedName() + ".sign." + (info.material.path.equals("")? "": info.material.path + ".") + getTextureFromNBT(stack.getTagCompound());
     }
 
@@ -152,12 +154,11 @@ public class ItemMoarSign extends Item {
 
                     tileEntity.setResourceLocation(texture);
                     tileEntity.isMetal = info.isMetal;
-                    tileEntity.materialName = info.material.materialName;
-                    tileEntity.materialPath = info.material.path;
                     tileEntity.func_145912_a(player);
 
-                    MoarSigns.packetPipeline.sendTo(new PacketOpenMoarSignsGui(texture, tileEntity.isMetal, tileEntity.materialName,
-                            tileEntity.materialPath, tileEntity.fontSize, tileEntity.textOffset, new String[]{"", "", "", ""}, x, y, z), (EntityPlayerMP) player);
+                    PacketHandler.INSTANCE.sendTo(new MessageSignMainInfo(tileEntity, true), (EntityPlayerMP) player);
+                    //MoarSigns.packetPipeline.sendTo(new PacketOpenMoarSignsGui(texture, tileEntity.isMetal,
+                    //        tileEntity.fontSize, tileEntity.textOffset, new String[]{"", "", "", ""}, x, y, z), (EntityPlayerMP) player);
                 }
 
                 return true;

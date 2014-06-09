@@ -2,11 +2,12 @@ package gory_moon.moarsigns.client.interfaces;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.lib.Info;
-import gory_moon.moarsigns.network.PacketSignUpdate;
+import gory_moon.moarsigns.network.PacketHandler;
+import gory_moon.moarsigns.network.message.MessageSignUpdate;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
+import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -83,14 +84,14 @@ public class GuiMoarSign extends GuiBase {
                 entitySign.signText[i] = "";
             }
         }
-
-        MoarSigns.packetPipeline.sendToServer(new PacketSignUpdate(entitySign.xCoord, entitySign.yCoord, entitySign.zCoord, entitySign.signText, entitySign.fontSize, entitySign.textOffset));
+        PacketHandler.INSTANCE.sendToServer(new MessageSignUpdate(entitySign));
+        //MoarSigns.packetPipeline.sendToServer(new PacketSignUpdate(entitySign.xCoord, entitySign.yCoord, entitySign.zCoord, entitySign.signText, entitySign.fontSize, entitySign.textOffset));
     }
 
     private void updateSize() {
         size = entitySign.fontSize;
-        rows = size > 15 ? 1: (size > 5 ? 2: (size > 1 ? 3 : 4));
-        maxLength = size > 17 ? 5: (size > 13 ? 6: (size > 10 ? 7: (size > 7 ? 8: (size > 4 ? 9: (size > 3 ? 11: (size > 1 ? 12: (size > 0 ? 13: 15)))))));
+        rows = Utils.getRows(size);
+        maxLength = Utils.getMaxLength(size);
 
         row = Info.textPostion[size];
         minOffset = row[0];

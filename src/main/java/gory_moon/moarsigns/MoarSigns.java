@@ -16,7 +16,7 @@ import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
 import gory_moon.moarsigns.items.Items;
 import gory_moon.moarsigns.lib.ModInfo;
-import gory_moon.moarsigns.network.PacketPipeline;
+import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.proxy.CommonProxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -40,8 +40,6 @@ public class MoarSigns {
     public static MoarSigns instance;
 
     public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
-    //TODO remake the packet system
-    public static final PacketPipeline packetPipeline = new PacketPipeline();
     public static Logger logger;
 
     @SidedProxy(clientSide = ModInfo.CLIENTPROXY, serverSide = ModInfo.COMMONPROXY)
@@ -55,6 +53,8 @@ public class MoarSigns {
     public void preInit(FMLPreInitializationEvent event) {
         new ConfigHandler(event.getSuggestedConfigurationFile());
 
+        PacketHandler.init();
+
         logger = LogManager.getLogger("MoarSigns");
 
         Blocks.init();
@@ -64,7 +64,6 @@ public class MoarSigns {
     @EventHandler
     public void load(FMLInitializationEvent event) {
         proxy.initRenderers();
-        packetPipeline.initalise();
 
         setupSigns();
     }
@@ -74,7 +73,6 @@ public class MoarSigns {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
         Items.registerRecipes();
-        packetPipeline.postInitialise();
     }
 
     public ResourceLocation getResourceLocation(String s, boolean isMetal) {

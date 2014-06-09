@@ -3,7 +3,9 @@ package gory_moon.moarsigns.tileentites;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
-import gory_moon.moarsigns.network.PacketSignMainInfo;
+import gory_moon.moarsigns.network.PacketHandler;
+import gory_moon.moarsigns.network.message.MessageSignMainInfo;
+import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,8 +20,6 @@ public class TileEntityMoarSign extends TileEntitySign {
     public int lineBeingEdited = -1;
     private boolean isEditable = true;
     public boolean isMetal = false;
-    public String materialName;
-    public String materialPath;
     public String texture_name;
     public int fontSize = 0;
     public int textOffset = 0;
@@ -60,8 +60,6 @@ public class TileEntityMoarSign extends TileEntitySign {
             compound.setString("Text" + (i + 1), signText[i]);
         }
         compound.setBoolean("isMetal", isMetal);
-        compound.setString("materialName", materialName);
-        compound.setString("materialPath", materialPath);
         compound.setString("texture", texture_name);
         compound.setInteger("fontSize", fontSize);
         compound.setInteger("textOffset", textOffset);
@@ -70,10 +68,6 @@ public class TileEntityMoarSign extends TileEntitySign {
     public void readFromNBT(NBTTagCompound compound) {
         isEditable = false;
         super.readFromNBT(compound);
-
-        fontSize = compound.getInteger("fontSize");
-        rows = fontSize > 16 ? 1: fontSize > 6 ? 2: fontSize > 1 ? 3 : 4;
-        maxLength = fontSize > 17 ? 5: fontSize > 13 ? 6: fontSize > 10 ? 7: fontSize > 7 ? 8: fontSize > 5 ? 9: fontSize > 4 ? 11: fontSize > 1 ? 12: fontSize > 0 ? 13: 15;
 
         for (int i = 0; i < 4; ++i) {
             signText[i] = compound.getString("Text" + (i + 1));
@@ -87,22 +81,18 @@ public class TileEntityMoarSign extends TileEntitySign {
             }
         }
         isMetal = compound.getBoolean("isMetal");
-        if (compound.hasKey("nbtVersion")) {
-            materialName = compound.getString("materialName");
-            materialPath = compound.getString("materialPath");
-        } else {
-            materialName = "";
-            materialPath = "";
-        }
         texture_name = compound.getString("texture");
+        fontSize = compound.getInteger("fontSize");
+        rows = Utils.getRows(fontSize);
+        maxLength = Utils.getMaxLength(fontSize);
+
         textOffset = compound.getInteger("textOffset");
 
     }
 
     @Override
     public Packet getDescriptionPacket() {
-        MoarSigns.packetPipeline.sendToAll(new PacketSignMainInfo(texture_name, isMetal, materialName, materialPath, fontSize, textOffset, signText, xCoord, yCoord, zCoord));
-        return null;
+        return PacketHandler.INSTANCE.getPacketFrom(new MessageSignMainInfo(this, false));
     }
 
     public boolean isEditable()
@@ -130,10 +120,6 @@ public class TileEntityMoarSign extends TileEntitySign {
             texture_name = texture;
             resourceLocation = MoarSigns.instance.getResourceLocation(texture, isMetal);
         }
-    }
-
-    public String getTexture_name() {
-        return texture_name;
     }
 
     @Override

@@ -226,7 +226,7 @@ public class BlockMoarSign extends BlockContainer {
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         TileEntityMoarSign tileEntity = (TileEntityMoarSign)world.getTileEntity(x, y, z);
-        String s = tileEntity.getTexture_name();
+        String s = tileEntity.texture_name;
         s = s != null ? s: "null";
         return Items.sign.createMoarItemStack(s, tileEntity.isMetal);
     }
@@ -242,7 +242,7 @@ public class BlockMoarSign extends BlockContainer {
 
         ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
         TileEntityMoarSign tileEntity = (TileEntityMoarSign)world.getTileEntity(x, y, z);
-        if (tileEntity != null) ret.add(Items.sign.createMoarItemStack(tileEntity.getTexture_name(), tileEntity.isMetal));
+        if (tileEntity != null) ret.add(Items.sign.createMoarItemStack(tileEntity.texture_name, tileEntity.isMetal));
         return ret;
     }
 

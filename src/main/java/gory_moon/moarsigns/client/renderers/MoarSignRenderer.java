@@ -4,6 +4,7 @@ import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.ModelMoarSign;
 import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
+import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -71,8 +72,8 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
         GL11.glNormal3f(0.0F, 0.0F, -1.0F * f2);
         GL11.glDepthMask(false);
 
-        int rows = size > 15 ? 1: (size > 5 ? 2: (size > 1 ? 3 : 4));
-        int maxLength = size > 17 ? 5: (size > 13 ? 6: (size > 10 ? 7: (size > 7 ? 8: (size > 4 ? 9: (size > 3 ? 11: (size > 1 ? 12: (size > 0 ? 13: 15)))))));
+        int rows = Utils.getRows((int) size);
+        int maxLength = Utils.getMaxLength((int) size);
         int offset = tileentity.textOffset;
 
         int[] row = Info.textPostion[((int) size)];
