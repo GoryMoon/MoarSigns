@@ -81,3 +81,17 @@ item.moarsign.sign.natura.sakura_sign.name=Sakura Sign
 item.moarsign.sign.natura.silverbell_sign.name=Silverbell Sign
 item.moarsign.sign.natura.tiger_sign.name=Tigerwood Sign
 item.moarsign.sign.natura.willow_sign.name=Willow Sign
+
+#IndustrailCraft 2
+item.moarsign.sign.ic2.copper_sign=Copper Sign
+item.moarsign.sign.ic2.tin_sign=Tin Sign
+item.moarsign.sign.ic2.bronze_sign=Bronze Sign
+
+#Tinkers Construct
+item.moarsign.sign.tconstruct.copper_sign=Copper Sign
+item.moarsign.sign.tconstruct.tin_sign=Tin Sign
+item.moarsign.sign.tconstruct.bronze_sign=Bronze Sign
+item.moarsign.sign.tconstruct.steel_sign=Steel Sign
+
+#Factorization
+item.moarsign.sign.factorization.silver_sign=Silver Sign

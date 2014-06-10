@@ -4,6 +4,7 @@ import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.items.Items;
+import gory_moon.moarsigns.lib.ModInfo;
 import net.minecraft.item.ItemStack;
 
 public class NEIMoarSignsConfig implements IConfigureNEI {
@@ -19,11 +20,11 @@ public class NEIMoarSignsConfig implements IConfigureNEI {
 
     @Override
     public String getName() {
-        return "MoarSigns NEI Config";
+        return "MoarSigns";
     }
 
     @Override
     public String getVersion() {
-        return "1.0";
+        return ModInfo.VERSION;
     }
 }
