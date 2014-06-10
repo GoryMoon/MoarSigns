@@ -1,13 +1,11 @@
 package gory_moon.moarsigns;
 
 import cpw.mods.fml.common.Loader;
-import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.SignRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SignInitialization {
 
@@ -110,7 +108,7 @@ public class SignInitialization {
             }
 
             if (stack != null) {
-                SignRegistry.register("sacredoak_sign", null, "sacredoak", "bop/", false, new ItemStack(stack.getItem(), 1, 0));
+                SignRegistry.register("sacred_oak_sign", null, "sacred_oak", "bop/", false, new ItemStack(stack.getItem(), 1, 0));
                 SignRegistry.register("cherry_sign", null, "cherry", "bop/", false, new ItemStack(stack.getItem(), 1, 1));
                 SignRegistry.register("dark_sign", null, "dark", "bop/", false, new ItemStack(stack.getItem(), 1, 2));
                 SignRegistry.register("fir_sign", null, "fir", "bop/", false, new ItemStack(stack.getItem(), 1, 3));

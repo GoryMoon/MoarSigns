@@ -13,7 +13,8 @@ public class Info {
     public static final String SIGN_ITEM_KEY = "MoarSignsItem";
     public static final String DEBUG_ITEM_KEY = "DebugItem";
     public static final String NUGGET_ITEM_KEY = "NuggetItems";
-    public static final String[] NUGGET_INGET_UNLOCS = {"item.diamond", "item.ingotIron", "item.emerald", "ic2.itemIngotBronze", "ic2.itemIngotCopper", "ic2.itemIngotTin", "item.factorization:silver_ingot"};
+    public static final String[] NUGGET_INGOT_UNLOCS = {"item.diamond", "item.ingotIron", "item.emerald", "ic2.itemIngotBronze", "ic2.itemIngotCopper", "ic2.itemIngotTin", "item.factorization:silver_ingot"};
+    public static final String[] NUGGET_ORE_DICTIONARY = {"diamondNugget", "nuggetIron", "nuggetEmerald", "nuggetBronze", "nuggetCopper", "nuggetTin", "nuggetSilver"};
 
     public static int[][] textPostion = new int[][] {
             {-36, -26, -16, -6},

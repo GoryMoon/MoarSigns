@@ -102,7 +102,7 @@ public class MoarSigns {
         Collections.sort(SignRegistry.getSignRegistry(), new Comparator<SignInfo>() {
             @Override
             public int compare(SignInfo o1, SignInfo o2) {
-                return (o1.isMetal && !o2.isMetal)? 1:((o1.isMetal) ? 0: -1);
+                return (o1.isMetal && !o2.isMetal)? 1:((o1.isMetal) ? 0: (o2.isMetal ? -1: (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ? 0: (o1.material.path.equals(o2.material.path)? (o1.itemName.compareToIgnoreCase(o2.itemName)):(o1.material.path.compareTo(o2.material.path))))));
             }
         });
 

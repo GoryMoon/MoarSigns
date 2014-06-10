@@ -1,5 +1,8 @@
+#General names
 itemGroup.moarSigns=MoarSigns
 item.moarsign.debug.name=Debug
+
+#Nuggets
 item.moarsign.diamond_nugget.name=Diamond Shard
 item.moarsign.iron_nugget.name=Iron Nugget
 item.moarsign.emerald_nugget.name=Emerald Shard
@@ -15,10 +18,66 @@ item.moarsign.sign.birch_sign.name=Birch Sign
 item.moarsign.sign.jungle_sign.name=Jungle Sign
 item.moarsign.sign.acacia_sign.name=Acacia Sign
 item.moarsign.sign.big_oak_sign.name=Big Oak Sign
+
 item.moarsign.sign.iron_sign.name=Iron Sign
 item.moarsign.sign.gold_sign.name=Gold Sign
 item.moarsign.sign.diamond_sign.name=Diamond Sign
 item.moarsign.sign.emerald_sign.name=Emerald Sign
 
 # Mod Signs
-#item.moarsign.sign."path"."sign".name=
+#Biomes O' Plenty
+item.moarsign.sign.bop.cherry_sign.name=Cherry Sign
+item.moarsign.sign.bop.dark_sign.name=Dark Sign
+item.moarsign.sign.bop.fir_sign.name=Fir Sign
+item.moarsign.sign.bop.hellbark_sign.name=Hellbark Sign
+item.moarsign.sign.bop.holy_sign.name=Loftwood Sign
+item.moarsign.sign.bop.jacaranda_sign.name=Jacaranda Sign
+item.moarsign.sign.bop.magic_sign.name=Magic Sign
+item.moarsign.sign.bop.mahogany_sign.name=Mahogany Sign
+item.moarsign.sign.bop.mangrove_sign.name=Mangrove Sign
+item.moarsign.sign.bop.palm_sign.name=Palm Sign
+item.moarsign.sign.bop.pine_sign.name=Pine Sign
+item.moarsign.sign.bop.redwood_sign.name=Redwood Sign
+item.moarsign.sign.bop.sacred_oak_sign.name=Sacred Oak Sign
+item.moarsign.sign.bop.willow_sign.name=Willow Sign
+
+#Forestry
+item.moarsign.sign.for.acacia_sign.name=Acacia Sign
+item.moarsign.sign.for.balsa_sign.name=Balsa Sign
+item.moarsign.sign.for.baobab_sign.name=Baobab Sign
+item.moarsign.sign.for.cherry_sign.name=Cherry Sign
+item.moarsign.sign.for.chestnut_sign.name=Chestnut Sign
+item.moarsign.sign.for.citrus_sign.name=Citrus Sign
+item.moarsign.sign.for.ebony_sign.name=Ebony Sign
+item.moarsign.sign.for.greenheart_sign.name=Greenheart Sign
+item.moarsign.sign.for.kapok_sign.name=Kapok Sign
+item.moarsign.sign.for.larch_sign.name=Larch Sign
+item.moarsign.sign.for.lime_sign.name=Lime Sign
+item.moarsign.sign.for.mahoe_sign.name=Mahoe Sign
+item.moarsign.sign.for.mahogany_sign.name=Mahogany Sign
+item.moarsign.sign.for.maple_sign.name=Maple Sign
+item.moarsign.sign.for.palm_sign.name=Palm Sign
+item.moarsign.sign.for.papaya_sign.name=Papaya Sign
+item.moarsign.sign.for.pine_sign.name=Pine Sign
+item.moarsign.sign.for.plum_sign.name=Plum Sign
+item.moarsign.sign.for.poplar_sign.name=Poplar Sign
+item.moarsign.sign.for.sequoia_sign.name=Sequoia Sign
+item.moarsign.sign.for.teak_sign.name=Teak Sign
+item.moarsign.sign.for.walnut_sign.name=Walnut Sign
+item.moarsign.sign.for.wenge_sign.name=Wenge Sign
+item.moarsign.sign.for.willow_sign.name=Willow Sign
+
+#Natura
+item.moarsign.sign.natura.bloodwood_sign.name=Bloodwood Sign
+item.moarsign.sign.natura.darkwood_sign.name=Darkwood Sign
+item.moarsign.sign.natura.eucalyptus_sign.name=Eucalyptus Sign
+item.moarsign.sign.natura.fusewood_sign.name=Fusewood Sign
+item.moarsign.sign.natura.ghostwood_sign.name=Ghostwood Sign
+item.moarsign.sign.natura.hopseed_sign.name=Hopseed Sign
+item.moarsign.sign.natura.maple_sign.name=Maple Sign
+item.moarsign.sign.natura.purpleheart_sign.name=Amaranth Sign
+item.moarsign.sign.natura.redwood_sign.name=Redwood Sign
+item.moarsign.sign.natura.sakura_sign.name=Sakura Sign
+item.moarsign.sign.natura.silverbell_sign.name=Silverbell Sign
+item.moarsign.sign.natura.tiger_sign.name=Tigerwood Sign
+item.moarsign.sign.natura.willow_sign.name=Willow Sign
