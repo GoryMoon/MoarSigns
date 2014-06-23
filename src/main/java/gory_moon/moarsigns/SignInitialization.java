@@ -2,6 +2,7 @@ package gory_moon.moarsigns;
 
 import cpw.mods.fml.common.Loader;
 import gory_moon.moarsigns.api.SignRegistry;
+import gory_moon.moarsigns.signproperties.DiamondProperty;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -13,7 +14,7 @@ public class SignInitialization {
 
         // Vanilla
         ItemStack vanillaStack = null;
-        for (ItemStack planks: loadedPlanks) {
+        for (ItemStack planks : loadedPlanks) {
             if (planks.getUnlocalizedName().equals("tile.wood.oak")) {
                 vanillaStack = planks.copy();
                 break;
@@ -33,7 +34,7 @@ public class SignInitialization {
         //Modded
         if (Loader.isModLoaded("Natura")) {
             ItemStack stack = null;
-            for (ItemStack planks: loadedPlanks) {
+            for (ItemStack planks : loadedPlanks) {
                 if (planks.getUnlocalizedName().equals("block.eucalyptus.NPlanks")) {
                     stack = planks.copy();
                     break;
@@ -61,9 +62,13 @@ public class SignInitialization {
             ItemStack stack1 = null;
             ItemStack stack2 = null;
 
-            for (ItemStack planks: loadedPlanks) {
-                if (stack1 == null && planks.getUnlocalizedName().equals("tile.for.planks.32767")) { stack1 = planks.copy(); }
-                if (stack2 == null && planks.getUnlocalizedName().equals("tile.for.planks2.32767")) { stack2 = planks.copy(); }
+            for (ItemStack planks : loadedPlanks) {
+                if (stack1 == null && planks.getUnlocalizedName().equals("tile.for.planks.32767")) {
+                    stack1 = planks.copy();
+                }
+                if (stack2 == null && planks.getUnlocalizedName().equals("tile.for.planks2.32767")) {
+                    stack2 = planks.copy();
+                }
                 if (stack1 != null && stack2 != null) break;
             }
 
@@ -100,7 +105,7 @@ public class SignInitialization {
 
         if (Loader.isModLoaded("BiomesOPlenty")) {
             ItemStack stack = null;
-            for (ItemStack planks: loadedPlanks) {
+            for (ItemStack planks : loadedPlanks) {
                 if (planks.getUnlocalizedName().equals("tile.planks.sacredoakPlank")) {
                     stack = planks.copy();
                     break;
@@ -139,14 +144,14 @@ public class SignInitialization {
 
         SignRegistry.register("iron_sign", null, "iron", "", false, iron).setMetal(true);
         SignRegistry.register("gold_sign", null, "gold", "", true, gold).setMetal(true);
-        SignRegistry.register("diamond_sign", null, "diamond", "", false, diamond).setMetal(true);
+        SignRegistry.register("diamond_sign", new DiamondProperty(), "diamond", "", false, diamond).setMetal(true);
         SignRegistry.register("emerald_sign", null, "emerald", "", false, emerald).setMetal(true);
 
         //Modded
 
         if (Loader.isModLoaded("IC2")) {
             ItemStack stack = null;
-            for (ItemStack stacks: ingots) {
+            for (ItemStack stacks : ingots) {
                 if (stacks.getUnlocalizedName().equals("ic2.itemIngotCopper")) {
                     stack = stacks.copy();
                     break;
@@ -164,7 +169,7 @@ public class SignInitialization {
 
         if (Loader.isModLoaded("TConstruct")) {
             ItemStack stack = null;
-            for (ItemStack stacks: ingots) {
+            for (ItemStack stacks : ingots) {
                 if (stacks.getUnlocalizedName().equals("item.tconstruct.Materials.CopperIngot")) {
                     stack = stacks.copy();
                     break;
@@ -182,7 +187,7 @@ public class SignInitialization {
         if (Loader.isModLoaded("factorization")) {
             ItemStack stack = null;
             ItemStack stack2 = null;
-            for (ItemStack stacks: ingots) {
+            for (ItemStack stacks : ingots) {
                 if (stacks.getUnlocalizedName().equals("item.factorization:silver_ingot")) {
                     stack = stacks.copy();
                 }

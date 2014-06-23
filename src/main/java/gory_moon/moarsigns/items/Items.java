@@ -55,11 +55,12 @@ public class Items {
             }
 
             @Override
-            public void onCraftMatrixChanged(IInventory par1IInventory) {}
+            public void onCraftMatrixChanged(IInventory par1IInventory) {
+            }
         };
         InventoryCrafting crafting = new InventoryCrafting(dummyContainer, 3, 3);
 
-        for (ItemStack stack: list) {
+        for (ItemStack stack : list) {
             MoarSigns.logger.info(stack.getUnlocalizedName());
 
             ItemMoarSign sign = (ItemMoarSign) stack.getItem();
@@ -73,7 +74,7 @@ public class Items {
                 continue;
             }
 
-            for (SignInfo s: signRegistry) {
+            for (SignInfo s : signRegistry) {
                 if ((s.material.path + s.itemName).equals(texture)) {
 
                     ItemStack mat = s.material.material;
@@ -123,21 +124,17 @@ public class Items {
             }
         }
 
-        GameRegistry.addRecipe(new ShapedOreRecipe(generalSign, new Object[] {"###", "###", " X ", '#', "plankWood", 'X', net.minecraft.init.Items.stick}));
+        GameRegistry.addRecipe(new ShapedOreRecipe(generalSign, new Object[]{"###", "###", " X ", '#', "plankWood", 'X', net.minecraft.init.Items.stick}));
     }
 
 
-
-    private static void removeRecipesWithResult(ItemStack resultItem)
-    {
+    private static void removeRecipesWithResult(ItemStack resultItem) {
         ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
 
-        for (int scan = 0; scan < recipes.size(); scan++)
-        {
+        for (int scan = 0; scan < recipes.size(); scan++) {
             IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
             ItemStack recipeResult = tmpRecipe.getRecipeOutput();
-            if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
-            {
+            if (ItemStack.areItemStacksEqual(resultItem, recipeResult)) {
                 MoarSigns.logger.info("Removing Recipe: " + recipes.get(scan) + " -> " + recipeResult);
                 recipes.remove(scan);
             }

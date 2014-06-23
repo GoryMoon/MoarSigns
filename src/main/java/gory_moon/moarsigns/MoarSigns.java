@@ -79,7 +79,7 @@ public class MoarSigns {
         ResourceLocation location = textures.get(s);
 
         if (location == null) {
-            location = new ResourceLocation("moarsigns", "textures/entities/signs/" + (isMetal ? "metal/": "wood/") + s + ".png");
+            location = new ResourceLocation("moarsigns", "textures/entities/signs/" + (isMetal ? "metal/" : "wood/") + s + ".png");
             textures.put(s, location);
         }
 
@@ -102,7 +102,7 @@ public class MoarSigns {
         Collections.sort(SignRegistry.getSignRegistry(), new Comparator<SignInfo>() {
             @Override
             public int compare(SignInfo o1, SignInfo o2) {
-                return (o1.isMetal && !o2.isMetal)? 1:((o1.isMetal) ? 0: (o2.isMetal ? -1: (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ? 0: (o1.material.path.equals(o2.material.path)? (o1.itemName.compareToIgnoreCase(o2.itemName)):(o1.material.path.compareTo(o2.material.path))))));
+                return (o1.isMetal && !o2.isMetal) ? 1 : ((o1.isMetal) ? 0 : (o2.isMetal ? -1 : (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ? 0 : (o1.material.path.equals(o2.material.path) ? (o1.itemName.compareToIgnoreCase(o2.itemName)) : (o1.material.path.compareTo(o2.material.path))))));
             }
         });
 
@@ -113,21 +113,26 @@ public class MoarSigns {
             }
 
             @Override
-            public void onCraftMatrixChanged(IInventory par1IInventory) {}
+            public void onCraftMatrixChanged(IInventory par1IInventory) {
+            }
         };
         InventoryCrafting crafting = new InventoryCrafting(dummyContainer, 3, 3);
 
-        for (Map.Entry<String, Set<MaterialInfo>> materialList: MaterialRegistry.materialRegistry.entrySet()) {
-            for (MaterialInfo material: materialList.getValue()) {
+        for (Map.Entry<String, Set<MaterialInfo>> materialList : MaterialRegistry.materialRegistry.entrySet()) {
+            for (MaterialInfo material : materialList.getValue()) {
                 ItemStack stack = material.material;
 
                 if (!(stack.getItem() instanceof ItemBlock)) {
-                    for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, stack);}
+                    for (int i = 0; i < 9; i++) {
+                        crafting.setInventorySlotContents(i, stack);
+                    }
                     ItemStack stack1 = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
                     if (stack1 != null) {
                         material.material = stack1;
                     }
-                    for (int i = 0; i < 9; i++) {crafting.setInventorySlotContents(i, null);}
+                    for (int i = 0; i < 9; i++) {
+                        crafting.setInventorySlotContents(i, null);
+                    }
                 }
 
             }

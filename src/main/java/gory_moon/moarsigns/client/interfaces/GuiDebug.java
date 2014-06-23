@@ -50,7 +50,7 @@ public class GuiDebug extends GuiContainer {
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
         GL11.glColor4f(1, 1, 1, 1);
 
-        Minecraft.getMinecraft().getTextureManager().bindTexture(blockInWorld ? texture_world: texture_item);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(blockInWorld ? texture_world : texture_item);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
     }
@@ -65,7 +65,7 @@ public class GuiDebug extends GuiContainer {
         if (blockInWorld) {
             if (block != null) {
                 Un = block.getUnlocalizedName();
-                meta = world.getBlockMetadata(this.x,y,z);
+                meta = world.getBlockMetadata(this.x, y, z);
                 x = 10;
                 y1 = 12;
                 y2 = 20;

@@ -30,9 +30,9 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
         float f1 = 0.6666667F;
         float f2;
 
-        if (block == Blocks.signStandingWood || block == Blocks.signStandingMetal)  {
-            GL11.glTranslatef((float)x + 0.5F, (float)y + 0.75F * f1, (float)z + 0.5F);
-            float f3 = (float)(tileentity.getBlockMetadata() * 360) / 16.0F;
+        if (block == Blocks.signStandingWood || block == Blocks.signStandingMetal) {
+            GL11.glTranslatef((float) x + 0.5F, (float) y + 0.75F * f1, (float) z + 0.5F);
+            float f3 = (float) (tileentity.getBlockMetadata() * 360) / 16.0F;
             GL11.glRotatef(-f3, 0.0F, 1.0F, 0.0F);
             this.modelMoarSign.stick.showModel = true;
         } else {
@@ -51,7 +51,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
                 f2 = -90.0F;
             }
 
-            GL11.glTranslatef((float)x + 0.5F, (float)y + 0.75F * f1, (float)z + 0.5F);
+            GL11.glTranslatef((float) x + 0.5F, (float) y + 0.75F * f1, (float) z + 0.5F);
             GL11.glRotatef(-f2, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(0.0F, -0.3125F, -0.4375F);
             this.modelMoarSign.stick.showModel = false;
@@ -64,10 +64,10 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
         modelMoarSign.render();
         GL11.glPopMatrix();
         FontRenderer fontRenderer = func_147498_b();
-        float size = (float)tileentity.fontSize;
+        float size = (float) tileentity.fontSize;
 
         f2 = 0.016666668F * f1 + (size / 1000F);
-        GL11.glTranslatef(size > 0 ? 0.01F: 0.0F, 0.5F * f1 - ((float)0.02 * size), 0.07F * f1);
+        GL11.glTranslatef(size > 0 ? 0.01F : 0.0F, 0.5F * f1 - ((float) 0.02 * size), 0.07F * f1);
         GL11.glScalef(f2, -f2, f2);
         GL11.glNormal3f(0.0F, 0.0F, -1.0F * f2);
         GL11.glDepthMask(false);
@@ -79,7 +79,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
         int[] row = Info.textPostion[((int) size)];
         int lastRow = row[0];
 
-        if(row.length > 1 && offset > lastRow) {
+        if (row.length > 1 && offset > lastRow) {
             for (int i = 0; i < row.length; i++) {
                 if (offset < row[i]) {
                     rows = i;
@@ -88,7 +88,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
             }
         } else {
             rows = 1;
-            offset = tileentity.textOffset < lastRow ? lastRow: tileentity.textOffset;
+            offset = tileentity.textOffset < lastRow ? lastRow : tileentity.textOffset;
         }
 
         for (int j = 0; j < rows; ++j) {
@@ -97,7 +97,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
             if (j == tileentity.lineBeingEdited)
                 s = "> " + s + " <";
 
-            fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, (j * 10 - tileentity.signText.length * 5) - offset - (size > 12 ? 0: size > 0 ? 1: 2), 0);
+            fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, (j * 10 - tileentity.signText.length * 5) - offset - (size > 12 ? 0 : size > 0 ? 1 : 2), 0);
 
         }
 
@@ -108,7 +108,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
 
 
     @Override
-    public void renderTileEntityAt(TileEntity tileentity, double x, double y,	double z, float partialTickTime) {
-        renderTileEntityMoarSignAt((TileEntityMoarSign)tileentity, x, y, z, partialTickTime);
+    public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float partialTickTime) {
+        renderTileEntityMoarSignAt((TileEntityMoarSign) tileentity, x, y, z, partialTickTime);
     }
 }

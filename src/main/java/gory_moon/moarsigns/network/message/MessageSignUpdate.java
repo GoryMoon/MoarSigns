@@ -19,9 +19,10 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
 
     public int fontSize;
     public int offset;
-    public String[] text = new String[] {"", "", "", ""};
+    public String[] text = new String[]{"", "", "", ""};
 
-    public MessageSignUpdate() {}
+    public MessageSignUpdate() {
+    }
 
     public MessageSignUpdate(int x, int y, int z, int fontSize, int offset, String[] text) {
         this.x = x;
@@ -45,7 +46,7 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
         this.fontSize = buf.readInt();
         this.offset = buf.readInt();
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             int textLength = buf.readInt();
             text[i] = new String(buf.readBytes(textLength).array());
         }
@@ -60,7 +61,7 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
         buf.writeInt(fontSize);
         buf.writeInt(offset);
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             buf.writeInt(text[i].length());
             buf.writeBytes(text[i].getBytes());
         }
@@ -75,9 +76,8 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
             TileEntity tileentity = worldserver.getTileEntity(message.x, message.y, message.z);
 
             if (tileentity instanceof TileEntityMoarSign) {
-                TileEntityMoarSign tileentitysign = (TileEntityMoarSign)tileentity;
-                if (!tileentitysign.func_145914_a() || tileentitysign.func_145911_b() != player)
-                {
+                TileEntityMoarSign tileentitysign = (TileEntityMoarSign) tileentity;
+                if (!tileentitysign.func_145914_a() || tileentitysign.func_145911_b() != player) {
                     MoarSigns.logger.warn("Player " + player.getCommandSenderName() + " just tried to change non-editable sign");
                     return null;
                 }

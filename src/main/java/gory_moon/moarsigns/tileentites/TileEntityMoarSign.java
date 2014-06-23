@@ -3,6 +3,8 @@ package gory_moon.moarsigns.tileentites;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
+import gory_moon.moarsigns.api.SignInfo;
+import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignMainInfo;
 import gory_moon.moarsigns.util.Utils;
@@ -34,6 +36,7 @@ public class TileEntityMoarSign extends TileEntitySign {
     private int oldFontSize;
 
     private final int NBT_VERSION = 1;
+    public boolean isRemovedByPlayerAndCreative;
 
     @Override
     public void updateEntity() {
@@ -41,15 +44,17 @@ public class TileEntityMoarSign extends TileEntitySign {
         if (worldObj.isRemote) {
 
             if (fontSize != oldFontSize) {
-                rows = fontSize > 16 ? 1: fontSize > 6 ? 2: fontSize > 1 ? 3 : 4;
-                maxLength = fontSize > 17 ? 5: fontSize > 13 ? 6: fontSize > 10 ? 7: fontSize > 7 ? 8: fontSize > 5 ? 9: fontSize > 4 ? 11: fontSize > 1 ? 12: fontSize > 0 ? 13: 15;
+                rows = Utils.getRows(fontSize);
+                maxLength = Utils.getMaxLength(fontSize);
                 oldFontSize = fontSize;
             }
             if (!textureReq) {
                 textureReq = true;
                 Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
-                worldObj.addBlockEvent(xCoord, yCoord, zCoord, block,  0, 0);
+                worldObj.addBlockEvent(xCoord, yCoord, zCoord, block, 0, 0);
             }
+            SignInfo sign = SignRegistry.get(texture_name);
+            if (sign != null && sign.property != null) sign.property.onUpdate();
         }
     }
 
@@ -95,8 +100,7 @@ public class TileEntityMoarSign extends TileEntitySign {
         return PacketHandler.INSTANCE.getPacketFrom(new MessageSignMainInfo(this, false));
     }
 
-    public boolean isEditable()
-    {
+    public boolean isEditable() {
         return this.isEditable;
     }
 

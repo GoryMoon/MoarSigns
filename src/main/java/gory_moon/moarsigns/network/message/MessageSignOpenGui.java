@@ -4,11 +4,9 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.tileentity.TileEntity;
 
@@ -20,9 +18,10 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
     public boolean isMetal;
     public int fontSize;
     public int offset;
-    public String[] text = new String[] {"", "", "", ""};
+    public String[] text = new String[]{"", "", "", ""};
 
-    public MessageSignOpenGui() {}
+    public MessageSignOpenGui() {
+    }
 
     public MessageSignOpenGui(int x, int y, int z, String texture, boolean isMetal, int fontSize, int offset, String[] text) {
         this.x = x;
@@ -53,7 +52,7 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
         this.fontSize = buf.readInt();
         this.offset = buf.readInt();
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             int textLength = buf.readInt();
             text[i] = new String(buf.readBytes(textLength).array());
         }
@@ -71,7 +70,7 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
         buf.writeInt(fontSize);
         buf.writeInt(offset);
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             buf.writeInt(text[i].length());
             buf.writeBytes(text[i].getBytes());
         }

@@ -20,10 +20,11 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
     public boolean isMetal;
     public int fontSize;
     public int offset;
-    public String[] text = new String[] {"", "", "", ""};
+    public String[] text = new String[]{"", "", "", ""};
     public boolean openGui;
 
-    public MessageSignMainInfo() {}
+    public MessageSignMainInfo() {
+    }
 
     public MessageSignMainInfo(int x, int y, int z, String texture, boolean isMetal, int fontSize, int offset, String[] text, boolean openGui) {
         this.x = x;
@@ -54,7 +55,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
         this.fontSize = buf.readInt();
         this.offset = buf.readInt();
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             int textLength = buf.readInt();
             text[i] = new String(buf.readBytes(textLength).array());
         }
@@ -74,7 +75,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
         buf.writeInt(fontSize);
         buf.writeInt(offset);
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             buf.writeInt(text[i].length());
             buf.writeBytes(text[i].getBytes());
         }
@@ -119,8 +120,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
                 flag = true;
             }
         }
-        if (!flag && FMLClientHandler.instance().getClient().thePlayer != null)
-        {
+        if (!flag && FMLClientHandler.instance().getClient().thePlayer != null) {
             MoarSigns.logger.info("Unable to locate sign at " + message.x + ", " + message.y + ", " + message.z);
             FMLClientHandler.instance().getClient().thePlayer.addChatMessage(new ChatComponentText("Unable to locate sign at " + message.x + ", " + message.y + ", " + message.z));
         }

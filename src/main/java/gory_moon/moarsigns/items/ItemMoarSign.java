@@ -19,7 +19,9 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class ItemMoarSign extends Item {
 
@@ -34,7 +36,7 @@ public class ItemMoarSign extends Item {
     public String getUnlocalizedName(ItemStack stack) {
         SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
         if (info == null) return "dummy";
-        return super.getUnlocalizedName() + ".sign." + (info.material.path.equals("")? "": info.material.path.replace("/", "") + ".") + getTextureFromNBT(stack.getTagCompound());
+        return super.getUnlocalizedName() + ".sign." + (info.material.path.equals("") ? "" : info.material.path.replace("/", "") + ".") + getTextureFromNBT(stack.getTagCompound());
     }
 
     @SuppressWarnings("unchecked")
@@ -42,7 +44,7 @@ public class ItemMoarSign extends Item {
     public void registerIcons(IIconRegister register) {
         List<SignInfo> signRegistry = SignRegistry.getSignRegistry();
 
-        for (SignInfo info: signRegistry) {
+        for (SignInfo info : signRegistry) {
             String path = info.material.path;
             String loc = info.isMetal ? "metal/" : "wood/";
             IIcon icon = register.registerIcon(Info.TEXTURE_LOCATION + ":" + loc + (path.equals("") ? "" : path.replace("\\", "/")) + info.itemName);
@@ -59,14 +61,13 @@ public class ItemMoarSign extends Item {
     public void getSubItemStacks(List list) {
         List<SignInfo> signRegistry = SignRegistry.getSignRegistry();
 
-        for (SignInfo info: signRegistry) {
+        for (SignInfo info : signRegistry) {
             String path = info.material.path;
             list.add(createMoarItemStack(path + info.itemName, info.isMetal));
         }
     }
 
-    public static
-    <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
+    public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
         List<T> list = new ArrayList<T>(c);
         java.util.Collections.sort(list);
         return list;
@@ -87,7 +88,7 @@ public class ItemMoarSign extends Item {
     }
 
     public ItemStack createMoarItemStack(String signName, boolean isMetal) {
-        ItemStack itemStack = new ItemStack(this, 1, (isMetal ? 1: 0));
+        ItemStack itemStack = new ItemStack(this, 1, (isMetal ? 1 : 0));
         NBTTagCompound compound = new NBTTagCompound();
         compound.setString("SignTexture", signName.replace("\\", "/"));
         itemStack.setTagCompound(compound);
@@ -95,11 +96,11 @@ public class ItemMoarSign extends Item {
     }
 
     public String getTextureFromNBTFull(NBTTagCompound compound) {
-        return compound.hasKey("SignTexture") ? compound.getString("SignTexture"): "";
+        return compound.hasKey("SignTexture") ? compound.getString("SignTexture") : "";
     }
 
     public String getTextureFromNBT(NBTTagCompound compound) {
-        String texture = compound.hasKey("SignTexture") ? compound.getString("SignTexture"): "";
+        String texture = compound.hasKey("SignTexture") ? compound.getString("SignTexture") : "";
         if (texture.contains("\\")) texture = texture.split("\\\\")[1];
         if (texture.contains("/")) texture = texture.split("/")[1];
         return texture;
@@ -143,7 +144,7 @@ public class ItemMoarSign extends Item {
                 }
 
                 if (!player.capabilities.isCreativeMode) --stack.stackSize;
-                TileEntityMoarSign tileEntity = (TileEntityMoarSign)world.getTileEntity(x, y, z);
+                TileEntityMoarSign tileEntity = (TileEntityMoarSign) world.getTileEntity(x, y, z);
 
                 if (tileEntity != null) {
                     String texture = getTextureFromNBTFull(stack.getTagCompound());

@@ -58,7 +58,7 @@ public class GuiBase extends GuiScreen {
             this.drawGradientRect(i1 - 3, j1 + k1 + 2, i1 + k + 3, j1 + k1 + 3, j2, j2);
 
             for (int k2 = 0; k2 < par1List.size(); ++k2) {
-                String s1 = (String)par1List.get(k2);
+                String s1 = (String) par1List.get(k2);
                 font.drawStringWithShadow(s1, i1, j1, -1);
 
                 if (k2 == 0) {

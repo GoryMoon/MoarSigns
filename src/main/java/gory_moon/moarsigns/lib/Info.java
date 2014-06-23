@@ -16,7 +16,7 @@ public class Info {
     public static final String[] NUGGET_INGOT_UNLOCS = {"item.diamond", "item.ingotIron", "item.emerald", "ic2.itemIngotBronze", "ic2.itemIngotCopper", "ic2.itemIngotTin", "item.factorization:silver_ingot"};
     public static final String[] NUGGET_ORE_DICTIONARY = {"diamondNugget", "nuggetIron", "nuggetEmerald", "nuggetBronze", "nuggetCopper", "nuggetTin", "nuggetSilver"};
 
-    public static int[][] textPostion = new int[][] {
+    public static int[][] textPostion = new int[][]{
             {-36, -26, -16, -6},
             {-31, -21, -11, -1},
             {-28, -18, -8},

@@ -6,10 +6,10 @@ public class SignInfo {
     public MaterialInfo material;
     public boolean isMetal;
 
-    public ISignSpecialProperty property;
+    public SignSpecialProperty property;
 
 
-    public SignInfo(String itemName, MaterialInfo material, ISignSpecialProperty property) {
+    public SignInfo(String itemName, MaterialInfo material, SignSpecialProperty property) {
         this.itemName = itemName;
         this.material = material;
         this.property = property;
