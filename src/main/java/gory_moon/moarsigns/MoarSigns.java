@@ -42,7 +42,7 @@ public class MoarSigns {
     public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
     public static Logger logger;
 
-    @SidedProxy(clientSide = ModInfo.CLIENTPROXY, serverSide = ModInfo.COMMONPROXY)
+    @SidedProxy(clientSide = ModInfo.CLIENT_PROXY, serverSide = ModInfo.COMMON_PROXY)
     public static CommonProxy proxy;
 
     private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
