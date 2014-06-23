@@ -13,8 +13,7 @@ public class ModelMoarSign extends ModelBase {
         stick.addBox(-1.0F, -2.0F, -1.0F, 2, 14, 2, 0.0F);
     }
 
-    public void render()
-    {
+    public void render() {
         this.board.render(0.0625F);
         this.stick.render(0.0625F);
     }
