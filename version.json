@@ -1,12 +1,24 @@
 {
 	"versionList": [
 		{
-			"mcVersion":"Minecraft 1.7.2",
-			"modVersion":"1.0.2",
+			"mcVersion":"Minecraft 1.7.10",
+			"modVersion":"1.0.3",
 			"changeLog": [
-				"1.7.2 port",
-				"Added emerald sign and emerald shard",
-				"Changed name on \"Diamond nugget\" to \"Diamond shard\""
+				"Fixed crash with Thaumcraft",
+				"Added support for Version Checker",
+				"Changed back from shards to nuggets"
+			],
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2207214/download",
+			"isDirectLink":"true",
+			"newFileName":""
+		},
+		{
+			"mcVersion":"Minecraft 1.7.2",
+			"modVersion":"1.0.3",
+			"changeLog": [
+				"Fixed crash with Thaumcraft",
+				"Added support for Version Checker",
+				"Changed back from shards to nuggets"
 			],
 			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2207214/download",
 			"isDirectLink":"true",
