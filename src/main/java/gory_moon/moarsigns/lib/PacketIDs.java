@@ -12,7 +12,7 @@ public enum PacketIDs {
     }
 
     public static PacketIDs getID(byte b) {
-        for (PacketIDs id: values()) {
+        for (PacketIDs id : values()) {
             if (id.getID() == b) {
                 return id;
             }

@@ -1,13 +1,12 @@
 package gory_moon.moarsigns;
 
 import cpw.mods.fml.common.Loader;
-import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.SignRegistry;
+import gory_moon.moarsigns.signproperties.DiamondProperty;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SignInitialization {
 
@@ -15,7 +14,7 @@ public class SignInitialization {
 
         // Vanilla
         ItemStack vanillaStack = null;
-        for (ItemStack planks: loadedPlanks) {
+        for (ItemStack planks : loadedPlanks) {
             if (planks.getUnlocalizedName().equals("tile.wood.oak")) {
                 vanillaStack = planks.copy();
                 break;
@@ -35,7 +34,7 @@ public class SignInitialization {
         //Modded
         if (Loader.isModLoaded("Natura")) {
             ItemStack stack = null;
-            for (ItemStack planks: loadedPlanks) {
+            for (ItemStack planks : loadedPlanks) {
                 if (planks.getUnlocalizedName().equals("block.eucalyptus.NPlanks")) {
                     stack = planks.copy();
                     break;
@@ -63,9 +62,13 @@ public class SignInitialization {
             ItemStack stack1 = null;
             ItemStack stack2 = null;
 
-            for (ItemStack planks: loadedPlanks) {
-                if (stack1 == null && planks.getUnlocalizedName().equals("tile.for.planks.32767")) { stack1 = planks.copy(); }
-                if (stack2 == null && planks.getUnlocalizedName().equals("tile.for.planks2.32767")) { stack2 = planks.copy(); }
+            for (ItemStack planks : loadedPlanks) {
+                if (stack1 == null && planks.getUnlocalizedName().equals("tile.for.planks.32767")) {
+                    stack1 = planks.copy();
+                }
+                if (stack2 == null && planks.getUnlocalizedName().equals("tile.for.planks2.32767")) {
+                    stack2 = planks.copy();
+                }
                 if (stack1 != null && stack2 != null) break;
             }
 
@@ -102,7 +105,7 @@ public class SignInitialization {
 
         if (Loader.isModLoaded("BiomesOPlenty")) {
             ItemStack stack = null;
-            for (ItemStack planks: loadedPlanks) {
+            for (ItemStack planks : loadedPlanks) {
                 if (planks.getUnlocalizedName().equals("tile.planks.sacredoakPlank")) {
                     stack = planks.copy();
                     break;
@@ -110,7 +113,7 @@ public class SignInitialization {
             }
 
             if (stack != null) {
-                SignRegistry.register("sacredoak_sign", null, "sacredoak", "bop/", false, new ItemStack(stack.getItem(), 1, 0));
+                SignRegistry.register("sacred_oak_sign", null, "sacred_oak", "bop/", false, new ItemStack(stack.getItem(), 1, 0));
                 SignRegistry.register("cherry_sign", null, "cherry", "bop/", false, new ItemStack(stack.getItem(), 1, 1));
                 SignRegistry.register("dark_sign", null, "dark", "bop/", false, new ItemStack(stack.getItem(), 1, 2));
                 SignRegistry.register("fir_sign", null, "fir", "bop/", false, new ItemStack(stack.getItem(), 1, 3));
@@ -141,11 +144,67 @@ public class SignInitialization {
 
         SignRegistry.register("iron_sign", null, "iron", "", false, iron).setMetal(true);
         SignRegistry.register("gold_sign", null, "gold", "", true, gold).setMetal(true);
-        SignRegistry.register("diamond_sign", null, "diamond", "", false, diamond).setMetal(true);
+        SignRegistry.register("diamond_sign", new DiamondProperty(), "diamond", "", false, diamond).setMetal(true);
         SignRegistry.register("emerald_sign", null, "emerald", "", false, emerald).setMetal(true);
 
         //Modded
-        //TODO add the modded metals
+
+        if (Loader.isModLoaded("IC2")) {
+            ItemStack stack = null;
+            for (ItemStack stacks : ingots) {
+                if (stacks.getUnlocalizedName().equals("ic2.itemIngotCopper")) {
+                    stack = stacks.copy();
+                    break;
+                }
+            }
+
+            if (stack != null) {
+                SignRegistry.register("copper_sign", null, "copper", "ic2/", false, new ItemStack(stack.getItem(), 1, 0)).setMetal(true);
+                SignRegistry.register("tin_sign", null, "tin", "ic2/", false, new ItemStack(stack.getItem(), 1, 1)).setMetal(true);
+                SignRegistry.register("bronze_sign", null, "bronze", "ic2/", false, new ItemStack(stack.getItem(), 1, 2)).setMetal(true);
+                //TODO add lead sign textures
+                //SignRegistry.register("lead_sign", null, "lead", "ic2/", false, new ItemStack(stack.getItem(), 1, 5)).setMetal(true);
+            }
+        }
+
+        if (Loader.isModLoaded("TConstruct")) {
+            ItemStack stack = null;
+            for (ItemStack stacks : ingots) {
+                if (stacks.getUnlocalizedName().equals("item.tconstruct.Materials.CopperIngot")) {
+                    stack = stacks.copy();
+                    break;
+                }
+            }
+
+            if (stack != null) {
+                SignRegistry.register("copper_sign", null, "copper", "tconstruct/", true, new ItemStack(stack.getItem(), 1, 9)).setMetal(true);
+                SignRegistry.register("tin_sign", null, "tin", "tconstruct/", true, new ItemStack(stack.getItem(), 1, 10)).setMetal(true);
+                SignRegistry.register("bronze_sign", null, "bronze", "tconstruct/", true, new ItemStack(stack.getItem(), 1, 13)).setMetal(true);
+                SignRegistry.register("steel_sign", null, "steel", "tconstruct/", true, new ItemStack(stack.getItem(), 1, 16)).setMetal(true);
+            }
+        }
+
+        if (Loader.isModLoaded("factorization")) {
+            ItemStack stack = null;
+            ItemStack stack2 = null;
+            for (ItemStack stacks : ingots) {
+                if (stacks.getUnlocalizedName().equals("item.factorization:silver_ingot")) {
+                    stack = stacks.copy();
+                }
+                if (stacks.getUnlocalizedName().equals("item.factorization:lead_ingot")) {
+                    stack2 = stacks.copy();
+                }
+                if (stack != null && stack2 != null) break;
+            }
+
+            if (stack != null) {
+                SignRegistry.register("silver_sign", null, "silver", "factorization/", true, new ItemStack(stack.getItem(), 1, 0)).setMetal(true);
+                //TODO add lead sign textures
+                //SignRegistry.register("lead_sign", null, "lead", "factorization/", true, new ItemStack(stack2.getItem(), 1, 0)).setMetal(true);
+            }
+        }
+
+        //TODO add thermal expansion when updated
 
     }
 }

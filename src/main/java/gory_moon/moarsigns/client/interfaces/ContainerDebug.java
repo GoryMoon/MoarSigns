@@ -9,12 +9,12 @@ import net.minecraft.inventory.Slot;
 public class ContainerDebug extends Container {
 
     public ContainerDebug(InventoryPlayer inventory, int ID, IInventory tempInv) {
-        for(int x = 0; x < 9; x++) {
+        for (int x = 0; x < 9; x++) {
             addSlotToContainer(new Slot(inventory, x, 8 + 18 * x, 96));
         }
 
-        for(int y = 0; y < 3; y++) {
-            for(int x = 0; x < 9; x++) {
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 9; x++) {
                 addSlotToContainer(new Slot(inventory, x + y * 9 + 9, 8 + 18 * x, 38 + y * 18));
             }
         }
