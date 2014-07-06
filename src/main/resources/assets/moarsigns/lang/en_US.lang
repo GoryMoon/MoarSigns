@@ -3,9 +3,9 @@ itemGroup.moarSigns=MoarSigns
 item.moarsign.debug.name=Debug
 
 #Nuggets
-item.moarsign.diamond_nugget.name=Diamond Shard
+item.moarsign.diamond_nugget.name=Diamond Nugget
 item.moarsign.iron_nugget.name=Iron Nugget
-item.moarsign.emerald_nugget.name=Emerald Shard
+item.moarsign.emerald_nugget.name=Emerald Nugget
 item.moarsign.bronze_nugget_ic2.name=Bronze Nugget
 item.moarsign.copper_nugget_ic2.name=Copper Nugget
 item.moarsign.tin_nugget_ic2.name=Tin Nugget
