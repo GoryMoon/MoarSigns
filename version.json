@@ -1,0 +1,16 @@
+{
+	"versionList": [
+		{
+			"mcVersion":"Minecraft 1.7.2",
+			"modVersion":"1.0.2",
+			"changeLog": [
+				"1.7.2 port",
+				"Added emerald sign and emerald shard",
+				"Changed name on \"Diamond nugget\" to \"Diamond shard\""
+			],
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/789270/download",
+			"isDirectLink":"true",
+			"newFileName":""
+		}
+	]
+}
