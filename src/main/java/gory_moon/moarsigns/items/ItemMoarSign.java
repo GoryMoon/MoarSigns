@@ -19,8 +19,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class ItemMoarSign extends Item {
@@ -67,12 +65,6 @@ public class ItemMoarSign extends Item {
         }
     }
 
-    public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
-        List<T> list = new ArrayList<T>(c);
-        java.util.Collections.sort(list);
-        return list;
-    }
-
     @Override
     public IIcon getIcon(ItemStack stack, int pass) {
         SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
@@ -96,11 +88,11 @@ public class ItemMoarSign extends Item {
     }
 
     public String getTextureFromNBTFull(NBTTagCompound compound) {
-        return compound.hasKey("SignTexture") ? compound.getString("SignTexture") : "";
+        return compound != null && compound.hasKey("SignTexture") ? compound.getString("SignTexture") : "";
     }
 
     public String getTextureFromNBT(NBTTagCompound compound) {
-        String texture = compound.hasKey("SignTexture") ? compound.getString("SignTexture") : "";
+        String texture = compound != null &&  compound.hasKey("SignTexture") ? compound.getString("SignTexture") : "";
         if (texture.contains("\\")) texture = texture.split("\\\\")[1];
         if (texture.contains("/")) texture = texture.split("/")[1];
         return texture;
@@ -158,8 +150,6 @@ public class ItemMoarSign extends Item {
                     tileEntity.func_145912_a(player);
 
                     PacketHandler.INSTANCE.sendTo(new MessageSignMainInfo(tileEntity, true), (EntityPlayerMP) player);
-                    //MoarSigns.packetPipeline.sendTo(new PacketOpenMoarSignsGui(texture, tileEntity.isMetal,
-                    //        tileEntity.fontSize, tileEntity.textOffset, new String[]{"", "", "", ""}, x, y, z), (EntityPlayerMP) player);
                 }
 
                 return true;

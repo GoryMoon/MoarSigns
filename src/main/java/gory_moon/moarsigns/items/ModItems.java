@@ -6,6 +6,7 @@ import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.lib.Info;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
@@ -18,7 +19,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Items {
+public class ModItems {
 
     public static ItemMoarSign sign;
     public static ItemDebug debug;
@@ -61,7 +62,6 @@ public class Items {
         InventoryCrafting crafting = new InventoryCrafting(dummyContainer, 3, 3);
 
         for (ItemStack stack : list) {
-            MoarSigns.logger.info(stack.getUnlocalizedName());
 
             ItemMoarSign sign = (ItemMoarSign) stack.getItem();
             String texture = sign.getTextureFromNBTFull(stack.getTagCompound());
@@ -108,11 +108,11 @@ public class Items {
                                 ItemStack stack1 = stack.copy();
                                 stack1.stackSize = 1;
                                 if (recNugget.getUnlocalizedName().equals("item.moarsign." + nugget.nuggets[0]))
-                                    GameRegistry.addRecipe(new ShapedOreRecipe(stack1, new Object[]{"XXX", "XXX", " / ", 'X', "diamondNugget", '/', net.minecraft.init.Items.stick}));
+                                    GameRegistry.addRecipe(new ShapedOreRecipe(stack1, new Object[]{"XXX", "XXX", " / ", 'X', "diamondNugget", '/', Items.stick}));
                                 else if (recNugget.getUnlocalizedName().equals("item.moarsign." + nugget.nuggets[1]))
-                                    GameRegistry.addRecipe(new ShapedOreRecipe(stack1, new Object[]{"XXX", "XXX", " / ", 'X', "nuggetIron", '/', net.minecraft.init.Items.stick}));
+                                    GameRegistry.addRecipe(new ShapedOreRecipe(stack1, new Object[]{"XXX", "XXX", " / ", 'X', "nuggetIron", '/', Items.stick}));
                                 else
-                                    GameRegistry.addRecipe(stack1, new Object[]{"XXX", "XXX", " / ", 'X', recNugget, '/', net.minecraft.init.Items.stick});
+                                    GameRegistry.addRecipe(stack1, new Object[]{"XXX", "XXX", " / ", 'X', recNugget, '/', Items.stick});
                             }
 
                             stack.stackSize = 10;
@@ -124,7 +124,7 @@ public class Items {
             }
         }
 
-        GameRegistry.addRecipe(new ShapedOreRecipe(generalSign, new Object[]{"###", "###", " X ", '#', "plankWood", 'X', net.minecraft.init.Items.stick}));
+        GameRegistry.addRecipe(new ShapedOreRecipe(generalSign, new Object[]{"###", "###", " X ", '#', "plankWood", 'X', Items.stick}));
     }
 
 

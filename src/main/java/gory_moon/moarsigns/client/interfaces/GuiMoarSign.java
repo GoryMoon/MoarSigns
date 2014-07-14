@@ -84,8 +84,8 @@ public class GuiMoarSign extends GuiBase {
                 entitySign.signText[i] = "";
             }
         }
+
         PacketHandler.INSTANCE.sendToServer(new MessageSignUpdate(entitySign));
-        //MoarSigns.packetPipeline.sendToServer(new PacketSignUpdate(entitySign.xCoord, entitySign.yCoord, entitySign.zCoord, entitySign.signText, entitySign.fontSize, entitySign.textOffset));
     }
 
     private void updateSize() {

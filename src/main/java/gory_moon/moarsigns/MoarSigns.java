@@ -14,7 +14,7 @@ import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
-import gory_moon.moarsigns.items.Items;
+import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.lib.ModInfo;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.proxy.CommonProxy;
@@ -39,15 +39,14 @@ public class MoarSigns {
     @Instance(ModInfo.ID)
     public static MoarSigns instance;
 
-    public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
-    public static Logger logger;
-
     @SidedProxy(clientSide = ModInfo.CLIENT_PROXY, serverSide = ModInfo.COMMON_PROXY)
     public static CommonProxy proxy;
 
+    public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
+    public static Logger logger = LogManager.getLogger("MoarSigns");
+
     private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
     public static HashMap<String, IIcon> icons = new HashMap<String, IIcon>();
-    public static HashMap<String, ItemStack> craftingMats = new HashMap<String, ItemStack>();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -55,10 +54,8 @@ public class MoarSigns {
 
         PacketHandler.init();
 
-        logger = LogManager.getLogger("MoarSigns");
-
         Blocks.init();
-        Items.init();
+        ModItems.init();
     }
 
     @EventHandler
@@ -72,7 +69,7 @@ public class MoarSigns {
     public void modsLoaded(FMLPostInitializationEvent event) {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
-        Items.registerRecipes();
+        ModItems.registerRecipes();
     }
 
     public ResourceLocation getResourceLocation(String s, boolean isMetal) {

@@ -74,6 +74,10 @@ public class TileEntityMoarSign extends TileEntitySign {
         isEditable = false;
         super.readFromNBT(compound);
 
+        fontSize = compound.getInteger("fontSize");
+        rows = Utils.getRows(fontSize);
+        maxLength = Utils.getMaxLength(fontSize);
+
         for (int i = 0; i < 4; ++i) {
             signText[i] = compound.getString("Text" + (i + 1));
 
@@ -87,9 +91,6 @@ public class TileEntityMoarSign extends TileEntitySign {
         }
         isMetal = compound.getBoolean("isMetal");
         texture_name = compound.getString("texture");
-        fontSize = compound.getInteger("fontSize");
-        rows = Utils.getRows(fontSize);
-        maxLength = Utils.getMaxLength(fontSize);
 
         textOffset = compound.getInteger("textOffset");
 

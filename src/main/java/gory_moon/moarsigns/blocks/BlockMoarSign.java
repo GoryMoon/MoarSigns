@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.client.particle.EntityDiggingFXMoarSigns;
-import gory_moon.moarsigns.items.Items;
+import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -50,7 +50,7 @@ public class BlockMoarSign extends BlockContainer {
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon(int par1, int par2) {
-        return Block.getBlockFromName("planks").getIcon(par1, par2);
+        return Blocks.planks.getIcon(par1, par2);
     }
 
     @Override
@@ -244,7 +244,7 @@ public class BlockMoarSign extends BlockContainer {
         TileEntityMoarSign tileEntity = (TileEntityMoarSign) world.getTileEntity(x, y, z);
         String s = tileEntity.texture_name;
         s = s != null ? s : "null";
-        return Items.sign.createMoarItemStack(s, tileEntity.isMetal);
+        return ModItems.sign.createMoarItemStack(s, tileEntity.isMetal);
     }
 
     @Override
@@ -262,7 +262,7 @@ public class BlockMoarSign extends BlockContainer {
             TileEntityMoarSign tileEntity = (TileEntityMoarSign) entity;
             if (tileEntity.isRemovedByPlayerAndCreative) return ret;
 
-            ret.add(Items.sign.createMoarItemStack(tileEntity.texture_name, tileEntity.isMetal));
+            ret.add(ModItems.sign.createMoarItemStack(tileEntity.texture_name, tileEntity.isMetal));
         }
         return ret;
     }
