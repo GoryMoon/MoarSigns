@@ -5,6 +5,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -45,12 +46,14 @@ public class MoarSigns {
     public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
     public static Logger logger = LogManager.getLogger("MoarSigns");
 
+    private static final String LINK = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/1.7.2/version.json";
     private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
     public static HashMap<String, IIcon> icons = new HashMap<String, IIcon>();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         new ConfigHandler(event.getSuggestedConfigurationFile());
+        FMLInterModComms.sendRuntimeMessage(ModInfo.ID, "VersionChecker", "addVersionCheck", LINK);
 
         PacketHandler.init();
 
