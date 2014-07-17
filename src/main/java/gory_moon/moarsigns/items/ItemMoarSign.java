@@ -4,7 +4,6 @@ import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
-import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignMainInfo;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
@@ -45,7 +44,7 @@ public class ItemMoarSign extends Item {
         for (SignInfo info : signRegistry) {
             String path = info.material.path;
             String loc = info.isMetal ? "metal/" : "wood/";
-            IIcon icon = register.registerIcon(Info.TEXTURE_LOCATION + ":" + loc + (path.equals("") ? "" : path.replace("\\", "/")) + info.itemName);
+            IIcon icon = register.registerIcon(info.modId.toLowerCase() + ":" + loc + (path.equals("") ? "" : path.replace("\\", "/")) + info.itemName);
             MoarSigns.icons.put((path.equals("") ? "" : path) + info.itemName, icon);
         }
     }
@@ -156,6 +155,8 @@ public class ItemMoarSign extends Item {
             }
         }
     }
+
+
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean extraInfo) {

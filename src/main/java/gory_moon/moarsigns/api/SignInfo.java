@@ -7,12 +7,14 @@ public class SignInfo {
     public boolean isMetal;
 
     public SignSpecialProperty property;
+    public String modId;
 
 
-    public SignInfo(String itemName, MaterialInfo material, SignSpecialProperty property) {
+    public SignInfo(String itemName, MaterialInfo material, SignSpecialProperty property, String modId) {
         this.itemName = itemName;
         this.material = material;
         this.property = property;
+        this.modId = modId;
     }
 
     public SignInfo setMetal(boolean isMetal) {

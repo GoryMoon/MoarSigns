@@ -79,7 +79,9 @@ public class MoarSigns {
         ResourceLocation location = textures.get(s);
 
         if (location == null) {
-            location = new ResourceLocation("moarsigns", "textures/entities/signs/" + (isMetal ? "metal/" : "wood/") + s + ".png");
+            SignInfo info = SignRegistry.get(s);
+
+            location = new ResourceLocation(info.modId.toLowerCase(), "textures/signs/" + (isMetal ? "metal/" : "wood/") + s + ".png");
             textures.put(s, location);
         }
 

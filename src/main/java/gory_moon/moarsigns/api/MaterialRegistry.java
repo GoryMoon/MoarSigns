@@ -10,10 +10,24 @@ public class MaterialRegistry {
 
     public static HashMap<String, Set<MaterialInfo>> materialRegistry = new HashMap<String, Set<MaterialInfo>>();
 
-    public static MaterialInfo register(String materialName, String path, boolean gotNugget, ItemStack stack) {
-        return register(new MaterialInfo(materialName, path, gotNugget, stack));
+    /**
+     * Registers the material used for the signs
+     *
+     * @param materialName The name of the material that it's registered with
+     * @param path Path to the folder that contains the sign texture in the "/metal" or "/wood" folder
+     * @param gotNugget True if the metal have a nugget, nugget should be obtainable trough 1 metal = nugget in a normal crafting table
+     * @param materialItemStack An itemstack of the material
+     * @return The {@link gory_moon.moarsigns.api.MaterialInfo} that is registered
+     */
+    public static MaterialInfo register(String materialName, String path, boolean gotNugget, ItemStack materialItemStack) {
+        return register(new MaterialInfo(materialName, path, gotNugget, materialItemStack));
     }
 
+    /**
+     * Registers the material used for the signs
+     * @param info The {@link gory_moon.moarsigns.api.MaterialInfo} that should be registered
+     * @return The {@link gory_moon.moarsigns.api.MaterialInfo} that is registered
+     */
     public static MaterialInfo register(MaterialInfo info) {
         if (!materialRegistry.containsKey(info.materialName)) {
             materialRegistry.put(info.materialName, Sets.newHashSet(info));
