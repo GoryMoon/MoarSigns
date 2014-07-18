@@ -32,7 +32,7 @@ public class ItemMoarSign extends Item {
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
-        if (info == null) return "dummy";
+        if (info == null) return super.getUnlocalizedName() + ".sign.dummy";
         return super.getUnlocalizedName() + ".sign." + (info.material.path.equals("") ? "" : info.material.path.replace("/", "") + ".") + getTextureFromNBT(stack.getTagCompound());
     }
 

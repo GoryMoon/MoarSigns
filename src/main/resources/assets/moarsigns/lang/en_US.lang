@@ -1,6 +1,7 @@
 #General names
 itemGroup.moarSigns=MoarSigns
 item.moarsign.debug.name=Debug
+item.moarsign.sign.dummy=MoarSign
 
 #Nuggets
 item.moarsign.diamond_nugget.name=Diamond Nugget
