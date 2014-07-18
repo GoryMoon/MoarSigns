@@ -35,20 +35,17 @@ public class GuiMoarSign extends GuiBase {
     private int size = 0;
 
     private int SIZE_W = 50;
-    private int SIZE_H = 20;
-
-    private int SIZE_X = width / 2 + 65;
-    private int SIZE_Y = 105 - SIZE_H;
     private int SIZE_X2 = width / 2 + 65 + SIZE_W;
+    private int OFFSET_X2 = width / 2 + 130 + SIZE_W;
+    private int SIZE_H = 20;
+    private int SIZE_Y = 105 - SIZE_H;
     private int SIZE_Y2 = 85 + SIZE_H;
-
+    private int OFFSET_Y = 105 - SIZE_H;
+    private int OFFSET_Y2 = 85 + SIZE_H;
+    private int SIZE_X = width / 2 + 65;
     private int OFFSET_W = 50;
     private int OFFSET_H = 20;
-
     private int OFFSET_X = width / 2 + 130;
-    private int OFFSET_Y = 105 - SIZE_H;
-    private int OFFSET_X2 = width / 2 + 130 + SIZE_W;
-    private int OFFSET_Y2 = 85 + SIZE_H;
 
     public GuiMoarSign(TileEntityMoarSign te) {
         entitySign = te;

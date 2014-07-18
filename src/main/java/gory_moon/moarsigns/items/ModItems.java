@@ -42,7 +42,7 @@ public class ModItems {
 
         removeRecipesWithResult(new ItemStack(net.minecraft.init.Items.sign, 3));
 
-        List<SignInfo> signRegistry = SignRegistry.getSignRegistry();
+        List<SignInfo> signRegistry = SignRegistry.getActivatedSignRegistry();
 
         ArrayList<ItemStack> list = new ArrayList<ItemStack>();
         sign.getSubItemStacks(list);

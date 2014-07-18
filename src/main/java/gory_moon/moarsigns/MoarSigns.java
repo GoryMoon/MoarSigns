@@ -37,18 +37,15 @@ import java.util.*;
 @Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = "after:*")
 public class MoarSigns {
 
+    private static final String LINK = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/1.7.2/version.json";
     @Instance(ModInfo.ID)
     public static MoarSigns instance;
-
     @SidedProxy(clientSide = ModInfo.CLIENT_PROXY, serverSide = ModInfo.COMMON_PROXY)
     public static CommonProxy proxy;
-
-    public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
     public static Logger logger = LogManager.getLogger("MoarSigns");
-
-    private static final String LINK = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/1.7.2/version.json";
-    private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
     public static HashMap<String, IIcon> icons = new HashMap<String, IIcon>();
+    private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
+    public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -101,7 +98,7 @@ public class MoarSigns {
         SignInitialization.addWoodMaterial(planks);
         SignInitialization.addMetalMaterial(ingots);
 
-        Collections.sort(SignRegistry.getSignRegistry(), new Comparator<SignInfo>() {
+        Collections.sort(SignRegistry.getActivatedSignRegistry(), new Comparator<SignInfo>() {
             @Override
             public int compare(SignInfo o1, SignInfo o2) {
                 return (o1.isMetal && !o2.isMetal) ? 1 : ((o1.isMetal) ? 0 : (o2.isMetal ? -1 : (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ? 0 : (o1.material.path.equals(o2.material.path) ? (o1.itemName.compareToIgnoreCase(o2.itemName)) : (o1.material.path.compareTo(o2.material.path))))));

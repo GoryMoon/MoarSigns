@@ -14,6 +14,8 @@ import java.util.List;
 
 public class GuiDebug extends GuiContainer {
 
+    private static final ResourceLocation texture_item = new ResourceLocation("moarsigns", "textures/gui/debug_item.png");
+    private static final ResourceLocation texture_world = new ResourceLocation("moarsigns", "textures/gui/debug_block.png");
     private boolean blockInWorld;
     private World world;
     private int x;
@@ -22,7 +24,6 @@ public class GuiDebug extends GuiContainer {
     private Block block;
     private IInventory inventory;
     private GuiRectangle infoArea;
-
     public GuiDebug(InventoryPlayer inventory, int ID, World world, int x, int y, int z, IInventory tempInv) {
         super(new ContainerDebug(inventory, ID, tempInv));
         this.world = world;
@@ -42,9 +43,6 @@ public class GuiDebug extends GuiContainer {
         xSize = 178;
         ySize = 116;
     }
-
-    private static final ResourceLocation texture_item = new ResourceLocation("moarsigns", "textures/gui/debug_item.png");
-    private static final ResourceLocation texture_world = new ResourceLocation("moarsigns", "textures/gui/debug_block.png");
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {

@@ -13,9 +13,9 @@ public class MaterialRegistry {
     /**
      * Registers the material used for the signs
      *
-     * @param materialName The name of the material that it's registered with
-     * @param path Path to the folder that contains the sign texture in the "/metal" or "/wood" folder
-     * @param gotNugget True if the metal have a nugget, nugget should be obtainable trough 1 metal = nugget in a normal crafting table
+     * @param materialName      The name of the material that it's registered with
+     * @param path              Path to the folder that contains the sign texture in the "/metal" or "/wood" folder
+     * @param gotNugget         True if the metal have a nugget, nugget should be obtainable trough 1 metal = nugget in a normal crafting table
      * @param materialItemStack An itemstack of the material
      * @return The {@link gory_moon.moarsigns.api.MaterialInfo} that is registered
      */
@@ -25,6 +25,7 @@ public class MaterialRegistry {
 
     /**
      * Registers the material used for the signs
+     *
      * @param info The {@link gory_moon.moarsigns.api.MaterialInfo} that should be registered
      * @return The {@link gory_moon.moarsigns.api.MaterialInfo} that is registered
      */

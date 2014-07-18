@@ -56,7 +56,7 @@ public class ItemMoarSign extends Item {
 
     @SuppressWarnings("unchecked")
     public void getSubItemStacks(List list) {
-        List<SignInfo> signRegistry = SignRegistry.getSignRegistry();
+        List<SignInfo> signRegistry = SignRegistry.getActivatedSignRegistry();
 
         for (SignInfo info : signRegistry) {
             String path = info.material.path;
@@ -91,7 +91,7 @@ public class ItemMoarSign extends Item {
     }
 
     public String getTextureFromNBT(NBTTagCompound compound) {
-        String texture = compound != null &&  compound.hasKey("SignTexture") ? compound.getString("SignTexture") : "";
+        String texture = compound != null && compound.hasKey("SignTexture") ? compound.getString("SignTexture") : "";
         if (texture.contains("\\")) texture = texture.split("\\\\")[1];
         if (texture.contains("/")) texture = texture.split("/")[1];
         return texture;
@@ -155,7 +155,6 @@ public class ItemMoarSign extends Item {
             }
         }
     }
-
 
 
     @Override

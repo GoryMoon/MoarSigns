@@ -8,13 +8,15 @@ public class SignInfo {
 
     public SignSpecialProperty property;
     public String modId;
+    public String activateTag;
 
 
-    public SignInfo(String itemName, MaterialInfo material, SignSpecialProperty property, String modId) {
+    public SignInfo(String itemName, MaterialInfo material, SignSpecialProperty property, String modId, String activateTag) {
         this.itemName = itemName;
         this.material = material;
         this.property = property;
         this.modId = modId;
+        this.activateTag = activateTag;
     }
 
     public SignInfo setMetal(boolean isMetal) {

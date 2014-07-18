@@ -19,24 +19,20 @@ public class TileEntityMoarSign extends TileEntitySign {
 
     //public String[] signText = new String[] {"", "", "", ""};
 
+    private final int NBT_VERSION = 1;
     public int lineBeingEdited = -1;
-    private boolean isEditable = true;
     public boolean isMetal = false;
     public String texture_name;
     public int fontSize = 0;
     public int textOffset = 0;
-
+    public boolean isRemovedByPlayerAndCreative;
+    private boolean isEditable = true;
     private int rows = 4;
     private int maxLength = 15;
-
     private EntityPlayer playerEditing;
     private ResourceLocation resourceLocation;
-
     private boolean textureReq = false;
     private int oldFontSize;
-
-    private final int NBT_VERSION = 1;
-    public boolean isRemovedByPlayerAndCreative;
 
     @Override
     public void updateEntity() {
