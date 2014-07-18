@@ -14,6 +14,7 @@ import gory_moon.moarsigns.api.MaterialRegistry;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
+import gory_moon.moarsigns.client.ClientEventHandler;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
 import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.lib.ModInfo;
@@ -28,6 +29,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +39,7 @@ import java.util.*;
 @Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = "after:*")
 public class MoarSigns {
 
-    private static final String LINK = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/1.7.2/version.json";
+    private static final String LINK = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/master/version.json";
     @Instance(ModInfo.ID)
     public static MoarSigns instance;
     @SidedProxy(clientSide = ModInfo.CLIENT_PROXY, serverSide = ModInfo.COMMON_PROXY)
@@ -53,6 +55,7 @@ public class MoarSigns {
         FMLInterModComms.sendRuntimeMessage(ModInfo.ID, "VersionChecker", "addVersionCheck", LINK);
 
         PacketHandler.init();
+        MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 
         Blocks.init();
         ModItems.init();

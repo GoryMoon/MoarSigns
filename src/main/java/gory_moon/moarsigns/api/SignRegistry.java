@@ -11,11 +11,15 @@ public class SignRegistry {
 
     public static final String ALWAYS_ACTIVE_TAG = "activeALL";
     static {
+        activeTags = Maps.newHashMap();
+        signRegistry = Lists.newArrayList();
+        activatedSignRegistry = Lists.newArrayList();
+
         activateTag(ALWAYS_ACTIVE_TAG);
     }
-    private static List<SignInfo> signRegistry = Lists.newArrayList();
-    private static List<SignInfo> activatedSignRegistry = Lists.newArrayList();
-    private static HashMap<String, Boolean> activeTags = Maps.newHashMap();
+    private static List<SignInfo> signRegistry;
+    private static List<SignInfo> activatedSignRegistry;
+    private static HashMap<String, Boolean> activeTags;
 
     /**
      * Registers a sign
