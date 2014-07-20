@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 public class ItemDebug extends Item {
 
     public ItemDebug() {
-        setCreativeTab(MoarSigns.instance.tabMS);
         setUnlocalizedName("moarsign.debug");
     }
 

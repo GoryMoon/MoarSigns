@@ -90,6 +90,17 @@ public class BlockMoarSign extends BlockContainer {
     }
 
     @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity instanceof TileEntityMoarSign) {
+            TileEntityMoarSign sign = (TileEntityMoarSign) tileEntity;
+            SignInfo info = SignRegistry.get(sign.texture_name);
+            if (info != null && info.property != null) return info.property.onRightClick(world, x, y, z, player, side, hitX, hitY, hitZ);
+        }
+        return false;
+    }
+
+    @Override
     public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
         if (!isFreestanding) {
             int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
