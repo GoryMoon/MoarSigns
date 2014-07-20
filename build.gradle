@@ -20,10 +20,6 @@ configurations {
 
 repositories {
     mavenCentral()
-    maven {
-        name = "chickenbones"
-        url = "http://chickenbones.net/maven"
-    }
 }
 
 apply plugin: 'forge'
@@ -52,11 +48,6 @@ minecraft {
 
 dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
-
-    //compile "mcp.mobius.waila:Waila:1.5.2a"
-    compile "codechicken:CodeChickenCore:1.7.2-1.0.1:dev"
-    compile "codechicken:NotEnoughItems:1.7.2-1.0.1:dev"
-    compile "codechicken:CodeChickenLib:1.7.2-1.1.0.77:dev"
 
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
@@ -117,7 +108,7 @@ artifacts {
 
 uploadArchives {
     repositories.mavenDeployer {
-        if (project.hasProperty("forgemaven_url")) {
+        if (project.hasProperty("maven_url")) {
             println 'Publishing to files server'
 
             configuration = configurations.deployerJars
@@ -135,6 +126,35 @@ uploadArchives {
                 packaging 'jar'
                 description 'MoarSigns'
                 url 'https://github.com/GoryMoon/MoarSigns/'
+
+                scm {
+                    url 'https://github.com/GoryMoon/MoarSigns/'
+                    connection 'scm:git:git://github.com/GoryMoon/MoarSigns.git'
+                    developerConnection 'scm:git:git@github.com/GoryMoon/MoarSigns.git'
+                }
+
+                issueManagement {
+                    system 'github'
+                    url 'https://github.com/GoryMoon/MoarSigns/issues'
+                }
+
+                licenses {
+                    license {
+                        name 'GNU Lesser General Public License 3.0'
+                        url 'https://www.gnu.org/licenses/lgpl-3.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'Gory_Moon'
+                        name 'Gory_Moon'
+                        roles {
+                            role 'developer'
+                        }
+                    }
+                }
             }
         }
     }
