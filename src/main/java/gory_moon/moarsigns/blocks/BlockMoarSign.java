@@ -101,9 +101,9 @@ public class BlockMoarSign extends BlockContainer {
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
         if (!isFreestanding) {
-            int l = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+            int l = world.getBlockMetadata(x, y, z);
             float f = 0.28125F;
             float f1 = 0.78125F;
             float f2 = 0.0F;
@@ -111,20 +111,38 @@ public class BlockMoarSign extends BlockContainer {
             float f4 = 0.125F;
             setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 
-            if (l == 2) {
-                setBlockBounds(f2, f, 1.0F - f4, f3, f1, 1.0F);
-            }
+            int side = l & 0b111;
+            boolean flatSign = ((l & 0b1000) >> 3) == 1;
+            boolean groundSign;
 
-            if (l == 3) {
-                setBlockBounds(f2, f, 0.0F, f3, f1, f4);
-            }
+            if (flatSign) {
+                groundSign = (l & 0b0001) == 1;
 
-            if (l == 4) {
-                setBlockBounds(1.0F - f4, f, f2, 1.0F, f1, f3);
-            }
+                if (groundSign) {
+                    int rotation = (l & 0b0110) >> 1;
+                    setBlockBounds(f2, f2, f - 0.01F, f3, f4, f1 - 0.01F);
 
-            if (l == 5) {
-                setBlockBounds(0.0F, f, f2, f4, f1, f3);
+                    if (rotation == 1) setBlockBounds(f - 0.05F, f2, f2, f1 - 0.05F, f4, f3);
+                    else if (rotation == 2) setBlockBounds(f2, f2, f - 0.05F, f3, f4, f1 - 0.05F);
+                    else if (rotation == 3) setBlockBounds(f - 0.01F, f2, f2, f1 - 0.01F, f4, f3);
+                } else {
+                    int rotation = (l & 0b0110) >> 1;
+                    setBlockBounds(f2, f3 - f4, f - 0.05F, f3, f3, f1 - 0.05F);
+
+                    if (rotation == 1) setBlockBounds(f - 0.01F, f3 - f4, f2, f1 - 0.01F, f3, f3);
+                    else if (rotation == 2) setBlockBounds(f2, f3 - f4, f - 0.01F, f3, f3, f1 - 0.01F);
+                    else if (rotation == 3) setBlockBounds(f - 0.05F, f3 - f4, f2, f1 - 0.05F, f3, f3);
+                }
+            } else {
+                if (side == 2) {
+                    setBlockBounds(f2, f, f3 - f4, f3, f1, f3);
+                } else if (side == 3) {
+                    setBlockBounds(f2, f, f2, f3, f1, f4);
+                } else if (side == 4) {
+                    setBlockBounds(f3 - f4, f, f2, f3, f1, f3);
+                } else if (side == 5) {
+                    setBlockBounds(f2, f, f2, f4, f1, f3);
+                }
             }
         }
     }
@@ -228,20 +246,40 @@ public class BlockMoarSign extends BlockContainer {
                 flag = true;
             }
         } else {
-            int i1 = world.getBlockMetadata(x, y, z);
+            int i = world.getBlockMetadata(x, y, z);
+            int i1 = i & 0b111;
 
-            flag = !(i1 == 2 && world.getBlock(x, y, z + 1).getMaterial().isSolid());
 
-            if (i1 == 3 && world.getBlock(x, y, z - 1).getMaterial().isSolid()) {
-                flag = false;
-            }
+            boolean flatSign = ((i & 0b1000) >> 3) == 1;
+            boolean groundSign;
 
-            if (i1 == 4 && world.getBlock(x + 1, y, z).getMaterial().isSolid()) {
-                flag = false;
-            }
+            if (flatSign) {
+                groundSign = (i & 0b0001) == 1;
 
-            if (i1 == 5 && world.getBlock(x - 1, y, z).getMaterial().isSolid()) {
-                flag = false;
+                if (groundSign) {
+                    flag = !(world.getBlock(x, y - 1, z).getMaterial().isSolid());
+                } else {
+                    flag = !(world.getBlock(x, y + 1, z).getMaterial().isSolid());
+                }
+            } else {
+
+                flag = !(i1 == 2 && world.getBlock(x, y, z + 1).getMaterial().isSolid());
+
+                if (i1 == 2 && world.getBlock(x, y, z + 1).getMaterial().isSolid()) {
+                    flag = false;
+                }
+
+                if (i1 == 3 && world.getBlock(x, y, z - 1).getMaterial().isSolid()) {
+                    flag = false;
+                }
+
+                if (i1 == 4 && world.getBlock(x + 1, y, z).getMaterial().isSolid()) {
+                    flag = false;
+                }
+
+                if (i1 == 5 && world.getBlock(x - 1, y, z).getMaterial().isSolid()) {
+                    flag = false;
+                }
             }
         }
 
@@ -279,10 +317,10 @@ public class BlockMoarSign extends BlockContainer {
     }
 
     @Override
-    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
+    public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
         TileEntity entity = world.getTileEntity(x, y, z);
         if (entity instanceof TileEntityMoarSign)
             ((TileEntityMoarSign) entity).isRemovedByPlayerAndCreative = player.capabilities.isCreativeMode;
-        return super.removedByPlayer(world, player, x, y, z);
+        return super.removedByPlayer(world, player, x, y, z, false);
     }
 }

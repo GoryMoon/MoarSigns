@@ -215,6 +215,7 @@ public class GuiMoarSign extends GuiBase {
         GL11.glTranslatef((float) (width / 2), 0.0F, 50.0F);
         float scale = 93.75F;
         GL11.glScalef(-scale, -scale, -scale);
+
         GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
         Block block = entitySign.getBlockType();
 
@@ -223,10 +224,13 @@ public class GuiMoarSign extends GuiBase {
             GL11.glRotatef(rotation, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(0.0F, -1.0625F, 0.0F);
         } else {
-            int k = entitySign.getBlockMetadata();
-            float f3 = 0.0F;
+            int i = entitySign.getBlockMetadata();
+            int k = i & 0b111;
 
-            if (k == 2) {
+            float f3 = 0.0F;
+            if (k == 0 || k == 1) {
+                f3 = 180.0F;
+            } else if (k == 2) {
                 f3 = 180.0F;
             } else if (k == 4) {
                 f3 = 90.0F;
@@ -235,7 +239,11 @@ public class GuiMoarSign extends GuiBase {
             }
 
             GL11.glRotatef(f3, 0.0F, 1.0F, 0.0F);
-            GL11.glTranslatef(0.0F, -1.0625F, 0.0F);
+            if (((i & 0b1000) >> 3) == 1) {
+                entitySign.blockMetadata = 2;
+
+            }
+            GL11.glTranslatef(0.0F, -0.8F, 0.0F);
         }
 
         if (updateCounter / 6 % 2 == 0) {

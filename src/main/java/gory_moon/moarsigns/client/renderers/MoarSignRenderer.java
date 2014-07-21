@@ -37,22 +37,54 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
             this.modelMoarSign.stick.showModel = true;
         } else {
             int i = tileentity.getBlockMetadata();
+
+            int side = i & 0b111;
+
             f2 = 0.0F;
 
-            if (i == 2) {
-                f2 = 180.0F;
-            }
+            boolean flatSign = ((i & 0b1000) >> 3) == 1;
+            boolean groundSign = false;
 
-            if (i == 4) {
-                f2 = 90.0F;
-            }
+            if (flatSign) {
+                groundSign = (i & 0b0001) == 1;
 
-            if (i == 5) {
-                f2 = -90.0F;
+                if (groundSign) {
+                    int rotation = (i & 0b0110) >> 1;
+                    f2 = 0F;
+
+                    if (rotation == 1) f2 = 90F;
+                    else if (rotation == 2) f2 = 180F;
+                    else if (rotation == 3) f2 = -90F;
+                } else {
+                    int rotation = (i & 0b0110) >> 1;
+                    f2 = 180F;
+
+                    if (rotation == 1) f2 = -90F;
+                    else if (rotation == 2) f2 = 0F;
+                    else if (rotation == 3) f2 = 90F;
+                }
+            } else {
+                if (side == 2) {
+                    f2 = 180.0F;
+                }
+
+                if (side == 4) {
+                    f2 = 90.0F;
+                }
+
+                if (side == 5) {
+                    f2 = -90.0F;
+                }
+
             }
 
             GL11.glTranslatef((float) x + 0.5F, (float) y + 0.75F * f1, (float) z + 0.5F);
             GL11.glRotatef(-f2, 0.0F, 1.0F, 0.0F);
+            if (flatSign && !groundSign) GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+            if (flatSign && groundSign) {
+                GL11.glRotatef(270.0F, 1.0F, 0.0F, 0.0F);
+                GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
+            }
             GL11.glTranslatef(0.0F, -0.3125F, -0.4375F);
             this.modelMoarSign.stick.showModel = false;
         }
