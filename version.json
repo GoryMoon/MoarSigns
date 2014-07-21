@@ -2,25 +2,25 @@
 	"versionList": [
 		{
 			"mcVersion":"Minecraft 1.7.10",
-			"modVersion":"1.0.3",
+			"modVersion":"1.0.4",
 			"changeLog": [
-				"Fixed crash with Thaumcraft",
-				"Added support for Version Checker",
-				"Changed back from shards to nuggets"
+				"Rewrote a lot of the backend",
+				"Added support for Factorization",
+				"Added API for signs"
 			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2207214/download",
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2209052/download",
 			"isDirectLink":"true",
 			"newFileName":""
 		},
 		{
 			"mcVersion":"Minecraft 1.7.2",
-			"modVersion":"1.0.3",
+			"modVersion":"1.0.4",
 			"changeLog": [
-				"Fixed crash with Thaumcraft",
-				"Added support for Version Checker",
-				"Changed back from shards to nuggets"
+				"Rewrote a lot of the backend",
+				"Added support for Factorization",
+				"Added API for signs"
 			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2207214/download",
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2209052/download",
 			"isDirectLink":"true",
 			"newFileName":""
 		}
