@@ -2,25 +2,21 @@
 	"versionList": [
 		{
 			"mcVersion":"Minecraft 1.7.10",
-			"modVersion":"1.0.4",
+			"modVersion":"1.0.5",
 			"changeLog": [
-				"Rewrote a lot of the backend",
-				"Added support for Factorization",
-				"Added API for signs"
+				"Fixed bug with breaking particles not showing correctly"
 			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2209052/download",
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2209138/download",
 			"isDirectLink":"true",
 			"newFileName":""
 		},
 		{
 			"mcVersion":"Minecraft 1.7.2",
-			"modVersion":"1.0.4",
+			"modVersion":"1.0.5",
 			"changeLog": [
-				"Rewrote a lot of the backend",
-				"Added support for Factorization",
-				"Added API for signs"
+				"Fixed bug with breaking particles not showing correctly"
 			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2209052/download",
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2209138/download",
 			"isDirectLink":"true",
 			"newFileName":""
 		}
