@@ -18,10 +18,8 @@ public class EntityDiggingFXMoarSigns extends EntityDiggingFX {
 
         Block Mblock = Block.getBlockFromItem(info.material.getItem());
 
-
-        //TODO fix a byg not showing the correct particles
         if (Mblock != null && !Mblock.getUnlocalizedName().equals("tile.ForgeFiller")) {
-            setParticleIcon(Mblock.getIcon(3, tileEntity.getBlockMetadata()));
+            setParticleIcon(Mblock.getIcon(3, info.material.getItemDamage()));
         } else {
             Item item = info.material.getItem();
             if (item != null) {
