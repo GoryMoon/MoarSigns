@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.items;
 
 import gory_moon.moarsigns.MoarSigns;
+import gory_moon.moarsigns.MoarSignsCreativeTab;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
@@ -24,7 +25,7 @@ public class ItemMoarSign extends Item {
 
     public ItemMoarSign() {
         maxStackSize = 16;
-        setCreativeTab(MoarSigns.instance.tabMS);
+        setCreativeTab(MoarSignsCreativeTab.tabMS);
         setUnlocalizedName("moarsign");
         hasSubtypes = true;
     }
@@ -137,7 +138,6 @@ public class ItemMoarSign extends Item {
                         int rotation = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
                         side += (rotation << 1);
                         side += 0b1000;
-                        //MoarSigns.logger.info(Integer.toBinaryString(side));
                     }
                     if (stack.getItemDamage() == 0) world.setBlock(x, y, z, Blocks.signWallWood, side, 3);
                     else if (stack.getItemDamage() == 1) world.setBlock(x, y, z, Blocks.signWallMetal, side, 3);

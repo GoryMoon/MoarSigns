@@ -47,7 +47,6 @@ public class MoarSigns {
     public static Logger logger = LogManager.getLogger("MoarSigns");
     public static HashMap<String, IIcon> icons = new HashMap<String, IIcon>();
     private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
-    public MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {

@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 
 public class MoarSignsCreativeTab extends CreativeTabs {
 
+    public static MoarSignsCreativeTab tabMS = new MoarSignsCreativeTab("moarSigns");
+
     public MoarSignsCreativeTab(String label) {
         super(label);
     }

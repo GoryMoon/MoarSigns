@@ -28,7 +28,7 @@ import java.util.Random;
 
 public class BlockMoarSign extends BlockContainer {
 
-    private boolean isFreestanding;
+    public boolean isFreestanding;
 
     protected BlockMoarSign(Material material, boolean freeStand) {
         super(material);
@@ -135,13 +135,13 @@ public class BlockMoarSign extends BlockContainer {
                 }
             } else {
                 if (side == 2) {
-                    setBlockBounds(f2, f, f3 - f4, f3, f1, f3);
+                    setBlockBounds(f2, f- 0.01F, f3 - f4, f3, f1- 0.01F, f3);
                 } else if (side == 3) {
-                    setBlockBounds(f2, f, f2, f3, f1, f4);
+                    setBlockBounds(f2, f- 0.01F, f2, f3, f1- 0.01F, f4);
                 } else if (side == 4) {
-                    setBlockBounds(f3 - f4, f, f2, f3, f1, f3);
+                    setBlockBounds(f3 - f4, f- 0.01F, f2, f3, f1 - 0.01F, f3);
                 } else if (side == 5) {
-                    setBlockBounds(f2, f, f2, f4, f1, f3);
+                    setBlockBounds(f2, f- 0.01F, f2, f4, f1- 0.01F, f3);
                 }
             }
         }
@@ -322,5 +322,32 @@ public class BlockMoarSign extends BlockContainer {
         if (entity instanceof TileEntityMoarSign)
             ((TileEntityMoarSign) entity).isRemovedByPlayerAndCreative = player.capabilities.isCreativeMode;
         return super.removedByPlayer(world, player, x, y, z, false);
+    }
+
+    public boolean canPlaceBlockAt(World world, int x, int y, int z, int meta) {
+        boolean flatSign = ((meta & 0b1000) >> 3) == 1;
+        int side = flatSign ? meta & 0b001: meta & 0b111;
+        switch (side) {
+            case 0:
+                y++;
+                break;
+            case 1:
+                y--;
+                break;
+            case 2:
+                z++;
+                break;
+            case 3:
+                z--;
+                break;
+            case 4:
+                x++;
+                break;
+            case 5:
+                x--;
+                break;
+        }
+
+        return !super.canPlaceBlockAt(world, x, y, z) && world.getBlock(x, y, z).getMaterial().isSolid();
     }
 }
