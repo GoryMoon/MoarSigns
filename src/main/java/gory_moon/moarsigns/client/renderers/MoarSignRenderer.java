@@ -124,7 +124,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
         }
 
         for (int j = 0; j < rows; ++j) {
-            String s = tileentity.signText[j].substring(0, Math.min(maxLength, tileentity.signText[j].length()));
+            String s = fontRenderer.trimStringToWidth(tileentity.signText[j], Math.min(maxLength, fontRenderer.getStringWidth(tileentity.signText[j])));
 
             if (j == tileentity.lineBeingEdited)
                 s = "> " + s + " <";

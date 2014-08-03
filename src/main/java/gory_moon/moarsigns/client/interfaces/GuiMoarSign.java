@@ -76,7 +76,7 @@ public class GuiMoarSign extends GuiBase {
         this.entitySign.setEditable(true);
 
         for (int i = 0; i < entitySign.signText.length; i++) {
-            entitySign.signText[i] = entitySign.signText[i].substring(0, Math.min(entitySign.signText[i].length(), maxLength));
+            entitySign.signText[i] = fontRendererObj.trimStringToWidth(entitySign.signText[i], Math.min(fontRendererObj.getStringWidth(entitySign.signText[i]), maxLength));
             if (i > rows) {
                 entitySign.signText[i] = "";
             }
@@ -160,16 +160,18 @@ public class GuiMoarSign extends GuiBase {
         }
 
         updateSize();
+        int l = fontRendererObj.getStringWidth(entitySign.signText[editLine]);
 
         if (key == 14 && entitySign.signText[editLine].length() > 0) {
-            if (entitySign.signText[editLine].length() > maxLength)
-                entitySign.signText[editLine] = entitySign.signText[editLine].substring(0, maxLength);
+            if (l > maxLength)
+                entitySign.signText[editLine] = fontRendererObj.trimStringToWidth(entitySign.signText[editLine], 90);
 
             entitySign.signText[editLine] = entitySign.signText[editLine].substring(0, entitySign.signText[editLine].length() - 1);
         }
 
-        if (ChatAllowedCharacters.isAllowedCharacter(typedChar) && entitySign.signText[editLine].length() < maxLength) {
+        if (ChatAllowedCharacters.isAllowedCharacter(typedChar) && fontRendererObj.getCharWidth(typedChar) + l < maxLength) {
             entitySign.signText[editLine] = entitySign.signText[editLine] + typedChar;
+            l = fontRendererObj.getStringWidth(entitySign.signText[editLine]);
         }
 
         if (key == 1) {

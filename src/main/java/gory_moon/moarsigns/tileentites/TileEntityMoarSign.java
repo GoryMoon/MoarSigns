@@ -1,5 +1,6 @@
 package gory_moon.moarsigns.tileentites;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
@@ -78,7 +79,7 @@ public class TileEntityMoarSign extends TileEntitySign {
             signText[i] = compound.getString("Text" + (i + 1));
 
             if (signText[i].length() > maxLength) {
-                signText[i] = signText[i].substring(0, maxLength);
+                signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength);
             }
 
             if (i > rows) {
