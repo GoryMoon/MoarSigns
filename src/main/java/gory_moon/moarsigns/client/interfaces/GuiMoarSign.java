@@ -2,24 +2,38 @@ package gory_moon.moarsigns.client.interfaces;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gory_moon.moarsigns.blocks.Blocks;
+import gory_moon.moarsigns.client.interfaces.buttons.*;
 import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignUpdate;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.ChatAllowedCharacters;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiMoarSign extends GuiBase {
+
+    private List<GuiButton> buttons = new ArrayList<GuiButton>();
+    public GuiTextField[] guiTextFields = new GuiTextField[4];
+    public int selectedTextField = -1;
+    private int pressedButton = -1;
+
+    private ButtonCut buttonCut;
+    private ButtonCopy buttonCopy;
+    private ButtonPaste buttonPaste;
+    private ButtonCutSign buttonCutSign;
+    private ButtonCopySign buttonCopySign;
+    private ButtonPasteSign buttonPasteSign;
+    private ButtonErase buttonErase;
+
+    public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
+
 
     public static final String EDIT_SIGN_MESSAGE = "Edit sign message:";
     public static final String FONT_SIZE = "Font Size";
@@ -53,11 +67,34 @@ public class GuiMoarSign extends GuiBase {
 
     @Override
     public void initGui() {
+        super.initGui();
 
         buttonList.clear();
+        buttons.clear();
         Keyboard.enableRepeatEvents(true);
 
-        SIZE_X = width / 2 + 65;
+        for (int i = 0; i < guiTextFields.length; i++) guiTextFields[i] = new GuiTextField(fontRendererObj, guiLeft + 10, guiTop + 35 + 17 * i, 90, 16);
+
+        buttonCut = new ButtonCut(guiLeft + 10, guiTop + 10);
+        buttonCopy = new ButtonCopy(guiLeft + 30, guiTop + 10);
+        buttonPaste = new ButtonPaste(guiLeft + 50, guiTop + 10);
+        buttonCutSign = new ButtonCutSign(guiLeft + 70, guiTop + 10);
+        buttonCopySign = new ButtonCopySign(guiLeft + 90, guiTop + 10);
+        buttonPasteSign = new ButtonPasteSign(guiLeft + 110, guiTop + 10);
+        buttonErase = new ButtonErase(guiLeft + 130, guiTop + 10);
+
+        updateButtons();
+
+        buttons.add(buttonCut);
+        buttons.add(buttonCopy);
+        buttons.add(buttonPaste);
+        buttons.add(buttonCutSign);
+        buttons.add(buttonCopySign);
+        buttons.add(buttonPasteSign);
+        buttons.add(buttonErase);
+
+
+        /*SIZE_X = width / 2 + 65;
         SIZE_X2 = width / 2 + 65 + SIZE_W;
         OFFSET_X = width / 2 + 130;
         OFFSET_X2 = width / 2 + 130 + SIZE_W;
@@ -67,7 +104,7 @@ public class GuiMoarSign extends GuiBase {
         buttonList.add(new GuiButton(2, SIZE_X - 2, SIZE_Y + 24, 54, 20, "-"));
         buttonList.add(new GuiButton(3, OFFSET_X - 2, OFFSET_Y - 24, 54, 20, "+"));
         buttonList.add(new GuiButton(4, OFFSET_X - 2, OFFSET_Y + 24, 54, 20, "-"));
-        entitySign.setEditable(false);
+        entitySign.setEditable(false);         */
     }
 
     @Override
@@ -109,9 +146,10 @@ public class GuiMoarSign extends GuiBase {
     @Override
     public void updateScreen() {
         ++updateCounter;
+        for (GuiTextField guiTextField : guiTextFields) guiTextField.updateCursorCounter();
     }
 
-    @Override
+    /*@Override
     protected void actionPerformed(GuiButton guiButton) {
         if (guiButton.enabled) {
             if (guiButton.id == 0) {
@@ -145,22 +183,33 @@ public class GuiMoarSign extends GuiBase {
                 updateSize();
             }
         }
-    }
+    }            */
 
     @Override
     protected void keyTyped(char typedChar, int key) {
 
+        if (selectedTextField != -1) {
+            int index = 0;
+            for (GuiTextField textField: guiTextFields) {
+                if (textField.isFocused()) textField.textboxKeyTyped(typedChar, key);
+                entitySign.signText[index++] = textField.getText();
+            }
+        }
+
+        updateButtons();
 
         if (key == 200) {
-            editLine = rows > 1 ? (editLine - 1 < 0 ? rows - 1 : editLine - 1) : 0;
+            selectedTextField = selectedTextField > 0 ? selectedTextField--: 3;
+            //editLine = rows > 1 ? (editLine - 1 < 0 ? rows - 1 : editLine - 1) : 0;
         }
 
         if (key == 208 || key == 28 || key == 156) {
-            editLine = rows > 1 ? (editLine + 1 > rows - 1 ? 0 : editLine + 1) : 0;
+            selectedTextField = selectedTextField < 3 ? selectedTextField++: 0;
+            //editLine = rows > 1 ? (editLine + 1 > rows - 1 ? 0 : editLine + 1) : 0;
         }
 
         updateSize();
-        int l = fontRendererObj.getStringWidth(entitySign.signText[editLine]);
+        /*int l = fontRendererObj.getStringWidth(entitySign.signText[editLine]);
 
         if (key == 14 && entitySign.signText[editLine].length() > 0) {
             if (l > maxLength)
@@ -172,7 +221,7 @@ public class GuiMoarSign extends GuiBase {
         if (ChatAllowedCharacters.isAllowedCharacter(typedChar) && fontRendererObj.getCharWidth(typedChar) + l < maxLength) {
             entitySign.signText[editLine] = entitySign.signText[editLine] + typedChar;
             l = fontRendererObj.getStringWidth(entitySign.signText[editLine]);
-        }
+        }                            */
 
         if (key == 1) {
             mc.thePlayer.closeScreen();
@@ -184,7 +233,28 @@ public class GuiMoarSign extends GuiBase {
 
         drawDefaultBackground();
         super.drawScreen(x, y, par3);
-        drawCenteredString(fontRendererObj, EDIT_SIGN_MESSAGE, width / 2, 40, 16777215);
+
+        bindTexture(texture);
+        drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+
+        for (GuiButton button: buttons) {
+            button.drawButton(this, x, y);
+        }
+
+        for (GuiTextField textField: guiTextFields) textField.drawTextBox();
+
+
+        int k = 0;
+        int j = 0;
+        for (GuiColor color: GuiColor.values()) {
+            drawRect(guiLeft + 110 + k * 12, guiTop + 40 + j * 12, guiLeft + 120 + k * 12, guiTop + 50 + j * 12, color.getARGB());
+            if (k > 2) {
+                k = 0;
+                j++;
+            } else k++;
+        }
+
+        /*drawCenteredString(fontRendererObj, EDIT_SIGN_MESSAGE, width / 2, 40, 16777215);
         GL11.glColor4f(1, 1, 1, 1);
 
 
@@ -271,7 +341,95 @@ public class GuiMoarSign extends GuiBase {
             text.add(GuiColor.GRAY + "Current lowest value is: " + GuiColor.CYAN + minOffset);
             text.add(GuiColor.GREEN + "Hold Shift to change with 10");
             drawHoveringText(text, x, y, fontRendererObj);
+        }     */
+
+        for (GuiButton button: buttons) button.hoverText(this, x, y);
+    }
+
+    @Override
+    protected void mouseClicked(int x, int y, int b) {
+        super.mouseClicked(x, y, b);
+
+        if (b == 0) {
+            int index = 0;
+            for (GuiButton button : buttons) {
+                if (!button.isDisabled && button.inRect(x, y))  {
+                    button.isPressed = true;
+                    pressedButton = index;
+                }
+                index++;
+            }
+        }
+
+        for (GuiTextField guiTextField : guiTextFields) {
+            guiTextField.mouseClicked(x, y, b);
+        }
+
+        if (pressedButton == -1) {
+            boolean newSet = false;
+            for (int i = 0; i < guiTextFields.length; i++) {
+                if (guiTextFields[i].isFocused()) {
+                    selectedTextField = i;
+                    newSet = true;
+                }
+            }
+
+            if (!newSet) {
+                selectedTextField = -1;
+            }
+
+            updateButtons();
         }
     }
 
+    public void updateButtons() {
+        if (selectedTextField != -1 && buttonPaste.isDisabled && hasClipboardContent()) {
+            buttonPaste.isDisabled = false;
+        } else if (selectedTextField == -1) {
+            buttonPaste.isDisabled = true;
+        }
+
+        if (selectedTextField != -1) {
+            if (!guiTextFields[selectedTextField].getSelectedText().equals("")) {
+                buttonCopy.isDisabled = false;
+                buttonCut.isDisabled = false;
+            } else {
+                buttonCopy.isDisabled = true;
+                buttonCut.isDisabled = true;
+            }
+        } else {
+            buttonCopy.isDisabled = true;
+            buttonCut.isDisabled = true;
+        }
+
+        String s = "";
+        for (GuiTextField textField: guiTextFields) {
+            s += textField.getText();
+        }
+
+        if (!s.equals("")) {
+            buttonCopySign.isDisabled = false;
+            buttonCutSign.isDisabled = false;
+            buttonErase.isDisabled = false;
+        } else {
+            buttonCopySign.isDisabled = true;
+            buttonCutSign.isDisabled = true;
+            buttonErase.isDisabled = true;
+        }
+
+        String clip = getClipboardContent();
+        buttonPasteSign.isDisabled = !(!clip.equals("") && clip.substring(0, "moarsign".length()).equals("moarsign") && clip.split(":").length == 6);
+
+    }
+
+    @Override
+    protected void mouseMovedOrUp(int x, int y, int b) {
+        super.mouseMovedOrUp(x, y, b);
+        if (b == 0 && pressedButton != -1) {
+            buttons.get(pressedButton).isPressed = false;
+            if (buttons.get(pressedButton).inRect(x,y)) buttons.get(pressedButton).action(this);
+            updateButtons();
+            pressedButton = -1;
+        }
+    }
 }

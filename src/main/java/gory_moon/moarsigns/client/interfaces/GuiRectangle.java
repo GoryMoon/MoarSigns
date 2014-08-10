@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public class GuiRectangle {
 
-    private int x;
-    private int y;
-    private int w;
-    private int h;
+    protected int x;
+    protected int y;
+    protected int w;
+    protected int h;
 
     public GuiRectangle(int x, int y, int w, int h) {
         this.x = x;
@@ -16,10 +16,7 @@ public class GuiRectangle {
         this.h = h;
     }
 
-    public boolean inRect(GuiDebug gui, int mouseX, int mouseY) {
-        mouseX -= gui.getLeft();
-        mouseY -= gui.getTop();
-
+    public boolean inRect(int mouseX, int mouseY) {
         return x <= mouseX && mouseX <= x + w && y <= mouseY && mouseY <= y + h;
     }
 
@@ -31,13 +28,13 @@ public class GuiRectangle {
         this.y = y;
     }
 
-    public void draw(GuiDebug gui, int srcX, int srcY) {
-        gui.drawTexturedModalRect(gui.getLeft() + x, gui.getTop() + y, srcX, srcY, w, h);
+    public void draw(GuiBase gui, int srcX, int srcY) {
+        gui.drawTexturedModalRect(x, y, srcX, srcY, w, h);
     }
 
-    public void drawString(GuiDebug gui, int mouseX, int mouseY, String str) {
-        if (inRect(gui, mouseX, mouseY)) {
-            gui.drawHoverString(Arrays.asList(str.split("\n")), mouseX - gui.getLeft(), mouseY - gui.getTop());
+    public void drawString(GuiBase gui, int mouseX, int mouseY, String str) {
+        if (inRect(mouseX, mouseY)) {
+            gui.drawHoveringText(Arrays.asList(str.split("\n")), mouseX, mouseY, gui.getFontRenderer());
         }
     }
 
