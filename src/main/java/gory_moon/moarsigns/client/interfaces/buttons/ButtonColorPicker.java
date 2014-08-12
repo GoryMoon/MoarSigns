@@ -18,30 +18,8 @@ public class ButtonColorPicker extends GuiButtonToggleable {
     @Override
     public void action(GuiBase gui) {
         GuiMoarSign guiM = (GuiMoarSign)gui;
-        guiM.showColors = true;
+        guiM.showColors = !guiM.showColors;
+        guiM.guiTextFields[guiM.selectedTextField].setFocused(true);
     }
 
-    @Override
-    public void update(GuiMoarSign gui) {
-        if (gui.selectedTextField != -1) {
-            isDisabled = false;
-        } else {
-            isDisabled = true;
-            gui.showColors = false;
-        }
-
-        if (!getState()) gui.showColors = false;
-    }
-
-    @Override
-    public boolean onClick(GuiMoarSign gui, int x, int y) {
-        if (super.onClick(gui, x, y)) {
-            setState(!getState());
-            return true;
-        } else {
-            setState(false);
-            gui.showColors = false;
-            return false;
-        }
-    }
 }
