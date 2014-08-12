@@ -2,6 +2,7 @@ package gory_moon.moarsigns.client.interfaces.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiRectangle;
+import net.minecraft.client.gui.Gui;
 
 import java.util.List;
 

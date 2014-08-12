@@ -61,6 +61,10 @@ public enum GuiColor {
         return (k & 255) << 16 | (l & 255) << 8 | i1 & 255;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
     @Override
     public String toString() {
         return "\u00a7" + Integer.toHexString(number);
