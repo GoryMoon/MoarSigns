@@ -71,7 +71,7 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
         buf.writeInt(offset);
 
         for (int i = 0; i < 4; i++) {
-            buf.writeInt(text[i].length());
+            buf.writeInt(text[i].getBytes().length);
             buf.writeBytes(text[i].getBytes());
         }
     }

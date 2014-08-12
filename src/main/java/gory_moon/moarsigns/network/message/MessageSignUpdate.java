@@ -4,6 +4,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import gory_moon.moarsigns.MoarSigns;
+import gory_moon.moarsigns.client.interfaces.GuiSignTextField;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Utils;
 import io.netty.buffer.ByteBuf;
@@ -62,7 +63,7 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
         buf.writeInt(offset);
 
         for (int i = 0; i < 4; i++) {
-            buf.writeInt(text[i].length());
+            buf.writeInt(text[i].getBytes().length);
             buf.writeBytes(text[i].getBytes());
         }
     }
@@ -94,7 +95,7 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
                     }
 
                     for (int j = 0; j < message.text[i].length(); ++j) {
-                        if (!ChatAllowedCharacters.isAllowedCharacter(message.text[i].charAt(j))) {
+                        if (!GuiSignTextField.isAllowedCharacter(message.text[i].charAt(j))) {
                             flag = false;
                         }
                     }

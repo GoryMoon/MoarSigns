@@ -76,7 +76,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
         buf.writeInt(offset);
 
         for (int i = 0; i < 4; i++) {
-            buf.writeInt(text[i].length());
+            buf.writeInt(text[i].getBytes().length);
             buf.writeBytes(text[i].getBytes());
         }
         buf.writeBoolean(openGui);
