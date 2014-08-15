@@ -19,6 +19,14 @@ public class ButtonPaste extends GuiButton {
     public void action(GuiBase gui) {
         GuiMoarSign guiM = (GuiMoarSign)gui;
         guiM.guiTextFields[guiM.selectedTextField].writeText(guiM.getClipboardContent());
-        guiM.guiTextFields[guiM.selectedTextField].setFocused(true);
+    }
+
+    @Override
+    public void update(GuiMoarSign gui) {
+        if (gui.selectedTextField != -1 && gui.hasClipboardContent()) {
+            isDisabled = false;
+        } else if (gui.selectedTextField == -1) {
+            isDisabled = true;
+        }
     }
 }

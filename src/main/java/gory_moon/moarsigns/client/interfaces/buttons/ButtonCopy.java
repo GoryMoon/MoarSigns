@@ -19,6 +19,10 @@ public class ButtonCopy extends GuiButton {
     public void action(GuiBase gui) {
         GuiMoarSign guiM = (GuiMoarSign)gui;
         gui.setClipboardContent(guiM.guiTextFields[guiM.selectedTextField].getSelectedText());
-        guiM.guiTextFields[guiM.selectedTextField].setFocused(true);
+    }
+
+    @Override
+    public void update(GuiMoarSign gui) {
+        isDisabled = gui.selectedTextField == -1 || gui.guiTextFields[gui.selectedTextField].getSelectedText().equals("");
     }
 }

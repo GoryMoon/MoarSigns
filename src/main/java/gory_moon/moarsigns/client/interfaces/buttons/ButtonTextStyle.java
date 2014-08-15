@@ -4,21 +4,21 @@ import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 
-public class ButtonColorPicker extends GuiButtonToggleable {
+public class ButtonTextStyle extends GuiButtonToggleable {
 
-    public ButtonColorPicker(int x, int y) {
-        super(x, y, 112);
+    public ButtonTextStyle(int x, int y) {
+        super(x, y, 128);
     }
 
     @Override
     public String getButtonInfo() {
-        return "Color Selector\n" + GuiColor.GRAY + "Add color to the text\n" + GuiColor.GRAY + "at the cursor position";
+        return "Text Style\n" + GuiColor.GRAY + "Set the style for\n" + GuiColor.GRAY + "the following text from\n" + GuiColor.GRAY + "the cursor position";
     }
 
     @Override
     public void action(GuiBase gui) {
         GuiMoarSign guiM = (GuiMoarSign)gui;
-        guiM.showColors = true;
+        guiM.showTextStyles = true;
     }
 
     @Override
@@ -27,10 +27,10 @@ public class ButtonColorPicker extends GuiButtonToggleable {
             isDisabled = false;
         } else if (gui.selectedTextField == -1) {
             isDisabled = true;
-            gui.showColors = false;
+            gui.showTextStyles = false;
         }
 
-        if (!getState()) gui.showColors = false;
+        if (!getState()) gui.showTextStyles = false;
     }
 
     @Override
@@ -40,8 +40,9 @@ public class ButtonColorPicker extends GuiButtonToggleable {
             return true;
         } else {
             setState(false);
-            gui.showColors = false;
+            gui.showTextStyles = false;
             return false;
         }
     }
+
 }

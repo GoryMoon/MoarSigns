@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.client.interfaces.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
+import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.client.interfaces.GuiRectangle;
 import net.minecraft.client.gui.Gui;
 
@@ -8,9 +9,8 @@ import java.util.List;
 
 public abstract class GuiButton extends GuiRectangle {
 
-    private int srcX;
+    protected int srcX;
     public boolean isDisabled = false;
-    public boolean isPressed = false;
 
     public GuiButton(int x, int y, int srcX) {
         super(x, y, 20, 20);
@@ -18,11 +18,11 @@ public abstract class GuiButton extends GuiRectangle {
     }
 
     public void drawButton(GuiBase gui, int mouseX, int mouseY) {
-        int buttonType = isDisabled ? 60: isPressed ? 40 : inRect(mouseX, mouseY) ? 20: 0;
+        int buttonType = isDisabled ? 60: inRect(mouseX, mouseY) ? 20: 0;
 
         super.draw(gui, buttonType, 204);
 
-        gui.drawTexturedModalRect(x + 2 + (isPressed ? 1: 0), y + 2 + (isPressed ? 0: 0), srcX, isDisabled ? 224: 240, 16, 16);
+        gui.drawTexturedModalRect(x + 2, y + 2, srcX, isDisabled ? 224: 240, 16, 16);
     }
 
     public void hoverText(GuiBase gui, int x, int y) {
@@ -32,4 +32,14 @@ public abstract class GuiButton extends GuiRectangle {
     public abstract String getButtonInfo();
 
     public abstract void action(GuiBase gui);
+
+    public void update(GuiMoarSign gui) {}
+
+    public boolean onClick(GuiMoarSign gui, int x, int y) {
+        if (inRect(x, y)) {
+            action(gui);
+            return true;
+        }
+        return false;
+    }
 }

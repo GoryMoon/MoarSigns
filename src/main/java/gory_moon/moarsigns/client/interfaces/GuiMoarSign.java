@@ -1,5 +1,6 @@
 package gory_moon.moarsigns.client.interfaces;
 
+import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.client.interfaces.buttons.*;
@@ -15,6 +16,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,19 +27,18 @@ public class GuiMoarSign extends GuiBase {
     private List<GuiButton> buttons = new ArrayList<GuiButton>();
     public GuiSignTextField[] guiTextFields = new GuiSignTextField[4];
     public int selectedTextField = -1;
-    private int pressedButton = -1;
 
     public boolean showColors = false;
     private GuiColorButton[] colors = new GuiColorButton[16];
 
-    private ButtonCut buttonCut;
-    private ButtonCopy buttonCopy;
-    private ButtonPaste buttonPaste;
+    public boolean showTextStyles;
+    private GuiTextStyleButton[] styleButtons = new GuiTextStyleButton[6];
+
     private ButtonCutSign buttonCutSign;
     private ButtonCopySign buttonCopySign;
-    private ButtonPasteSign buttonPasteSign;
     private ButtonErase buttonErase;
-    private ButtonColorPicker buttonColorPicker;
+    public ButtonColorPicker buttonColorPicker;
+    public ButtonTextStyle buttonTextStyle;
 
     public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
 
@@ -80,38 +81,45 @@ public class GuiMoarSign extends GuiBase {
         buttons.clear();
         Keyboard.enableRepeatEvents(true);
 
-        for (int i = 0; i < guiTextFields.length; i++) guiTextFields[i] = new GuiSignTextField(fontRendererObj, guiLeft + 10, guiTop + 35 + 17 * i, 90, 16);
+        String[] text = getSignTextWithCode(entitySign.signText);
+        for (int i = 0; i < guiTextFields.length; i++) {
+            guiTextFields[i] = new GuiSignTextField(fontRendererObj, guiLeft + 10, guiTop + 35 + 17 * i, 90, 16);
+            guiTextFields[i].setText(text[i]);
+        }
+
+        if (selectedTextField != -1) guiTextFields[selectedTextField].setFocused(true);
 
         int k = 0;
         int j = 0;
         for (int i = 0; i < colors.length; i++) {
-            colors[i] = new GuiColorButton(guiLeft + 150 + 5 + 14 * k, guiTop + 30 + 5 + 14 * j, 12, 12, i, 0xffb2b2b2, 0xff424242);
+            colors[i] = new GuiColorButton(guiLeft + 150 + 5 + 14 * k, guiTop + 30 + 5 + 14 * j, 12, 12, i);
             if (k > 2) {
                 k = 0;
                 j++;
             } else k++;
         }
 
-        buttonCut = new ButtonCut(guiLeft + 10, guiTop + 10);
-        buttonCopy = new ButtonCopy(guiLeft + 30, guiTop + 10);
-        buttonPaste = new ButtonPaste(guiLeft + 50, guiTop + 10);
+        for (int i = 0; i < styleButtons.length; i++) {
+            styleButtons[i] = new GuiTextStyleButton(guiLeft + 150 + 5, guiTop + 30 + 5 + 18 * i, 50, 16, i);
+        }
+
         buttonCutSign = new ButtonCutSign(guiLeft + 70, guiTop + 10);
         buttonCopySign = new ButtonCopySign(guiLeft + 90, guiTop + 10);
-        buttonPasteSign = new ButtonPasteSign(guiLeft + 110, guiTop + 10);
         buttonErase = new ButtonErase(guiLeft + 130, guiTop + 10);
         buttonColorPicker = new ButtonColorPicker(guiLeft + 150, guiTop + 10);
+        buttonTextStyle = new ButtonTextStyle(guiLeft + 170, guiTop + 10);
 
-        update();
-
-        buttons.add(buttonCut);
-        buttons.add(buttonCopy);
-        buttons.add(buttonPaste);
+        buttons.add(new ButtonCut(guiLeft + 10, guiTop + 10));
+        buttons.add(new ButtonCopy(guiLeft + 30, guiTop + 10));
+        buttons.add(new ButtonPaste(guiLeft + 50, guiTop + 10));
         buttons.add(buttonCutSign);
         buttons.add(buttonCopySign);
-        buttons.add(buttonPasteSign);
+        buttons.add(new ButtonPasteSign(guiLeft + 110, guiTop + 10));
         buttons.add(buttonErase);
         buttons.add(buttonColorPicker);
+        buttons.add(buttonTextStyle);
 
+        update();
 
         /*SIZE_X = width / 2 + 65;
         SIZE_X2 = width / 2 + 65 + SIZE_W;
@@ -219,18 +227,14 @@ public class GuiMoarSign extends GuiBase {
 
         if (key == 200) {
             guiTextFields[selectedTextField].setFocused(false);
-            selectedTextField = selectedTextField > 0 ? selectedTextField--: 3;
+            selectedTextField = selectedTextField - 1 < 0 ? 3: selectedTextField - 1;
             guiTextFields[selectedTextField].setFocused(true);
-
-            //editLine = rows > 1 ? (editLine - 1 < 0 ? rows - 1 : editLine - 1) : 0;
         }
 
         if (key == 208 || key == 28 || key == 156) {
             guiTextFields[selectedTextField].setFocused(false);
-            selectedTextField = selectedTextField < 3 ? selectedTextField++: 0;
+            selectedTextField = selectedTextField + 1 > 3 ? 0: selectedTextField + 1;
             guiTextFields[selectedTextField].setFocused(true);
-
-            //editLine = rows > 1 ? (editLine + 1 > rows - 1 ? 0 : editLine + 1) : 0;
         }
 
         updateSize();
@@ -371,8 +375,36 @@ public class GuiMoarSign extends GuiBase {
                 } else k1++;
             }
             GL11.glPopMatrix();
+
+            for (GuiColorButton button: colors) {
+                if (button.inRect(x, y)) {
+                    String s = GuiColor.values()[button.getId(this, x, y)].name();
+                    drawHoveringText(Lists.asList(s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase(), new String[0]), x, y, fontRendererObj);
+                }
+            }
         }
 
+        if (showTextStyles) {
+            GL11.glPushMatrix();
+            GL11.glTranslatef(0.0F, 0.0F, 51.0F);
+
+            bindTexture(texture);
+
+            drawTexturedModalRect(guiLeft + 150, guiTop + 30, 0, 0, 55, 111);
+            drawTexturedModalRect(guiLeft + 205, guiTop + 30, 219, 0, 5, 111);
+
+            drawTexturedModalRect(guiLeft + 150, guiTop + 141, 0, 195, 35, 5);
+            drawTexturedModalRect(guiLeft + 180, guiTop + 141, 194, 195, 30, 5);
+
+            for (GuiTextStyleButton button: styleButtons) {
+                button.draw(this, x, y);
+            }
+            GL11.glPopMatrix();
+
+            for (GuiTextStyleButton button: styleButtons) {
+                if (button.inRect(x, y)) drawHoveringText(Lists.asList(button.getName(), new String[0]), x, y, fontRendererObj);
+            }
+        }
 
         for (GuiButton button: buttons) button.hoverText(this, x, y);
     }
@@ -391,29 +423,43 @@ public class GuiMoarSign extends GuiBase {
                     guiTextFields[selectedTextField].writeText("{" + Integer.toHexString(GuiColor.values()[id].getNumber()) + "}");
                     update();
 
-                    buttonColorPicker.isPressed = false;
-                    buttonColorPicker.setState(false);
+                    buttonColorPicker.onClick(this, x, y);
                     return;
                 }
             }
         }
 
-        if (b == 0) {
-            int index = 0;
-            for (GuiButton button : buttons) {
-                if (!button.isDisabled && button.inRect(x, y)) {
-                    button.isPressed = true;
-                    pressedButton = index;
+        if (showTextStyles) {
+            for (GuiTextStyleButton button: styleButtons) {
+                if (button.inRect(x, y)) {
+                    showTextStyles = false;
+                    guiTextFields[selectedTextField].setFocused(true);
+                    guiTextFields[selectedTextField].writeText("{" + button.getStyleChar(x, y) + "}");
+                    update();
+
+                    buttonTextStyle.onClick(this, x, y);
+                    return;
                 }
-                index++;
             }
         }
 
-        for (GuiTextField guiTextField : guiTextFields) {
-            guiTextField.mouseClicked(x, y, b);
+        boolean pressedButton = false;
+        if (b == 0) {
+            for (GuiButton button : buttons) {
+                if (!button.isDisabled && button.onClick(this, x, y)) {
+                    pressedButton = true;
+                    update();
+                    if (selectedTextField != -1) guiTextFields[selectedTextField].setFocused(true);
+                }
+            }
         }
 
-        if (pressedButton == -1) {
+        if (!pressedButton) {
+
+            for (GuiTextField guiTextField : guiTextFields) {
+                guiTextField.mouseClicked(x, y, b);
+            }
+
             boolean newSet = false;
             for (int i = 0; i < guiTextFields.length; i++) {
                 if (guiTextFields[i].isFocused()) {
@@ -426,45 +472,23 @@ public class GuiMoarSign extends GuiBase {
                 selectedTextField = -1;
             }
         }
+
         update();
     }
 
     int oldSelectedIndex = -1;
     public void update() {
 
-        if (selectedTextField != -1 && buttonPaste.isDisabled && hasClipboardContent()) {
-            buttonPaste.isDisabled = false;
-            buttonColorPicker.isDisabled = false;
-        } else if (selectedTextField == -1) {
-            buttonPaste.isDisabled = true;
-            buttonColorPicker.isDisabled = true;
-            showColors = false;
-        }
-
-        if (selectedTextField != -1) {
-            if (!guiTextFields[selectedTextField].getSelectedText().equals("")) {
-                buttonCopy.isDisabled = false;
-                buttonCut.isDisabled = false;
-            } else {
-                buttonCopy.isDisabled = true;
-                buttonCut.isDisabled = true;
-            }
-        } else {
-            buttonCopy.isDisabled = true;
-            buttonCut.isDisabled = true;
+        for (GuiButton button: buttons) {
+            button.update(this);
         }
 
         String s = "";
-        for (GuiTextField textField: guiTextFields) {
-            s += textField.getText();
-        }
+        String[] array = new String[guiTextFields.length];
 
-        for (GuiButton button: buttons) {
-            if ((button instanceof GuiButtonToggleable) && selectedTextField != oldSelectedIndex) {
-                button.isPressed = false;
-                ((GuiButtonToggleable) button).setState(false);
-                showColors = false;
-            }
+        for (int i = 0; i < 4; i++) {
+            array[i] = guiTextFields[i].getText();
+            s += guiTextFields[i].getText();
         }
 
         if (!s.equals("")) {
@@ -477,37 +501,10 @@ public class GuiMoarSign extends GuiBase {
             buttonErase.isDisabled = true;
         }
 
-        String clip = getClipboardContent();
-        buttonPasteSign.isDisabled = !(!clip.equals("") && clip.length() > 8 && clip.substring(0, 8).equals("moarsign") && clip.split(":").length == 6);
-
-        String[] array = new String[guiTextFields.length];
-        for (int i = 0; i < 4; i++) {
-            array[i] = guiTextFields[i].getText();
-        }
         entitySign.signText = getSignTextWithColor(array);
 
         if (oldSelectedIndex != selectedTextField) oldSelectedIndex = selectedTextField;
 
-    }
-
-    @Override
-    protected void mouseMovedOrUp(int x, int y, int b) {
-        super.mouseMovedOrUp(x, y, b);
-        if (b == 0 && pressedButton != -1) {
-            GuiButton button = buttons.get(pressedButton);
-            if (!(button instanceof GuiButtonToggleable)) button.isPressed = false;
-            else {
-                if (!((GuiButtonToggleable) button).getState()) ((GuiButtonToggleable) button).setState(true);
-                else {
-                    button.isPressed = false;
-                    ((GuiButtonToggleable) button).setState(false);
-                }
-            }
-
-            if (button.inRect(x,y)) button.action(this);
-            update();
-            pressedButton = -1;
-        }
     }
 
     public static String[] getSignTextWithColor(String[] array) {
@@ -535,7 +532,7 @@ public class GuiMoarSign extends GuiBase {
         for (int i = 0; i < array.length; i++) {
             String s = array[i];
             if (!s.equals("")) {
-                s = s.replaceAll("(§[a-z0-9])+", "{$}");
+                s = s.replaceAll("(§[a-z0-9])+", "{$1}");
                 s = s.replaceAll("([§])+", "");
             }
             result[i] = s;
@@ -543,4 +540,5 @@ public class GuiMoarSign extends GuiBase {
 
         return result;
     }
+
 }

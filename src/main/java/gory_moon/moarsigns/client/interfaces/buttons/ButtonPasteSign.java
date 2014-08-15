@@ -20,12 +20,18 @@ public class ButtonPasteSign extends GuiButton {
         GuiMoarSign guiM = (GuiMoarSign)gui;
 
         String s = guiM.getClipboardContent();
-        boolean signPaste = (!s.equals("") && s.substring(0, "moarsign".length()).equals("moarsign") && s.split(":").length == 6);
+        boolean signPaste = (!s.equals("") && s.length() > 8 && s.substring(0, 8).equals("moarsign") && s.split(":").length == 6);
         if (signPaste) {
             String[] rows = s.split(":");
             for (int i = 1; i < rows.length - 1; i++) {
                 guiM.guiTextFields[i - 1].setText(rows[i]);
             }
         }
+    }
+
+    @Override
+    public void update(GuiMoarSign gui) {
+        String clip = gui.getClipboardContent();
+        isDisabled = !(!clip.equals("") && clip.length() > 8 && clip.substring(0, 8).equals("moarsign") && clip.split(":").length == 6);
     }
 }
