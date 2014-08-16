@@ -3,6 +3,7 @@ package gory_moon.moarsigns.client.interfaces.buttons;
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 
 public class ButtonCopySign extends GuiButton {
@@ -23,8 +24,8 @@ public class ButtonCopySign extends GuiButton {
         GuiMoarSign guiM = (GuiMoarSign)gui;
         String s = "moarsign";
         for (GuiTextField textField: guiM.guiTextFields) {
-            s += ":" + textField.getText();
+            s += "\u001D" + textField.getText();
         }
-        gui.setClipboardContent(s + ":moarsign");
+        GuiScreen.setClipboardString(s + "\u001Dmoarsign");
     }
 }

@@ -3,6 +3,7 @@ package gory_moon.moarsigns.client.interfaces.buttons;
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
+import net.minecraft.client.gui.GuiScreen;
 
 public class ButtonPaste extends GuiButton {
 
@@ -18,12 +19,12 @@ public class ButtonPaste extends GuiButton {
     @Override
     public void action(GuiBase gui) {
         GuiMoarSign guiM = (GuiMoarSign)gui;
-        guiM.guiTextFields[guiM.selectedTextField].writeText(guiM.getClipboardContent());
+        guiM.guiTextFields[guiM.selectedTextField].writeText(GuiScreen.getClipboardString());
     }
 
     @Override
     public void update(GuiMoarSign gui) {
-        if (gui.selectedTextField != -1 && gui.hasClipboardContent()) {
+        if (gui.selectedTextField != -1 && !GuiScreen.getClipboardString().equals("")) {
             isDisabled = false;
         } else if (gui.selectedTextField == -1) {
             isDisabled = true;

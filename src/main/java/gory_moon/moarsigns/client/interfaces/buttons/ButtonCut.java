@@ -3,6 +3,7 @@ package gory_moon.moarsigns.client.interfaces.buttons;
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
+import net.minecraft.client.gui.GuiScreen;
 
 public class ButtonCut extends GuiButton {
 
@@ -18,7 +19,7 @@ public class ButtonCut extends GuiButton {
     @Override
     public void action(GuiBase gui) {
         GuiMoarSign guiM = (GuiMoarSign)gui;
-        gui.setClipboardContent(guiM.guiTextFields[guiM.selectedTextField].getSelectedText());
+        GuiScreen.setClipboardString(guiM.guiTextFields[guiM.selectedTextField].getSelectedText());
         guiM.guiTextFields[guiM.selectedTextField].deleteFromCursor(0);
     }
 

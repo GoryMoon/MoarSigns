@@ -26,7 +26,7 @@ public class GuiMoarSign extends GuiBase {
 
     private List<GuiButton> buttons = new ArrayList<GuiButton>();
     public GuiSignTextField[] guiTextFields = new GuiSignTextField[4];
-    public int selectedTextField = -1;
+    public int selectedTextField = 0;
 
     public boolean showColors = false;
     private GuiColorButton[] colors = new GuiColorButton[16];
@@ -412,64 +412,64 @@ public class GuiMoarSign extends GuiBase {
     @Override
     protected void mouseClicked(int x, int y, int b) {
         super.mouseClicked(x, y, b);
-
-        if (showColors) {
-            int id;
-            for (GuiColorButton button: colors) {
-                id = button.getId(this, x, y);
-                if (id != -1) {
-                    showColors = false;
-                    guiTextFields[selectedTextField].setFocused(true);
-                    guiTextFields[selectedTextField].writeText("{" + Integer.toHexString(GuiColor.values()[id].getNumber()) + "}");
-                    update();
-
-                    buttonColorPicker.onClick(this, x, y);
-                    return;
-                }
-            }
-        }
-
-        if (showTextStyles) {
-            for (GuiTextStyleButton button: styleButtons) {
-                if (button.inRect(x, y)) {
-                    showTextStyles = false;
-                    guiTextFields[selectedTextField].setFocused(true);
-                    guiTextFields[selectedTextField].writeText("{" + button.getStyleChar(x, y) + "}");
-                    update();
-
-                    buttonTextStyle.onClick(this, x, y);
-                    return;
-                }
-            }
-        }
-
-        boolean pressedButton = false;
         if (b == 0) {
+            boolean noTextFieldClick = false;
+
+            if (showColors) {
+                int id;
+                for (GuiColorButton button : colors) {
+                    id = button.getId(this, x, y);
+                    if (id != -1) {
+                        showColors = false;
+                        guiTextFields[selectedTextField].setFocused(true);
+                        guiTextFields[selectedTextField].writeText("{" + Integer.toHexString(GuiColor.values()[id].getNumber()) + "}");
+                        update();
+                        noTextFieldClick = true;
+
+                        buttonColorPicker.onClick(this, x, y);
+                    }
+                }
+            }
+
+            if (showTextStyles) {
+                for (GuiTextStyleButton button : styleButtons) {
+                    if (button.inRect(x, y)) {
+                        showTextStyles = false;
+                        guiTextFields[selectedTextField].setFocused(true);
+                        guiTextFields[selectedTextField].writeText("{" + button.getStyleChar(x, y) + "}");
+                        update();
+                        noTextFieldClick = true;
+
+                        buttonTextStyle.onClick(this, x, y);
+                    }
+                }
+            }
+
             for (GuiButton button : buttons) {
                 if (!button.isDisabled && button.onClick(this, x, y)) {
-                    pressedButton = true;
+                    noTextFieldClick = true;
                     update();
                     if (selectedTextField != -1) guiTextFields[selectedTextField].setFocused(true);
                 }
             }
-        }
 
-        if (!pressedButton) {
+            if (!noTextFieldClick) {
 
-            for (GuiTextField guiTextField : guiTextFields) {
-                guiTextField.mouseClicked(x, y, b);
-            }
-
-            boolean newSet = false;
-            for (int i = 0; i < guiTextFields.length; i++) {
-                if (guiTextFields[i].isFocused()) {
-                    selectedTextField = i;
-                    newSet = true;
+                for (GuiTextField guiTextField : guiTextFields) {
+                    guiTextField.mouseClicked(x, y, b);
                 }
-            }
 
-            if (!newSet) {
-                selectedTextField = -1;
+                boolean newSet = false;
+                for (int i = 0; i < guiTextFields.length; i++) {
+                    if (guiTextFields[i].isFocused()) {
+                        selectedTextField = i;
+                        newSet = true;
+                    }
+                }
+
+                if (!newSet) {
+                    selectedTextField = -1;
+                }
             }
         }
 

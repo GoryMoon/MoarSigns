@@ -42,29 +42,4 @@ public class GuiBase extends GuiScreen {
         Minecraft.getMinecraft().getTextureManager().bindTexture(resource);
     }
 
-    public boolean hasClipboardContent() {
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        Transferable content = clipboard.getContents(null);
-        return content != null && content.isDataFlavorSupported(DataFlavor.stringFlavor);
-    }
-
-    public String getClipboardContent() {
-        String result = "";
-
-        if (hasClipboardContent()) {
-            Transferable content = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
-
-            try {
-                result = (String) content.getTransferData(DataFlavor.stringFlavor);
-            } catch (UnsupportedFlavorException | IOException ignored) {}
-        }
-
-        return result;
-    }
-
-    public void setClipboardContent(String s) {
-        StringSelection selection = new StringSelection(s);
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(selection, selection);
-    }
 }

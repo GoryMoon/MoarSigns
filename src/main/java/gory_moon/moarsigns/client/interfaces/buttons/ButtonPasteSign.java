@@ -3,6 +3,7 @@ package gory_moon.moarsigns.client.interfaces.buttons;
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
+import net.minecraft.client.gui.GuiScreen;
 
 public class ButtonPasteSign extends GuiButton {
 
@@ -19,10 +20,10 @@ public class ButtonPasteSign extends GuiButton {
     public void action(GuiBase gui) {
         GuiMoarSign guiM = (GuiMoarSign)gui;
 
-        String s = guiM.getClipboardContent();
-        boolean signPaste = (!s.equals("") && s.length() > 8 && s.substring(0, 8).equals("moarsign") && s.split(":").length == 6);
+        String s = GuiScreen.getClipboardString();
+        boolean signPaste = (!s.equals("") && s.length() > 8 && s.substring(0, 8).equals("moarsign") && s.split("\u001D").length == 6);
         if (signPaste) {
-            String[] rows = s.split(":");
+            String[] rows = s.split("\u001D");
             for (int i = 1; i < rows.length - 1; i++) {
                 guiM.guiTextFields[i - 1].setText(rows[i]);
             }
@@ -31,7 +32,7 @@ public class ButtonPasteSign extends GuiButton {
 
     @Override
     public void update(GuiMoarSign gui) {
-        String clip = gui.getClipboardContent();
-        isDisabled = !(!clip.equals("") && clip.length() > 8 && clip.substring(0, 8).equals("moarsign") && clip.split(":").length == 6);
+        String clip = GuiScreen.getClipboardString();
+        isDisabled = !(!clip.equals("") && clip.length() > 8 && clip.substring(0, 8).equals("moarsign") && clip.split("\u001D").length == 6);
     }
 }
