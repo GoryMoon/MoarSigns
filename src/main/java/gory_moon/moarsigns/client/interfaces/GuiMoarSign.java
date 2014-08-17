@@ -41,34 +41,18 @@ public class GuiMoarSign extends GuiBase {
     public ButtonColorPicker buttonColorPicker;
     public ButtonTextStyle buttonTextStyle;
 
+    public int[] fontSizes = new int[4];
+
     public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
 
 
-    public static final String EDIT_SIGN_MESSAGE = "Edit sign message:";
-    public static final String FONT_SIZE = "Font Size";
-    public static final String TEXT_OFFSET = "Text Offset";
     private TileEntityMoarSign entitySign;
-    private int updateCounter;
-    private int editLine;
     private int rows = 4;
     private int maxLength = 15;
     private int minOffset = -1;
     private int[] row;
 
     private int size = 0;
-
-    private int SIZE_W = 50;
-    private int SIZE_X2 = width / 2 + 65 + SIZE_W;
-    private int OFFSET_X2 = width / 2 + 130 + SIZE_W;
-    private int SIZE_H = 20;
-    private int SIZE_Y = 105 - SIZE_H;
-    private int SIZE_Y2 = 85 + SIZE_H;
-    private int OFFSET_Y = 105 - SIZE_H;
-    private int OFFSET_Y2 = 85 + SIZE_H;
-    private int SIZE_X = width / 2 + 65;
-    private int OFFSET_W = 50;
-    private int OFFSET_H = 20;
-    private int OFFSET_X = width / 2 + 130;
 
     public GuiMoarSign(TileEntityMoarSign te) {
         entitySign = te;
@@ -119,6 +103,17 @@ public class GuiMoarSign extends GuiBase {
         buttons.add(buttonErase);
         buttons.add(buttonColorPicker);
         buttons.add(buttonTextStyle);
+
+        k = 0;
+        j = 0;
+        for (int i = 0; i < fontSizes.length; i++) {
+            buttons.add(new ButtonFontSize(guiLeft + 40 + k * 40, guiTop + 150 + j * 20, i, true));
+            buttons.add(new ButtonFontSize(guiLeft + 40 + k * 40, guiTop + 158 + j * 20, i, false));
+            if (k >= 1) {
+                k = 0;
+                j++;
+            } else k++;
+        }
 
         update();
 
@@ -173,7 +168,6 @@ public class GuiMoarSign extends GuiBase {
 
     @Override
     public void updateScreen() {
-        ++updateCounter;
         for (GuiTextField guiTextField : guiTextFields) guiTextField.updateCursorCounter();
     }
 
@@ -294,7 +288,7 @@ public class GuiMoarSign extends GuiBase {
 
         drawRect(OFFSET_X, OFFSET_Y, OFFSET_X2, OFFSET_Y2, -16777216);
 
-        drawCenteredString(fontRendererObj, String.valueOf(entitySign.fontSize), width / 2 + 65 + 25, 95 - 3, 16777215);
+        drawCenteredString(fontRendererObj, "^v><", width / 2 + 65 + 25, 155 - 3, 0xffffff);
         drawCenteredString(fontRendererObj, FONT_SIZE, width / 2 + 65 + 25, 40, 16777215);
 
         drawCenteredString(fontRendererObj, String.valueOf(entitySign.textOffset), width / 2 + 130 + 25, 95 - 3, 16777215);

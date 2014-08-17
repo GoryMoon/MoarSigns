@@ -16,7 +16,11 @@ public abstract class GuiButton extends GuiRectangle {
     protected String newLine = "\n" + GuiColor.GRAY.toString();
 
     public GuiButton(int x, int y, int srcX) {
-        super(x, y, 20, 20);
+        this(x, y, 20, 20, srcX);
+    }
+
+    public GuiButton(int x, int y, int w, int h, int srcX) {
+        super(x, y, w, h);
         this.srcX = srcX;
     }
 
