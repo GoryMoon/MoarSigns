@@ -30,7 +30,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
         float f1 = 0.6666667F;
         float f2;
 
-        if (!tileentity.showInGui && block == Blocks.signStandingWood || block == Blocks.signStandingMetal) {
+        if (block == Blocks.signStandingWood || block == Blocks.signStandingMetal) {
             GL11.glTranslatef((float) x + 0.5F, (float) y + 0.75F * f1, (float) z + 0.5F);
             float f3 = (float) (tileentity.getBlockMetadata() * 360) / 16.0F;
             GL11.glRotatef(-f3, 0.0F, 1.0F, 0.0F);
@@ -38,25 +38,25 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
         } else {
             int i = tileentity.getBlockMetadata();
 
-            int side = i & 0b111;
+            int side = i & 7;
 
             f2 = 0.0F;
 
-            boolean flatSign = !tileentity.showInGui && ((i & 0b1000) >> 3) == 1;
+            boolean flatSign = ((i & 8) >> 3) == 1;
             boolean groundSign = false;
 
             if (flatSign) {
-                groundSign = (i & 0b0001) == 1;
+                groundSign = (i & 1) == 1;
 
                 if (groundSign) {
-                    int rotation = (i & 0b0110) >> 1;
+                    int rotation = (i & 6) >> 1;
                     f2 = 0F;
 
                     if (rotation == 1) f2 = 90F;
                     else if (rotation == 2) f2 = 180F;
                     else if (rotation == 3) f2 = -90F;
                 } else {
-                    int rotation = (i & 0b0110) >> 1;
+                    int rotation = (i & 6) >> 1;
                     f2 = 180F;
 
                     if (rotation == 1) f2 = -90F;

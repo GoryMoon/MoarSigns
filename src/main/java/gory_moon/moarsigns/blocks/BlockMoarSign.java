@@ -111,22 +111,22 @@ public class BlockMoarSign extends BlockContainer {
             float f4 = 0.125F;
             setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 
-            int side = l & 0b111;
-            boolean flatSign = ((l & 0b1000) >> 3) == 1;
+            int side = l & 7;
+            boolean flatSign = ((l & 8) >> 3) == 1;
             boolean groundSign;
 
             if (flatSign) {
-                groundSign = (l & 0b0001) == 1;
+                groundSign = (l & 1) == 1;
 
                 if (groundSign) {
-                    int rotation = (l & 0b0110) >> 1;
+                    int rotation = (l & 6) >> 1;
                     setBlockBounds(f2, f2, f - 0.01F, f3, f4, f1 - 0.01F);
 
                     if (rotation == 1) setBlockBounds(f - 0.05F, f2, f2, f1 - 0.05F, f4, f3);
                     else if (rotation == 2) setBlockBounds(f2, f2, f - 0.05F, f3, f4, f1 - 0.05F);
                     else if (rotation == 3) setBlockBounds(f - 0.01F, f2, f2, f1 - 0.01F, f4, f3);
                 } else {
-                    int rotation = (l & 0b0110) >> 1;
+                    int rotation = (l & 6) >> 1;
                     setBlockBounds(f2, f3 - f4, f - 0.05F, f3, f3, f1 - 0.05F);
 
                     if (rotation == 1) setBlockBounds(f - 0.01F, f3 - f4, f2, f1 - 0.01F, f3, f3);
@@ -247,14 +247,14 @@ public class BlockMoarSign extends BlockContainer {
             }
         } else {
             int i = world.getBlockMetadata(x, y, z);
-            int i1 = i & 0b111;
+            int i1 = i & 7;
 
 
-            boolean flatSign = ((i & 0b1000) >> 3) == 1;
+            boolean flatSign = ((i & 8) >> 3) == 1;
             boolean groundSign;
 
             if (flatSign) {
-                groundSign = (i & 0b0001) == 1;
+                groundSign = (i & 1) == 1;
 
                 if (groundSign) {
                     flag = !(world.getBlock(x, y - 1, z).getMaterial().isSolid());
@@ -325,8 +325,8 @@ public class BlockMoarSign extends BlockContainer {
     }
 
     public boolean canPlaceBlockAt(World world, int x, int y, int z, int meta) {
-        boolean flatSign = ((meta & 0b1000) >> 3) == 1;
-        int side = flatSign ? meta & 0b001: meta & 0b111;
+        boolean flatSign = ((meta & 8) >> 3) == 1;
+        int side = flatSign ? meta & 1 : meta & 7;
         switch (side) {
             case 0:
                 y++;
