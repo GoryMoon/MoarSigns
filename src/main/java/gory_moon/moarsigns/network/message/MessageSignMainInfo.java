@@ -4,6 +4,8 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
@@ -82,6 +84,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
         buf.writeBoolean(openGui);
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public IMessage onMessage(MessageSignMainInfo message, MessageContext ctx) {
         WorldClient world = FMLClientHandler.instance().getClient().theWorld;
