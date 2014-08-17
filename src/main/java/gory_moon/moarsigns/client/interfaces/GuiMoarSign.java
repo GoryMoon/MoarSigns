@@ -227,7 +227,7 @@ public class GuiMoarSign extends GuiBase {
             GL11.glTranslatef(0.0F, -1.0625F, 0.0F);
         } else {
             int i = entitySign.getBlockMetadata();
-            int k = i & 0b111;
+            int k = i & 7;
 
             float f3 = 0.0F;
             if (k == 0 || k == 1) {
@@ -241,7 +241,7 @@ public class GuiMoarSign extends GuiBase {
             }
 
             GL11.glRotatef(f3, 0.0F, 1.0F, 0.0F);
-            if (((i & 0b1000) >> 3) == 1) {
+            if (((i & 8) >> 3) == 1) {
                 entitySign.blockMetadata = 2;
 
             }

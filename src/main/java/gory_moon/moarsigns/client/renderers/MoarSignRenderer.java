@@ -38,25 +38,25 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
         } else {
             int i = tileentity.getBlockMetadata();
 
-            int side = i & 0b111;
+            int side = i & 7;
 
             f2 = 0.0F;
 
-            boolean flatSign = ((i & 0b1000) >> 3) == 1;
+            boolean flatSign = ((i & 8) >> 3) == 1;
             boolean groundSign = false;
 
             if (flatSign) {
-                groundSign = (i & 0b0001) == 1;
+                groundSign = (i & 1) == 1;
 
                 if (groundSign) {
-                    int rotation = (i & 0b0110) >> 1;
+                    int rotation = (i & 6) >> 1;
                     f2 = 0F;
 
                     if (rotation == 1) f2 = 90F;
                     else if (rotation == 2) f2 = 180F;
                     else if (rotation == 3) f2 = -90F;
                 } else {
-                    int rotation = (i & 0b0110) >> 1;
+                    int rotation = (i & 6) >> 1;
                     f2 = 180F;
 
                     if (rotation == 1) f2 = -90F;
