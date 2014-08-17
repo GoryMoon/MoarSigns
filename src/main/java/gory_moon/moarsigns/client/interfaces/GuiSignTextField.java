@@ -4,7 +4,6 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.ChatAllowedCharacters;
 
-import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,10 +23,9 @@ public class GuiSignTextField extends GuiTextField {
     @Override
     public void setText(String text) {
 
-        System.out.println(getAmountofSpecials(text));
-        if (field_146211_a.getStringWidth(text) > this.maxRowLength + getAmountofSpecials(text))
+        if (field_146211_a.getStringWidth(text) > this.maxRowLength + getSpecialsWidth(text))
         {
-            this.text = field_146211_a.trimStringToWidth(text, this.maxRowLength + getAmountofSpecials(text));
+            this.text = field_146211_a.trimStringToWidth(text, this.maxRowLength + getSpecialsWidth(text));
         }
         else
         {
@@ -65,7 +63,7 @@ public class GuiSignTextField extends GuiTextField {
             l = s2.length();
         }
 
-        if (isSpecial(s2)) {
+        if (l == 0 && isSpecial(s2)) {
             s1 = s1 + s2;
             l = s2.length();
         }
@@ -84,7 +82,7 @@ public class GuiSignTextField extends GuiTextField {
 
     }
 
-    private int getAmountofSpecials(String s) {
+    private int getSpecialsWidth(String s) {
         Matcher m = Pattern.compile("(\\{[0-9a-z]\\})").matcher(s);
         int i = 0;
 

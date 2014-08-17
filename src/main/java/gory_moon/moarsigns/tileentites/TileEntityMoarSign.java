@@ -26,6 +26,7 @@ public class TileEntityMoarSign extends TileEntitySign {
     public String texture_name;
     public int fontSize = 0;
     public int textOffset = 0;
+    public boolean showInGui = false;
     public boolean isRemovedByPlayerAndCreative;
     private boolean isEditable = true;
     private int rows = 4;

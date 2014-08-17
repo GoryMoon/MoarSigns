@@ -3,7 +3,52 @@ itemGroup.moarSigns=MoarSigns
 item.moarsign.debug.name=Debug
 item.moarsign.sign.dummy=MoarSign
 
-#Nuggets
+# -Gui
+#  For the buttons, [%1] = linebreak
+gui.moarsigns:button.title.cut=Cut
+gui.moarsigns:button.description.cut=Cuts the selected text[%1]to the clipboard
+gui.moarsigns:button.title.copy=Copy
+gui.moarsigns:button.description.copy=Copies the selected text[%1]to the clipboard
+gui.moarsigns:button.title.paste=Paste
+gui.moarsigns:button.description.paste=Pastes text from the clipboard
+gui.moarsigns:button.title.cutsign=Cut Sign
+gui.moarsigns:button.description.cutsign=Cuts the sign into[%1]the clipboard, ready to[%1]be pasted into a sign
+gui.moarsigns:button.title.copysign=Copy Sign
+gui.moarsigns:button.description.copysign=Copies the sign into[%1]the clipboard, ready to[%1]be pasted into a sign
+gui.moarsigns:button.title.pastesign=Paste Sign
+gui.moarsigns:button.description.pastesign=Pastes all text from a sign[%1]that is in the clipboard.
+gui.moarsigns:button.title.erase=Erase
+gui.moarsigns:button.description.erase=Erases all text from sign
+gui.moarsigns:button.title.textstyle=Text Style
+gui.moarsigns:button.description.textstyle=Set the style for[%1]the following text[%1]from the cursor
+
+#  Colors
+gui.moarsigns:color.black=Black
+gui.moarsigns:color.blue=Blue
+gui.moarsigns:color.green=Green
+gui.moarsigns:color.cyan=Cyan
+gui.moarsigns:color.red=Red
+gui.moarsigns:color.purple=Purple
+gui.moarsigns:color.orange=Orange
+gui.moarsigns:color.lightgray=Lightgray
+gui.moarsigns:color.gray=Gray
+gui.moarsigns:color.lightblue=Lightblue
+gui.moarsigns:color.lime=Lime
+gui.moarsigns:color.turquise=Turquise
+gui.moarsigns:color.pink=Pink
+gui.moarsigns:color.magneta=Magneta
+gui.moarsigns:color.yellow=Yellow
+gui.moarsigns:color.white=White
+
+#  Textstyles
+gui.moarsigns:textstyle.random=Random
+gui.moarsigns:textstyle.bold=Bold
+gui.moarsigns:textstyle.strikethrough=Strikethrough
+gui.moarsigns:textstyle.underline=Underline
+gui.moarsigns:textstyle.italic=Italic
+gui.moarsigns:textstyle.reset=Reset
+
+# Nuggets
 item.moarsign.diamond_nugget.name=Diamond Nugget
 item.moarsign.iron_nugget.name=Iron Nugget
 item.moarsign.emerald_nugget.name=Emerald Nugget

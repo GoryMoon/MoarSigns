@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.client.interfaces.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
+import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.client.interfaces.GuiRectangle;
 import net.minecraft.client.gui.Gui;
@@ -11,6 +12,8 @@ public abstract class GuiButton extends GuiRectangle {
 
     protected int srcX;
     public boolean isDisabled = false;
+
+    protected String newLine = "\n" + GuiColor.GRAY.toString();
 
     public GuiButton(int x, int y, int srcX) {
         super(x, y, 20, 20);

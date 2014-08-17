@@ -3,6 +3,9 @@ package gory_moon.moarsigns.client.interfaces.buttons;
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
+import gory_moon.moarsigns.util.Localization;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.StatCollector;
 
 public class ButtonTextStyle extends GuiButtonToggleable {
 
@@ -12,7 +15,7 @@ public class ButtonTextStyle extends GuiButtonToggleable {
 
     @Override
     public String getButtonInfo() {
-        return "Text Style\n" + GuiColor.GRAY + "Set the style for\n" + GuiColor.GRAY + "the following text from\n" + GuiColor.GRAY + "the cursor position";
+        return Localization.GUI.BUTTONS.TEXTSTYLE.translateTitles() + newLine + Localization.GUI.BUTTONS.TEXTSTYLE.translateDescriptions(newLine);
     }
 
     @Override
@@ -23,9 +26,9 @@ public class ButtonTextStyle extends GuiButtonToggleable {
 
     @Override
     public void update(GuiMoarSign gui) {
-        if (gui.selectedTextField != -1 && gui.hasClipboardContent()) {
+        if (gui.selectedTextField != -1) {
             isDisabled = false;
-        } else if (gui.selectedTextField == -1) {
+        } else {
             isDisabled = true;
             gui.showTextStyles = false;
         }

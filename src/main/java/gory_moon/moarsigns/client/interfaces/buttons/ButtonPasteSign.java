@@ -3,6 +3,7 @@ package gory_moon.moarsigns.client.interfaces.buttons;
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
+import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.GuiScreen;
 
 public class ButtonPasteSign extends GuiButton {
@@ -13,7 +14,7 @@ public class ButtonPasteSign extends GuiButton {
 
     @Override
     public String getButtonInfo() {
-        return "Paste Sign\n" + GuiColor.GRAY + "Pastes all text from a sign\n" + GuiColor.GRAY + "that is in the clipboard";
+        return Localization.GUI.BUTTONS.PASTESIGN.translateTitles() + newLine + Localization.GUI.BUTTONS.PASTESIGN.translateDescriptions(newLine);
     }
 
     @Override

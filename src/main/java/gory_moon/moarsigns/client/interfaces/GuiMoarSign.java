@@ -8,6 +8,7 @@ import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignUpdate;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
+import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -103,18 +104,18 @@ public class GuiMoarSign extends GuiBase {
             styleButtons[i] = new GuiTextStyleButton(guiLeft + 150 + 5, guiTop + 30 + 5 + 18 * i, 50, 16, i);
         }
 
-        buttonCutSign = new ButtonCutSign(guiLeft + 70, guiTop + 10);
-        buttonCopySign = new ButtonCopySign(guiLeft + 90, guiTop + 10);
-        buttonErase = new ButtonErase(guiLeft + 130, guiTop + 10);
-        buttonColorPicker = new ButtonColorPicker(guiLeft + 150, guiTop + 10);
-        buttonTextStyle = new ButtonTextStyle(guiLeft + 170, guiTop + 10);
+        buttonCutSign = new ButtonCutSign(guiLeft + 74, guiTop + 10);
+        buttonCopySign = new ButtonCopySign(guiLeft + 95, guiTop + 10);
+        buttonErase = new ButtonErase(guiLeft + 137, guiTop + 10);
+        buttonColorPicker = new ButtonColorPicker(guiLeft + 158, guiTop + 10);
+        buttonTextStyle = new ButtonTextStyle(guiLeft + 179, guiTop + 10);
 
-        buttons.add(new ButtonCut(guiLeft + 10, guiTop + 10));
-        buttons.add(new ButtonCopy(guiLeft + 30, guiTop + 10));
-        buttons.add(new ButtonPaste(guiLeft + 50, guiTop + 10));
+        buttons.add(new ButtonCut(guiLeft + 11, guiTop + 10));
+        buttons.add(new ButtonCopy(guiLeft + 32, guiTop + 10));
+        buttons.add(new ButtonPaste(guiLeft + 53, guiTop + 10));
         buttons.add(buttonCutSign);
         buttons.add(buttonCopySign);
-        buttons.add(new ButtonPasteSign(guiLeft + 110, guiTop + 10));
+        buttons.add(new ButtonPasteSign(guiLeft + 116, guiTop + 10));
         buttons.add(buttonErase);
         buttons.add(buttonColorPicker);
         buttons.add(buttonTextStyle);
@@ -310,6 +311,7 @@ public class GuiMoarSign extends GuiBase {
         GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
 
         int i = entitySign.getBlockMetadata();
+        entitySign.showInGui = true;
         int k = i & 0b111;
 
         float f3 = 0.0F;
@@ -332,24 +334,6 @@ public class GuiMoarSign extends GuiBase {
 
         TileEntityRendererDispatcher.instance.renderTileEntityAt(entitySign, -0.5D, -0.75D, -0.5D, 0.0F);
         GL11.glPopMatrix();
-
-        /*
-        if (SIZE_X - 1 <= x && x <= SIZE_X + SIZE_W && SIZE_Y - 1 <= y && y <= SIZE_Y + SIZE_H) {
-            List<String> text = new ArrayList<String>();
-            text.add("Text size can go from 0-20");
-            text.add(GuiColor.GREEN + "Hold Shift to change with 10");
-            drawHoveringText(text, x, y, fontRendererObj);
-        }
-
-        if (OFFSET_X - 1 <= x && x <= OFFSET_X + OFFSET_W && OFFSET_Y - 1 <= y && y <= OFFSET_Y + OFFSET_H) {
-            List<String> text = new ArrayList<String>();
-            text.add("Text offset can't be bigger then 0, only lower.");
-            text.add("The lowest value is dependant on the text size");
-
-            text.add(GuiColor.GRAY + "Current lowest value is: " + GuiColor.CYAN + minOffset);
-            text.add(GuiColor.GREEN + "Hold Shift to change with 10");
-            drawHoveringText(text, x, y, fontRendererObj);
-        }     */
 
         if (showColors) {
             GL11.glPushMatrix();
@@ -378,8 +362,8 @@ public class GuiMoarSign extends GuiBase {
 
             for (GuiColorButton button: colors) {
                 if (button.inRect(x, y)) {
-                    String s = GuiColor.values()[button.getId(this, x, y)].name();
-                    drawHoveringText(Lists.asList(s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase(), new String[0]), x, y, fontRendererObj);
+                    Localization.GUI.COLORS s = Localization.GUI.COLORS.values()[button.getId(this, x, y)];
+                    drawHoveringText(Lists.asList(s.translate(), new String[0]), x, y, fontRendererObj);
                 }
             }
         }

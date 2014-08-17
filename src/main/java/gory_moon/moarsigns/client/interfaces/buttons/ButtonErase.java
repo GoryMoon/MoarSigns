@@ -3,6 +3,7 @@ package gory_moon.moarsigns.client.interfaces.buttons;
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
+import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.GuiTextField;
 
 public class ButtonErase extends GuiButton {
@@ -13,7 +14,7 @@ public class ButtonErase extends GuiButton {
 
     @Override
     public String getButtonInfo() {
-        return GuiColor.RED + "Erase\n" + GuiColor.GRAY + "Erases all text from sign";
+        return GuiColor.RED + Localization.GUI.BUTTONS.ERASE.translateTitles() + newLine + Localization.GUI.BUTTONS.ERASE.translateDescriptions("");
     }
 
     @Override

@@ -23,9 +23,9 @@ public class ButtonColorPicker extends GuiButtonToggleable {
 
     @Override
     public void update(GuiMoarSign gui) {
-        if (gui.selectedTextField != -1 && gui.hasClipboardContent()) {
+        if (gui.selectedTextField != -1) {
             isDisabled = false;
-        } else if (gui.selectedTextField == -1) {
+        } else {
             isDisabled = true;
             gui.showColors = false;
         }

@@ -34,7 +34,9 @@ public class GuiRectangle {
 
     public void drawString(GuiBase gui, int mouseX, int mouseY, String str) {
         if (inRect(mouseX, mouseY)) {
-            gui.drawHoveringText(Arrays.asList(str.split("\n")), mouseX, mouseY, gui.getFontRenderer());
+            String[] list = str.split("\n");
+            for (String s: list) s = s.trim();
+            gui.drawHoveringText(Arrays.asList(list), mouseX, mouseY, gui.getFontRenderer());
         }
     }
 

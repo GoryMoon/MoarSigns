@@ -1,6 +1,8 @@
 package gory_moon.moarsigns.client.interfaces;
 
+import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 
@@ -8,7 +10,8 @@ public class GuiTextStyleButton extends GuiRectangle {
 
     private int id;
     private String style = "klmnor";
-    private String[] names = {"Random", "Bold", "Strikethrough", "Underline", "Italic", "Reset"};
+    private Localization.GUI.TEXTSTYLES[] names = {Localization.GUI.TEXTSTYLES.RANDOM, Localization.GUI.TEXTSTYLES.BOLD, Localization.GUI.TEXTSTYLES.STRIKETHROUGH,
+            Localization.GUI.TEXTSTYLES.UNDERLINE, Localization.GUI.TEXTSTYLES.ITALIC, Localization.GUI.TEXTSTYLES.RESET};
 
     public GuiTextStyleButton(int x, int y, int w, int h, int id) {
         super(x, y, w, h);
@@ -33,8 +36,8 @@ public class GuiTextStyleButton extends GuiRectangle {
         return style.charAt(id);
     }
 
-    public String getName () {
-        return names[id];
+    public String getName() {
+        return names[id].translate();
     }
 
 }
