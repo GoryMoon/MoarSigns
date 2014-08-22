@@ -2,21 +2,21 @@
 	"versionList": [
 		{
 			"mcVersion":"Minecraft 1.7.10",
-			"modVersion":"1.0.6",
+			"modVersion":"1.0.7",
 			"changeLog": [
-				"Fixed bug with breaking particles not showing correctly"
+				"Fixed crash with railcraft installed"
 			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2211862/download",
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2212337/download",
 			"isDirectLink":"true",
 			"newFileName":""
 		},
 		{
 			"mcVersion":"Minecraft 1.7.2",
-			"modVersion":"1.0.6",
+			"modVersion":"1.0.7",
 			"changeLog": [
-				"Fixed bug with breaking particles not showing correctly"
+				"Fixed crash with railcraft installed"
 			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2211862/download",
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2212337/download",
 			"isDirectLink":"true",
 			"newFileName":""
 		}
