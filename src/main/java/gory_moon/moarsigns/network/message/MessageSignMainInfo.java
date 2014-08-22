@@ -93,7 +93,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
             if (world.blockExists(message.x, message.y, message.z)) {
                 tileEntity = world.getTileEntity(message.x, message.y, message.z);
 
-                if (tileEntity == null) {
+                if (tileEntity == null || !(tileEntity instanceof TileEntityMoarSign)) {
                     tileEntity = new TileEntityMoarSign();
                     tileEntity.setWorldObj(FMLClientHandler.instance().getClient().theWorld);
                     tileEntity.xCoord = message.x;
@@ -107,7 +107,6 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
 
         if (world.blockExists(message.x, message.y, message.z)) {
             if (!message.openGui) tileEntity = world.getTileEntity(message.x, message.y, message.z);
-
             if (tileEntity instanceof TileEntityMoarSign) {
                 TileEntityMoarSign sign = (TileEntityMoarSign) tileEntity;
 
