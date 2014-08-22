@@ -125,7 +125,7 @@ public class MoarSigns {
             for (MaterialInfo material : materialList.getValue()) {
                 ItemStack stack = material.material;
 
-                if (!(stack.getItem() instanceof ItemBlock)) {
+                if (stack.getItem() != null && !(stack.getItem() instanceof ItemBlock)) {
                     for (int i = 0; i < 9; i++) {
                         crafting.setInventorySlotContents(i, stack);
                     }

@@ -67,10 +67,10 @@ public class SignInitialization {
         SignRegistry.register("fusewood_sign", null, "fusewood", "natura/", false, new ItemStack(naturaItem, 1, 12), ModInfo.ID, NATURA_TAG);
 
         for (ItemStack planks : loadedPlanks) {
-            if (forestryItem1 == null && planks.getUnlocalizedName().equals("tile.for.planks.32767")) {
+            if (forestryItem1 == null && planks.getItem().getUnlocalizedName().equals("tile.for.planks")) {
                 forestryItem1 = planks.copy().getItem();
             }
-            if (forestryItem2 == null && planks.getUnlocalizedName().equals("tile.for.planks2.32767")) {
+            if (forestryItem2 == null && planks.getItem().getUnlocalizedName().equals("tile.for.planks2")) {
                 forestryItem2 = planks.copy().getItem();
             }
             if (forestryItem1 != null && forestryItem2 != null) break;

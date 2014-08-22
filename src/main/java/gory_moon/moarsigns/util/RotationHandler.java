@@ -20,30 +20,30 @@ public class RotationHandler {
             boolean testing = true;
             while (testing) {
                 meta = side;
-                side = meta & 0b111;
-                flatSign = ((meta & 0b1000) >> 3) == 1;
+                side = meta & 7;
+                flatSign = ((meta & 8) >> 3) == 1;
                 if (flatSign) {
                     meta = side;
                     side = meta & 1;
-                    int rotation = (meta & 0b0110) >> 1;
+                    int rotation = (meta & 6) >> 1;
 
                     if (side == 1) {
                         if (rotation == 3) side = 2;
                         else {
                             side = (++rotation << 1);
-                            side += 0b1001;
+                            side += 9;
                         }
                     } else {
                             if (rotation == 3) {
-                                side = 0b1001;
+                                side = 9;
                             } else {
                                 side = (++rotation << 1);
-                                side += 0b1000;
+                                side += 8;
                             }
                     }
                 } else {
-                    side = side & 0b111;
-                    if (side == 5) side = 0b1000;
+                    side = side & 7;
+                    if (side == 5) side = 8;
                     else if (side == 2) side = 4;
                     else if (side == 4) side = 3;
                     else if (side == 3) side = 5;
