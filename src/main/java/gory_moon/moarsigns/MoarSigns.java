@@ -99,6 +99,7 @@ public class MoarSigns {
         ingots.addAll(OreDictionary.getOres("ingotSilver"));
         ingots.addAll(OreDictionary.getOres("ingotBronze"));
         ingots.addAll(OreDictionary.getOres("ingotSteel"));
+        ingots.addAll(OreDictionary.getOres("ingotLead"));
 
         SignInitialization.addWoodMaterial(planks);
         SignInitialization.addMetalMaterial(ingots);

@@ -199,8 +199,7 @@ public class SignInitialization {
         }
 
         SignRegistry.register("silver_sign", null, "silver", "factorization/", true, new ItemStack(factorizationSilverItem, 1, 0), ModInfo.ID, FACTORIZATION_TAG).setMetal(true);
-        //TODO add lead sign textures
-        //SignRegistry.register("lead_sign", null, "lead", "factorization/", true, new ItemStack(factorizationLeadItem, 1, 0)).setMetal(true);
+        SignRegistry.register("lead_sign", null, "lead", "factorization/", true, new ItemStack(factorizationLeadItem, 1, 0), ModInfo.ID, FACTORIZATION_TAG).setMetal(true);
 
 
         //TODO add thermal expansion when updated
