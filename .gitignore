@@ -1,8 +1,12 @@
 eclipse/
+bin/
 build/
 out/
 libs/
 .gradle/
+.classpath
+.project
+.settings/
 *.iml
 *.ipr
 *.iws
