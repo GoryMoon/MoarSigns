@@ -105,9 +105,9 @@ public class ItemMoarSign extends Item {
         } else {
 
             switch (side) {
-                /*case 0:
+                case 0:
                     y--;
-                    break;*/
+                    break;
                 case 1:
                     y++;
                     break;
@@ -128,17 +128,17 @@ public class ItemMoarSign extends Item {
             if (!player.canPlayerEdit(x, y, z, side, stack) || !Blocks.signStandingWood.canPlaceBlockAt(world, x, y, z) || world.isRemote) {
                 return false;
             } else {
-                if (side == 1 /*&& !player.isSneaking()*/) {
+                if (side == 1 && !player.isSneaking()) {
                     int rotation = MathHelper.floor_double((double) ((player.rotationYaw + 180.0F) * 16.0F / 360.0F) + 0.5D) & 15;
                     if (stack.getItemDamage() == 0) world.setBlock(x, y, z, Blocks.signStandingWood, rotation, 3);
                     else if (stack.getItemDamage() == 1) world.setBlock(x, y, z, Blocks.signStandingMetal, rotation, 3);
 
                 } else {
-                    /*if (side == 0 || side == 1) {
+                    if (side == 0 || side == 1) {
                         int rotation = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
                         side += (rotation << 1);
                         side += 8;
-                    }*/
+                    }
                     if (stack.getItemDamage() == 0) world.setBlock(x, y, z, Blocks.signWallWood, side, 3);
                     else if (stack.getItemDamage() == 1) world.setBlock(x, y, z, Blocks.signWallMetal, side, 3);
                 }

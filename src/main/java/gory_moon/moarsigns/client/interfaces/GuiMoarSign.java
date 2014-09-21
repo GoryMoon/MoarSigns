@@ -40,34 +40,17 @@ public class GuiMoarSign extends GuiBase {
     public ButtonColorPicker buttonColorPicker;
     public ButtonTextStyle buttonTextStyle;
 
+    public int[] fontSizes = new int[4];
+
     public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
 
-
-    public static final String EDIT_SIGN_MESSAGE = "Edit sign message:";
-    public static final String FONT_SIZE = "Font Size";
-    public static final String TEXT_OFFSET = "Text Offset";
     private TileEntityMoarSign entitySign;
-    private int updateCounter;
-    private int editLine;
     private int rows = 4;
     private int maxLength = 15;
     private int minOffset = -1;
     private int[] row;
 
     private int size = 0;
-
-    private int SIZE_W = 50;
-    private int SIZE_X2 = width / 2 + 65 + SIZE_W;
-    private int OFFSET_X2 = width / 2 + 130 + SIZE_W;
-    private int SIZE_H = 20;
-    private int SIZE_Y = 105 - SIZE_H;
-    private int SIZE_Y2 = 85 + SIZE_H;
-    private int OFFSET_Y = 105 - SIZE_H;
-    private int OFFSET_Y2 = 85 + SIZE_H;
-    private int SIZE_X = width / 2 + 65;
-    private int OFFSET_W = 50;
-    private int OFFSET_H = 20;
-    private int OFFSET_X = width / 2 + 130;
 
     public GuiMoarSign(TileEntityMoarSign te) {
         entitySign = te;
@@ -92,7 +75,7 @@ public class GuiMoarSign extends GuiBase {
         int k = 0;
         int j = 0;
         for (int i = 0; i < colors.length; i++) {
-            colors[i] = new GuiColorButton(guiLeft + 150 + 5 + 14 * k, guiTop + 30 + 5 + 14 * j, 12, 12, i);
+            colors[i] = new GuiColorButton(guiLeft + 150 + 5 + 14 * k, guiTop + 30 + 5 + 14 * j, 12, 12, i  , 0xffb2b2b2, 0xff424242);
             if (k > 2) {
                 k = 0;
                 j++;
@@ -119,19 +102,18 @@ public class GuiMoarSign extends GuiBase {
         buttons.add(buttonColorPicker);
         buttons.add(buttonTextStyle);
 
+        k = 0;
+        j = 0;
+        for (int i = 0; i < fontSizes.length; i++) {
+            buttons.add(new ButtonFontSize(guiLeft + 40 + k * 40, guiTop + 150 + j * 20, i, true));
+            buttons.add(new ButtonFontSize(guiLeft + 40 + k * 40, guiTop + 158 + j * 20, i, false));
+            if (k >= 1) {
+                 k = 0;
+                j++;
+            } else k++;
+        }
+
         update();
-
-        /*SIZE_X = width / 2 + 65;
-        SIZE_X2 = width / 2 + 65 + SIZE_W;
-        OFFSET_X = width / 2 + 130;
-        OFFSET_X2 = width / 2 + 130 + SIZE_W;
-
-        buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, "Done"));
-        buttonList.add(new GuiButton(1, SIZE_X - 2, SIZE_Y - 24, 54, 20, "+"));
-        buttonList.add(new GuiButton(2, SIZE_X - 2, SIZE_Y + 24, 54, 20, "-"));
-        buttonList.add(new GuiButton(3, OFFSET_X - 2, OFFSET_Y - 24, 54, 20, "+"));
-        buttonList.add(new GuiButton(4, OFFSET_X - 2, OFFSET_Y + 24, 54, 20, "-"));
-        entitySign.setEditable(false);         */
     }
 
     @Override
@@ -172,45 +154,8 @@ public class GuiMoarSign extends GuiBase {
 
     @Override
     public void updateScreen() {
-        ++updateCounter;
         for (GuiTextField guiTextField : guiTextFields) guiTextField.updateCursorCounter();
     }
-
-    /*@Override
-    protected void actionPerformed(GuiButton guiButton) {
-        if (guiButton.enabled) {
-            if (guiButton.id == 0) {
-                entitySign.markDirty();
-                mc.thePlayer.closeScreen();
-            }
-            if (guiButton.id == 1) {
-                entitySign.fontSize = isShiftKeyDown() ? entitySign.fontSize + 10 : entitySign.fontSize + 1;
-                entitySign.fontSize = entitySign.fontSize + 1 > 20 ? 20 : entitySign.fontSize;
-                updateSize();
-
-                if (editLine > rows - 1) {
-                    editLine = rows - 1;
-                }
-
-            }
-            if (guiButton.id == 2) {
-                entitySign.fontSize = isShiftKeyDown() ? entitySign.fontSize - 10 : entitySign.fontSize - 1;
-                entitySign.fontSize = entitySign.fontSize - 1 < 0 ? 0 : entitySign.fontSize;
-                updateSize();
-            }
-
-            if (guiButton.id == 3) {
-                entitySign.textOffset = isShiftKeyDown() ? entitySign.textOffset + 10 : entitySign.textOffset + 1;
-                entitySign.textOffset = entitySign.textOffset + 1 > 0 ? 0 : entitySign.textOffset;
-                updateSize();
-            }
-            if (guiButton.id == 4) {
-                entitySign.textOffset = isShiftKeyDown() ? entitySign.textOffset - 10 : entitySign.textOffset - 1;
-                entitySign.textOffset = entitySign.textOffset - 1 < minOffset ? minOffset : entitySign.textOffset;
-                updateSize();
-            }
-        }
-    }            */
 
     @Override
     protected void keyTyped(char typedChar, int key) {
@@ -272,34 +217,6 @@ public class GuiMoarSign extends GuiBase {
 
         for (GuiTextField textField: guiTextFields) textField.drawTextBox();
 
-        /*
-        GL11.glColor4f(1, 1, 1, 1);
-
-
-        if (SIZE_X - 1 <= x && x <= SIZE_X + SIZE_W && SIZE_Y - 1 <= y && y <= SIZE_Y + SIZE_H) {
-            drawRect(SIZE_X - 1, SIZE_Y - 1, SIZE_X2 + 1, SIZE_Y2 + 1, -11250336);
-        } else {
-            drawRect(SIZE_X - 1, SIZE_Y - 1, SIZE_X2 + 1, SIZE_Y2 + 1, -6250336);
-        }
-
-        drawRect(SIZE_X, SIZE_Y, SIZE_X2, SIZE_Y2, -16777216);
-
-        GL11.glColor4f(1, 1, 1, 1);
-        if (OFFSET_X - 1 <= x && x <= OFFSET_X + OFFSET_W && OFFSET_Y - 1 <= y && y <= OFFSET_Y + OFFSET_H) {
-            drawRect(OFFSET_X - 1, OFFSET_Y - 1, OFFSET_X2 + 1, OFFSET_Y2 + 1, -11250336);
-        } else {
-            drawRect(OFFSET_X - 1, OFFSET_Y - 1, OFFSET_X2 + 1, OFFSET_Y2 + 1, -6250336);
-        }
-
-        drawRect(OFFSET_X, OFFSET_Y, OFFSET_X2, OFFSET_Y2, -16777216);
-
-        drawCenteredString(fontRendererObj, String.valueOf(entitySign.fontSize), width / 2 + 65 + 25, 95 - 3, 16777215);
-        drawCenteredString(fontRendererObj, FONT_SIZE, width / 2 + 65 + 25, 40, 16777215);
-
-        drawCenteredString(fontRendererObj, String.valueOf(entitySign.textOffset), width / 2 + 130 + 25, 95 - 3, 16777215);
-        drawCenteredString(fontRendererObj, TEXT_OFFSET, width / 2 + 158, 40, 16777215);
-
-        */
         GL11.glColor4f(1, 1, 1, 1);
 
         GL11.glPushMatrix();
