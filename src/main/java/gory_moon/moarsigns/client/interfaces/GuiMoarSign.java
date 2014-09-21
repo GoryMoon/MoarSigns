@@ -17,6 +17,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,6 +42,7 @@ public class GuiMoarSign extends GuiBase {
     public ButtonTextStyle buttonTextStyle;
 
     public int[] fontSizes = new int[4];
+    public int[] textLocations = new int[4];
 
     public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
 
@@ -65,15 +67,24 @@ public class GuiMoarSign extends GuiBase {
         Keyboard.enableRepeatEvents(true);
 
         String[] text = getSignTextWithCode(entitySign.signText);
-        for (int i = 0; i < guiTextFields.length; i++) {
-            guiTextFields[i] = new GuiSignTextField(fontRendererObj, guiLeft + 10, guiTop + 35 + 17 * i, 90, 16);
+        textLocations = Arrays.copyOf(entitySign.rowLocations, entitySign.rowLocations.length);
+
+        int k = 0;
+        int j = 0;
+        for (int i = 0; i < fontSizes.length; i++) {
+            buttons.add(new ButtonTextLocation(guiLeft + 151, guiTop + 110 + k * 18, i, true));
+            buttons.add(new ButtonTextLocation(guiLeft + 151, guiTop + 118 + k * 18, i, false));
+
+            guiTextFields[i] = new GuiSignTextField(fontRendererObj, guiLeft + 60, guiTop + 110 + 18 * k, 90, 16);
             guiTextFields[i].setText(text[i]);
+            k++;
         }
 
         if (selectedTextField != -1) guiTextFields[selectedTextField].setFocused(true);
 
-        int k = 0;
-        int j = 0;
+
+        k = 0;
+        j = 0;
         for (int i = 0; i < colors.length; i++) {
             colors[i] = new GuiColorButton(guiLeft + 150 + 5 + 14 * k, guiTop + 30 + 5 + 14 * j, 12, 12, i  , 0xffb2b2b2, 0xff424242);
             if (k > 2) {
@@ -101,17 +112,6 @@ public class GuiMoarSign extends GuiBase {
         buttons.add(buttonErase);
         buttons.add(buttonColorPicker);
         buttons.add(buttonTextStyle);
-
-        k = 0;
-        j = 0;
-        for (int i = 0; i < fontSizes.length; i++) {
-            buttons.add(new ButtonFontSize(guiLeft + 40 + k * 40, guiTop + 150 + j * 20, i, true));
-            buttons.add(new ButtonFontSize(guiLeft + 40 + k * 40, guiTop + 158 + j * 20, i, false));
-            if (k >= 1) {
-                 k = 0;
-                j++;
-            } else k++;
-        }
 
         update();
     }
@@ -220,7 +220,7 @@ public class GuiMoarSign extends GuiBase {
         GL11.glColor4f(1, 1, 1, 1);
 
         GL11.glPushMatrix();
-        GL11.glTranslatef((float) guiLeft + 162F, (float) guiTop - 27.0F, 40.0F);
+        GL11.glTranslatef((float) guiLeft + 112F, (float) guiTop - 27.0F, 40.0F);
         float scale = 93.75F;
         GL11.glScalef(-scale, -scale, -scale);
 
@@ -402,6 +402,7 @@ public class GuiMoarSign extends GuiBase {
         }
 
         entitySign.signText = getSignTextWithColor(array);
+        entitySign.rowLocations = Arrays.copyOf(textLocations, textLocations.length);
 
         if (oldSelectedIndex != selectedTextField) oldSelectedIndex = selectedTextField;
 

@@ -20,6 +20,7 @@ public class TileEntityMoarSign extends TileEntitySign {
 
     //public String[] signText = new String[] {"", "", "", ""};
 
+    public int[] rowLocations = new int[4];
     private final int NBT_VERSION = 1;
     public int lineBeingEdited = -1;
     public boolean isMetal = false;
@@ -35,6 +36,12 @@ public class TileEntityMoarSign extends TileEntitySign {
     private ResourceLocation resourceLocation;
     private boolean textureReq = false;
     private int oldFontSize;
+
+    public TileEntityMoarSign() {
+        super();
+        for (int i = 0; i < 4; i++)
+            rowLocations[i] = 2 + 10 * i;
+    }
 
     @Override
     public void updateEntity() {

@@ -17,7 +17,7 @@ public class GuiRectangle {
     }
 
     public boolean inRect(int mouseX, int mouseY) {
-        return x <= mouseX && mouseX <= x + w && y <= mouseY && mouseY <= y + h;
+        return x <= mouseX && mouseX < x + w && y <= mouseY && mouseY < y + h;
     }
 
     public void setX(int x) {

@@ -106,12 +106,12 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
 
         int rows = Utils.getRows((int) size);
         int maxLength = Utils.getMaxLength((int) size);
-        int offset = tileentity.textOffset;
+        int[] offset = tileentity.rowLocations;
 
         int[] row = Info.textPostion[((int) size)];
         int lastRow = row[0];
 
-        if (row.length > 1 && offset > lastRow) {
+/*        if (row.length > 1 && offset > lastRow) {
             for (int i = 0; i < row.length; i++) {
                 if (offset < row[i]) {
                     rows = i;
@@ -120,8 +120,8 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
             }
         } else {
             rows = 1;
-            offset = tileentity.textOffset < lastRow ? lastRow : tileentity.textOffset;
-        }
+            //offset = tileentity.textOffset < lastRow ? lastRow : tileentity.textOffset;
+        }*/
 
         for (int j = 0; j < rows; ++j) {
             String s = fontRenderer.trimStringToWidth(tileentity.signText[j], Math.min(maxLength, fontRenderer.getStringWidth(tileentity.signText[j])));
@@ -129,7 +129,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
             if (j == tileentity.lineBeingEdited)
                 s = "> " + s + " <";
 
-            fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, (j * 10 - tileentity.signText.length * 5) - offset - (size > 12 ? 0 : size > 0 ? 1 : 2), 0);
+            fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, (-tileentity.signText.length * 5) + offset[j] - 2, 0);
 
         }
 
