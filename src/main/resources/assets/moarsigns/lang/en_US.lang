@@ -17,8 +17,8 @@ gui.moarsigns:button.title.copysign=Copy Sign
 gui.moarsigns:button.description.copysign=Copies the sign into[%1]the clipboard, ready to[%1]be pasted into a sign
 gui.moarsigns:button.title.pastesign=Paste Sign
 gui.moarsigns:button.description.pastesign=Pastes all text from a sign[%1]that is in the clipboard.
-gui.moarsigns:button.title.erase=Erase
-gui.moarsigns:button.description.erase=Erases all text from sign
+gui.moarsigns:button.title.reset=Reset
+gui.moarsigns:button.description.reset=Erases all text from sign and[%1]resets hidden rows and text location
 gui.moarsigns:button.title.textstyle=Text Style
 gui.moarsigns:button.description.textstyle=Set the style for[%1]the following text[%1]from the cursor
 
@@ -48,6 +48,7 @@ gui.moarsigns:textstyle.underline=Underline
 gui.moarsigns:textstyle.italic=Italic
 gui.moarsigns:textstyle.reset=Reset
 
+# -Items
 # Nuggets
 item.moarsign.diamond_nugget.name=Diamond Nugget
 item.moarsign.iron_nugget.name=Iron Nugget

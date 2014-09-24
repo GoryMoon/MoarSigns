@@ -8,7 +8,6 @@ public class Utils {
     }
 
     private static int[] maxLenghts = {90, 82, 76, 70, 66, 62, 58, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 36, 34, 32, 32};
-    @Deprecated
     public static int getMaxLength(int size) {
         return maxLenghts[size];
     }

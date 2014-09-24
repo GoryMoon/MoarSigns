@@ -24,7 +24,7 @@ public final class Localization {
             CUTSIGN,
             COPYSIGN,
             PASTESIGN,
-            ERASE,
+            RESET,
             COLORSELECTOR,
             TEXTSTYLE;
 

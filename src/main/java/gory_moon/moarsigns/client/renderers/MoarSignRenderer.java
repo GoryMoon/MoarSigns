@@ -2,7 +2,6 @@ package gory_moon.moarsigns.client.renderers;
 
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.ModelMoarSign;
-import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
@@ -96,44 +95,31 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
         modelMoarSign.render();
         GL11.glPopMatrix();
         FontRenderer fontRenderer = func_147498_b();
-        float size = (float) tileentity.fontSize;
 
-        f2 = 0.016666668F * f1 + (size / 1000F);
-        GL11.glTranslatef(size > 0 ? 0.01F : 0.0F, 0.5F * f1 - ((float) 0.02 * size), 0.07F * f1);
-        GL11.glScalef(f2, -f2, f2);
-        GL11.glNormal3f(0.0F, 0.0F, -1.0F * f2);
-        GL11.glDepthMask(false);
-
-        int rows = Utils.getRows((int) size);
-        int maxLength = Utils.getMaxLength((int) size);
+        int[] sizes = tileentity.rowSizes;
+        boolean[] rows = tileentity.visibleRows;
         int[] offset = tileentity.rowLocations;
 
-        int[] row = Info.textPostion[((int) size)];
-        int lastRow = row[0];
+        for (int row = 0; row < rows.length; row++) {
+            if (!rows[row]) continue;
 
-/*        if (row.length > 1 && offset > lastRow) {
-            for (int i = 0; i < row.length; i++) {
-                if (offset < row[i]) {
-                    rows = i;
-                    break;
-                }
-            }
-        } else {
-            rows = 1;
-            //offset = tileentity.textOffset < lastRow ? lastRow : tileentity.textOffset;
-        }*/
+            float size = sizes[row];
+            GL11.glPushMatrix();
+            f2 = 0.016666668F * f1 + (size / 1000F);
+            GL11.glTranslatef(size > 0 ? 0.01F : 0.0F, 0.5F * f1 - ((float) 0.02 * size), 0.07F * f1);
+            GL11.glScalef(f2, -f2, f2);
+            GL11.glNormal3f(0.0F, 0.0F, -1.0F * f2);
+            GL11.glDepthMask(false);
 
-        for (int j = 0; j < rows; ++j) {
-            String s = fontRenderer.trimStringToWidth(tileentity.signText[j], Math.min(maxLength, fontRenderer.getStringWidth(tileentity.signText[j])));
+            int maxLength = Utils.getMaxLength((int) size);
+            String s = fontRenderer.trimStringToWidth(tileentity.signText[row], Math.min(maxLength, fontRenderer.getStringWidth(tileentity.signText[row])));
 
-            if (j == tileentity.lineBeingEdited)
-                s = "> " + s + " <";
-
-            fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, (-tileentity.signText.length * 5) + offset[j] - 2, 0);
-
+            fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, (-tileentity.signText.length * 5) + offset[row] - 2, 0);
+            GL11.glDepthMask(true);
+            GL11.glPopMatrix();
         }
 
-        GL11.glDepthMask(true);
+
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glPopMatrix();
     }

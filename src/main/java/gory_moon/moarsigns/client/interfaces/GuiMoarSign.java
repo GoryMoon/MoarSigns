@@ -25,24 +25,25 @@ import java.util.regex.Pattern;
 @SideOnly(Side.CLIENT)
 public class GuiMoarSign extends GuiBase {
 
-    private List<GuiButton> buttons = new ArrayList<GuiButton>();
+    public List<GuiButton> buttons = new ArrayList<GuiButton>();
     public GuiSignTextField[] guiTextFields = new GuiSignTextField[4];
     public int selectedTextField = 0;
 
     public boolean showColors = false;
-    private GuiColorButton[] colors = new GuiColorButton[16];
+    private GuiColorButton[] colorButtons = new GuiColorButton[16];
 
     public boolean showTextStyles;
     private GuiTextStyleButton[] styleButtons = new GuiTextStyleButton[6];
 
     private ButtonCutSign buttonCutSign;
     private ButtonCopySign buttonCopySign;
-    private ButtonErase buttonErase;
+    private ButtonReset buttonErase;
     public ButtonColorPicker buttonColorPicker;
     public ButtonTextStyle buttonTextStyle;
 
-    public int[] fontSizes = new int[4];
-    public int[] textLocations = new int[4];
+    public int[] rowSizes = new int[4];
+    public int[] rowLocations = new int[4];
+    public boolean[] visibleRows = new boolean[4];
 
     public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
 
@@ -67,13 +68,15 @@ public class GuiMoarSign extends GuiBase {
         Keyboard.enableRepeatEvents(true);
 
         String[] text = getSignTextWithCode(entitySign.signText);
-        textLocations = Arrays.copyOf(entitySign.rowLocations, entitySign.rowLocations.length);
+        rowLocations = Arrays.copyOf(entitySign.rowLocations, entitySign.rowLocations.length);
+        visibleRows = Arrays.copyOf(entitySign.visibleRows, entitySign.visibleRows.length);
 
         int k = 0;
-        int j = 0;
-        for (int i = 0; i < fontSizes.length; i++) {
-            buttons.add(new ButtonTextLocation(guiLeft + 151, guiTop + 110 + k * 18, i, true));
-            buttons.add(new ButtonTextLocation(guiLeft + 151, guiTop + 118 + k * 18, i, false));
+        int j;
+        for (int i = 0; i < rowSizes.length; i++) {
+            buttons.add(new ButtonTextLocation(i, guiLeft + 151, guiTop + 110 + k * 18, true));
+            buttons.add(new ButtonTextLocation(i, guiLeft + 151, guiTop + 118 + k * 18, false));
+            buttons.add(new ButtonShowHide(i, guiLeft + 43, guiTop + 110 + 18 * k, !visibleRows[i]));
 
             guiTextFields[i] = new GuiSignTextField(fontRendererObj, guiLeft + 60, guiTop + 110 + 18 * k, 90, 16);
             guiTextFields[i].setText(text[i]);
@@ -85,8 +88,8 @@ public class GuiMoarSign extends GuiBase {
 
         k = 0;
         j = 0;
-        for (int i = 0; i < colors.length; i++) {
-            colors[i] = new GuiColorButton(guiLeft + 150 + 5 + 14 * k, guiTop + 30 + 5 + 14 * j, 12, 12, i  , 0xffb2b2b2, 0xff424242);
+        for (int i = 0; i < colorButtons.length; i++) {
+            colorButtons[i] = new GuiColorButton(guiLeft + 150 + 5 + 14 * k, guiTop + 30 + 5 + 14 * j, 12, 12, i  , 0xffb2b2b2, 0xff424242);
             if (k > 2) {
                 k = 0;
                 j++;
@@ -99,7 +102,7 @@ public class GuiMoarSign extends GuiBase {
 
         buttonCutSign = new ButtonCutSign(guiLeft + 74, guiTop + 10);
         buttonCopySign = new ButtonCopySign(guiLeft + 95, guiTop + 10);
-        buttonErase = new ButtonErase(guiLeft + 137, guiTop + 10);
+        buttonErase = new ButtonReset(guiLeft + 137, guiTop + 10);
         buttonColorPicker = new ButtonColorPicker(guiLeft + 158, guiTop + 10);
         buttonTextStyle = new ButtonTextStyle(guiLeft + 179, guiTop + 10);
 
@@ -261,7 +264,7 @@ public class GuiMoarSign extends GuiBase {
             drawTexturedModalRect(guiLeft + 150, guiTop + 89, 0, 195, 35, 5);
             drawTexturedModalRect(guiLeft + 184, guiTop + 89, 194, 195, 30, 5);
 
-            for (GuiColorButton color : colors) {
+            for (GuiColorButton color : colorButtons) {
                 color.draw(this, x, y);
             }
 
@@ -276,7 +279,7 @@ public class GuiMoarSign extends GuiBase {
             }
             GL11.glPopMatrix();
 
-            for (GuiColorButton button: colors) {
+            for (GuiColorButton button: colorButtons) {
                 if (button.inRect(x, y)) {
                     Localization.GUI.COLORS s = Localization.GUI.COLORS.values()[button.getId(this, x, y)];
                     drawHoveringText(Lists.asList(s.translate(), new String[0]), x, y, fontRendererObj);
@@ -317,12 +320,12 @@ public class GuiMoarSign extends GuiBase {
 
             if (showColors) {
                 int id;
-                for (GuiColorButton button : colors) {
+                for (GuiColorButton button : colorButtons) {
                     id = button.getId(this, x, y);
                     if (id != -1) {
                         showColors = false;
                         guiTextFields[selectedTextField].setFocused(true);
-                        guiTextFields[selectedTextField].writeText("{" + Integer.toHexString(GuiColor.values()[id].getNumber()) + "}");
+                        guiTextFields[selectedTextField].writeText("{" + "\u222B" + Integer.toHexString(GuiColor.values()[id].getNumber()) + "}");
                         update();
                         noTextFieldClick = true;
 
@@ -336,7 +339,7 @@ public class GuiMoarSign extends GuiBase {
                     if (button.inRect(x, y)) {
                         showTextStyles = false;
                         guiTextFields[selectedTextField].setFocused(true);
-                        guiTextFields[selectedTextField].writeText("{" + button.getStyleChar(x, y) + "}");
+                        guiTextFields[selectedTextField].writeText("{" + "\u222B" + button.getStyleChar(x, y) + "}");
                         update();
                         noTextFieldClick = true;
 
@@ -402,7 +405,8 @@ public class GuiMoarSign extends GuiBase {
         }
 
         entitySign.signText = getSignTextWithColor(array);
-        entitySign.rowLocations = Arrays.copyOf(textLocations, textLocations.length);
+        entitySign.rowLocations = Arrays.copyOf(rowLocations, rowLocations.length);
+        entitySign.visibleRows = Arrays.copyOf(visibleRows, visibleRows.length);
 
         if (oldSelectedIndex != selectedTextField) oldSelectedIndex = selectedTextField;
 
@@ -411,14 +415,14 @@ public class GuiMoarSign extends GuiBase {
     public static String[] getSignTextWithColor(String[] array) {
         String[] result = new String[array.length];
 
-        Pattern p = Pattern.compile("([a-z0-9])(?=})+");
+        Pattern p = Pattern.compile("(?<=[∫])([a-z0-9])(?=\\})+");
         for (int i = 0; i < array.length; i++) {
             String s = array[i];
             if (!s.equals("")) {
 
                 Matcher m = p.matcher(s);
                 while (m.find()) {
-                    s = s.replace("{" + m.group(1) + "}", "§" + m.group(1));
+                    s = s.replace("{∫" + m.group(1) + "}", "§" + m.group(1));
                 }
             }
             result[i] = s;
@@ -433,7 +437,7 @@ public class GuiMoarSign extends GuiBase {
         for (int i = 0; i < array.length; i++) {
             String s = array[i];
             if (!s.equals("")) {
-                s = s.replaceAll("(§[a-z0-9])+", "{$1}");
+                s = s.replaceAll("(§[a-z0-9])+", "{∫$1}");
                 s = s.replaceAll("([§])+", "");
             }
             result[i] = s;

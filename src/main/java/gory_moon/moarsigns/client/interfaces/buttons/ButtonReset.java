@@ -6,15 +6,15 @@ import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.GuiTextField;
 
-public class ButtonErase extends GuiButton {
+public class ButtonReset extends GuiButton {
 
-    public ButtonErase(int x, int y) {
+    public ButtonReset(int x, int y) {
         super(x, y, 96);
     }
 
     @Override
     public String getButtonInfo() {
-        return GuiColor.RED + Localization.GUI.BUTTONS.ERASE.translateTitles() + newLine + Localization.GUI.BUTTONS.ERASE.translateDescriptions("");
+        return GuiColor.RED + Localization.GUI.BUTTONS.RESET.translateTitles() + newLine + Localization.GUI.BUTTONS.RESET.translateDescriptions(newLine);
     }
 
     @Override
@@ -23,6 +23,17 @@ public class ButtonErase extends GuiButton {
 
         for (GuiTextField textField: guiM.guiTextFields) {
             textField.setText("");
+        }
+
+        for (GuiButton button: guiM.buttons) {
+            if (button instanceof ButtonShowHide) {
+                ((ButtonShowHide)button).isHidden = false;
+            }
+        }
+
+        for (int i = 0; i < guiM.visibleRows.length; i++) guiM.visibleRows[i] = true;
+        for (int i = 0; i < 4; i++) {
+            guiM.rowLocations[i] = 2 + 10 * i;
         }
     }
 }
