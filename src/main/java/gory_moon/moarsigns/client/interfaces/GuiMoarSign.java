@@ -77,6 +77,8 @@ public class GuiMoarSign extends GuiBase {
             buttons.add(new ButtonTextLocation(i, guiLeft + 151, guiTop + 110 + k * 18, true));
             buttons.add(new ButtonTextLocation(i, guiLeft + 151, guiTop + 118 + k * 18, false));
             buttons.add(new ButtonShowHide(i, guiLeft + 43, guiTop + 110 + 18 * k, !visibleRows[i]));
+            buttons.add(new ButtonTextSize(i, guiLeft + 168, guiTop + 110 + k * 18, true));
+            buttons.add(new ButtonTextSize(i, guiLeft + 185, guiTop + 110 + k * 18, false));
 
             guiTextFields[i] = new GuiSignTextField(fontRendererObj, guiLeft + 60, guiTop + 110 + 18 * k, 90, 16);
             guiTextFields[i].setText(text[i]);
@@ -389,9 +391,14 @@ public class GuiMoarSign extends GuiBase {
         String s = "";
         String[] array = new String[guiTextFields.length];
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < guiTextFields.length; i++) {
             array[i] = guiTextFields[i].getText();
             s += guiTextFields[i].getText();
+        }
+
+        for (int i = 0; i < rowLocations.length; i++) {
+            int max = Utils.getMaxTextOffset(rowSizes[i]);
+            rowLocations[i] = max > rowLocations[i] ? rowLocations[i]: max;
         }
 
         if (!s.equals("")) {
@@ -407,9 +414,35 @@ public class GuiMoarSign extends GuiBase {
         entitySign.signText = getSignTextWithColor(array);
         entitySign.rowLocations = Arrays.copyOf(rowLocations, rowLocations.length);
         entitySign.visibleRows = Arrays.copyOf(visibleRows, visibleRows.length);
+        entitySign.rowSizes = Arrays.copyOf(rowSizes, rowSizes.length);
 
         if (oldSelectedIndex != selectedTextField) oldSelectedIndex = selectedTextField;
 
+    }
+
+    public void changeTextSize (int id, int change) {
+        if (id < rowSizes.length) {
+            int rowSize = rowSizes[id];
+
+            if (change > 0) {
+                rowSizes[id] = rowSize + change <= 20 ? rowSize + change: 20;
+            } else if(change < 0) {
+                rowSizes[id] = rowSize + change > -1 ? rowSize + change: 0;
+            }
+        }
+    }
+
+    public void changeTextPosition(int id, int change) {
+        if (id < rowLocations.length) {
+            int rowLocation = rowLocations[id];
+
+            if (change > 0) {
+                int max = Utils.getMaxTextOffset(rowSizes[id]);
+                rowLocations[id] = max > rowLocation + change ? rowLocation + change: max;
+            } else if (change < 0) {
+                rowLocations[id] = rowLocation + change < 0 ? 0: rowLocation + change;
+            }
+        }
     }
 
     public static String[] getSignTextWithColor(String[] array) {

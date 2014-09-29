@@ -31,6 +31,5 @@ public class ButtonShowHide extends GuiButtonSpecial {
     public void action(GuiBase gui) {
         isHidden = !isHidden;
         ((GuiMoarSign)gui).visibleRows[id] = !isHidden;
-        System.out.println(id + ": " + isHidden);
     }
 }

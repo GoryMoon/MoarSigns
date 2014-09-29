@@ -4,14 +4,14 @@ import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import net.minecraft.client.gui.GuiScreen;
 
-public class ButtonTextLocation extends GuiButtonSpecial {
+public class ButtonTextSize extends GuiButtonSpecial {
 
-    int id;
-    private boolean moveUp;
+    private int id;
+    private boolean increase;
 
-    public ButtonTextLocation(int id, int x, int y, boolean moveUp) {
-        super(x, y, 16, 8, moveUp ? 224: 240, 0);
-        this.moveUp = moveUp;
+    public ButtonTextSize(int id, int x, int y, boolean increase) {
+        super(x, y, 16, 16, increase ? 224: 240, 24);
+        this.increase = increase;
         this.id = id;
     }
 
@@ -25,6 +25,6 @@ public class ButtonTextLocation extends GuiButtonSpecial {
         GuiMoarSign guiM = ((GuiMoarSign)gui);
 
         int change = GuiScreen.isShiftKeyDown() ? 10: 1;
-        guiM.changeTextPosition(id, moveUp ? -change: change);
+        guiM.changeTextSize(id, increase ? change: -change);
     }
 }
