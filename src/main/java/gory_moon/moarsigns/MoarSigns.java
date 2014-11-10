@@ -1,5 +1,6 @@
 package gory_moon.moarsigns;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -33,10 +34,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.input.Keyboard;
 
 import java.util.*;
 
-@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, dependencies = "after:*")
+@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION)
 public class MoarSigns {
 
     private static final String LINK = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/master/version.json";
@@ -54,7 +56,7 @@ public class MoarSigns {
         FMLInterModComms.sendRuntimeMessage(ModInfo.ID, "VersionChecker", "addVersionCheck", LINK);
 
         PacketHandler.init();
-        MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
+        FMLCommonHandler.instance().bus().register(new ClientEventHandler());
 
         Blocks.init();
         ModItems.init();

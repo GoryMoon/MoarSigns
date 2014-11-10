@@ -81,10 +81,6 @@ public class ModItems {
                     ItemStack mat = s.material.material;
                     if (mat != null && mat.getItem() != null) {
                         if (isMetal) {
-                            crafting.setInventorySlotContents(0, mat);
-                            mat = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
-                            mat.stackSize = 1;
-
                             ItemStack recNugget = null;
                             if (!s.material.gotNugget) {
                                 String unlocName = mat.getUnlocalizedName();
@@ -101,6 +97,7 @@ public class ModItems {
                                     }
                                 }
                             } else {
+                                mat.stackSize = 1;
                                 crafting.setInventorySlotContents(0, mat);
                                 recNugget = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
                             }

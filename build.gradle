@@ -84,6 +84,12 @@ processResources
     }
 }
 
+jar {
+    manifest {
+        attributes 'FMLAT': 'moarSigns_at.cfg'
+    }
+}
+
 task devJar(type: Jar, dependsOn: 'classes') {
     from(sourceSets.main.output) {
         include '**'

@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class GuiDebug extends GuiContainer {
@@ -23,7 +24,7 @@ public class GuiDebug extends GuiContainer {
     private int z;
     private Block block;
     private IInventory inventory;
-    private GuiRectangle infoArea;
+    private Rectangle infoArea;
     public GuiDebug(InventoryPlayer inventory, int ID, World world, int x, int y, int z, IInventory tempInv) {
         super(new ContainerDebug(inventory, ID, tempInv));
         this.world = world;
@@ -35,9 +36,9 @@ public class GuiDebug extends GuiContainer {
 
         if (blockInWorld) {
             block = world.getBlock(x, y, z);
-            infoArea = new GuiRectangle(8, 10, 160, 20);
+            infoArea = new Rectangle(8, 10, 160, 20);
         } else {
-            infoArea = new GuiRectangle(31, 10, 137, 19);
+            infoArea = new Rectangle(31, 10, 137, 19);
         }
 
         xSize = 178;
@@ -103,6 +104,46 @@ public class GuiDebug extends GuiContainer {
 
     public void drawHoverString(List<String> lst, int x, int y) {
         drawHoveringText(lst, x, y, fontRendererObj);
+    }
+
+    public class Rectangle {
+
+        private int x;
+        private int y;
+        private int w;
+        private int h;
+
+        public Rectangle(int x, int y, int w, int h) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+        }
+
+        public boolean inRect(GuiDebug gui, int mouseX, int mouseY) {
+            mouseX -= gui.getLeft();
+            mouseY -= gui.getTop();
+
+            return x <= mouseX && mouseX <= x + w && y <= mouseY && mouseY <= y + h;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
+
+        public void setY(int y) {
+            this.y = y;
+        }
+
+        public void draw(GuiDebug gui, int srcX, int srcY) {
+            gui.drawTexturedModalRect(gui.getLeft() + x, gui.getTop() + y, srcX, srcY, w, h);
+        }
+
+        public void drawString(GuiDebug gui, int mouseX, int mouseY, String str) {
+            if (inRect(gui, mouseX, mouseY)) {
+                gui.drawHoverString(Arrays.asList(str.split("\n")), mouseX - gui.getLeft(), mouseY - gui.getTop());
+            }
+        }
     }
 
 }

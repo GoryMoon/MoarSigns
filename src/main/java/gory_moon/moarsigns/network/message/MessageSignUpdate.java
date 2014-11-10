@@ -1,40 +1,47 @@
 package gory_moon.moarsigns.network.message;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import gory_moon.moarsigns.MoarSigns;
+import gory_moon.moarsigns.client.interfaces.GuiSignTextField;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Utils;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.world.WorldServer;
 
 public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignUpdate, IMessage> {
 
     public int x, y, z;
 
-    public int fontSize;
-    public int offset;
+    public int[] rowLocations = new int[4];
+    public int[] rowSizes = {0,0,0,0};
+    public boolean[] visibleRows = {true, true, true, true};
+    public boolean lockedChanges;
     public String[] text = new String[]{"", "", "", ""};
 
     public MessageSignUpdate() {
     }
 
-    public MessageSignUpdate(int x, int y, int z, int fontSize, int offset, String[] text) {
+    public MessageSignUpdate(int x, int y, int z, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean lockedChanges, String[] text) {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.fontSize = fontSize;
-        this.offset = offset;
+        this.rowLocations = rowLocations;
+        this.rowSizes = rowSizes;
+        this.visibleRows = visibleRows;
+        this.lockedChanges = lockedChanges;
         this.text = text;
     }
 
     public MessageSignUpdate(TileEntityMoarSign tileEntity) {
-        this(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.fontSize, tileEntity.textOffset, tileEntity.signText);
+        this(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.rowLocations,
+                tileEntity.rowSizes, tileEntity.visibleRows, tileEntity.lockedChanges, tileEntity.signText);
     }
 
     @Override
@@ -43,8 +50,10 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
         this.y = buf.readInt();
         this.z = buf.readInt();
 
-        this.fontSize = buf.readInt();
-        this.offset = buf.readInt();
+        for (int i = 0; i < 4; i++) rowLocations[i] = buf.readInt();
+        for (int i = 0; i < 4; i++) rowSizes[i] = buf.readInt();
+        for (int i = 0; i < 4; i++) visibleRows[i] = buf.readBoolean();
+        lockedChanges = buf.readBoolean();
 
         for (int i = 0; i < 4; i++) {
             int textLength = buf.readInt();
@@ -58,11 +67,13 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
         buf.writeInt(y);
         buf.writeInt(z);
 
-        buf.writeInt(fontSize);
-        buf.writeInt(offset);
+        for (int i = 0; i < 4; i++)  buf.writeInt(rowLocations[i]);
+        for (int i = 0; i < 4; i++)  buf.writeInt(rowSizes[i]);
+        for (int i = 0; i < 4; i++)  buf.writeBoolean(visibleRows[i]);
+        buf.writeBoolean(lockedChanges);
 
         for (int i = 0; i < 4; i++) {
-            buf.writeInt(text[i].length());
+            buf.writeInt(text[i].getBytes().length);
             buf.writeBytes(text[i].getBytes());
         }
     }
@@ -82,19 +93,16 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
                     return null;
                 }
 
-                int maxLength = Utils.getMaxLength(message.fontSize);
-                int rows = Utils.getRows(message.fontSize);
+                tileentitysign.rowLocations = message.rowLocations;
+                tileentitysign.rowSizes = message.rowSizes;
+                tileentitysign.visibleRows = message.visibleRows;
+                tileentitysign.lockedChanges = message.lockedChanges;
 
                 for (int i = 0; i < 4; ++i) {
                     boolean flag = true;
 
-                    message.text[i] = message.text[i].substring(0, Math.min(message.text[i].length(), maxLength));
-                    if (i > rows) {
-                        message.text[i] = "";
-                    }
-
                     for (int j = 0; j < message.text[i].length(); ++j) {
-                        if (!ChatAllowedCharacters.isAllowedCharacter(message.text[i].charAt(j))) {
+                        if (!GuiSignTextField.isAllowedCharacter(message.text[i].charAt(j))) {
                             flag = false;
                         }
                     }
@@ -103,9 +111,6 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
                         message.text[i] = "!?";
                     }
                 }
-
-                tileentitysign.fontSize = message.fontSize;
-                tileentitysign.textOffset = message.offset;
 
                 System.arraycopy(message.text, 0, tileentitysign.signText, 0, 4);
                 tileentitysign.markDirty();

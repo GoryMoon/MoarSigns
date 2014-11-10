@@ -1,5 +1,7 @@
 package gory_moon.moarsigns.client.interfaces;
 
+import cpw.mods.fml.client.FMLClientHandler;
+
 public enum GuiColor {
     BLACK(0),
     BLUE(1),
@@ -19,9 +21,48 @@ public enum GuiColor {
     WHITE(15);
 
     private int number;
+    private int rgb;
 
     private GuiColor(int number) {
         this.number = number;
+        rgb = getRGB(number);
+    }
+
+    public int getARGB () {
+        return 0xff << 24 | rgb;
+    }
+
+    public int getRGB () {
+        return rgb;
+    }
+
+    private int getRGB(int i) {
+
+        int j = (i >> 3 & 1) * 85;
+        int k = (i >> 2 & 1) * 170 + j;
+        int l = (i >> 1 & 1) * 170 + j;
+        int i1 = (i & 1) * 170 + j;
+
+        if (i == 6)
+        {
+            k += 85;
+        }
+
+        if (FMLClientHandler.instance().getClient().gameSettings.anaglyph)
+        {
+            int j1 = (k * 30 + l * 59 + i1 * 11) / 100;
+            int k1 = (k * 30 + l * 70) / 100;
+            int l1 = (k * 30 + i1 * 70) / 100;
+            k = j1;
+            l = k1;
+            i1 = l1;
+        }
+
+        return (k & 255) << 16 | (l & 255) << 8 | i1 & 255;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     @Override

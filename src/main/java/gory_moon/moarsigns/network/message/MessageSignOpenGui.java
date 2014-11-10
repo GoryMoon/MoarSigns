@@ -18,28 +18,24 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
 
     public String texture;
     public boolean isMetal;
-    public int fontSize;
-    public int offset;
-    public String[] text = new String[]{"", "", "", ""};
 
     public MessageSignOpenGui() {
     }
 
-    public MessageSignOpenGui(int x, int y, int z, String texture, boolean isMetal, int fontSize, int offset, String[] text) {
+    public MessageSignOpenGui(int x, int y, int z, String texture, boolean isMetal) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.texture = texture;
         this.isMetal = isMetal;
-        this.fontSize = fontSize;
-        this.offset = offset;
-        this.text = text;
     }
 
     public MessageSignOpenGui(TileEntityMoarSign tileEntity) {
         this.x = tileEntity.xCoord;
         this.y = tileEntity.yCoord;
         this.z = tileEntity.zCoord;
+        this.texture = tileEntity.texture_name;
+        this.isMetal = tileEntity.isMetal;
     }
 
     @Override
@@ -51,13 +47,6 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
         int textureLength = buf.readInt();
         this.texture = new String(buf.readBytes(textureLength).array());
         this.isMetal = buf.readBoolean();
-        this.fontSize = buf.readInt();
-        this.offset = buf.readInt();
-
-        for (int i = 0; i < 4; i++) {
-            int textLength = buf.readInt();
-            text[i] = new String(buf.readBytes(textLength).array());
-        }
     }
 
     @Override
@@ -69,13 +58,6 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
         buf.writeInt(texture.length());
         buf.writeBytes(texture.getBytes());
         buf.writeBoolean(isMetal);
-        buf.writeInt(fontSize);
-        buf.writeInt(offset);
-
-        for (int i = 0; i < 4; i++) {
-            buf.writeInt(text[i].length());
-            buf.writeBytes(text[i].getBytes());
-        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -92,6 +74,9 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
                 tileEntity.yCoord = message.y;
                 tileEntity.zCoord = message.z;
             }
+
+            ((TileEntityMoarSign)tileEntity).isMetal = message.isMetal;
+            ((TileEntityMoarSign)tileEntity).setResourceLocation(message.texture);
 
             FMLClientHandler.instance().getClient().displayGuiScreen(new GuiMoarSign((TileEntityMoarSign) tileEntity));
         }
