@@ -8,7 +8,24 @@ public final class Localization {
         String result = StatCollector.translateToLocal(key);
 
         for (int i = 0; i < vars.length; i++) {
-            result = result.replace("[%" + (i + 1) + "]", vars[i]);
+            String optionCheck = "[%" + (i + 1) + "->";
+            int pos = result.indexOf(optionCheck);
+
+            if (pos != -1) {
+                int endPos = result.indexOf("]");
+                if (endPos != -1) {
+                    String[] options = result.substring(pos + optionCheck.length(), endPos).split("\\|");
+                    int pickedOption = vars[i].equals("1") ? 1: 0;
+                    if (options.length > pickedOption) {
+                        String opt = options[pickedOption];
+                        result = result.substring(0, pos) + opt + result.substring(endPos + 1);
+
+                        i--;
+                    }
+                }
+            } else {
+                result = result.replace("[%" + (i + 1) + "]", vars[i]);
+            }
         }
 
         return result;
@@ -26,16 +43,20 @@ public final class Localization {
             PASTESIGN,
             RESET,
             COLORSELECTOR,
-            TEXTSTYLE;
+            TEXTSTYLE,
+            LOCK,
+            TEXT_SIZE,
+            TEXT_POSITION,
+            TEXT_SHOWHIDE;
 
             private String key;
 
             private BUTTONS() {
-                this.key = toString().toLowerCase();
+                this.key = toString().toLowerCase().replaceAll("_", ".");
             }
 
-            public String translateTitles() {
-                return Localization.translateString("gui.moarsigns:button.title." + key, "");
+            public String translateTitles(String... vars) {
+                return Localization.translateString("gui.moarsigns:button.title." + key, vars);
             }
 
             public String translateDescriptions(String... vars) {

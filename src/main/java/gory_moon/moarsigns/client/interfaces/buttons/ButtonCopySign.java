@@ -14,8 +14,8 @@ public class ButtonCopySign extends GuiButton {
     }
 
     @Override
-    public String getButtonInfo() {
-        return Localization.GUI.BUTTONS.COPYSIGN.translateTitles() + newLine + Localization.GUI.BUTTONS.COPYSIGN.translateDescriptions(newLine);
+    public String getButtonInfo(GuiBase gui) {
+        return Localization.GUI.BUTTONS.COPYSIGN.translateTitles() + newLine + Localization.GUI.BUTTONS.COPYSIGN.translateDescriptions(newLine, "\n" + GuiColor.LIGHTGRAY);
     }
 
     @Override
@@ -25,6 +25,19 @@ public class ButtonCopySign extends GuiButton {
         for (GuiTextField textField: guiM.guiTextFields) {
             s += "\u001D" + textField.getText();
         }
+
+        if (GuiMoarSign.isShiftKeyDown()) {
+            s += "\u001E";
+
+            int[] sizes = guiM.rowSizes;
+            int[] locations = guiM.rowLocations;
+            boolean[] hidden = guiM.visibleRows;
+
+            for (int i = 0; i < 4; i++) {
+                s+= (i > 0 ? "\u001F" : "") + sizes[i] + ":" + locations[i] + ":" + (hidden[i] ? 1: 0);
+            }
+        }
+
         GuiScreen.setClipboardString(s + "\u001Dmoarsign");
     }
 }

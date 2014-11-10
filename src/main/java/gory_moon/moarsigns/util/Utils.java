@@ -12,7 +12,7 @@ public class Utils {
         return maxLengths[size];
     }
 
-    private static int[] maxTextLocation = {36, 32, 29, 27, 25, 23, 21, 20, 18, 17, 16, 15, 14, 13, 12, 12, 11, 10, 10, 9, 9};
+    private static int[] maxTextLocation = {36, 32, 29, 27, 24, 22, 21, 19, 17, 16, 15, 14, 13, 12, 11, 11, 10, 9, 9, 8, 8};
 
     public static int getMaxTextOffset(int size) {
         return maxTextLocation.length > size ? maxTextLocation[size]: 0;

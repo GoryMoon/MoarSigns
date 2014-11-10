@@ -1,8 +1,12 @@
 package gory_moon.moarsigns.client.interfaces.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
+import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
+import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.GuiScreen;
+
+import java.util.ArrayList;
 
 public class ButtonTextLocation extends GuiButtonSpecial {
 
@@ -16,8 +20,10 @@ public class ButtonTextLocation extends GuiButtonSpecial {
     }
 
     @Override
-    public String getButtonInfo() {
-        return "";
+    public String getButtonInfo(GuiBase gui) {
+        return Localization.GUI.BUTTONS.TEXT_POSITION.translateTitles(moveUp ? "0": "1") + newLine +
+                Localization.GUI.BUTTONS.TEXT_POSITION.translateDescriptions(newLine, "\n" + GuiColor.LIGHTBLUE,
+                        GuiColor.LIGHTGRAY.toString(), "\n" + GuiColor.ORANGE.toString());
     }
 
     @Override
@@ -25,6 +31,20 @@ public class ButtonTextLocation extends GuiButtonSpecial {
         GuiMoarSign guiM = ((GuiMoarSign)gui);
 
         int change = GuiScreen.isShiftKeyDown() ? 10: 1;
+
         guiM.changeTextPosition(id, moveUp ? -change: change);
+
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        if (guiM.buttonLock.getState()) {
+            for (GuiButton next : guiM.textPosSizeButtons) {
+                if (next instanceof ButtonTextLocation) {
+                    int nextID = ((ButtonTextLocation) next).id;
+                    if (!ids.contains(nextID)) {
+                        ids.add(nextID);
+                        guiM.changeTextPosition(nextID, moveUp ? -change : change);
+                    }
+                }
+            }
+        }
     }
 }

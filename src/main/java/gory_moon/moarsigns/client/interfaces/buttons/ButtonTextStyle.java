@@ -1,11 +1,8 @@
 package gory_moon.moarsigns.client.interfaces.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.util.Localization;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.StatCollector;
 
 public class ButtonTextStyle extends GuiButtonToggleable {
 
@@ -14,7 +11,7 @@ public class ButtonTextStyle extends GuiButtonToggleable {
     }
 
     @Override
-    public String getButtonInfo() {
+    public String getButtonInfo(GuiBase gui) {
         return Localization.GUI.BUTTONS.TEXTSTYLE.translateTitles() + newLine + Localization.GUI.BUTTONS.TEXTSTYLE.translateDescriptions(newLine);
     }
 

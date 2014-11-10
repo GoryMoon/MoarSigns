@@ -4,23 +4,41 @@ item.moarsign.debug.name=Debug
 item.moarsign.sign.dummy=MoarSign
 
 # -Gui
-#  For the buttons, [%1] = linebreak
 gui.moarsigns:button.title.cut=Cut
-gui.moarsigns:button.description.cut=Cuts the selected text[%1]to the clipboard
 gui.moarsigns:button.title.copy=Copy
-gui.moarsigns:button.description.copy=Copies the selected text[%1]to the clipboard
 gui.moarsigns:button.title.paste=Paste
-gui.moarsigns:button.description.paste=Pastes text from the clipboard
 gui.moarsigns:button.title.cutsign=Cut Sign
-gui.moarsigns:button.description.cutsign=Cuts the sign into[%1]the clipboard, ready to[%1]be pasted into a sign
 gui.moarsigns:button.title.copysign=Copy Sign
-gui.moarsigns:button.description.copysign=Copies the sign into[%1]the clipboard, ready to[%1]be pasted into a sign
 gui.moarsigns:button.title.pastesign=Paste Sign
-gui.moarsigns:button.description.pastesign=Pastes all text from a sign[%1]that is in the clipboard.
 gui.moarsigns:button.title.reset=Reset
-gui.moarsigns:button.description.reset=Erases all text from sign and[%1]resets hidden rows and text location
 gui.moarsigns:button.title.textstyle=Text Style
+gui.moarsigns:button.title.colorselector=Color Selector
+gui.moarsigns:button.title.lock=Lock rows
+
+#  The [%2->Increase|Decrease] in the following get decided what to pick in the code
+gui.moarsigns:button.title.text.size=[%1][%2->Increase|Decrease] text size
+gui.moarsigns:button.title.text.position=Move text [%1->up|down]
+gui.moarsigns:button.title.text.showhide=[%1->Show|Hide] row
+
+
+#  For the descriptions of the first, [%1] = linebreak
+gui.moarsigns:button.description.cut=Cuts the selected text[%1]to the clipboard
+gui.moarsigns:button.description.copy=Copies the selected text[%1]to the clipboard
+gui.moarsigns:button.description.paste=Pastes text from the clipboard
+gui.moarsigns:button.description.cutsign=Cuts the sign into[%1]the clipboard, ready to[%1]be pasted into a sign[%2]Shift-click to get the[%2]size, location and if hidden
+gui.moarsigns:button.description.copysign=Copies the sign into[%1]the clipboard, ready to[%1]be pasted into a sign[%2]Shift-click to get the[%2]size, location and if hidden
+gui.moarsigns:button.description.pastesign=Pastes all text from a sign[%1]that is in the clipboard.
+gui.moarsigns:button.description.reset=Erases all text from sign[%1]and resets hidden rows[%1]and text location
 gui.moarsigns:button.description.textstyle=Set the style for[%1]the following text[%1]from the cursor
+gui.moarsigns:button.description.colorselector=Add color to the text[%1]at the cursor position
+gui.moarsigns:button.description.lock=Locks the 3 bottom rows[%1]Changes to the top row[%1]will effect these rows
+
+#  The different numbers does different things in theses, look in-game to better understand
+gui.moarsigns:button.description.text.size=Changes the size of the[%1]text for the row[%2]Current size: [%3]Normal-click [%4]Shift-click [%5]
+gui.moarsigns:button.description.text.position=Changes the position of[%1]the text on the sign[%1]Each click moves accordingly:[%2]Normal-click [%3]1x[%4]Shift-click [%3]10x
+gui.moarsigns:button.description.text.showhide=[%1->Shows|Hides] the row on the sign[%2]Text will still be saved[%2]even if the row is hidden
+
+
 
 #  Colors
 gui.moarsigns:color.black=Black

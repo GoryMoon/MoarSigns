@@ -21,9 +21,11 @@ public class TileEntityMoarSign extends TileEntitySign {
     //public String[] signText = new String[] {"", "", "", ""};
 
     private final int NBT_VERSION = 1;
+
     public int[] rowLocations = new int[4];
     public int[] rowSizes = {0,0,0,0};
     public boolean[] visibleRows = {true, true, true, true};
+    public boolean lockedChanges;
 
     public boolean isMetal = false;
     public String texture_name;
@@ -35,12 +37,12 @@ public class TileEntityMoarSign extends TileEntitySign {
     private ResourceLocation resourceLocation;
     private boolean textureReq = false;
 
+    //TODO Remove
     public int fontSize = 0;
     public int textOffset = 0;
     private int rows = 4;
     private int maxLength = 15;
     private int oldFontSize;
-    public int lineBeingEdited = -1;
 
     public TileEntityMoarSign() {
         super();
@@ -72,6 +74,8 @@ public class TileEntityMoarSign extends TileEntitySign {
     public void writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         compound.setInteger("nbtVersion", NBT_VERSION);
+
+        //TODO Write correctly for new system
         for (int i = 0; i < 4; i++) {
             compound.setString("Text" + (i + 1), signText[i]);
         }
@@ -84,6 +88,15 @@ public class TileEntityMoarSign extends TileEntitySign {
     public void readFromNBT(NBTTagCompound compound) {
         isEditable = false;
         super.readFromNBT(compound);
+
+        int nbtVersion = compound.getInteger("nbtVersion");
+
+        //TODO Read correctly depending on version
+        if (nbtVersion == 1) {
+
+        } else if (nbtVersion == 2) {
+
+        }
 
         fontSize = compound.getInteger("fontSize");
         rows = Utils.getRows(fontSize);

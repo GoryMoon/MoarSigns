@@ -13,7 +13,7 @@ public class ButtonReset extends GuiButton {
     }
 
     @Override
-    public String getButtonInfo() {
+    public String getButtonInfo(GuiBase gui) {
         return GuiColor.RED + Localization.GUI.BUTTONS.RESET.translateTitles() + newLine + Localization.GUI.BUTTONS.RESET.translateDescriptions(newLine);
     }
 
@@ -32,8 +32,9 @@ public class ButtonReset extends GuiButton {
         }
 
         for (int i = 0; i < guiM.visibleRows.length; i++) guiM.visibleRows[i] = true;
-        for (int i = 0; i < 4; i++) {
-            guiM.rowLocations[i] = 2 + 10 * i;
-        }
+        for (int i = 0; i < 4; i++) guiM.rowLocations[i] = 2 + 10 * i;
+        for (int i = 0; i < guiM.rowSizes.length; i++) guiM.rowSizes[i] = 0;
+
+        guiM.buttonLock.unlock(gui);
     }
 }

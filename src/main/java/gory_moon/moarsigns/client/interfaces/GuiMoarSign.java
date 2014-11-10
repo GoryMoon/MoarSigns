@@ -35,25 +35,24 @@ public class GuiMoarSign extends GuiBase {
     public boolean showTextStyles;
     private GuiTextStyleButton[] styleButtons = new GuiTextStyleButton[6];
 
+    public ArrayList<GuiButton> textPosSizeButtons = new ArrayList<GuiButton>();
+
     private ButtonCutSign buttonCutSign;
     private ButtonCopySign buttonCopySign;
-    private ButtonReset buttonErase;
+    public ButtonReset buttonErase;
     public ButtonColorPicker buttonColorPicker;
     public ButtonTextStyle buttonTextStyle;
+    public ButtonLock buttonLock;
 
     public int[] rowSizes = new int[4];
     public int[] rowLocations = new int[4];
     public boolean[] visibleRows = new boolean[4];
 
     public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
+    private final int TEXT_EDIT_AREA = 23;
 
     private TileEntityMoarSign entitySign;
-    private int rows = 4;
     private int maxLength = 15;
-    private int minOffset = -1;
-    private int[] row;
-
-    private int size = 0;
 
     public GuiMoarSign(TileEntityMoarSign te) {
         entitySign = te;
@@ -74,13 +73,25 @@ public class GuiMoarSign extends GuiBase {
         int k = 0;
         int j;
         for (int i = 0; i < rowSizes.length; i++) {
-            buttons.add(new ButtonTextLocation(i, guiLeft + 151, guiTop + 110 + k * 18, true));
-            buttons.add(new ButtonTextLocation(i, guiLeft + 151, guiTop + 118 + k * 18, false));
-            buttons.add(new ButtonShowHide(i, guiLeft + 43, guiTop + 110 + 18 * k, !visibleRows[i]));
-            buttons.add(new ButtonTextSize(i, guiLeft + 168, guiTop + 110 + k * 18, true));
-            buttons.add(new ButtonTextSize(i, guiLeft + 185, guiTop + 110 + k * 18, false));
+            ButtonTextLocation btnText1 = new ButtonTextLocation(i, guiLeft + TEXT_EDIT_AREA + 108, guiTop + 110 + k * 18, true);
+            ButtonTextLocation btnText2 = new ButtonTextLocation(i, guiLeft + TEXT_EDIT_AREA + 108, guiTop + 118 + k * 18, false);
+            ButtonTextSize btnSize1 =  new ButtonTextSize(i, guiLeft + TEXT_EDIT_AREA + 125, guiTop + 110 + k * 18, true);
+            ButtonTextSize btnSize2 = new ButtonTextSize(i, guiLeft + TEXT_EDIT_AREA + 142, guiTop + 110 + k * 18, false);
 
-            guiTextFields[i] = new GuiSignTextField(fontRendererObj, guiLeft + 60, guiTop + 110 + 18 * k, 90, 16);
+            buttons.add(btnText1);
+            buttons.add(btnText2);
+            buttons.add(new ButtonShowHide(i, guiLeft + TEXT_EDIT_AREA, guiTop + 110 + 18 * k, !visibleRows[i]));
+            buttons.add(btnSize1);
+            buttons.add(btnSize2);
+
+            if (i > 0) {
+                textPosSizeButtons.add(btnText1);
+                textPosSizeButtons.add(btnText2);
+                textPosSizeButtons.add(btnSize1);
+                textPosSizeButtons.add(btnSize2);
+            }
+
+            guiTextFields[i] = new GuiSignTextField(fontRendererObj, guiLeft + TEXT_EDIT_AREA + 17, guiTop + 110 + 18 * k, 90, 16);
             guiTextFields[i].setText(text[i]);
             k++;
         }
@@ -107,6 +118,8 @@ public class GuiMoarSign extends GuiBase {
         buttonErase = new ButtonReset(guiLeft + 137, guiTop + 10);
         buttonColorPicker = new ButtonColorPicker(guiLeft + 158, guiTop + 10);
         buttonTextStyle = new ButtonTextStyle(guiLeft + 179, guiTop + 10);
+        int LOCK_BASE_POS = 224;
+        buttonLock = new ButtonLock(guiLeft + TEXT_EDIT_AREA + 164, guiTop + 146, LOCK_BASE_POS);
 
         buttons.add(new ButtonCut(guiLeft + 11, guiTop + 10));
         buttons.add(new ButtonCopy(guiLeft + 32, guiTop + 10));
@@ -117,6 +130,7 @@ public class GuiMoarSign extends GuiBase {
         buttons.add(buttonErase);
         buttons.add(buttonColorPicker);
         buttons.add(buttonTextStyle);
+        buttons.add(buttonLock);
 
         update();
     }
@@ -128,33 +142,14 @@ public class GuiMoarSign extends GuiBase {
 
         for (int i = 0; i < entitySign.signText.length; i++) {
             entitySign.signText[i] = fontRendererObj.trimStringToWidth(entitySign.signText[i], Math.min(fontRendererObj.getStringWidth(entitySign.signText[i]), maxLength));
-            if (i > rows) {
-                entitySign.signText[i] = "";
-            }
         }
 
         PacketHandler.INSTANCE.sendToServer(new MessageSignUpdate(entitySign));
     }
 
     private void updateSize() {
-        size = entitySign.fontSize;
-        rows = Utils.getRows(size);
+        int size = entitySign.fontSize;
         maxLength = Utils.getMaxLength(size);
-
-        row = Info.textPostion[size];
-        minOffset = row[0];
-
-        if (row.length > 1 && entitySign.textOffset > minOffset) {
-            for (int i = 0; i < row.length; i++) {
-                if (entitySign.textOffset < row[i]) {
-                    rows = i;
-                    break;
-                }
-            }
-        } else {
-            rows = 1;
-            entitySign.textOffset = entitySign.textOffset < minOffset ? minOffset : entitySign.textOffset;
-        }
     }
 
     @Override
@@ -188,19 +183,6 @@ public class GuiMoarSign extends GuiBase {
         }
 
         updateSize();
-        /*int l = fontRendererObj.getStringWidth(entitySign.signText[editLine]);
-
-        if (key == 14 && entitySign.signText[editLine].length() > 0) {
-            if (l > maxLength)
-                entitySign.signText[editLine] = fontRendererObj.trimStringToWidth(entitySign.signText[editLine], 90);
-
-            entitySign.signText[editLine] = entitySign.signText[editLine].substring(0, entitySign.signText[editLine].length() - 1);
-        }
-
-        if (ChatAllowedCharacters.isAllowedCharacter(typedChar) && fontRendererObj.getCharWidth(typedChar) + l < maxLength) {
-            entitySign.signText[editLine] = entitySign.signText[editLine] + typedChar;
-            l = fontRendererObj.getStringWidth(entitySign.signText[editLine]);
-        }                            */
 
         if (key == 1) {
             mc.thePlayer.closeScreen();
@@ -213,12 +195,20 @@ public class GuiMoarSign extends GuiBase {
         drawDefaultBackground();
         super.drawScreen(x, y, par3);
 
+        GL11.glColor4f(1,1,1,1);
+
         bindTexture(texture);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
         for (GuiButton button: buttons) {
             button.drawButton(this, x, y);
         }
+
+        drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 172, guiTop + 136, guiTop + 146, GuiColor.BLACK.getARGB());
+        drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 172, guiTop + 160, guiTop + 172, GuiColor.BLACK.getARGB());
+        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 158, guiLeft + TEXT_EDIT_AREA + 172, guiTop + 136, GuiColor.BLACK.getARGB());
+        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 158, guiLeft + TEXT_EDIT_AREA + 164, guiTop + 154, GuiColor.BLACK.getARGB());
+        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 158, guiLeft + TEXT_EDIT_AREA + 172, guiTop + 172, GuiColor.BLACK.getARGB());
 
         for (GuiTextField textField: guiTextFields) textField.drawTextBox();
 
@@ -415,6 +405,7 @@ public class GuiMoarSign extends GuiBase {
         entitySign.rowLocations = Arrays.copyOf(rowLocations, rowLocations.length);
         entitySign.visibleRows = Arrays.copyOf(visibleRows, visibleRows.length);
         entitySign.rowSizes = Arrays.copyOf(rowSizes, rowSizes.length);
+        entitySign.lockedChanges = buttonLock.getState();
 
         if (oldSelectedIndex != selectedTextField) oldSelectedIndex = selectedTextField;
 

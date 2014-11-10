@@ -33,10 +33,10 @@ public abstract class GuiButton extends GuiRectangle {
     }
 
     public void hoverText(GuiBase gui, int x, int y) {
-        drawString(gui, x, y, getButtonInfo());
+        drawString(gui, x, y, getButtonInfo(gui));
     }
 
-    public abstract String getButtonInfo();
+    public abstract String getButtonInfo(GuiBase gui);
 
     public abstract void action(GuiBase gui);
 
