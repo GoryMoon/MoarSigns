@@ -122,7 +122,7 @@ public class TileEntityMoarSign extends TileEntitySign {
 
     @Override
     public Packet getDescriptionPacket() {
-        return PacketHandler.INSTANCE.getPacketFrom(new MessageSignMainInfo(this, false));
+        return PacketHandler.INSTANCE.getPacketFrom(new MessageSignMainInfo(this));
     }
 
     public boolean isEditable() {

@@ -42,7 +42,7 @@ public class GuiSignTextField extends GuiTextField {
         String s2 = ChatAllowedCharacters.filerAllowedCharacters(text);
         int i = cursorPosition < this.selectionEnd ? cursorPosition : this.selectionEnd;
         int j = cursorPosition < this.selectionEnd ? this.selectionEnd : cursorPosition;
-        int k = this.maxRowLength  - field_146211_a.getStringWidth(GuiMoarSign.getSignTextWithColor(new String[]{this.text})[0]) - (field_146211_a.getStringWidth(this.text.substring(0, i)) - field_146211_a.getStringWidth(this.text.substring(0, j)));// - field_146211_a.getStringWidth(this.text.substring(0, i - this.selectionEnd));
+        int k = this.maxRowLength  - field_146211_a.getStringWidth(GuiMoarSign.getSignTextWithColor(new String[]{this.text})[0]) - (field_146211_a.getStringWidth(this.text.substring(0, i)) - field_146211_a.getStringWidth(this.text.substring(0, j)));
 
         if (this.text.length() > 0)
         {
@@ -51,7 +51,7 @@ public class GuiSignTextField extends GuiTextField {
 
         int l;
 
-        if (k < field_146211_a.getStringWidth(s2))
+        if (k < field_146211_a.getStringWidth(s2) && !isSpecial(s2))
         {
             String temp = field_146211_a.trimStringToWidth(s2, k);
             s1 = s1 + temp;
