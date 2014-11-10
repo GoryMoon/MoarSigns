@@ -12,15 +12,15 @@ import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagIntArray;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.ResourceLocation;
 
 public class TileEntityMoarSign extends TileEntitySign {
 
-    //public String[] signText = new String[] {"", "", "", ""};
-
-    private final int NBT_VERSION = 1;
+    private final int NBT_VERSION = 2;
 
     public int[] rowLocations = new int[4];
     public int[] rowSizes = {0,0,0,0};
@@ -37,13 +37,6 @@ public class TileEntityMoarSign extends TileEntitySign {
     private ResourceLocation resourceLocation;
     private boolean textureReq = false;
 
-    //TODO Remove
-    public int fontSize = 0;
-    public int textOffset = 0;
-    private int rows = 4;
-    private int maxLength = 15;
-    private int oldFontSize;
-
     public TileEntityMoarSign() {
         super();
         for (int i = 0; i < 4; i++) {
@@ -56,11 +49,11 @@ public class TileEntityMoarSign extends TileEntitySign {
 
         if (worldObj.isRemote) {
 
-            if (fontSize != oldFontSize) {
+            /*if (fontSize != oldFontSize) {
                 rows = Utils.getRows(fontSize);
                 maxLength = Utils.getMaxLength(fontSize);
                 oldFontSize = fontSize;
-            }
+            }*/
             if (!textureReq) {
                 textureReq = true;
                 Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
@@ -75,14 +68,36 @@ public class TileEntityMoarSign extends TileEntitySign {
         super.writeToNBT(compound);
         compound.setInteger("nbtVersion", NBT_VERSION);
 
-        //TODO Write correctly for new system
         for (int i = 0; i < 4; i++) {
             compound.setString("Text" + (i + 1), signText[i]);
         }
+
+        NBTTagList settings = new NBTTagList();
+
+        int[] loc = new int[5];
+        loc[0] = 0;
+        System.arraycopy(rowLocations, 0, loc, 1, 4);
+
+        int[] size = new int[5];
+        size[0] = 1;
+        System.arraycopy(rowSizes, 0, size, 1, 4);
+
+        int[] visible = new int[5];
+        visible[0] = 2;
+        for (int i = 0; i < 4; i++) visible[i + 1] = visibleRows[i] ? 1: 0;
+
+        NBTTagIntArray locations = new NBTTagIntArray(loc);
+        NBTTagIntArray sizes = new NBTTagIntArray(size);
+        NBTTagIntArray hidden = new NBTTagIntArray(visible);
+
+        settings.appendTag(locations);
+        settings.appendTag(sizes);
+        settings.appendTag(hidden);
+
+        compound.setTag("settings", settings);
+        compound.setBoolean("lockedChanges", lockedChanges);
         compound.setBoolean("isMetal", isMetal);
         compound.setString("texture", texture_name);
-        compound.setInteger("fontSize", fontSize);
-        compound.setInteger("textOffset", textOffset);
     }
 
     public void readFromNBT(NBTTagCompound compound) {
@@ -91,32 +106,77 @@ public class TileEntityMoarSign extends TileEntitySign {
 
         int nbtVersion = compound.getInteger("nbtVersion");
 
-        //TODO Read correctly depending on version
         if (nbtVersion == 1) {
+            int fontSize = compound.getInteger("fontSize");
+            int rows = Utils.getRows(fontSize);
+            int maxLength = Utils.getMaxLength(fontSize);
+
+            rowSizes = new int[] {fontSize, fontSize, fontSize, fontSize};
+            visibleRows = new boolean[] {false, false, false, false};
+            for (int i = 0; i < rows; i++) {
+                visibleRows[i] = true;
+            }
+
+            for (int i = 0; i < 4; ++i) {
+                signText[i] = compound.getString("Text" + (i + 1));
+
+                if (signText[i].length() > maxLength) {
+                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength);
+                }
+
+                if (i > rows) {
+                    signText[i] = "";
+                }
+            }
+
+            int textOffset = compound.getInteger("textOffset");
+            for (int i = 0; i < 4; i++) {
+                int temp = textOffset + rowLocations[i];
+
+                if (temp > 20) temp = 20;
+                if (temp < 0) temp = 0;
+
+                rowLocations[i] = temp;
+            }
+
 
         } else if (nbtVersion == 2) {
 
-        }
+            lockedChanges = compound.getBoolean("lockedChanges");
 
-        fontSize = compound.getInteger("fontSize");
-        rows = Utils.getRows(fontSize);
-        maxLength = Utils.getMaxLength(fontSize);
+            NBTTagList settings = compound.getTagList("settings", 11);
 
-        for (int i = 0; i < 4; ++i) {
-            signText[i] = compound.getString("Text" + (i + 1));
+            for (int i = 0; i < settings.tagCount(); i++) {
+                int[] array = settings.func_150306_c(i);
+                if (array[0] == 0) {
+                    System.arraycopy(array, 1, rowLocations, 0, 4);
+                } else if (array[0] == 1) {
+                    System.arraycopy(array, 1, rowSizes, 0, 4);
+                }else if (array[0] == 2) {
+                    int[] hidden = new int[4];
+                    System.arraycopy(array, 1, hidden, 0, 4);
+                    for (int j = 0; j < 4; j++) visibleRows[j] = hidden[j] == 1;
+                }
 
-            if (signText[i].length() > maxLength) {
-                signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength);
             }
 
-            if (i > rows) {
-                signText[i] = "";
+
+            for (int i = 0; i < 4; ++i) {
+                signText[i] = compound.getString("Text" + (i + 1));
+
+                int maxLength = Utils.getMaxLength(rowSizes[i]);
+                if (signText[i].length() > maxLength) {
+                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength);
+                }
+
+                if (!visibleRows[i]) {
+                    signText[i] = "";
+                }
             }
         }
+
         isMetal = compound.getBoolean("isMetal");
         texture_name = compound.getString("texture");
-
-        textOffset = compound.getInteger("textOffset");
 
     }
 

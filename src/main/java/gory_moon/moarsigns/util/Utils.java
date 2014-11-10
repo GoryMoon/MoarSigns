@@ -2,7 +2,6 @@ package gory_moon.moarsigns.util;
 
 public class Utils {
 
-    @Deprecated
     public static int getRows(int size) {
         return size > 15 ? 1 : (size > 5 ? 2 : (size > 1 ? 3 : 4));
     }

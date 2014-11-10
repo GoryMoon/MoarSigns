@@ -52,7 +52,6 @@ public class GuiMoarSign extends GuiBase {
     private final int TEXT_EDIT_AREA = 23;
 
     private TileEntityMoarSign entitySign;
-    private int maxLength = 15;
 
     public GuiMoarSign(TileEntityMoarSign te) {
         entitySign = te;
@@ -141,15 +140,11 @@ public class GuiMoarSign extends GuiBase {
         this.entitySign.setEditable(true);
 
         for (int i = 0; i < entitySign.signText.length; i++) {
+            int maxLength = Utils.getMaxLength(rowSizes[i]);
             entitySign.signText[i] = fontRendererObj.trimStringToWidth(entitySign.signText[i], Math.min(fontRendererObj.getStringWidth(entitySign.signText[i]), maxLength));
         }
 
         PacketHandler.INSTANCE.sendToServer(new MessageSignUpdate(entitySign));
-    }
-
-    private void updateSize() {
-        int size = entitySign.fontSize;
-        maxLength = Utils.getMaxLength(size);
     }
 
     @Override
@@ -181,8 +176,6 @@ public class GuiMoarSign extends GuiBase {
             selectedTextField = selectedTextField + 1 > 3 ? 0: selectedTextField + 1;
             guiTextFields[selectedTextField].setFocused(true);
         }
-
-        updateSize();
 
         if (key == 1) {
             mc.thePlayer.closeScreen();
