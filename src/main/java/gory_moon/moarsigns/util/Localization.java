@@ -31,6 +31,29 @@ public final class Localization {
         return result;
     }
 
+    public static class ITEM {
+
+        public static enum SIGNTOOLBOX {
+
+            CHANGE,
+            EDIT,
+            ROTATE,
+            COPY,
+            MOVE;
+
+            private String key;
+
+            private SIGNTOOLBOX() {
+                this.key = toString().toLowerCase();
+            }
+
+            public String translate(String... vars) {
+                return Localization.translateString("item.moarsign.description:signtoolbox." + key, vars);
+            }
+        }
+
+    }
+
     public static class GUI {
 
         public static enum BUTTONS {

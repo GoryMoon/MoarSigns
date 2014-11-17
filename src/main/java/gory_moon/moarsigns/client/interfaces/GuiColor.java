@@ -32,6 +32,10 @@ public enum GuiColor {
         return 0xff << 24 | rgb;
     }
 
+    public int getRGBA () {
+        return rgb << 2 | 0xff;
+    }
+
     public int getRGB () {
         return rgb;
     }

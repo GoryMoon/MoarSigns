@@ -2,6 +2,7 @@ package gory_moon.moarsigns.util;
 
 import gory_moon.moarsigns.blocks.BlockMoarSign;
 import gory_moon.moarsigns.blocks.Blocks;
+import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.world.World;
 
@@ -54,10 +55,18 @@ public class RotationHandler {
             }
             rotate(tileEntity, side);
         } else {
-            if (meta == 15) {
-                meta = 0;
+            if (GuiMoarSign.isShiftKeyDown()) {
+                if (meta == 0) {
+                    meta = 15;
+                } else {
+                    meta--;
+                }
             } else {
-                meta++;
+                if (meta == 15) {
+                    meta = 0;
+                } else {
+                    meta++;
+                }
             }
             rotate(tileEntity, meta);
         }

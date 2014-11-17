@@ -2,13 +2,16 @@ package gory_moon.moarsigns.client.renderers;
 
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.ModelMoarSign;
+import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.RenderHandEvent;
 import org.lwjgl.opengl.GL11;
 
 public class MoarSignRenderer extends TileEntitySpecialRenderer {
@@ -106,7 +109,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
             float size = sizes[row];
             GL11.glPushMatrix();
             f2 = 0.016666668F * f1 + (size / 1000F);
-            GL11.glTranslatef(size > 0 ? 0.01F : 0.0F, 0.5F * f1 - ((float) 0.02 * size) - (size < 2 ? 0: size < 7 ? 0.01F : size < 11 ? 0.02F: size < 16 ? 0.03F : size < 20 ? 0.035F: 0.037F), 0.07F * f1);
+            GL11.glTranslatef(size > 0 ? 0.01F : 0.0F, 0.5F * f1 - ((float) 0.02 * size) - (size < 2 ? 0 : size < 7 ? 0.01F : size < 11 ? 0.02F : size < 16 ? 0.03F : size < 20 ? 0.035F : 0.037F), 0.07F * f1);
             GL11.glScalef(f2, -f2, f2);
             GL11.glNormal3f(0.0F, 0.0F, -1.0F * f2);
             GL11.glDepthMask(false);
@@ -114,7 +117,13 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
             int maxLength = Utils.getMaxLength((int) size);
             String s = fontRenderer.trimStringToWidth(tileentity.signText[row], Math.min(maxLength, fontRenderer.getStringWidth(tileentity.signText[row])));
 
+
+            GL11.glDisable(GL11.GL_LIGHTING);
+
             fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, (-tileentity.signText.length * 5) + offset[row] - 2, 0);
+
+            GL11.glEnable(GL11.GL_LIGHTING);
+
             GL11.glDepthMask(true);
             GL11.glPopMatrix();
         }

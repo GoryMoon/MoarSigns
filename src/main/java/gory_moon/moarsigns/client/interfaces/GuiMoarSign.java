@@ -242,6 +242,7 @@ public class GuiMoarSign extends GuiBase {
         if (showColors) {
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 50.0F);
+            GL11.glDisable(GL11.GL_LIGHTING);
 
             bindTexture(texture);
             drawTexturedModalRect(guiLeft + 150, guiTop + 30, 0, 0, 60, 60);
@@ -253,6 +254,7 @@ public class GuiMoarSign extends GuiBase {
                 color.draw(this, x, y);
             }
 
+
             int k1 = 0;
             int j = 0;
             for (GuiColor color: GuiColor.values()) {
@@ -262,6 +264,7 @@ public class GuiMoarSign extends GuiBase {
                     j++;
                 } else k1++;
             }
+            GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();
 
             for (GuiColorButton button: colorButtons) {
@@ -275,6 +278,7 @@ public class GuiMoarSign extends GuiBase {
         if (showTextStyles) {
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 51.0F);
+            GL11.glDisable(GL11.GL_LIGHTING);
 
             bindTexture(texture);
 
@@ -287,6 +291,7 @@ public class GuiMoarSign extends GuiBase {
             for (GuiTextStyleButton button: styleButtons) {
                 button.draw(this, x, y);
             }
+            GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();
             for (GuiTextStyleButton button: styleButtons) {
                 if (button.inRect(x, y)) drawHoveringText(Lists.asList(button.getName(), new String[0]), x, y, fontRendererObj);

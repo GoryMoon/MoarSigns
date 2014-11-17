@@ -24,19 +24,19 @@ public class ModItems {
     public static ItemMoarSign sign;
     public static ItemDebug debug;
     public static ItemNugget nugget;
-    //public static ItemSignToolbox signToolbox;
+    public static ItemSignToolbox signToolbox;
 
     public static void init() {
 
         sign = new ItemMoarSign();
         debug = new ItemDebug();
         nugget = new ItemNugget();
-        //signToolbox = new ItemSignToolbox();
+        signToolbox = new ItemSignToolbox();
 
         GameRegistry.registerItem(sign, Info.SIGN_ITEM_KEY);
         GameRegistry.registerItem(debug, Info.DEBUG_ITEM_KEY);
         GameRegistry.registerItem(nugget, Info.NUGGET_ITEM_KEY);
-        //GameRegistry.registerItem(signToolbox, Info.SIGN_TOOLBOX_ITEM_KEY);
+        GameRegistry.registerItem(signToolbox, Info.SIGN_TOOLBOX_ITEM_KEY);
     }
 
     public static void registerRecipes() {
