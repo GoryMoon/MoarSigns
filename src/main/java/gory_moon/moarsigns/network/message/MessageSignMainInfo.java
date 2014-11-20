@@ -55,18 +55,20 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
         this.y = buf.readInt();
         this.z = buf.readInt();
 
-        int textureLength = buf.readInt();
-        this.texture = new String(buf.readBytes(textureLength).array());
-        this.isMetal = buf.readBoolean();
+        if (buf.readBoolean()) {
+            int textureLength = buf.readInt();
+            this.texture = new String(buf.readBytes(textureLength).array());
+            this.isMetal = buf.readBoolean();
 
-        for (int i = 0; i < 4; i++) rowLocations[i] = buf.readInt();
-        for (int i = 0; i < 4; i++) rowSizes[i] = buf.readInt();
-        for (int i = 0; i < 4; i++) visibleRows[i] = buf.readBoolean();
-        lockedChanges = buf.readBoolean();
+            for (int i = 0; i < 4; i++) rowLocations[i] = buf.readInt();
+            for (int i = 0; i < 4; i++) rowSizes[i] = buf.readInt();
+            for (int i = 0; i < 4; i++) visibleRows[i] = buf.readBoolean();
+            lockedChanges = buf.readBoolean();
 
-        for (int i = 0; i < 4; i++) {
-            int textLength = buf.readInt();
-            text[i] = new String(buf.readBytes(textLength).array());
+            for (int i = 0; i < 4; i++) {
+                int textLength = buf.readInt();
+                text[i] = new String(buf.readBytes(textLength).array());
+            }
         }
     }
 
@@ -76,18 +78,23 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
         buf.writeInt(y);
         buf.writeInt(z);
 
-        buf.writeInt(texture.length());
-        buf.writeBytes(texture.getBytes());
-        buf.writeBoolean(isMetal);
+        if (texture != null && rowLocations != null && rowSizes != null && visibleRows != null && text != null) {
+            buf.writeBoolean(true);
+            buf.writeInt(texture.length());
+            buf.writeBytes(texture.getBytes());
+            buf.writeBoolean(isMetal);
 
-        for (int i = 0; i < 4; i++)  buf.writeInt(rowLocations[i]);
-        for (int i = 0; i < 4; i++)  buf.writeInt(rowSizes[i]);
-        for (int i = 0; i < 4; i++)  buf.writeBoolean(visibleRows[i]);
-        buf.writeBoolean(lockedChanges);
+            for (int i = 0; i < 4; i++) buf.writeInt(rowLocations[i]);
+            for (int i = 0; i < 4; i++) buf.writeInt(rowSizes[i]);
+            for (int i = 0; i < 4; i++) buf.writeBoolean(visibleRows[i]);
+            buf.writeBoolean(lockedChanges);
 
-        for (int i = 0; i < 4; i++) {
-            buf.writeInt(text[i].getBytes().length);
-            buf.writeBytes(text[i].getBytes());
+            for (int i = 0; i < 4; i++) {
+                buf.writeInt(text[i].getBytes().length);
+                buf.writeBytes(text[i].getBytes());
+            }
+        } else {
+            buf.writeBoolean(false);
         }
     }
 
@@ -99,27 +106,31 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
 
         boolean flag = false;
 
-        if (world.blockExists(message.x, message.y, message.z)) {
-        tileEntity = world.getTileEntity(message.x, message.y, message.z);
-            if (tileEntity instanceof TileEntityMoarSign) {
-                TileEntityMoarSign sign = (TileEntityMoarSign) tileEntity;
+        if (message.texture != null && message.rowLocations != null && message.rowSizes != null && message.visibleRows != null && message.text != null) {
+            if (world.blockExists(message.x, message.y, message.z)) {
+                tileEntity = world.getTileEntity(message.x, message.y, message.z);
+                if (tileEntity instanceof TileEntityMoarSign) {
+                    TileEntityMoarSign sign = (TileEntityMoarSign) tileEntity;
 
-                sign.isMetal = message.isMetal;
-                sign.rowLocations = message.rowLocations;
-                sign.rowSizes = message.rowSizes;
-                sign.visibleRows = message.visibleRows;
-                sign.lockedChanges = message.lockedChanges;
-                sign.setResourceLocation(message.texture);
+                    sign.isMetal = message.isMetal;
+                    sign.rowLocations = message.rowLocations;
+                    sign.rowSizes = message.rowSizes;
+                    sign.visibleRows = message.visibleRows;
+                    sign.lockedChanges = message.lockedChanges;
+                    sign.setResourceLocation(message.texture);
 
-                if (sign.isEditable()) {
-                    System.arraycopy(message.text, 0, sign.signText, 0, 4);
+                    if (sign.isEditable()) {
+                        System.arraycopy(message.text, 0, sign.signText, 0, 4);
+                    }
+                    flag = true;
                 }
-                flag = true;
             }
-        }
-        if (!flag && FMLClientHandler.instance().getClient().thePlayer != null) {
-            MoarSigns.logger.info("Unable to locate sign at " + message.x + ", " + message.y + ", " + message.z);
-            FMLClientHandler.instance().getClient().thePlayer.addChatMessage(new ChatComponentText("Unable to locate sign at " + message.x + ", " + message.y + ", " + message.z));
+            if (!flag && FMLClientHandler.instance().getClient().thePlayer != null) {
+                MoarSigns.logger.info("Unable to locate sign at " + message.x + ", " + message.y + ", " + message.z);
+                FMLClientHandler.instance().getClient().thePlayer.addChatMessage(new ChatComponentText("Unable to locate sign at " + message.x + ", " + message.y + ", " + message.z));
+            }
+        } else {
+            MoarSigns.logger.error("An error with packages occurred");
         }
 
         return null;

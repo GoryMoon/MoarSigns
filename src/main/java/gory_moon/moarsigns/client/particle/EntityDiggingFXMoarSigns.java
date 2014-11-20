@@ -14,18 +14,22 @@ public class EntityDiggingFXMoarSigns extends EntityDiggingFX {
         super(world, particleX, particleY, particleZ, motionX, motionY, motionZ, block, meta, side);
 
         TileEntityMoarSign tileEntity = (TileEntityMoarSign) world.getTileEntity(x, y, z);
-        MaterialInfo info = SignRegistry.get(tileEntity.texture_name).material;
+        if (tileEntity != null && tileEntity.texture_name != null) {
+            MaterialInfo info = SignRegistry.get(tileEntity.texture_name).material;
 
-        Block Mblock = Block.getBlockFromItem(info.material.getItem());
+            if (info != null && info.material != null && info.material.getItem() != null) {
+                Block Mblock = Block.getBlockFromItem(info.material.getItem());
 
-        if (Mblock != null && !Mblock.getUnlocalizedName().equals("tile.ForgeFiller")) {
-            setParticleIcon(Mblock.getIcon(3, info.material.getItemDamage()));
-        } else {
-            Item item = info.material.getItem();
-            if (item != null) {
-                setParticleIcon(item.getIcon(info.material, 0));
-            } else {
-                setParticleIcon(tileEntity.isMetal ? Blocks.iron_block.getIcon(side, meta) : Blocks.planks.getIcon(side, meta));
+                if (Mblock != null && !Mblock.getUnlocalizedName().equals("tile.ForgeFiller")) {
+                    setParticleIcon(Mblock.getIcon(3, info.material.getItemDamage()));
+                } else {
+                    Item item = info.material.getItem();
+                    if (item != null) {
+                        setParticleIcon(item.getIcon(info.material, 0));
+                    } else {
+                        setParticleIcon(tileEntity.isMetal ? Blocks.iron_block.getIcon(side, meta) : Blocks.planks.getIcon(side, meta));
+                    }
+                }
             }
         }
     }
