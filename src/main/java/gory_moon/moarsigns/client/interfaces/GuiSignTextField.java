@@ -15,11 +15,6 @@ public class GuiSignTextField extends GuiTextField {
         super(p_i1032_1_, p_i1032_2_, p_i1032_3_, p_i1032_4_, p_i1032_5_);
     }
 
-    public static boolean isAllowedCharacter(char p_71566_0_)
-    {
-        return  p_71566_0_ >= 32 && p_71566_0_ != 127;
-    }
-
     @Override
     public void setText(String text) {
 

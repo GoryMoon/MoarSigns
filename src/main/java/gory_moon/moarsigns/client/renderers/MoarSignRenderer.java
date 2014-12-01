@@ -2,16 +2,13 @@ package gory_moon.moarsigns.client.renderers;
 
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.ModelMoarSign;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.RenderHandEvent;
 import org.lwjgl.opengl.GL11;
 
 public class MoarSignRenderer extends TileEntitySpecialRenderer {
@@ -120,7 +117,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
 
             GL11.glDisable(GL11.GL_LIGHTING);
 
-            fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, (-tileentity.signText.length * 5) + offset[row] - 2, 0);
+            fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, (-tileentity.signText.length * 5) + offset[row] - 2, 0, true);
 
             GL11.glEnable(GL11.GL_LIGHTING);
 

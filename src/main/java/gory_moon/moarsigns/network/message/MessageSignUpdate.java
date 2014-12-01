@@ -1,15 +1,12 @@
 package gory_moon.moarsigns.network.message;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import gory_moon.moarsigns.MoarSigns;
-import gory_moon.moarsigns.client.interfaces.GuiSignTextField;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Utils;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -102,7 +99,7 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
                     boolean flag = true;
 
                     for (int j = 0; j < message.text[i].length(); ++j) {
-                        if (!GuiSignTextField.isAllowedCharacter(message.text[i].charAt(j))) {
+                        if (!Utils.isAllowedCharacter(message.text[i].charAt(j))) {
                             flag = false;
                         }
                     }

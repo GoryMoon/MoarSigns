@@ -67,7 +67,7 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
         if (world.blockExists(message.x, message.y, message.z)) {
             TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 
-            if (tileEntity == null) {
+            if (tileEntity == null || !(tileEntity instanceof TileEntityMoarSign)) {
                 tileEntity = new TileEntityMoarSign();
                 tileEntity.setWorldObj(FMLClientHandler.instance().getClient().theWorld);
                 tileEntity.xCoord = message.x;

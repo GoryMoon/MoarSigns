@@ -253,8 +253,6 @@ public class GuiMoarSign extends GuiBase {
             for (GuiColorButton color : colorButtons) {
                 color.draw(this, x, y);
             }
-
-
             int k1 = 0;
             int j = 0;
             for (GuiColor color: GuiColor.values()) {

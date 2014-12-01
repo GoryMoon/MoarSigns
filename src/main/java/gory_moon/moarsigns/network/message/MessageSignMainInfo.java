@@ -7,12 +7,13 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
-import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
+
+import java.util.Arrays;
 
 public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSignMainInfo, IMessage> {
 
@@ -105,6 +106,8 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
         TileEntity tileEntity;
 
         boolean flag = false;
+
+        MoarSigns.logger.info("Texture: " + message.texture + " \nrows: " + Arrays.toString(message.rowLocations) + " \nsizes: " + Arrays.toString(message.rowSizes) + " \nvisible: " + Arrays.toString(message.visibleRows) + " \ntext: " + message.text);
 
         if (message.texture != null && message.rowLocations != null && message.rowSizes != null && message.visibleRows != null && message.text != null) {
             if (world.blockExists(message.x, message.y, message.z)) {
