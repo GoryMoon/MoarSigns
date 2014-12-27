@@ -2,7 +2,6 @@ package gory_moon.moarsigns.client.interfaces;
 
 import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 

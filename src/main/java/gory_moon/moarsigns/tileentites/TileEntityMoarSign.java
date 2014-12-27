@@ -25,6 +25,7 @@ public class TileEntityMoarSign extends TileEntitySign {
     public int[] rowLocations = new int[4];
     public int[] rowSizes = {0,0,0,0};
     public boolean[] visibleRows = {true, true, true, true};
+    public boolean[] shadowRows = new boolean[4];
     public boolean lockedChanges;
 
     public boolean isMetal = false;
@@ -86,13 +87,19 @@ public class TileEntityMoarSign extends TileEntitySign {
         visible[0] = 2;
         for (int i = 0; i < 4; i++) visible[i + 1] = visibleRows[i] ? 1: 0;
 
+        int[] shadow = new int[5];
+        shadow[0] = 3;
+        for (int i = 0; i < 4; i++) shadow[i + 1] = shadowRows[i] ? 1: 0;
+
         NBTTagIntArray locations = new NBTTagIntArray(loc);
         NBTTagIntArray sizes = new NBTTagIntArray(size);
         NBTTagIntArray hidden = new NBTTagIntArray(visible);
+        NBTTagIntArray shadows = new NBTTagIntArray(shadow);
 
         settings.appendTag(locations);
         settings.appendTag(sizes);
         settings.appendTag(hidden);
+        settings.appendTag(shadows);
 
         compound.setTag("settings", settings);
         compound.setBoolean("lockedChanges", lockedChanges);
@@ -120,8 +127,8 @@ public class TileEntityMoarSign extends TileEntitySign {
             for (int i = 0; i < 4; ++i) {
                 signText[i] = compound.getString("Text" + (i + 1));
 
-                if (signText[i].length() > maxLength) {
-                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength);
+                if (signText[i].length() > maxLength - (shadowRows[i] ? FMLClientHandler.instance().getClient().fontRenderer.getCharWidth('i'): 0)) {
+                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength - (shadowRows[i] ? FMLClientHandler.instance().getClient().fontRenderer.getCharWidth('i'): 0));
                 }
 
                 if (i > rows) {
@@ -156,6 +163,10 @@ public class TileEntityMoarSign extends TileEntitySign {
                     int[] hidden = new int[4];
                     System.arraycopy(array, 1, hidden, 0, 4);
                     for (int j = 0; j < 4; j++) visibleRows[j] = hidden[j] == 1;
+                } else if (array[0] == 3) {
+                    int[] shadows = new int[4];
+                    System.arraycopy(array, 1, shadows, 0, 4);
+                    for (int j = 0; j < 4; j++) shadowRows[j] = shadows[j] == 1;
                 }
 
             }
@@ -165,8 +176,8 @@ public class TileEntityMoarSign extends TileEntitySign {
                 signText[i] = compound.getString("Text" + (i + 1));
 
                 int maxLength = Utils.getMaxLength(rowSizes[i]);
-                if (signText[i].length() > maxLength) {
-                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength);
+                if (signText[i].length() > maxLength - (shadowRows[i] ? FMLClientHandler.instance().getClient().fontRenderer.getCharWidth('i'): 0)) {
+                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength - (shadowRows[i] ? FMLClientHandler.instance().getClient().fontRenderer.getCharWidth('i'): 0));
                 }
 
                 if (!visibleRows[i]) {

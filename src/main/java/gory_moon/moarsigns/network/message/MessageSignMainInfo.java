@@ -13,8 +13,6 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 
-import java.util.Arrays;
-
 public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSignMainInfo, IMessage> {
 
     public int x, y, z;
@@ -25,6 +23,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
     public int[] rowLocations = new int[4];
     public int[] rowSizes = {0,0,0,0};
     public boolean[] visibleRows = {true, true, true, true};
+    public boolean[] shadowRows = new boolean[4];
     public boolean lockedChanges;
 
     public String[] text = new String[]{"", "", "", ""};
@@ -32,7 +31,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
     public MessageSignMainInfo() {
     }
 
-    public MessageSignMainInfo(int x, int y, int z, String texture, boolean isMetal, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean lockedChanges, String[] text) {
+    public MessageSignMainInfo(int x, int y, int z, String texture, boolean isMetal, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean[] shadowRows ,boolean lockedChanges, String[] text) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -41,13 +40,14 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
         this.rowLocations = rowLocations;
         this.rowSizes = rowSizes;
         this.visibleRows = visibleRows;
+        this.shadowRows = shadowRows;
         this.lockedChanges = lockedChanges;
         this.text = text;
     }
 
     public MessageSignMainInfo(TileEntityMoarSign tileEntity) {
         this(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.texture_name, tileEntity.isMetal,
-                tileEntity.rowLocations, tileEntity.rowSizes, tileEntity.visibleRows, tileEntity.lockedChanges, tileEntity.signText);
+                tileEntity.rowLocations, tileEntity.rowSizes, tileEntity.visibleRows, tileEntity.shadowRows, tileEntity.lockedChanges, tileEntity.signText);
     }
 
     @Override
@@ -64,6 +64,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
             for (int i = 0; i < 4; i++) rowLocations[i] = buf.readInt();
             for (int i = 0; i < 4; i++) rowSizes[i] = buf.readInt();
             for (int i = 0; i < 4; i++) visibleRows[i] = buf.readBoolean();
+            for (int i = 0; i < 4; i++) shadowRows[i] = buf.readBoolean();
             lockedChanges = buf.readBoolean();
 
             for (int i = 0; i < 4; i++) {
@@ -88,6 +89,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
             for (int i = 0; i < 4; i++) buf.writeInt(rowLocations[i]);
             for (int i = 0; i < 4; i++) buf.writeInt(rowSizes[i]);
             for (int i = 0; i < 4; i++) buf.writeBoolean(visibleRows[i]);
+            for (int i = 0; i < 4; i++) buf.writeBoolean(shadowRows[i]);
             buf.writeBoolean(lockedChanges);
 
             for (int i = 0; i < 4; i++) {
@@ -107,9 +109,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
 
         boolean flag = false;
 
-        MoarSigns.logger.info("Texture: " + message.texture + " \nrows: " + Arrays.toString(message.rowLocations) + " \nsizes: " + Arrays.toString(message.rowSizes) + " \nvisible: " + Arrays.toString(message.visibleRows) + " \ntext: " + message.text);
-
-        if (message.texture != null && message.rowLocations != null && message.rowSizes != null && message.visibleRows != null && message.text != null) {
+        if (message.texture != null && message.rowLocations != null && message.rowSizes != null && message.visibleRows != null && message.shadowRows != null && message.text != null) {
             if (world.blockExists(message.x, message.y, message.z)) {
                 tileEntity = world.getTileEntity(message.x, message.y, message.z);
                 if (tileEntity instanceof TileEntityMoarSign) {
@@ -119,6 +119,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
                     sign.rowLocations = message.rowLocations;
                     sign.rowSizes = message.rowSizes;
                     sign.visibleRows = message.visibleRows;
+                    sign.shadowRows = message.shadowRows;
                     sign.lockedChanges = message.lockedChanges;
                     sign.setResourceLocation(message.texture);
 

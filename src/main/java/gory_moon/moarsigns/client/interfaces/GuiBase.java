@@ -3,14 +3,8 @@ package gory_moon.moarsigns.client.interfaces;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
-import java.awt.*;
-import java.awt.datatransfer.*;
-import java.io.IOException;
 import java.util.List;
 
 public class GuiBase extends GuiScreen {

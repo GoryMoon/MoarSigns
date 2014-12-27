@@ -19,26 +19,28 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
     public int[] rowLocations = new int[4];
     public int[] rowSizes = {0,0,0,0};
     public boolean[] visibleRows = {true, true, true, true};
+    public boolean[] shadowRows = new boolean[4];
     public boolean lockedChanges;
     public String[] text = new String[]{"", "", "", ""};
 
     public MessageSignUpdate() {
     }
 
-    public MessageSignUpdate(int x, int y, int z, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean lockedChanges, String[] text) {
+    public MessageSignUpdate(int x, int y, int z, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean[] shadowRows, boolean lockedChanges, String[] text) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.rowLocations = rowLocations;
         this.rowSizes = rowSizes;
         this.visibleRows = visibleRows;
+        this.shadowRows = shadowRows;
         this.lockedChanges = lockedChanges;
         this.text = text;
     }
 
     public MessageSignUpdate(TileEntityMoarSign tileEntity) {
         this(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.rowLocations,
-                tileEntity.rowSizes, tileEntity.visibleRows, tileEntity.lockedChanges, tileEntity.signText);
+                tileEntity.rowSizes, tileEntity.visibleRows, tileEntity.shadowRows, tileEntity.lockedChanges, tileEntity.signText);
     }
 
     @Override
@@ -50,6 +52,7 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
         for (int i = 0; i < 4; i++) rowLocations[i] = buf.readInt();
         for (int i = 0; i < 4; i++) rowSizes[i] = buf.readInt();
         for (int i = 0; i < 4; i++) visibleRows[i] = buf.readBoolean();
+        for (int i = 0; i < 4; i++) shadowRows[i] = buf.readBoolean();
         lockedChanges = buf.readBoolean();
 
         for (int i = 0; i < 4; i++) {
@@ -67,6 +70,7 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
         for (int i = 0; i < 4; i++)  buf.writeInt(rowLocations[i]);
         for (int i = 0; i < 4; i++)  buf.writeInt(rowSizes[i]);
         for (int i = 0; i < 4; i++)  buf.writeBoolean(visibleRows[i]);
+        for (int i = 0; i < 4; i++)  buf.writeBoolean(shadowRows[i]);
         buf.writeBoolean(lockedChanges);
 
         for (int i = 0; i < 4; i++) {
@@ -93,6 +97,7 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
                 tileentitysign.rowLocations = message.rowLocations;
                 tileentitysign.rowSizes = message.rowSizes;
                 tileentitysign.visibleRows = message.visibleRows;
+                tileentitysign.shadowRows = message.shadowRows;
                 tileentitysign.lockedChanges = message.lockedChanges;
 
                 for (int i = 0; i < 4; ++i) {

@@ -6,7 +6,6 @@ import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.network.PacketHandler;
-import gory_moon.moarsigns.network.message.MessageSignMainInfo;
 import gory_moon.moarsigns.network.message.MessageSignOpenGui;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.client.renderer.texture.IIconRegister;

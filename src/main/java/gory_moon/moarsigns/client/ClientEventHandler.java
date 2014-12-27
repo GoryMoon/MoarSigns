@@ -4,11 +4,9 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.blocks.Blocks;
-import gory_moon.moarsigns.items.ItemSignToolbox;
 import gory_moon.moarsigns.items.ModItems;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import java.lang.reflect.Method;
 

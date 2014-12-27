@@ -16,6 +16,7 @@ import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.ClientEventHandler;
+import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
 import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.lib.ModInfo;
@@ -30,11 +31,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.input.Keyboard;
 
 import java.util.*;
 
@@ -74,6 +73,11 @@ public class MoarSigns {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
         ModItems.registerRecipes();
+        logger.info(Integer.toHexString(GuiColor.ORANGE.getARGB()));
+        logger.info(GuiColor.ORANGE.getNumber());
+        logger.info(Integer.toHexString(GuiColor.ORANGE.getRGB()));
+        logger.info(Integer.toHexString(GuiColor.ORANGE.getRGBA()));
+        logger.info(GuiColor.ORANGE.toString());
     }
 
     public ResourceLocation getResourceLocation(String s, boolean isMetal) {

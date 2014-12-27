@@ -36,7 +36,7 @@ public class ButtonTextLocation extends GuiButtonSpecial {
 
         ArrayList<Integer> ids = new ArrayList<Integer>();
         if (guiM.buttonLock.getState()) {
-            for (GuiButton next : guiM.textPosSizeButtons) {
+            for (GuiButton next : guiM.textButtons) {
                 if (next instanceof ButtonTextLocation) {
                     int nextID = ((ButtonTextLocation) next).id;
                     if (!ids.contains(nextID)) {

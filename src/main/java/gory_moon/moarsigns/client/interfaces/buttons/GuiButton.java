@@ -4,9 +4,6 @@ import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.client.interfaces.GuiRectangle;
-import net.minecraft.client.gui.Gui;
-
-import java.util.List;
 
 public abstract class GuiButton extends GuiRectangle {
 

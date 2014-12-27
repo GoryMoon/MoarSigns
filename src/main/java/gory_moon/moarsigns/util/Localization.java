@@ -70,7 +70,8 @@ public final class Localization {
             LOCK,
             TEXT_SIZE,
             TEXT_POSITION,
-            TEXT_SHOWHIDE;
+            TEXT_SHOWHIDE,
+            TEXT_SHADOW;
 
             private String key;
 

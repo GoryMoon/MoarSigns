@@ -28,14 +28,26 @@ public enum GuiColor {
         rgb = getRGB(number);
     }
 
+    /**
+     * Alpha, Red, Green, Blue
+     * Example: 0xffffaa00, 4294945280
+     */
     public int getARGB () {
         return 0xff << 24 | rgb;
     }
 
+    /**
+     * Alpha, Red, Green, Blue
+     * Example: 0xffaa00ff, 4289331455
+     */
     public int getRGBA () {
-        return rgb << 2 | 0xff;
+        return rgb << 8 | 0xff;
     }
 
+    /**
+     * Red, Green, Blue
+     * Example: 0xffaa00, 16755200
+     */
     public int getRGB () {
         return rgb;
     }
@@ -65,10 +77,18 @@ public enum GuiColor {
         return (k & 255) << 16 | (l & 255) << 8 | i1 & 255;
     }
 
+    /**
+     * Number in enum table
+     * Example: 6
+     */
     public int getNumber() {
         return number;
     }
 
+    /**
+     * Minecraft text colors
+     * Example: §6
+     */
     @Override
     public String toString() {
         return "\u00a7" + Integer.toHexString(number);

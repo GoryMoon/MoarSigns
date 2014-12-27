@@ -4,8 +4,6 @@ import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.util.Localization;
 
-import java.util.Iterator;
-
 public class ButtonLock extends GuiButtonToggleable  {
 
     public ButtonLock(int x, int y, int srcX) {
@@ -24,11 +22,11 @@ public class ButtonLock extends GuiButtonToggleable  {
         GuiMoarSign guiMoarSign = (GuiMoarSign) gui;
 
         if (getState()) {
-            for (GuiButton textPosSizeButton : guiMoarSign.textPosSizeButtons) {
+            for (GuiButton textPosSizeButton : guiMoarSign.textButtons) {
                 textPosSizeButton.isDisabled = true;
             }
         } else {
-            for (GuiButton textPosSizeButton : guiMoarSign.textPosSizeButtons) {
+            for (GuiButton textPosSizeButton : guiMoarSign.textButtons) {
                 textPosSizeButton.isDisabled = false;
             }
         }
@@ -43,7 +41,7 @@ public class ButtonLock extends GuiButtonToggleable  {
         GuiMoarSign guiMoarSign = (GuiMoarSign) gui;
         setState(false);
 
-        for (GuiButton textPosSizeButton : guiMoarSign.textPosSizeButtons) {
+        for (GuiButton textPosSizeButton : guiMoarSign.textButtons) {
             textPosSizeButton.isDisabled = false;
         }
     }
