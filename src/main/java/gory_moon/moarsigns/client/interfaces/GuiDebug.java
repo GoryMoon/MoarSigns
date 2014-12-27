@@ -25,6 +25,7 @@ public class GuiDebug extends GuiContainer {
     private Block block;
     private IInventory inventory;
     private Rectangle infoArea;
+
     public GuiDebug(InventoryPlayer inventory, int ID, World world, int x, int y, int z, IInventory tempInv) {
         super(new ContainerDebug(inventory, ID, tempInv));
         this.world = world;
@@ -49,7 +50,7 @@ public class GuiDebug extends GuiContainer {
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
         GL11.glColor4f(1, 1, 1, 1);
 
-        Minecraft.getMinecraft().getTextureManager().bindTexture(blockInWorld ? texture_world : texture_item);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(blockInWorld ? texture_world: texture_item);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
     }
@@ -135,6 +136,7 @@ public class GuiDebug extends GuiContainer {
             this.y = y;
         }
 
+        @SuppressWarnings("unused")
         public void draw(GuiDebug gui, int srcX, int srcY) {
             gui.drawTexturedModalRect(gui.getLeft() + x, gui.getTop() + y, srcX, srcY, w, h);
         }

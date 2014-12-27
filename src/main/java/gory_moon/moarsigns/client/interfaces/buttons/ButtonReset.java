@@ -19,15 +19,15 @@ public class ButtonReset extends GuiButton {
 
     @Override
     public void action(GuiBase gui) {
-        GuiMoarSign guiM = (GuiMoarSign)gui;
+        GuiMoarSign guiM = (GuiMoarSign) gui;
 
-        for (GuiTextField textField: guiM.guiTextFields) {
+        for (GuiTextField textField : guiM.guiTextFields) {
             textField.setText("");
         }
 
-        for (GuiButton button: guiM.buttons) {
+        for (GuiButton button : guiM.buttons) {
             if (button instanceof ButtonShowHide) {
-                ((ButtonShowHide)button).isHidden = false;
+                ((ButtonShowHide) button).isHidden = false;
             }
         }
 

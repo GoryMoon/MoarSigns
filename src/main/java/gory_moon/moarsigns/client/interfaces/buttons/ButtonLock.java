@@ -4,7 +4,7 @@ import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.util.Localization;
 
-public class ButtonLock extends GuiButtonToggleable  {
+public class ButtonLock extends GuiButtonToggleable {
 
     public ButtonLock(int x, int y, int srcX) {
         super(x, y, 16, 16, srcX);

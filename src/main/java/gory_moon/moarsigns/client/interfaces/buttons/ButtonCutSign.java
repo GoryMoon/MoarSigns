@@ -20,9 +20,9 @@ public class ButtonCutSign extends GuiButton {
 
     @Override
     public void action(GuiBase gui) {
-        GuiMoarSign guiM = (GuiMoarSign)gui;
+        GuiMoarSign guiM = (GuiMoarSign) gui;
         String s = "moarsign";
-        for (GuiTextField textField: guiM.guiTextFields) {
+        for (GuiTextField textField : guiM.guiTextFields) {
             s += "\u001D" + textField.getText();
         }
 
@@ -34,7 +34,7 @@ public class ButtonCutSign extends GuiButton {
             boolean[] hidden = guiM.visibleRows;
 
             for (int i = 0; i < 4; i++) {
-                s+= (i > 0 ? "\u001F" : "") + sizes[i] + ":" + locations[i] + ":" + (hidden[i] ? 1: 0);
+                s += (i > 0 ? "\u001F": "") + sizes[i] + ":" + locations[i] + ":" + (hidden[i] ? 1: 0);
             }
         }
 

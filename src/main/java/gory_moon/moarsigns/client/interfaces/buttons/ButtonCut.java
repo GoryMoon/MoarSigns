@@ -13,12 +13,12 @@ public class ButtonCut extends GuiButton {
 
     @Override
     public String getButtonInfo(GuiBase gui) {
-        return Localization.GUI.BUTTONS.CUT.translateTitles()+ newLine + Localization.GUI.BUTTONS.CUT.translateDescriptions(newLine);
+        return Localization.GUI.BUTTONS.CUT.translateTitles() + newLine + Localization.GUI.BUTTONS.CUT.translateDescriptions(newLine);
     }
 
     @Override
     public void action(GuiBase gui) {
-        GuiMoarSign guiM = (GuiMoarSign)gui;
+        GuiMoarSign guiM = (GuiMoarSign) gui;
         GuiScreen.setClipboardString(guiM.guiTextFields[guiM.selectedTextField].getSelectedText());
         guiM.guiTextFields[guiM.selectedTextField].deleteFromCursor(0);
     }

@@ -16,7 +16,6 @@ import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.ClientEventHandler;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
 import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.lib.ModInfo;
@@ -50,6 +49,7 @@ public class MoarSigns {
     private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
 
     @EventHandler
+    @SuppressWarnings("unused")
     public void preInit(FMLPreInitializationEvent event) {
         new ConfigHandler(event.getSuggestedConfigurationFile());
         FMLInterModComms.sendRuntimeMessage(ModInfo.ID, "VersionChecker", "addVersionCheck", LINK);
@@ -62,6 +62,7 @@ public class MoarSigns {
     }
 
     @EventHandler
+    @SuppressWarnings("unused")
     public void load(FMLInitializationEvent event) {
         proxy.initRenderers();
 
@@ -69,6 +70,7 @@ public class MoarSigns {
     }
 
     @EventHandler
+    @SuppressWarnings("unused")
     public void modsLoaded(FMLPostInitializationEvent event) {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
@@ -83,7 +85,7 @@ public class MoarSigns {
 
             if (info == null) return null;
 
-            location = new ResourceLocation(info.modId.toLowerCase(), "textures/signs/" + (isMetal ? "metal/" : "wood/") + s + ".png");
+            location = new ResourceLocation(info.modId.toLowerCase(), "textures/signs/" + (isMetal ? "metal/": "wood/") + s + ".png");
             textures.put(s, location);
         }
 
@@ -107,7 +109,7 @@ public class MoarSigns {
         Collections.sort(SignRegistry.getActivatedSignRegistry(), new Comparator<SignInfo>() {
             @Override
             public int compare(SignInfo o1, SignInfo o2) {
-                return (o1.isMetal && !o2.isMetal) ? 1 : ((o1.isMetal) ? 0 : (o2.isMetal ? -1 : (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ? 0 : (o1.material.path.equals(o2.material.path) ? (o1.itemName.compareToIgnoreCase(o2.itemName)) : (o1.material.path.compareTo(o2.material.path))))));
+                return (o1.isMetal && !o2.isMetal) ? 1: ((o1.isMetal) ? 0: (o2.isMetal ? -1: (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ? 0: (o1.material.path.equals(o2.material.path) ? (o1.itemName.compareToIgnoreCase(o2.itemName)): (o1.material.path.compareTo(o2.material.path))))));
             }
         });
 

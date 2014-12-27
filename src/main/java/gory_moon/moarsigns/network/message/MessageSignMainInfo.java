@@ -21,17 +21,18 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
     public boolean isMetal;
 
     public int[] rowLocations = new int[4];
-    public int[] rowSizes = {0,0,0,0};
+    public int[] rowSizes = {0, 0, 0, 0};
     public boolean[] visibleRows = {true, true, true, true};
     public boolean[] shadowRows = new boolean[4];
     public boolean lockedChanges;
 
     public String[] text = new String[]{"", "", "", ""};
 
+    @SuppressWarnings("unused")
     public MessageSignMainInfo() {
     }
 
-    public MessageSignMainInfo(int x, int y, int z, String texture, boolean isMetal, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean[] shadowRows ,boolean lockedChanges, String[] text) {
+    public MessageSignMainInfo(int x, int y, int z, String texture, boolean isMetal, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean[] shadowRows, boolean lockedChanges, String[] text) {
         this.x = x;
         this.y = y;
         this.z = z;

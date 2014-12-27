@@ -15,7 +15,7 @@ public class RotationHandler {
 
         int side = meta;
         boolean flatSign;
-        boolean isFreestanding = ((BlockMoarSign)world.getBlock(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord)).isFreestanding;
+        boolean isFreestanding = ((BlockMoarSign) world.getBlock(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord)).isFreestanding;
 
         if (!isFreestanding) {
             boolean testing = true;
@@ -35,12 +35,12 @@ public class RotationHandler {
                             side += 9;
                         }
                     } else {
-                            if (rotation == 3) {
-                                side = 9;
-                            } else {
-                                side = (++rotation << 1);
-                                side += 8;
-                            }
+                        if (rotation == 3) {
+                            side = 9;
+                        } else {
+                            side = (++rotation << 1);
+                            side += 8;
+                        }
                     }
                 } else {
                     side = side & 7;
@@ -49,7 +49,7 @@ public class RotationHandler {
                     else if (side == 4) side = 3;
                     else if (side == 3) side = 5;
                 }
-                if (((BlockMoarSign)Blocks.signWallMetal).canPlaceBlockAt(world, tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, side)) {
+                if (((BlockMoarSign) Blocks.signWallMetal).canPlaceBlockAt(world, tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, side)) {
                     testing = false;
                 }
             }

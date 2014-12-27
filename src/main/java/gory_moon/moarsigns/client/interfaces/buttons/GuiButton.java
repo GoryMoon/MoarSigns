@@ -7,9 +7,8 @@ import gory_moon.moarsigns.client.interfaces.GuiRectangle;
 
 public abstract class GuiButton extends GuiRectangle {
 
-    protected int srcX;
     public boolean isDisabled = false;
-
+    protected int srcX;
     protected String newLine = "\n" + GuiColor.GRAY.toString();
 
     public GuiButton(int x, int y, int srcX) {
@@ -37,7 +36,8 @@ public abstract class GuiButton extends GuiRectangle {
 
     public abstract void action(GuiBase gui);
 
-    public void update(GuiMoarSign gui) {}
+    public void update(GuiMoarSign gui) {
+    }
 
     public boolean onClick(GuiMoarSign gui, int x, int y) {
         if (inRect(x, y)) {

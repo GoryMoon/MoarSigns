@@ -28,19 +28,19 @@ public class ItemSignToolbox extends Item {
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-       if (!world.isRemote) {
-           MovingObjectPosition.MovingObjectType hit = FMLClientHandler.instance().getClient().objectMouseOver.typeOfHit;
+        if (!world.isRemote) {
+            MovingObjectPosition.MovingObjectType hit = FMLClientHandler.instance().getClient().objectMouseOver.typeOfHit;
 
-           if (hit == MovingObjectPosition.MovingObjectType.MISS && player.isSneaking()) {
-               return rotateModes(stack);
-           }
-       }
+            if (hit == MovingObjectPosition.MovingObjectType.MISS && player.isSneaking()) {
+                return rotateModes(stack);
+            }
+        }
         return super.onItemRightClick(stack, world, player);
     }
 
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-        if (!world.isRemote){
+        if (!world.isRemote) {
             if (player.isSneaking()) {
 
             } else {
@@ -66,6 +66,7 @@ public class ItemSignToolbox extends Item {
         return super.getUnlocalizedName(stack) + "." + ToolBoxModes.values()[stack.getItemDamage()].toString();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean extraInfo) {
         list.add(GuiColor.WHITE + Localization.ITEM.SIGNTOOLBOX.CHANGE.translate(GuiColor.LIGHTGRAY + "[" + GameSettings.getKeyDisplayString(FMLClientHandler.instance().getClient().gameSettings.keyBindSneak.getKeyCode()) + "]" + GuiColor.WHITE));

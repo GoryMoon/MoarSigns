@@ -18,7 +18,7 @@ public class ButtonCopy extends GuiButton {
 
     @Override
     public void action(GuiBase gui) {
-        GuiMoarSign guiM = (GuiMoarSign)gui;
+        GuiMoarSign guiM = (GuiMoarSign) gui;
         GuiScreen.setClipboardString(guiM.guiTextFields[guiM.selectedTextField].getSelectedText());
     }
 

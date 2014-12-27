@@ -35,9 +35,10 @@ public class ItemNugget extends Item {
 
     @Override
     public IIcon getIconFromDamage(int dmg) {
-        return dmg >= 0 && dmg < nuggets.length ? icons[dmg] : null;
+        return dmg >= 0 && dmg < nuggets.length ? icons[dmg]: null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
         for (int i = 0; i < nuggets.length; i++) {

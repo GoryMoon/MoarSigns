@@ -19,9 +19,11 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
     public String texture;
     public boolean isMetal;
 
+    @SuppressWarnings("unused")
     public MessageSignOpenGui() {
     }
 
+    @SuppressWarnings("unused")
     public MessageSignOpenGui(int x, int y, int z, String texture, boolean isMetal) {
         this.x = x;
         this.y = y;
@@ -75,8 +77,8 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
                 tileEntity.zCoord = message.z;
             }
 
-            ((TileEntityMoarSign)tileEntity).isMetal = message.isMetal;
-            ((TileEntityMoarSign)tileEntity).setResourceLocation(message.texture);
+            ((TileEntityMoarSign) tileEntity).isMetal = message.isMetal;
+            ((TileEntityMoarSign) tileEntity).setResourceLocation(message.texture);
 
             FMLClientHandler.instance().getClient().displayGuiScreen(new GuiMoarSign((TileEntityMoarSign) tileEntity));
         }

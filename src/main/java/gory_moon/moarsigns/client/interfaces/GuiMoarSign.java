@@ -26,37 +26,77 @@ import java.util.regex.Pattern;
 @SideOnly(Side.CLIENT)
 public class GuiMoarSign extends GuiBase {
 
+    public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
+    private final int TEXT_EDIT_AREA = 16;
     public List<GuiButton> buttons = new ArrayList<GuiButton>();
     public GuiSignTextField[] guiTextFields = new GuiSignTextField[4];
     public int selectedTextField = 0;
-
     public boolean showColors = false;
-    private GuiColorButton[] colorButtons = new GuiColorButton[16];
-
     public boolean showTextStyles;
-    private GuiTextStyleButton[] styleButtons = new GuiTextStyleButton[6];
-
     public ArrayList<GuiButton> textButtons = new ArrayList<GuiButton>();
-
-    private ButtonCutSign buttonCutSign;
-    private ButtonCopySign buttonCopySign;
     public ButtonReset buttonErase;
     public ButtonColorPicker buttonColorPicker;
     public ButtonTextStyle buttonTextStyle;
     public ButtonLock buttonLock;
-
     public int[] rowSizes = new int[4];
     public int[] rowLocations = new int[4];
     public boolean[] visibleRows = new boolean[4];
     public boolean[] shadowRows = new boolean[4];
-
-    public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
-    private final int TEXT_EDIT_AREA = 16;
-
+    int oldSelectedIndex = -1;
+    private GuiColorButton[] colorButtons = new GuiColorButton[16];
+    private GuiTextStyleButton[] styleButtons = new GuiTextStyleButton[6];
+    private ButtonCutSign buttonCutSign;
+    private ButtonCopySign buttonCopySign;
     private TileEntityMoarSign entitySign;
 
     public GuiMoarSign(TileEntityMoarSign te) {
         entitySign = te;
+    }
+
+    public static int getStyleOffset(String s, boolean b) {
+        return (isUnderlined(s) ? 1: 0) + (b ? 1: 0);
+    }
+
+    public static int toPixelWidth(FontRenderer fr, int i) {
+        return fr.getCharWidth('i') * i;
+    }
+
+    public static boolean isUnderlined(String s) {
+        return Pattern.compile("(\\{∫n\\})|(§n)").matcher(s).find();
+    }
+
+    public static String[] getSignTextWithColor(String[] array) {
+        String[] result = new String[array.length];
+
+        Pattern p = Pattern.compile("(?<=[∫])([a-z0-9])(?=\\})+");
+        for (int i = 0; i < array.length; i++) {
+            String s = array[i];
+            if (!s.equals("")) {
+
+                Matcher m = p.matcher(s);
+                while (m.find()) {
+                    s = s.replace("{∫" + m.group(1) + "}", "§" + m.group(1));
+                }
+            }
+            result[i] = s;
+        }
+
+        return result;
+    }
+
+    public static String[] getSignTextWithCode(String[] array) {
+        String[] result = new String[array.length];
+
+        for (int i = 0; i < array.length; i++) {
+            String s = array[i];
+            if (!s.equals("")) {
+                s = s.replaceAll("(§[a-z0-9])+", "{∫$1}");
+                s = s.replaceAll("([§])+", "");
+            }
+            result[i] = s;
+        }
+
+        return result;
     }
 
     @Override
@@ -107,7 +147,7 @@ public class GuiMoarSign extends GuiBase {
         k = 0;
         j = 0;
         for (int i = 0; i < colorButtons.length; i++) {
-            colorButtons[i] = new GuiColorButton(guiLeft + 150 + 5 + 14 * k, guiTop + 30 + 5 + 14 * j, 12, 12, i  , 0xffb2b2b2, 0xff424242);
+            colorButtons[i] = new GuiColorButton(guiLeft + 150 + 5 + 14 * k, guiTop + 30 + 5 + 14 * j, 12, 12, i, 0xffb2b2b2, 0xff424242);
             if (k > 2) {
                 k = 0;
                 j++;
@@ -163,7 +203,7 @@ public class GuiMoarSign extends GuiBase {
 
         if (selectedTextField != -1) {
             int index = 0;
-            for (GuiTextField textField: guiTextFields) {
+            for (GuiTextField textField : guiTextFields) {
                 if (textField.isFocused()) textField.textboxKeyTyped(typedChar, key);
                 entitySign.signText[index++] = textField.getText();
             }
@@ -194,12 +234,12 @@ public class GuiMoarSign extends GuiBase {
         drawDefaultBackground();
         super.drawScreen(x, y, par3);
 
-        GL11.glColor4f(1,1,1,1);
+        GL11.glColor4f(1, 1, 1, 1);
 
         bindTexture(texture);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
-        for (GuiButton button: buttons) {
+        for (GuiButton button : buttons) {
             button.drawButton(this, x, y);
         }
 
@@ -209,7 +249,7 @@ public class GuiMoarSign extends GuiBase {
         drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 181, guiTop + 154, GuiColor.BLACK.getARGB());
         drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 189, guiTop + 172, GuiColor.BLACK.getARGB());
 
-        for (GuiTextField textField: guiTextFields) textField.drawTextBox();
+        for (GuiTextField textField : guiTextFields) textField.drawTextBox();
 
         GL11.glColor4f(1, 1, 1, 1);
 
@@ -261,7 +301,7 @@ public class GuiMoarSign extends GuiBase {
             }
             int k1 = 0;
             int j = 0;
-            for (GuiColor color: GuiColor.values()) {
+            for (GuiColor color : GuiColor.values()) {
                 drawRect(guiLeft + 152 + 4 + k1 * 14, guiTop + 32 + 4 + j * 14, guiLeft + 152 + 14 + k1 * 14, guiTop + 32 + 14 + j * 14, color.getARGB());
                 if (k1 > 2) {
                     k1 = 0;
@@ -271,7 +311,7 @@ public class GuiMoarSign extends GuiBase {
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();
 
-            for (GuiColorButton button: colorButtons) {
+            for (GuiColorButton button : colorButtons) {
                 if (button.inRect(x, y)) {
                     Localization.GUI.COLORS s = Localization.GUI.COLORS.values()[button.getId(this, x, y)];
                     drawHoveringText(Lists.asList(s.translate(), new String[0]), x, y, fontRendererObj);
@@ -292,17 +332,18 @@ public class GuiMoarSign extends GuiBase {
             drawTexturedModalRect(guiLeft + 150, guiTop + 141, 0, 195, 35, 5);
             drawTexturedModalRect(guiLeft + 180, guiTop + 141, 194, 195, 30, 5);
 
-            for (GuiTextStyleButton button: styleButtons) {
+            for (GuiTextStyleButton button : styleButtons) {
                 button.draw(this, x, y);
             }
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();
-            for (GuiTextStyleButton button: styleButtons) {
-                if (button.inRect(x, y)) drawHoveringText(Lists.asList(button.getName(), new String[0]), x, y, fontRendererObj);
+            for (GuiTextStyleButton button : styleButtons) {
+                if (button.inRect(x, y))
+                    drawHoveringText(Lists.asList(button.getName(), new String[0]), x, y, fontRendererObj);
             }
         }
 
-        for (GuiButton button: buttons) button.hoverText(this, x, y);
+        for (GuiButton button : buttons) button.hoverText(this, x, y);
     }
 
     @Override
@@ -372,10 +413,9 @@ public class GuiMoarSign extends GuiBase {
         update();
     }
 
-    int oldSelectedIndex = -1;
     public void update() {
 
-        for (GuiButton button: buttons) {
+        for (GuiButton button : buttons) {
             button.update(this);
         }
 
@@ -413,13 +453,13 @@ public class GuiMoarSign extends GuiBase {
 
     }
 
-    public void changeTextSize (int id, int change) {
+    public void changeTextSize(int id, int change) {
         if (id < rowSizes.length) {
             int rowSize = rowSizes[id];
 
             if (change > 0) {
                 rowSizes[id] = rowSize + change <= 20 ? rowSize + change: 20;
-            } else if(change < 0) {
+            } else if (change < 0) {
                 rowSizes[id] = rowSize + change > -1 ? rowSize + change: 0;
             }
         }
@@ -438,58 +478,12 @@ public class GuiMoarSign extends GuiBase {
         }
     }
 
-    public static int getStyleOffset(String s, boolean b) {
-        return (isUnderlined(s) ? 1: 0) + (b ? 1: 0);
-    }
-
     public int getStyleOffset(int id) {
         return getStyleOffset(guiTextFields[id].getText(), shadowRows[id]);
     }
 
-    public static int toPixelWidth(FontRenderer fr, int i) {
-        return fr.getCharWidth('i') * i;
-    }
-
     public int toPixelWidth(int i) {
         return toPixelWidth(fontRendererObj, i);
-    }
-
-    public static boolean isUnderlined(String s) {
-        return Pattern.compile("(\\{∫n\\})|(§n)").matcher(s).find();
-    }
-
-    public static String[] getSignTextWithColor(String[] array) {
-        String[] result = new String[array.length];
-
-        Pattern p = Pattern.compile("(?<=[∫])([a-z0-9])(?=\\})+");
-        for (int i = 0; i < array.length; i++) {
-            String s = array[i];
-            if (!s.equals("")) {
-
-                Matcher m = p.matcher(s);
-                while (m.find()) {
-                    s = s.replace("{∫" + m.group(1) + "}", "§" + m.group(1));
-                }
-            }
-            result[i] = s;
-        }
-
-        return result;
-    }
-
-    public static String[] getSignTextWithCode(String[] array) {
-        String[] result = new String[array.length];
-
-        for (int i = 0; i < array.length; i++) {
-            String s = array[i];
-            if (!s.equals("")) {
-                s = s.replaceAll("(§[a-z0-9])+", "{∫$1}");
-                s = s.replaceAll("([§])+", "");
-            }
-            result[i] = s;
-        }
-
-        return result;
     }
 
 }

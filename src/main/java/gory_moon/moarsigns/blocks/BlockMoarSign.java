@@ -44,7 +44,7 @@ public class BlockMoarSign extends BlockContainer {
     @Override
     public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
         Boolean s = !((TileEntityMoarSign) world.getTileEntity(x, y, z)).isMetal;
-        return s ? Blocks.planks.getIcon(world, x, y, z, side) : Blocks.iron_block.getIcon(world, x, y, z, side);
+        return s ? Blocks.planks.getIcon(world, x, y, z, side): Blocks.iron_block.getIcon(world, x, y, z, side);
     }
 
     @SideOnly(Side.CLIENT)
@@ -95,7 +95,8 @@ public class BlockMoarSign extends BlockContainer {
         if (tileEntity instanceof TileEntityMoarSign) {
             TileEntityMoarSign sign = (TileEntityMoarSign) tileEntity;
             SignInfo info = SignRegistry.get(sign.texture_name);
-            if (info != null && info.property != null) return info.property.onRightClick(world, x, y, z, player, side, hitX, hitY, hitZ);
+            if (info != null && info.property != null)
+                return info.property.onRightClick(world, x, y, z, player, side, hitX, hitY, hitZ);
         }
         return false;
     }
@@ -135,13 +136,13 @@ public class BlockMoarSign extends BlockContainer {
                 }
             } else {
                 if (side == 2) {
-                    setBlockBounds(f2, f- 0.01F, f3 - f4, f3, f1- 0.01F, f3);
+                    setBlockBounds(f2, f - 0.01F, f3 - f4, f3, f1 - 0.01F, f3);
                 } else if (side == 3) {
-                    setBlockBounds(f2, f- 0.01F, f2, f3, f1- 0.01F, f4);
+                    setBlockBounds(f2, f - 0.01F, f2, f3, f1 - 0.01F, f4);
                 } else if (side == 4) {
-                    setBlockBounds(f3 - f4, f- 0.01F, f2, f3, f1 - 0.01F, f3);
+                    setBlockBounds(f3 - f4, f - 0.01F, f2, f3, f1 - 0.01F, f3);
                 } else if (side == 5) {
-                    setBlockBounds(f2, f- 0.01F, f2, f4, f1- 0.01F, f3);
+                    setBlockBounds(f2, f - 0.01F, f2, f4, f1 - 0.01F, f3);
                 }
             }
         }
@@ -292,7 +293,7 @@ public class BlockMoarSign extends BlockContainer {
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         TileEntityMoarSign tileEntity = (TileEntityMoarSign) world.getTileEntity(x, y, z);
         String s = tileEntity.texture_name;
-        s = s != null ? s : "null";
+        s = s != null ? s: "null";
         return ModItems.sign.createMoarItemStack(s, tileEntity.isMetal);
     }
 
@@ -326,7 +327,7 @@ public class BlockMoarSign extends BlockContainer {
 
     public boolean canPlaceBlockAt(World world, int x, int y, int z, int meta) {
         boolean flatSign = ((meta & 8) >> 3) == 1;
-        int side = flatSign ? meta & 1 : meta & 7;
+        int side = flatSign ? meta & 1: meta & 7;
         switch (side) {
             case 0:
                 y++;

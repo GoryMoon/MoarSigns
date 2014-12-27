@@ -28,7 +28,7 @@ public class ButtonTextLocation extends GuiButtonSpecial {
 
     @Override
     public void action(GuiBase gui) {
-        GuiMoarSign guiM = ((GuiMoarSign)gui);
+        GuiMoarSign guiM = ((GuiMoarSign) gui);
 
         int change = GuiScreen.isShiftKeyDown() ? 10: 1;
 
@@ -41,7 +41,7 @@ public class ButtonTextLocation extends GuiButtonSpecial {
                     int nextID = ((ButtonTextLocation) next).id;
                     if (!ids.contains(nextID)) {
                         ids.add(nextID);
-                        guiM.changeTextPosition(nextID, moveUp ? -change : change);
+                        guiM.changeTextPosition(nextID, moveUp ? -change: change);
                     }
                 }
             }

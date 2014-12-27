@@ -29,26 +29,28 @@ public enum GuiColor {
     }
 
     /**
-     * Alpha, Red, Green, Blue
+     * Alpha, Red, Green, Blue<br>
      * Example: 0xffffaa00, 4294945280
      */
-    public int getARGB () {
+    public int getARGB() {
         return 0xff << 24 | rgb;
     }
 
     /**
-     * Alpha, Red, Green, Blue
+     * Alpha, Red, Green, Blue<br>
      * Example: 0xffaa00ff, 4289331455
      */
-    public int getRGBA () {
+    @SuppressWarnings("unused")
+    public int getRGBA() {
         return rgb << 8 | 0xff;
     }
 
     /**
-     * Red, Green, Blue
+     * Red, Green, Blue<br>
      * Example: 0xffaa00, 16755200
      */
-    public int getRGB () {
+    @SuppressWarnings("unused")
+    public int getRGB() {
         return rgb;
     }
 
@@ -59,13 +61,11 @@ public enum GuiColor {
         int l = (i >> 1 & 1) * 170 + j;
         int i1 = (i & 1) * 170 + j;
 
-        if (i == 6)
-        {
+        if (i == 6) {
             k += 85;
         }
 
-        if (FMLClientHandler.instance().getClient().gameSettings.anaglyph)
-        {
+        if (FMLClientHandler.instance().getClient().gameSettings.anaglyph) {
             int j1 = (k * 30 + l * 59 + i1 * 11) / 100;
             int k1 = (k * 30 + l * 70) / 100;
             int l1 = (k * 30 + i1 * 70) / 100;
@@ -78,7 +78,7 @@ public enum GuiColor {
     }
 
     /**
-     * Number in enum table
+     * Number in enum table<br>
      * Example: 6
      */
     public int getNumber() {
@@ -86,8 +86,10 @@ public enum GuiColor {
     }
 
     /**
-     * Minecraft text colors
+     * Minecraft text colors<br>
      * Example: §6
+     *
+     * @return The colors in minecraft text style
      */
     @Override
     public String toString() {

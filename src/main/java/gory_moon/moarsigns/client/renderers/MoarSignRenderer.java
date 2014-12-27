@@ -15,15 +15,15 @@ import org.lwjgl.opengl.GL11;
 public class MoarSignRenderer extends TileEntitySpecialRenderer {
 
     private ModelMoarSign modelMoarSign;
-    private ResourceLocation texture;
     private ResourceLocation tempTexture = new ResourceLocation("textures/entity/sign.png");
 
     public MoarSignRenderer() {
         this.modelMoarSign = new ModelMoarSign();
     }
 
+    @SuppressWarnings("unused")
     public void renderTileEntityMoarSignAt(TileEntityMoarSign tileentity, double x, double y, double z, float partialTickTime) {
-        texture = tileentity.getResourceLocation();
+        ResourceLocation texture = tileentity.getResourceLocation();
 
         Block block = tileentity.getBlockType();
         GL11.glPushMatrix();
@@ -107,7 +107,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
             float size = sizes[row];
             GL11.glPushMatrix();
             f2 = 0.016666668F * f1 + (size / 1000F);
-            GL11.glTranslatef(size > 0 ? 0.01F : 0.0F, 0.5F * f1 - ((float) 0.02 * size) - (size < 2 ? 0 : size < 7 ? 0.01F : size < 11 ? 0.02F : size < 16 ? 0.03F : size < 20 ? 0.035F : 0.037F), 0.07F * f1);
+            GL11.glTranslatef(size > 0 ? 0.01F: 0.0F, 0.5F * f1 - ((float) 0.02 * size) - (size < 2 ? 0: size < 7 ? 0.01F: size < 11 ? 0.02F: size < 16 ? 0.03F: size < 20 ? 0.035F: 0.037F), 0.07F * f1);
             GL11.glScalef(f2, -f2, f2);
             GL11.glNormal3f(0.0F, 0.0F, -1.0F * f2);
             GL11.glDepthMask(false);

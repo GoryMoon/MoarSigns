@@ -18,7 +18,7 @@ public class ButtonPaste extends GuiButton {
 
     @Override
     public void action(GuiBase gui) {
-        GuiMoarSign guiM = (GuiMoarSign)gui;
+        GuiMoarSign guiM = (GuiMoarSign) gui;
         guiM.guiTextFields[guiM.selectedTextField].writeText(GuiScreen.getClipboardString());
     }
 

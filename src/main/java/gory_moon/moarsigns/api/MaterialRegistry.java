@@ -39,7 +39,7 @@ public class MaterialRegistry {
     }
 
     public static Set<MaterialInfo> get(String materialName) {
-        return materialRegistry.containsKey(materialName) ? materialRegistry.get(materialName) : null;
+        return materialRegistry.containsKey(materialName) ? materialRegistry.get(materialName): null;
     }
 
     public static boolean contains(MaterialInfo info) {

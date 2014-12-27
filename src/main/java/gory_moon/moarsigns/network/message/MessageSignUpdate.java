@@ -17,12 +17,13 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
     public int x, y, z;
 
     public int[] rowLocations = new int[4];
-    public int[] rowSizes = {0,0,0,0};
+    public int[] rowSizes = {0, 0, 0, 0};
     public boolean[] visibleRows = {true, true, true, true};
     public boolean[] shadowRows = new boolean[4];
     public boolean lockedChanges;
     public String[] text = new String[]{"", "", "", ""};
 
+    @SuppressWarnings("unused")
     public MessageSignUpdate() {
     }
 
@@ -67,10 +68,10 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
         buf.writeInt(y);
         buf.writeInt(z);
 
-        for (int i = 0; i < 4; i++)  buf.writeInt(rowLocations[i]);
-        for (int i = 0; i < 4; i++)  buf.writeInt(rowSizes[i]);
-        for (int i = 0; i < 4; i++)  buf.writeBoolean(visibleRows[i]);
-        for (int i = 0; i < 4; i++)  buf.writeBoolean(shadowRows[i]);
+        for (int i = 0; i < 4; i++) buf.writeInt(rowLocations[i]);
+        for (int i = 0; i < 4; i++) buf.writeInt(rowSizes[i]);
+        for (int i = 0; i < 4; i++) buf.writeBoolean(visibleRows[i]);
+        for (int i = 0; i < 4; i++) buf.writeBoolean(shadowRows[i]);
         buf.writeBoolean(lockedChanges);
 
         for (int i = 0; i < 4; i++) {

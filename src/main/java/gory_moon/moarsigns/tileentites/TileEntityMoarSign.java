@@ -24,7 +24,7 @@ public class TileEntityMoarSign extends TileEntitySign {
     private final int NBT_VERSION = 2;
 
     public int[] rowLocations = new int[4];
-    public int[] rowSizes = {0,0,0,0};
+    public int[] rowSizes = {0, 0, 0, 0};
     public boolean[] visibleRows = {true, true, true, true};
     public boolean[] shadowRows = new boolean[4];
     public boolean lockedChanges;
@@ -118,8 +118,8 @@ public class TileEntityMoarSign extends TileEntitySign {
             int fontSize = compound.getInteger("fontSize");
             int rows = Utils.getRows(fontSize);
 
-            rowSizes = new int[] {fontSize, fontSize, fontSize, fontSize};
-            visibleRows = new boolean[] {false, false, false, false};
+            rowSizes = new int[]{fontSize, fontSize, fontSize, fontSize};
+            visibleRows = new boolean[]{false, false, false, false};
             for (int i = 0; i < rows; i++) {
                 visibleRows[i] = true;
             }
@@ -161,7 +161,7 @@ public class TileEntityMoarSign extends TileEntitySign {
                     System.arraycopy(array, 1, rowLocations, 0, 4);
                 } else if (array[0] == 1) {
                     System.arraycopy(array, 1, rowSizes, 0, 4);
-                }else if (array[0] == 2) {
+                } else if (array[0] == 2) {
                     int[] hidden = new int[4];
                     System.arraycopy(array, 1, hidden, 0, 4);
                     for (int j = 0; j < 4; j++) visibleRows[j] = hidden[j] == 1;

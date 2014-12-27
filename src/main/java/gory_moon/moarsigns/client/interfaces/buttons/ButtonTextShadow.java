@@ -20,7 +20,7 @@ public class ButtonTextShadow extends GuiButtonSpecial {
     @Override
     public void drawButton(GuiBase gui, int mouseX, int mouseY) {
         int srcX = hasShadow ? 224: 240;
-        int buttonType = isDisabled ? srcY + h * 2: inRect(mouseX, mouseY) ? srcY + h : srcY;
+        int buttonType = isDisabled ? srcY + h * 2: inRect(mouseX, mouseY) ? srcY + h: srcY;
 
         super.draw(gui, srcX, buttonType);
     }
@@ -34,7 +34,7 @@ public class ButtonTextShadow extends GuiButtonSpecial {
 
     @Override
     public void action(GuiBase gui) {
-        GuiMoarSign guiM = ((GuiMoarSign)gui);
+        GuiMoarSign guiM = ((GuiMoarSign) gui);
 
         setShadow(gui, !hasShadow);
 
@@ -53,7 +53,7 @@ public class ButtonTextShadow extends GuiButtonSpecial {
     }
 
     public void setShadow(GuiBase gui, boolean shadow) {
-        GuiMoarSign guiM = ((GuiMoarSign)gui);
+        GuiMoarSign guiM = ((GuiMoarSign) gui);
 
         guiM.shadowRows[id] = hasShadow = shadow;
     }

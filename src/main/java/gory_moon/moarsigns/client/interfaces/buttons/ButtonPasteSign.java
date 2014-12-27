@@ -18,7 +18,7 @@ public class ButtonPasteSign extends GuiButton {
 
     @Override
     public void action(GuiBase gui) {
-        GuiMoarSign guiM = (GuiMoarSign)gui;
+        GuiMoarSign guiM = (GuiMoarSign) gui;
 
         String s = GuiScreen.getClipboardString();
         boolean signPaste = (!s.equals("") && s.length() > 8 && s.substring(0, 8).equals("moarsign") && (s.split("\u001D").length == 6 || (s.contains("\u001E") && s.split("\u001F").length == 4)));
@@ -46,9 +46,9 @@ public class ButtonPasteSign extends GuiButton {
                     guiM.rowLocations[i] = Integer.parseInt(values[1]);
                     guiM.visibleRows[i] = Integer.parseInt(values[2]) == 1;
 
-                    for (GuiButton button: guiM.buttons) {
+                    for (GuiButton button : guiM.buttons) {
                         if (button instanceof ButtonShowHide) {
-                            if (((ButtonShowHide)button).id == i) {
+                            if (((ButtonShowHide) button).id == i) {
                                 ((ButtonShowHide) button).isHidden = !guiM.visibleRows[i];
                             }
                         }

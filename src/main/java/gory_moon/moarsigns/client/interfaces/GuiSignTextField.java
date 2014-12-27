@@ -18,12 +18,9 @@ public class GuiSignTextField extends GuiTextField {
     @Override
     public void setText(String text) {
 
-        if (field_146211_a.getStringWidth(text) > this.maxRowLength + getSpecialsWidth(text))
-        {
+        if (field_146211_a.getStringWidth(text) > this.maxRowLength + getSpecialsWidth(text)) {
             this.text = field_146211_a.trimStringToWidth(text, this.maxRowLength + getSpecialsWidth(text));
-        }
-        else
-        {
+        } else {
             this.text = text;
         }
 
@@ -35,25 +32,21 @@ public class GuiSignTextField extends GuiTextField {
     public void writeText(String text) {
         String s1 = "";
         String s2 = ChatAllowedCharacters.filerAllowedCharacters(text);
-        int i = cursorPosition < this.selectionEnd ? cursorPosition : this.selectionEnd;
-        int j = cursorPosition < this.selectionEnd ? this.selectionEnd : cursorPosition;
-        int k = this.maxRowLength  - field_146211_a.getStringWidth(GuiMoarSign.getSignTextWithColor(new String[]{this.text})[0]) - (field_146211_a.getStringWidth(this.text.substring(0, i)) - field_146211_a.getStringWidth(this.text.substring(0, j)));
+        int i = cursorPosition < this.selectionEnd ? cursorPosition: this.selectionEnd;
+        int j = cursorPosition < this.selectionEnd ? this.selectionEnd: cursorPosition;
+        int k = this.maxRowLength - field_146211_a.getStringWidth(GuiMoarSign.getSignTextWithColor(new String[]{this.text})[0]) - (field_146211_a.getStringWidth(this.text.substring(0, i)) - field_146211_a.getStringWidth(this.text.substring(0, j)));
 
-        if (this.text.length() > 0)
-        {
+        if (this.text.length() > 0) {
             s1 = s1 + this.text.substring(0, i);
         }
 
         int l;
 
-        if (k < field_146211_a.getStringWidth(s2) && !isSpecial(s2))
-        {
+        if (k < field_146211_a.getStringWidth(s2) && !isSpecial(s2)) {
             String temp = field_146211_a.trimStringToWidth(s2, k);
             s1 = s1 + temp;
             l = temp.length();
-        }
-        else
-        {
+        } else {
             s1 = s1 + s2;
             l = s2.length();
         }
@@ -63,8 +56,7 @@ public class GuiSignTextField extends GuiTextField {
             l = s2.length();
         }
 
-        if (this.text.length() > 0 && j < this.text.length())
-        {
+        if (this.text.length() > 0 && j < this.text.length()) {
             s1 = s1 + this.text.substring(j);
         }
 
@@ -72,29 +64,24 @@ public class GuiSignTextField extends GuiTextField {
         this.moveCursorBy(i - this.getSelectionEnd() + l);
     }
 
-    public void deleteFromCursor(int p_146175_1_)
-    {
-        if (this.text.length() != 0)
-        {
-            if (this.selectionEnd != this.cursorPosition)
-            {
+    public void deleteFromCursor(int p_146175_1_) {
+        if (this.text.length() != 0) {
+            if (this.selectionEnd != this.cursorPosition) {
                 this.writeText("");
-            }
-            else
-            {
+            } else {
                 boolean flag = p_146175_1_ < 0;
 
                 char[][] position = {{'{'}, {'∫'}, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
-                'd', 'e', 'f', 'k', 'l', 'm', 'n', 'o', 'r'}, {'}'}};
+                        'd', 'e', 'f', 'k', 'l', 'm', 'n', 'o', 'r'}, {'}'}};
 
-                int offset = getCharIndex(position, this.text.charAt(this.cursorPosition + (flag && cursorPosition != 0 ? p_146175_1_ : ((!flag && this.cursorPosition == this.text.length()) ? -1: 0))));
+                int offset = getCharIndex(position, this.text.charAt(this.cursorPosition + (flag && cursorPosition != 0 ? p_146175_1_: ((!flag && this.cursorPosition == this.text.length()) ? -1: 0))));
 
                 if (offset > -1 &&
                         (flag && (0 <= cursorPosition - offset - 1) && this.text.length() > this.cursorPosition + (2 - (offset)) &&
-                            isSpecial(this.text.substring(this.cursorPosition - offset - 1, cursorPosition + (3 - offset)))) ||
+                                isSpecial(this.text.substring(this.cursorPosition - offset - 1, cursorPosition + (3 - offset)))) ||
                         (!flag && 0 <= cursorPosition - offset) && this.text.length() > this.cursorPosition + (3 - offset + 1) &&
-                            isSpecial(this.text.substring(this.cursorPosition - offset, cursorPosition + (3 - offset + 1)))
-                    ) {
+                                isSpecial(this.text.substring(this.cursorPosition - offset, cursorPosition + (3 - offset + 1)))
+                        ) {
 
                     this.selectionEnd = flag ? (cursorPosition + (3 - offset)): (cursorPosition + (3 - offset + 1));
                     this.cursorPosition = flag ? (cursorPosition - offset - 1): (cursorPosition - offset);
@@ -103,8 +90,8 @@ public class GuiSignTextField extends GuiTextField {
 
                 } else {
 
-                    int j = flag ? this.cursorPosition + p_146175_1_ : this.cursorPosition;
-                    int k = flag ? this.cursorPosition : this.cursorPosition + p_146175_1_;
+                    int j = flag ? this.cursorPosition + p_146175_1_: this.cursorPosition;
+                    int k = flag ? this.cursorPosition: this.cursorPosition + p_146175_1_;
                     String s = "";
 
                     if (j >= 0) {
@@ -125,6 +112,7 @@ public class GuiSignTextField extends GuiTextField {
         }
     }
 
+    @SuppressWarnings("unused")
     public void setMaxRowLength(int maxRowLength) {
         this.maxRowLength = maxRowLength;
     }

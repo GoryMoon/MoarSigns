@@ -10,6 +10,7 @@ import java.util.List;
 public class SignRegistry {
 
     public static final String ALWAYS_ACTIVE_TAG = "activeALL";
+
     static {
         activeTags = Maps.newHashMap();
         signRegistry = Lists.newArrayList();
@@ -17,6 +18,7 @@ public class SignRegistry {
 
         activateTag(ALWAYS_ACTIVE_TAG);
     }
+
     private static List<SignInfo> signRegistry;
     private static List<SignInfo> activatedSignRegistry;
     private static HashMap<String, Boolean> activeTags;
@@ -114,6 +116,7 @@ public class SignRegistry {
      *
      * @param tag The tag to deactivate
      */
+    @SuppressWarnings("unused")
     public static void decativateTag(String tag) {
         activeTags.put(tag, false);
 

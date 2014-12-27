@@ -27,7 +27,7 @@ public class EntityDiggingFXMoarSigns extends EntityDiggingFX {
                     if (item != null) {
                         setParticleIcon(item.getIcon(info.material, 0));
                     } else {
-                        setParticleIcon(tileEntity.isMetal ? Blocks.iron_block.getIcon(side, meta) : Blocks.planks.getIcon(side, meta));
+                        setParticleIcon(tileEntity.isMetal ? Blocks.iron_block.getIcon(side, meta): Blocks.planks.getIcon(side, meta));
                     }
                 }
             }
