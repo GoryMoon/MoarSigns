@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
+import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignMainInfo;
 import gory_moon.moarsigns.util.Utils;
@@ -116,7 +117,6 @@ public class TileEntityMoarSign extends TileEntitySign {
         if (nbtVersion == 1) {
             int fontSize = compound.getInteger("fontSize");
             int rows = Utils.getRows(fontSize);
-            int maxLength = Utils.getMaxLength(fontSize);
 
             rowSizes = new int[] {fontSize, fontSize, fontSize, fontSize};
             visibleRows = new boolean[] {false, false, false, false};
@@ -125,10 +125,12 @@ public class TileEntityMoarSign extends TileEntitySign {
             }
 
             for (int i = 0; i < 4; ++i) {
+                int maxLength = Utils.getMaxLength(fontSize) - GuiMoarSign.toPixelWidth(FMLClientHandler.instance().getClient().fontRenderer, GuiMoarSign.getStyleOffset(signText[i], shadowRows[i]));
+
                 signText[i] = compound.getString("Text" + (i + 1));
 
-                if (signText[i].length() > maxLength - (shadowRows[i] ? FMLClientHandler.instance().getClient().fontRenderer.getCharWidth('i'): 0)) {
-                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength - (shadowRows[i] ? FMLClientHandler.instance().getClient().fontRenderer.getCharWidth('i'): 0));
+                if (signText[i].length() > maxLength) {
+                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength);
                 }
 
                 if (i > rows) {
@@ -175,9 +177,9 @@ public class TileEntityMoarSign extends TileEntitySign {
             for (int i = 0; i < 4; ++i) {
                 signText[i] = compound.getString("Text" + (i + 1));
 
-                int maxLength = Utils.getMaxLength(rowSizes[i]);
-                if (signText[i].length() > maxLength - (shadowRows[i] ? FMLClientHandler.instance().getClient().fontRenderer.getCharWidth('i'): 0)) {
-                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength - (shadowRows[i] ? FMLClientHandler.instance().getClient().fontRenderer.getCharWidth('i'): 0));
+                int maxLength = Utils.getMaxLength(rowSizes[i]) - GuiMoarSign.toPixelWidth(FMLClientHandler.instance().getClient().fontRenderer, GuiMoarSign.getStyleOffset(signText[i], shadowRows[i]));
+                if (signText[i].length() > maxLength) {
+                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength);
                 }
 
                 if (!visibleRows[i]) {

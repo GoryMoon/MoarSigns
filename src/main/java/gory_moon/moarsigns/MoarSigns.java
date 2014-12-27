@@ -73,11 +73,6 @@ public class MoarSigns {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
         ModItems.registerRecipes();
-        logger.info(Integer.toHexString(GuiColor.ORANGE.getARGB()));
-        logger.info(GuiColor.ORANGE.getNumber());
-        logger.info(Integer.toHexString(GuiColor.ORANGE.getRGB()));
-        logger.info(Integer.toHexString(GuiColor.ORANGE.getRGBA()));
-        logger.info(GuiColor.ORANGE.toString());
     }
 
     public ResourceLocation getResourceLocation(String s, boolean isMetal) {
