@@ -140,7 +140,7 @@ public class TileEntityMoarSign extends TileEntitySign {
 
             int textOffset = compound.getInteger("textOffset");
             for (int i = 0; i < 4; i++) {
-                int temp = Math.abs(textOffset) + rowLocations[i] - (textOffset != 0? 2: 0);
+                int temp = Math.abs(textOffset) + rowLocations[i] - (textOffset != 0 ? 2: 0);
 
                 if (temp < 0) temp = 0;
 

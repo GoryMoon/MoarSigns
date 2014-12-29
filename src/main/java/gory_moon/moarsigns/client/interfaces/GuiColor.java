@@ -87,7 +87,7 @@ public enum GuiColor {
 
     /**
      * Minecraft text colors<br>
-     * Example: §6
+     * Example: &#167;6
      *
      * @return The colors in minecraft text style
      */

@@ -4,14 +4,14 @@ import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.client.interfaces.buttons.*;
-import gory_moon.moarsigns.client.interfaces.buttons.GuiButton;
 import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignUpdate;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.Utils;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -63,20 +63,20 @@ public class GuiMoarSign extends GuiBase {
     }
 
     public static boolean isUnderlined(String s) {
-        return Pattern.compile("(\\{∫n\\})|(§n)").matcher(s).find();
+        return Pattern.compile("(\\{\u222bn\\})|(\u00a7n)").matcher(s).find();
     }
 
     public static String[] getSignTextWithColor(String[] array) {
         String[] result = new String[array.length];
 
-        Pattern p = Pattern.compile("(?<=[∫])([a-z0-9])(?=\\})+");
+        Pattern p = Pattern.compile("(?<=[\u222b])([a-z0-9])(?=\\})+");
         for (int i = 0; i < array.length; i++) {
             String s = array[i];
             if (!s.equals("")) {
 
                 Matcher m = p.matcher(s);
                 while (m.find()) {
-                    s = s.replace("{∫" + m.group(1) + "}", "§" + m.group(1));
+                    s = s.replace("{\u222b" + m.group(1) + "}", "\u00a7" + m.group(1));
                 }
             }
             result[i] = s;
@@ -91,8 +91,8 @@ public class GuiMoarSign extends GuiBase {
         for (int i = 0; i < array.length; i++) {
             String s = array[i];
             if (!s.equals("")) {
-                s = s.replaceAll("(§[a-z0-9])+", "{∫$1}");
-                s = s.replaceAll("([§])+", "");
+                s = s.replaceAll("(\u00a7[a-z0-9])+", "{\u222b$1}");
+                s = s.replaceAll("([\u00a7])+", "");
             }
             result[i] = s;
         }
@@ -100,6 +100,7 @@ public class GuiMoarSign extends GuiBase {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();
@@ -197,12 +198,9 @@ public class GuiMoarSign extends GuiBase {
     }
 
     @Override
-    protected void actionPerformed(net.minecraft.client.gui.GuiButton btn)
-    {
-        if (btn.enabled)
-        {
-            if (btn.id == 0)
-            {
+    protected void actionPerformed(net.minecraft.client.gui.GuiButton btn) {
+        if (btn.enabled) {
+            if (btn.id == 0) {
                 this.entitySign.markDirty();
                 mc.thePlayer.closeScreen();
             }

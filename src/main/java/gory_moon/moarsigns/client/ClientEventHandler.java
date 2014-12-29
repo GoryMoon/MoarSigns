@@ -14,14 +14,14 @@ public class ClientEventHandler {
 
     private boolean setupNEI = true;
 
-    @SuppressWarnings("unused")
     @SubscribeEvent
+    @SuppressWarnings("unused")
     public void onJoinWorld(EntityJoinWorldEvent event) {
         if (setupNEI) {
             if (Loader.isModLoaded("NotEnoughItems")) {
                 try {
-                    Class neiAPI = Class.forName("codechicken.nei.api.API");
-                    Method hideItem = neiAPI.getDeclaredMethod("hideItem", new Class[] { ItemStack.class });
+                    Class<?> neiAPI = Class.forName("codechicken.nei.api.API");
+                    Method hideItem = neiAPI.getDeclaredMethod("hideItem", new Class[]{ItemStack.class});
                     hideItem.invoke(null, new ItemStack(Blocks.signStandingMetal));
                     hideItem.invoke(null, new ItemStack(Blocks.signStandingWood));
                     hideItem.invoke(null, new ItemStack(Blocks.signWallMetal));
