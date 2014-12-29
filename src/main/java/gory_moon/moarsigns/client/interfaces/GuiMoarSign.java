@@ -4,15 +4,16 @@ import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.client.interfaces.buttons.*;
+import gory_moon.moarsigns.client.interfaces.buttons.GuiButton;
 import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignUpdate;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.Utils;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -27,7 +28,7 @@ import java.util.regex.Pattern;
 public class GuiMoarSign extends GuiBase {
 
     public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
-    private final int TEXT_EDIT_AREA = 16;
+    private final int TEXT_EDIT_AREA = 14;
     public List<GuiButton> buttons = new ArrayList<GuiButton>();
     public GuiSignTextField[] guiTextFields = new GuiSignTextField[4];
     public int selectedTextField = 0;
@@ -114,7 +115,7 @@ public class GuiMoarSign extends GuiBase {
         int k = 0;
         int j;
         for (int i = 0; i < rowSizes.length; i++) {
-            int row = guiTop + 110 + k * 18;
+            int row = guiTop + 100 + k * 18;
             ButtonTextLocation btnText1 = new ButtonTextLocation(i, guiLeft + TEXT_EDIT_AREA + 108, row, true);
             ButtonTextLocation btnText2 = new ButtonTextLocation(i, guiLeft + TEXT_EDIT_AREA + 108, row + 8, false);
             ButtonTextSize btnSize1 = new ButtonTextSize(i, guiLeft + TEXT_EDIT_AREA + 125, row, true);
@@ -123,7 +124,7 @@ public class GuiMoarSign extends GuiBase {
 
             buttons.add(btnText1);
             buttons.add(btnText2);
-            buttons.add(new ButtonShowHide(i, guiLeft + TEXT_EDIT_AREA, guiTop + 110 + 18 * k, !visibleRows[i]));
+            buttons.add(new ButtonShowHide(i, guiLeft + TEXT_EDIT_AREA, row, !visibleRows[i]));
             buttons.add(btnSize1);
             buttons.add(btnSize2);
             buttons.add(btnSha);
@@ -136,7 +137,7 @@ public class GuiMoarSign extends GuiBase {
                 textButtons.add(btnSha);
             }
 
-            guiTextFields[i] = new GuiSignTextField(fontRendererObj, guiLeft + TEXT_EDIT_AREA + 17, guiTop + 110 + 18 * k, 90, 16);
+            guiTextFields[i] = new GuiSignTextField(fontRendererObj, guiLeft + TEXT_EDIT_AREA + 17, row, 90, 16);
             guiTextFields[i].setText(text[i]);
             k++;
         }
@@ -164,7 +165,7 @@ public class GuiMoarSign extends GuiBase {
         buttonColorPicker = new ButtonColorPicker(guiLeft + 158, guiTop + 10);
         buttonTextStyle = new ButtonTextStyle(guiLeft + 179, guiTop + 10);
         int LOCK_BASE_POS = 224;
-        buttonLock = new ButtonLock(guiLeft + TEXT_EDIT_AREA + 181, guiTop + 146, LOCK_BASE_POS);
+        buttonLock = new ButtonLock(guiLeft + TEXT_EDIT_AREA + 181, guiTop + 136, LOCK_BASE_POS);
 
         buttons.add(new ButtonCut(guiLeft + 11, guiTop + 10));
         buttons.add(new ButtonCopy(guiLeft + 32, guiTop + 10));
@@ -176,6 +177,8 @@ public class GuiMoarSign extends GuiBase {
         buttons.add(buttonColorPicker);
         buttons.add(buttonTextStyle);
         buttons.add(buttonLock);
+
+        buttonList.add(new net.minecraft.client.gui.GuiButton(0, guiLeft + 12, guiTop + 174, I18n.format("gui.done", new Object[0])));
 
         update();
     }
@@ -191,6 +194,19 @@ public class GuiMoarSign extends GuiBase {
         }
 
         PacketHandler.INSTANCE.sendToServer(new MessageSignUpdate(entitySign));
+    }
+
+    @Override
+    protected void actionPerformed(net.minecraft.client.gui.GuiButton btn)
+    {
+        if (btn.enabled)
+        {
+            if (btn.id == 0)
+            {
+                this.entitySign.markDirty();
+                mc.thePlayer.closeScreen();
+            }
+        }
     }
 
     @Override
@@ -232,22 +248,23 @@ public class GuiMoarSign extends GuiBase {
     public void drawScreen(int x, int y, float par3) {
 
         drawDefaultBackground();
-        super.drawScreen(x, y, par3);
 
         GL11.glColor4f(1, 1, 1, 1);
 
         bindTexture(texture);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+        super.drawScreen(x, y, par3);
+        GL11.glColor4f(1, 1, 1, 1);
+        bindTexture(texture);
 
         for (GuiButton button : buttons) {
             button.drawButton(this, x, y);
         }
-
-        drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 189, guiTop + 136, guiTop + 146, GuiColor.BLACK.getARGB());
-        drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 189, guiTop + 160, guiTop + 172, GuiColor.BLACK.getARGB());
-        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 189, guiTop + 136, GuiColor.BLACK.getARGB());
-        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 181, guiTop + 154, GuiColor.BLACK.getARGB());
-        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 189, guiTop + 172, GuiColor.BLACK.getARGB());
+        drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 189, guiTop + 126, guiTop + 136, GuiColor.BLACK.getARGB());
+        drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 189, guiTop + 150, guiTop + 162, GuiColor.BLACK.getARGB());
+        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 189, guiTop + 126, GuiColor.BLACK.getARGB());
+        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 181, guiTop + 144, GuiColor.BLACK.getARGB());
+        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 189, guiTop + 162, GuiColor.BLACK.getARGB());
 
         for (GuiTextField textField : guiTextFields) textField.drawTextBox();
 

@@ -4,6 +4,8 @@ import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.client.interfaces.GuiRectangle;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.util.ResourceLocation;
 
 public abstract class GuiButton extends GuiRectangle {
 
@@ -42,6 +44,7 @@ public abstract class GuiButton extends GuiRectangle {
     public boolean onClick(GuiMoarSign gui, int x, int y) {
         if (inRect(x, y)) {
             action(gui);
+            gui.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
             return true;
         }
         return false;
