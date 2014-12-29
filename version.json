@@ -2,21 +2,18 @@
 	"versionList": [
 		{
 			"mcVersion":"Minecraft 1.7.10",
-			"modVersion":"1.0.7",
+			"modVersion":"1.1.0",
 			"changeLog": [
-				"Fixed crash with railcraft installed"
+				"Reworked the Gui",
+				"- Made text colorable",
+				"- Made text styleable",
+				"- Made text have a shadow",
+				"- Made text rows able to move invidually",
+				"- Made text hidable",
+				"Made signs placeable on ceilings and on the ground",
+				"Added factorization lead sign",
 			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2212337/download",
-			"isDirectLink":"true",
-			"newFileName":""
-		},
-		{
-			"mcVersion":"Minecraft 1.7.2",
-			"modVersion":"1.0.7",
-			"changeLog": [
-				"Fixed crash with railcraft installed"
-			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2212337/download",
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2223209/download",
 			"isDirectLink":"true",
 			"newFileName":""
 		}
