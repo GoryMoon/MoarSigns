@@ -2,7 +2,6 @@ package gory_moon.moarsigns.client.renderers;
 
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.ModelMoarSign;
-import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
@@ -112,7 +111,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
             GL11.glNormal3f(0.0F, 0.0F, -1.0F * f2);
             GL11.glDepthMask(false);
 
-            int maxLength = Utils.getMaxLength((int) size) - GuiMoarSign.toPixelWidth(fontRenderer, GuiMoarSign.getStyleOffset(tileentity.signText[row], tileentity.shadowRows[row]));
+            int maxLength = Utils.getMaxLength((int) size) - Utils.toPixelWidth(fontRenderer, Utils.getStyleOffset(tileentity.signText[row], tileentity.shadowRows[row]));
             String s = fontRenderer.trimStringToWidth(tileentity.signText[row], Math.min(maxLength, fontRenderer.getStringWidth(tileentity.signText[row])));
 
             GL11.glDisable(GL11.GL_LIGHTING);

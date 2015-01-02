@@ -10,7 +10,6 @@ import gory_moon.moarsigns.network.message.MessageSignUpdate;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.Utils;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.resources.I18n;
@@ -52,18 +51,6 @@ public class GuiMoarSign extends GuiBase {
 
     public GuiMoarSign(TileEntityMoarSign te) {
         entitySign = te;
-    }
-
-    public static int getStyleOffset(String s, boolean b) {
-        return (isUnderlined(s) ? 1: 0) + (b ? 1: 0);
-    }
-
-    public static int toPixelWidth(FontRenderer fr, int i) {
-        return fr.getCharWidth('i') * i;
-    }
-
-    public static boolean isUnderlined(String s) {
-        return Pattern.compile("(\\{\u222bn\\})|(\u00a7n)").matcher(s).find();
     }
 
     public static String[] getSignTextWithColor(String[] array) {
@@ -494,11 +481,11 @@ public class GuiMoarSign extends GuiBase {
     }
 
     public int getStyleOffset(int id) {
-        return getStyleOffset(guiTextFields[id].getText(), shadowRows[id]);
+        return Utils.getStyleOffset(guiTextFields[id].getText(), shadowRows[id]);
     }
 
     public int toPixelWidth(int i) {
-        return toPixelWidth(fontRendererObj, i);
+        return Utils.toPixelWidth(fontRendererObj, i);
     }
 
 }

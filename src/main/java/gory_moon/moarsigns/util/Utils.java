@@ -1,5 +1,9 @@
 package gory_moon.moarsigns.util;
 
+import net.minecraft.client.gui.FontRenderer;
+
+import java.util.regex.Pattern;
+
 public class Utils {
 
     private static int[] maxLengths = {90, 82, 76, 70, 66, 62, 58, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 36, 34, 32, 32};
@@ -19,6 +23,18 @@ public class Utils {
 
     public static boolean isAllowedCharacter(char p_71566_0_) {
         return p_71566_0_ >= 32 && p_71566_0_ != 127;
+    }
+
+    public static int getStyleOffset(String s, boolean b) {
+        return (isUnderlined(s) ? 1: 0) + (b ? 1: 0);
+    }
+
+    public static int toPixelWidth(FontRenderer fr, int i) {
+        return fr.getCharWidth('i') * i;
+    }
+
+    public static boolean isUnderlined(String s) {
+        return Pattern.compile("(\\{\u222bn\\})|(\u00a7n)").matcher(s).find();
     }
 
 }

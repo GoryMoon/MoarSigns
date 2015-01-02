@@ -1,12 +1,10 @@
 package gory_moon.moarsigns.tileentites;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
-import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignMainInfo;
 import gory_moon.moarsigns.util.Utils;
@@ -125,13 +123,7 @@ public class TileEntityMoarSign extends TileEntitySign {
             }
 
             for (int i = 0; i < 4; ++i) {
-                int maxLength = Utils.getMaxLength(fontSize) - GuiMoarSign.toPixelWidth(FMLClientHandler.instance().getClient().fontRenderer, GuiMoarSign.getStyleOffset(signText[i], shadowRows[i]));
-
                 signText[i] = compound.getString("Text" + (i + 1));
-
-                if (signText[i].length() > maxLength) {
-                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength);
-                }
 
                 if (i > rows) {
                     signText[i] = "";
@@ -175,15 +167,6 @@ public class TileEntityMoarSign extends TileEntitySign {
 
             for (int i = 0; i < 4; ++i) {
                 signText[i] = compound.getString("Text" + (i + 1));
-
-                int maxLength = Utils.getMaxLength(rowSizes[i]) - GuiMoarSign.toPixelWidth(FMLClientHandler.instance().getClient().fontRenderer, GuiMoarSign.getStyleOffset(signText[i], shadowRows[i]));
-                if (signText[i].length() > maxLength) {
-                    signText[i] = FMLClientHandler.instance().getClient().fontRenderer.trimStringToWidth(signText[i], maxLength);
-                }
-
-                if (!visibleRows[i]) {
-                    signText[i] = "";
-                }
             }
         }
 

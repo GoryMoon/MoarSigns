@@ -2,16 +2,9 @@
 	"versionList": [
 		{
 			"mcVersion":"Minecraft 1.7.10",
-			"modVersion":"1.1.0",
+			"modVersion":"1.1.1",
 			"changeLog": [
-				"Reworked the Gui",
-				"- Made text colorably",
-				"- Made text styleable",
-				"- Made text have a shadow",
-				"- Made text rows able to move individually",
-				"- Made text hidable",
-				"Made signs placeable on ceilings and on the ground",
-				"Added Factorization lead sign",
+				"Fixed crash with loading world on dedicated server"
 			],
 			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2223209/download",
 			"isDirectLink":"true",
