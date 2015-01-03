@@ -1,0 +1,174 @@
+#General names
+itemGroup.moarSigns=MoarSigns
+item.moarsign.debug.name=Debug
+item.moarsign.sign.dummy=MoarSign
+
+# -Gui
+gui.moarsigns:button.title.cut=Couper
+gui.moarsigns:button.title.copy=Copier
+gui.moarsigns:button.title.paste=Coller
+gui.moarsigns:button.title.cutsign=Couper le panneau
+gui.moarsigns:button.title.copysign=Copier le panneau
+gui.moarsigns:button.title.pastesign=Coller le panneau
+gui.moarsigns:button.title.reset=Remise à zéro
+gui.moarsigns:button.title.textstyle=Style du texte
+gui.moarsigns:button.title.colorselector=Sélecteur de couleur
+gui.moarsigns:button.title.lock=Verrouiller les rangées
+
+#  The [%2->Increase|Decrease] in the following get decided what to pick in the code
+gui.moarsigns:button.title.text.size=[%1][%2->Augmenter|Diminuer] la taille du texte
+gui.moarsigns:button.title.text.position=Déplacer le texte en [%1->haut|bas]
+gui.moarsigns:button.title.text.showhide=[%1->Montere|Cacher] la rangée
+
+
+#  For the descriptions of the first, [%1] = linebreak
+gui.moarsigns:button.description.cut=Cuts the selected text[%1]to the clipboard
+gui.moarsigns:button.description.copy=Copies the selected text[%1]to the clipboard
+gui.moarsigns:button.description.paste=Pastes text from the clipboard
+gui.moarsigns:button.description.cutsign=Cuts the sign into[%1]the clipboard, ready to[%1]be pasted into a sign[%2]Shift-click to get the[%2]size, location and if hidden
+gui.moarsigns:button.description.copysign=Copies the sign into[%1]the clipboard, ready to[%1]be pasted into a sign[%2]Shift-click to get the[%2]size, location and if hidden
+gui.moarsigns:button.description.pastesign=Pastes all text from a sign[%1]that is in the clipboard.
+gui.moarsigns:button.description.reset=Erases all text from sign[%1]and resets hidden rows[%1]and text location
+gui.moarsigns:button.description.textstyle=Set the style for[%1]the following text[%1]from the cursor
+gui.moarsigns:button.description.colorselector=Add color to the text[%1]at the cursor position
+gui.moarsigns:button.description.lock=Locks the 3 bottom rows[%1]Changes to the top row[%1]will effect these rows
+
+#  The different numbers does different things in theses, look in-game to better understand
+gui.moarsigns:button.description.text.size=Changes the size of the[%1]text for the row[%2]Current size: [%3]Normal-click [%4]Shift-click [%5]
+gui.moarsigns:button.description.text.position=Changes the position of[%1]the text on the sign[%1]Each click moves accordingly:[%2]Normal-click [%3]1x[%4]Shift-click [%3]10x
+gui.moarsigns:button.description.text.showhide=[%1->Shows|Hides] the row on the sign[%2]Text will still be saved[%2]even if the row is hidden
+
+
+
+#  Colors
+gui.moarsigns:color.black=Noir
+gui.moarsigns:color.blue=Bleu
+gui.moarsigns:color.green=Vert
+gui.moarsigns:color.cyan=Cyan
+gui.moarsigns:color.red=Rouge
+gui.moarsigns:color.purple=Violet
+gui.moarsigns:color.orange=Orange
+gui.moarsigns:color.lightgray=Gris clair
+gui.moarsigns:color.gray=Gris
+gui.moarsigns:color.lightblue=Bleu clair
+gui.moarsigns:color.lime=Citron
+gui.moarsigns:color.turquise=Turquoise
+gui.moarsigns:color.pink=Rose
+gui.moarsigns:color.magneta=Magneta
+gui.moarsigns:color.yellow=Jaune
+gui.moarsigns:color.white=Blanc
+
+#  Textstyles
+gui.moarsigns:textstyle.random=Aléatoire
+gui.moarsigns:textstyle.bold=Gras
+gui.moarsigns:textstyle.strikethrough=Barré
+gui.moarsigns:textstyle.underline=Souligné
+gui.moarsigns:textstyle.italic=Italique
+gui.moarsigns:textstyle.reset=Remise à zéro
+
+# -Items
+item.moarsign.signtoolbox.EDIT_MODE.name=Boite à outil du panneau §7(Editer)§r
+item.moarsign.signtoolbox.ROTATE_MODE.name=Boite à outil du panneau §6(Tourner)§r
+item.moarsign.signtoolbox.COPY_MODE.name=Boite à outil du panneau §9(Copier)§r
+item.moarsign.signtoolbox.MOVE_MODE.name=Boite à outil du panneau §e(Déplacer)§r
+
+item.moarsign.description:signtoolbox.change=maintenez [%1] puis cliquez droit pour changer de mode
+item.moarsign.description:signtoolbox.edit=
+item.moarsign.description:signtoolbox.rotate=
+item.moarsign.description:signtoolbox.copy=
+item.moarsign.description:signtoolbox.move=
+
+# Nuggets
+item.moarsign.diamond_nugget.name=Pépite de diamant
+item.moarsign.iron_nugget.name=Pépite de fer
+item.moarsign.emerald_nugget.name=Pépite d'émeraude
+item.moarsign.bronze_nugget_ic2.name=Pépite de bronze
+item.moarsign.copper_nugget_ic2.name=Pépite de cuivre
+item.moarsign.tin_nugget_ic2.name=Pépite d'étain
+item.moarsign.silver_nugget_factorization.name=Pépite d'argent
+
+# Vanilla Sign
+item.moarsign.sign.oak_sign.name=Panneau de chêne
+item.moarsign.sign.spruce_sign.name=Panneau de sapin
+item.moarsign.sign.birch_sign.name=Panneau de bouleau
+item.moarsign.sign.jungle_sign.name=Panneau de jungle
+item.moarsign.sign.acacia_sign.name=Panneau d'acacia
+item.moarsign.sign.big_oak_sign.name=Panneau de chêne noir
+
+item.moarsign.sign.iron_sign.name=Panneau de fer
+item.moarsign.sign.gold_sign.name=Panneau d'or
+item.moarsign.sign.diamond_sign.name=Panneau de diamant
+item.moarsign.sign.emerald_sign.name=Panneau d'émeraude
+
+# Mod Signs
+#Biomes O' Plenty
+item.moarsign.sign.bop.cherry_sign.name=Panneau de cerisier
+item.moarsign.sign.bop.dark_sign.name=Panneau d'arbre sombre
+item.moarsign.sign.bop.fir_sign.name=Panneau de grand sapin
+item.moarsign.sign.bop.hellbark_sign.name=Panneau de buisson d'enfer
+item.moarsign.sign.bop.holy_sign.name=Panneau d'arbre sacré
+item.moarsign.sign.bop.jacaranda_sign.name=Panneau de jacaranda
+item.moarsign.sign.bop.magic_sign.name=Panneau d'arbre magique
+item.moarsign.sign.bop.mahogany_sign.name=Panneau d'acajou
+item.moarsign.sign.bop.mangrove_sign.name=Panneau de mangrove
+item.moarsign.sign.bop.palm_sign.name=Panneau de palmier
+item.moarsign.sign.bop.pine_sign.name=Panneau de pin
+item.moarsign.sign.bop.redwood_sign.name=Panneau de séquoia
+item.moarsign.sign.bop.sacred_oak_sign.name=Panneau de chêne sacré
+item.moarsign.sign.bop.willow_sign.name=Panneau de saule
+
+#Forestry
+item.moarsign.sign.for.acacia_sign.name=Panneau d'acacia
+item.moarsign.sign.for.balsa_sign.name=Panneau de balsa
+item.moarsign.sign.for.baobab_sign.name=Panneau de baobab
+item.moarsign.sign.for.cherry_sign.name=Panneau de cerisier
+item.moarsign.sign.for.chestnut_sign.name=Panneau de châtaignier
+item.moarsign.sign.for.citrus_sign.name=Panneau de citrus
+item.moarsign.sign.for.ebony_sign.name=Panneau d'ébène
+item.moarsign.sign.for.greenheart_sign.name=Panneau de coeur vert
+item.moarsign.sign.for.kapok_sign.name=Panneau de kapok
+item.moarsign.sign.for.larch_sign.name=Panneau de mélèze
+item.moarsign.sign.for.lime_sign.name=Panneau de citronier
+item.moarsign.sign.for.mahoe_sign.name=Panneau de mahoe
+item.moarsign.sign.for.mahogany_sign.name=Panneau d'acajou
+item.moarsign.sign.for.maple_sign.name=Panneau d'érable
+item.moarsign.sign.for.palm_sign.name=Panneau de palmier
+item.moarsign.sign.for.papaya_sign.name=Panneau de papaye
+item.moarsign.sign.for.pine_sign.name=Panneau de pin
+item.moarsign.sign.for.plum_sign.name=Panneau de prunier
+item.moarsign.sign.for.poplar_sign.name=Panneau de peuplier
+item.moarsign.sign.for.sequoia_sign.name=Panneau de séquoia
+item.moarsign.sign.for.teak_sign.name=Panneau de teck
+item.moarsign.sign.for.walnut_sign.name=Panneau de noyer
+item.moarsign.sign.for.wenge_sign.name=Panneau de wengé
+item.moarsign.sign.for.willow_sign.name=Panneau de saule
+
+#Natura
+item.moarsign.sign.natura.bloodwood_sign.name=Panneau d'arbre à sang
+item.moarsign.sign.natura.darkwood_sign.name=Panneau d'arbre sombre
+item.moarsign.sign.natura.eucalyptus_sign.name=Panneau d'eucalyptus
+item.moarsign.sign.natura.fusewood_sign.name=Panneau d'arbre fusible
+item.moarsign.sign.natura.ghostwood_sign.name=Panneau d'arbre fantome
+item.moarsign.sign.natura.hopseed_sign.name=Panneau de dodonée
+item.moarsign.sign.natura.maple_sign.name=Panneau d'érable
+item.moarsign.sign.natura.purpleheart_sign.name=Panneau d'amarante
+item.moarsign.sign.natura.redwood_sign.name=Panneau de séquoia
+item.moarsign.sign.natura.sakura_sign.name=Panneau de sakura
+item.moarsign.sign.natura.silverbell_sign.name=Panneau de halésia
+item.moarsign.sign.natura.tiger_sign.name=Panneau de coula
+item.moarsign.sign.natura.willow_sign.name=Panneau de saule
+
+#IndustrailCraft 2
+item.moarsign.sign.ic2.copper_sign.name=Panneau de cuivre
+item.moarsign.sign.ic2.tin_sign.name=Panneau d'étain
+item.moarsign.sign.ic2.bronze_sign.name=Panneau de bronze
+
+#Tinkers Construct
+item.moarsign.sign.tconstruct.copper_sign.name=Panneau de cuivre
+item.moarsign.sign.tconstruct.tin_sign.name=Panneau d'étain
+item.moarsign.sign.tconstruct.bronze_sign.name=Panneau de bronze
+item.moarsign.sign.tconstruct.steel_sign.name=Panneau d'acier
+
+#Factorization
+item.moarsign.sign.factorization.silver_sign.name=Panneau d'argent
+item.moarsign.sign.factorization.lead_sign.name=Panneau de plomb
