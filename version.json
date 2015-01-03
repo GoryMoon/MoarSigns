@@ -2,11 +2,11 @@
 	"versionList": [
 		{
 			"mcVersion":"Minecraft 1.7.10",
-			"modVersion":"1.1.1",
+			"modVersion":"1.1.2",
 			"changeLog": [
-				"Fixed crash with loading world on dedicated server"
+				"Fixed metal signs being more expensive then they should be"
 			],
-			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2223209/download",
+			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2223620/download",
 			"isDirectLink":"true",
 			"newFileName":""
 		}
