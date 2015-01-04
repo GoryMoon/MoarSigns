@@ -1,0 +1,175 @@
+#General names
+itemGroup.moarSigns=MoarSigns
+item.moarsign.debug.name=Предмет отладки
+item.moarsign.sign.dummy=MoarSign
+
+# -Gui
+gui.moarsigns:button.title.cut=Вырезать
+gui.moarsigns:button.title.copy=Скопировать
+gui.moarsigns:button.title.paste=Вставить
+gui.moarsigns:button.title.cutsign=Вырезать табличку
+gui.moarsigns:button.title.copysign=Скопировать табличку
+gui.moarsigns:button.title.pastesign=Вставить табличку
+gui.moarsigns:button.title.reset=Сбросить
+gui.moarsigns:button.title.textstyle=Текстовый стиль
+gui.moarsigns:button.title.colorselector=Выбор цвета
+gui.moarsigns:button.title.lock=Заблокировать строки
+
+#  The [%2->Increase|Decrease] in the following get decided what to pick in the code
+gui.moarsigns:button.title.text.size=[%1][%2->Увеличить|Уменьшить] размер текста
+gui.moarsigns:button.title.text.position=Двигать текст [%1->вверх|вниз]
+gui.moarsigns:button.title.text.showhide=[%1->Показать|Спрятать] строку
+gui.moarsigns:button.title.text.shadow=[%1->Включить|Выключить] тень текста
+
+
+#  For the descriptions of the first, [%1] = linebreak
+gui.moarsigns:button.description.cut=Вырезает выделенный текст[%1]в буфер обмена
+gui.moarsigns:button.description.copy=Копирует выделенный текст[%1]в буфер обмена
+gui.moarsigns:button.description.paste=Вставляет текст из буфера обмена
+gui.moarsigns:button.description.cutsign=Вырезает табличку[%1]в буфер обмена, готова[%1]к вставлению в табличку[%2]Shift-ЛКМ, чтобы узнать[%2]размер и расположение, если скрыто
+gui.moarsigns:button.description.copysign=Копирует табличку[%1]в буфер обмена, готова[%1]к вставлению в табличку[%2]Shift-ЛКМ, чтобы узнать[%2]размер и расположение, если скрыто
+gui.moarsigns:button.description.pastesign=Вставляет весь текст таблички,[%1]который в буфере обмена.
+gui.moarsigns:button.description.reset=Стирает весь текст из таблички,[%1]сбрасывает спрятанные строки[%1]и расположение текста
+gui.moarsigns:button.description.textstyle=Устанавливает стиль для[%1]следующего за курсом[%1]текста[%2]Подсказка: Добавьте цвет до стиля
+gui.moarsigns:button.description.colorselector=Добавляет цвет тексту[%1]на позиции курсора[%2]Подсказка: Добавьте его до стиля
+gui.moarsigns:button.description.lock=Блокирует 3 нижних строки[%1]Изменения верхней строки[%1]отразятся на этих строках
+
+#  The different numbers does different things in theses, look in-game to better understanding
+gui.moarsigns:button.description.text.size=Изменяет размер[%1]текста строки[%2]Текущий размер: [%3]Обычный ЛКМ [%4]Shift-ЛКМ [%5]
+gui.moarsigns:button.description.text.position=Изменяет позицию[%1]текста на табличке[%1]Каждое нажатие перемещает текст:[%2]Обычный ЛКМ [%3]1x[%4]Shift-ЛКМ [%3]10x
+gui.moarsigns:button.description.text.showhide=[%1->Показывает|Прячет] строку на табличке[%2]Текст будет сохранён,[%2]даже если строка скрыта
+gui.moarsigns:button.description.text.shadow=[%1->Включает|Выключает] тень текста
+
+
+#  Colors
+gui.moarsigns:color.black=Чёрный
+gui.moarsigns:color.blue=Синий
+gui.moarsigns:color.green=Зелёный
+gui.moarsigns:color.cyan=Бирюзовый
+gui.moarsigns:color.red=Красный
+gui.moarsigns:color.purple=Фиолетовый
+gui.moarsigns:color.orange=Оранжевый
+gui.moarsigns:color.lightgray=Светло-серый
+gui.moarsigns:color.gray=Серый
+gui.moarsigns:color.lightblue=Светло-синий
+gui.moarsigns:color.lime=Лаймовый
+gui.moarsigns:color.turquise=Голубой
+gui.moarsigns:color.pink=Розовый
+gui.moarsigns:color.magneta=Сиреневый
+gui.moarsigns:color.yellow=Жёлтый
+gui.moarsigns:color.white=Белый
+
+#  Textstyles
+gui.moarsigns:textstyle.random=Случайный
+gui.moarsigns:textstyle.bold=Полужирный
+gui.moarsigns:textstyle.strikethrough=Зачёркнутый
+gui.moarsigns:textstyle.underline=Подчёркнутый
+gui.moarsigns:textstyle.italic=Курсивный
+gui.moarsigns:textstyle.reset=Сбросить
+
+# -Items
+item.moarsign.signtoolbox.EDIT_MODE.name=Инструменты для табличек §7(Редактирование)§r
+item.moarsign.signtoolbox.ROTATE_MODE.name=Инструменты для табличек §6(Поворачивание)§r
+item.moarsign.signtoolbox.COPY_MODE.name=Инструменты для табличек §9(Копирование)§r
+item.moarsign.signtoolbox.MOVE_MODE.name=Инструменты для табличек §e(Перемещение)§r
+
+item.moarsign.description:signtoolbox.change=Зажмите [%1] при нажатом ПКМ, чтобы изменить режим
+item.moarsign.description:signtoolbox.edit=
+item.moarsign.description:signtoolbox.rotate=
+item.moarsign.description:signtoolbox.copy=
+item.moarsign.description:signtoolbox.move=
+
+# Nuggets
+item.moarsign.diamond_nugget.name=Алмазный самородок
+item.moarsign.iron_nugget.name=Железный самородок
+item.moarsign.emerald_nugget.name=Изумрудный самородок
+item.moarsign.bronze_nugget_ic2.name=Бронзовый самородок
+item.moarsign.copper_nugget_ic2.name=Медный самородок
+item.moarsign.tin_nugget_ic2.name=Оловянный самородок
+item.moarsign.silver_nugget_factorization.name=Серебряный самородок
+
+# Vanilla Sign
+item.moarsign.sign.oak_sign.name=Табличка из дуба
+item.moarsign.sign.spruce_sign.name=Табличка из ели
+item.moarsign.sign.birch_sign.name=Табличка из берёзы
+item.moarsign.sign.jungle_sign.name=Табличка из тропического дерева
+item.moarsign.sign.acacia_sign.name=Табличка из акации
+item.moarsign.sign.big_oak_sign.name=Табличка из тёмного дуба
+
+item.moarsign.sign.iron_sign.name=Железная табличка
+item.moarsign.sign.gold_sign.name=Золотая табличка
+item.moarsign.sign.diamond_sign.name=Алмазная табличка
+item.moarsign.sign.emerald_sign.name=Изумрудная табличка
+
+# Mod Signs
+#Biomes O' Plenty
+item.moarsign.sign.bop.cherry_sign.name=Табличка из вишнёвого дерева
+item.moarsign.sign.bop.dark_sign.name=Табличка из тёмной древесины
+item.moarsign.sign.bop.fir_sign.name=Табличка из древесины пихты
+item.moarsign.sign.bop.hellbark_sign.name=Табличка из адского дерева
+item.moarsign.sign.bop.holy_sign.name=Табличка из эфирной древесины
+item.moarsign.sign.bop.jacaranda_sign.name=Табличка из древесины жакаранды
+item.moarsign.sign.bop.magic_sign.name=Табличка из магической древесины
+item.moarsign.sign.bop.mahogany_sign.name=Табличка из махагониевой древесины
+item.moarsign.sign.bop.mangrove_sign.name=Табличка из мангрового дерева
+item.moarsign.sign.bop.palm_sign.name=Табличка из древесины пальмы
+item.moarsign.sign.bop.pine_sign.name=Табличка из древесины сосны
+item.moarsign.sign.bop.redwood_sign.name=Табличка из красного дерева
+item.moarsign.sign.bop.sacred_oak_sign.name=Табличка из древесины священного дуба
+item.moarsign.sign.bop.willow_sign.name=Табличка из древесины ивы
+
+#Forestry
+item.moarsign.sign.for.acacia_sign.name=Табличка из акации
+item.moarsign.sign.for.balsa_sign.name=Табличка из бальзы
+item.moarsign.sign.for.baobab_sign.name=Табличка из баобаба
+item.moarsign.sign.for.cherry_sign.name=Табличка вишнёвого дерева
+item.moarsign.sign.for.chestnut_sign.name=Табличка из каштанового дерева
+item.moarsign.sign.for.citrus_sign.name=Табличка из цитрусового дерева
+item.moarsign.sign.for.ebony_sign.name=Табличка из миртового дерева
+item.moarsign.sign.for.greenheart_sign.name=Табличка из гринхарта
+item.moarsign.sign.for.kapok_sign.name=Табличка из хлопкового дерева
+item.moarsign.sign.for.larch_sign.name=Табличка из лиственницы
+item.moarsign.sign.for.lime_sign.name=Табличка из липы
+item.moarsign.sign.for.mahoe_sign.name=Табличка из гибискуса
+item.moarsign.sign.for.mahogany_sign.name=Табличка из красного дерева
+item.moarsign.sign.for.maple_sign.name=Табличка из клёна
+item.moarsign.sign.for.palm_sign.name=Табличка из пальмы
+item.moarsign.sign.for.papaya_sign.name=Табличка из дынного дерева
+item.moarsign.sign.for.pine_sign.name=Табличка из сосны
+item.moarsign.sign.for.plum_sign.name=Табличка из сливового дерева
+item.moarsign.sign.for.poplar_sign.name=Табличка из тополя
+item.moarsign.sign.for.sequoia_sign.name=Табличка из секвойи
+item.moarsign.sign.for.teak_sign.name=Табличка из тикового дерева
+item.moarsign.sign.for.walnut_sign.name=Табличка из орехового дерева
+item.moarsign.sign.for.wenge_sign.name=Табличка из дерева венге
+item.moarsign.sign.for.willow_sign.name=Табличка из ивы
+
+#Natura
+item.moarsign.sign.natura.bloodwood_sign.name=Табличка из кровавого дерева
+item.moarsign.sign.natura.darkwood_sign.name=Табличка из тёмного дерева
+item.moarsign.sign.natura.eucalyptus_sign.name=Табличка из древесины эвкалипта
+item.moarsign.sign.natura.fusewood_sign.name=Табличка из плавкого дерева
+item.moarsign.sign.natura.ghostwood_sign.name=Табличка из призрачного дерева
+item.moarsign.sign.natura.hopseed_sign.name=Табличка из хмельного дерева
+item.moarsign.sign.natura.maple_sign.name=Табличка из древесины клёна
+item.moarsign.sign.natura.purpleheart_sign.name=Табличка из древесины щирицы
+item.moarsign.sign.natura.redwood_sign.name=Табличка из красного дерева
+item.moarsign.sign.natura.sakura_sign.name=Табличка из древесины сакуры
+item.moarsign.sign.natura.silverbell_sign.name=Табличка из древесины галезии
+item.moarsign.sign.natura.tiger_sign.name=Табличка из тигрового дерева
+item.moarsign.sign.natura.willow_sign.name=Табличка из древесины ивы
+
+#IndustrailCraft 2
+item.moarsign.sign.ic2.copper_sign.name=Медная табличка
+item.moarsign.sign.ic2.tin_sign.name=Оловянная табличка
+item.moarsign.sign.ic2.bronze_sign.name=Бронзовая табличка
+
+#Tinkers Construct
+item.moarsign.sign.tconstruct.copper_sign.name=Медная табличка
+item.moarsign.sign.tconstruct.tin_sign.name=Оловянная табличка
+item.moarsign.sign.tconstruct.bronze_sign.name=Бронзовая табличка
+item.moarsign.sign.tconstruct.steel_sign.name=Стальная табличка
+
+#Factorization
+item.moarsign.sign.factorization.silver_sign.name=Серебряная табличка
+item.moarsign.sign.factorization.lead_sign.name=Свинцовая табличка
