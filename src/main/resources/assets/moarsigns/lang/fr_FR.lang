@@ -18,7 +18,8 @@ gui.moarsigns:button.title.lock=Verrouiller les rangées
 #  The [%2->Increase|Decrease] in the following get decided what to pick in the code
 gui.moarsigns:button.title.text.size=[%1][%2->Augmenter|Diminuer] la taille du texte
 gui.moarsigns:button.title.text.position=Déplacer le texte en [%1->haut|bas]
-gui.moarsigns:button.title.text.showhide=[%1->Montere|Cacher] la rangée
+gui.moarsigns:button.title.text.showhide=[%1->Monter|Cacher] la rangée
+gui.moarsigns:button.title.text.shadow=[%1->Monter|Cacher] l'ombre du texte
 
 
 #  For the descriptions of the first, [%1] = linebreak
@@ -37,7 +38,7 @@ gui.moarsigns:button.description.lock=Locks the 3 bottom rows[%1]Changes to the 
 gui.moarsigns:button.description.text.size=Changes the size of the[%1]text for the row[%2]Current size: [%3]Normal-click [%4]Shift-click [%5]
 gui.moarsigns:button.description.text.position=Changes the position of[%1]the text on the sign[%1]Each click moves accordingly:[%2]Normal-click [%3]1x[%4]Shift-click [%3]10x
 gui.moarsigns:button.description.text.showhide=[%1->Shows|Hides] the row on the sign[%2]Text will still be saved[%2]even if the row is hidden
-
+gui.moarsigns:button.description.text.shadow=[%1->Enables|Disables] the shadow on the text
 
 
 #  Colors
