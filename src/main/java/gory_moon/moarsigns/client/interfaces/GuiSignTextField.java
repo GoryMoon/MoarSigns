@@ -71,7 +71,7 @@ public class GuiSignTextField extends GuiTextField {
             } else {
                 boolean flag = p_146175_1_ < 0;
 
-                char[][] position = {{'{'}, {'\u222b'}, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
+                char[][] position = {{'{'}, {(char) 8747}, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
                         'd', 'e', 'f', 'k', 'l', 'm', 'n', 'o', 'r'}, {'}'}};
 
                 int offset = getCharIndex(position, this.text.charAt(this.cursorPosition + (flag && cursorPosition != 0 ? p_146175_1_: ((!flag && this.cursorPosition == this.text.length()) ? -1: 0))));
@@ -118,12 +118,12 @@ public class GuiSignTextField extends GuiTextField {
     }
 
     private boolean isSpecial(String s) {
-        return s.matches("(\\{\u222b[0-9a-z]\\})");
+        return s.matches("(\\{" + (char) 8747 + "[0-9a-z]\\})");
 
     }
 
     private int getSpecialsWidth(String s) {
-        Matcher m = Pattern.compile("(\\{\u222b[0-9a-z]\\})").matcher(s);
+        Matcher m = Pattern.compile("(\\{" + (char) 8747 + "[0-9a-z]\\})").matcher(s);
         int i = 0;
 
         while (m.find()) i += field_146211_a.getStringWidth(m.group(1));

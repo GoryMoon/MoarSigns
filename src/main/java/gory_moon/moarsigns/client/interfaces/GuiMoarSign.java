@@ -56,14 +56,14 @@ public class GuiMoarSign extends GuiBase {
     public static String[] getSignTextWithColor(String[] array) {
         String[] result = new String[array.length];
 
-        Pattern p = Pattern.compile("(?<=[\u222b])([a-z0-9])(?=\\})+");
+        Pattern p = Pattern.compile("(?<=[" + (char) 8747 + "])([a-z0-9])(?=\\})+");
         for (int i = 0; i < array.length; i++) {
             String s = array[i];
             if (!s.equals("")) {
 
                 Matcher m = p.matcher(s);
                 while (m.find()) {
-                    s = s.replace("{\u222b" + m.group(1) + "}", "\u00a7" + m.group(1));
+                    s = s.replace("{" + (char) 8747 + m.group(1) + "}", (char) 167 + m.group(1));
                 }
             }
             result[i] = s;
@@ -78,8 +78,8 @@ public class GuiMoarSign extends GuiBase {
         for (int i = 0; i < array.length; i++) {
             String s = array[i];
             if (!s.equals("")) {
-                s = s.replaceAll("(\u00a7[a-z0-9])+", "{\u222b$1}");
-                s = s.replaceAll("([\u00a7])+", "");
+                s = s.replaceAll("(" + (char) 167 + "[a-z0-9])+", "{" + (char) 8747 + "$1}");
+                s = s.replaceAll("([" + (char) 167 + ")])+", "");
             }
             result[i] = s;
         }
@@ -245,6 +245,7 @@ public class GuiMoarSign extends GuiBase {
         for (GuiButton button : buttons) {
             button.drawButton(this, x, y);
         }
+
         drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 189, guiTop + 126, guiTop + 136, GuiColor.BLACK.getARGB());
         drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 189, guiTop + 150, guiTop + 162, GuiColor.BLACK.getARGB());
         drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 189, guiTop + 126, GuiColor.BLACK.getARGB());
@@ -266,22 +267,9 @@ public class GuiMoarSign extends GuiBase {
         entitySign.showInGui = true;
         int k = i & 7;
 
-        float f3 = 0.0F;
-        if (k == 0 || k == 1) {
-            f3 = 180.0F;
-        } else if (k == 2) {
-            f3 = 180.0F;
-        } else if (k == 4) {
-            f3 = 90.0F;
-        } else if (k == 5) {
-            f3 = -90.0F;
-        }
+        GL11.glRotatef(180, 0.0F, 1.0F, 0.0F);
+        entitySign.blockMetadata = 2;
 
-        GL11.glRotatef(f3, 0.0F, 1.0F, 0.0F);
-        if (((i & 8) >> 3) == 1) {
-            entitySign.blockMetadata = 2;
-
-        }
         GL11.glTranslatef(0.0F, -0.8F, 0.0F);
 
         TileEntityRendererDispatcher.instance.renderTileEntityAt(entitySign, -0.5D, -0.75D, -0.5D, 0.0F);
@@ -289,7 +277,7 @@ public class GuiMoarSign extends GuiBase {
 
         if (showColors) {
             GL11.glPushMatrix();
-            GL11.glTranslatef(0.0F, 0.0F, 50.0F);
+            GL11.glTranslatef(0.0F, 0.0F, 90.0F);
             GL11.glDisable(GL11.GL_LIGHTING);
 
             bindTexture(texture);
@@ -323,7 +311,8 @@ public class GuiMoarSign extends GuiBase {
 
         if (showTextStyles) {
             GL11.glPushMatrix();
-            GL11.glTranslatef(0.0F, 0.0F, 51.0F);
+
+            GL11.glTranslatef(0.0F, 0.0F, 91.0F);
             GL11.glDisable(GL11.GL_LIGHTING);
 
             bindTexture(texture);
@@ -334,11 +323,14 @@ public class GuiMoarSign extends GuiBase {
             drawTexturedModalRect(guiLeft + 150, guiTop + 141, 0, 195, 35, 5);
             drawTexturedModalRect(guiLeft + 180, guiTop + 141, 194, 195, 30, 5);
 
+            zLevel += 100.0F;
             for (GuiTextStyleButton button : styleButtons) {
                 button.draw(this, x, y);
             }
+            zLevel -= 100.0F;
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();
+
             for (GuiTextStyleButton button : styleButtons) {
                 if (button.inRect(x, y))
                     drawHoveringText(Lists.asList(button.getName(), new String[0]), x, y, fontRendererObj);
@@ -361,7 +353,7 @@ public class GuiMoarSign extends GuiBase {
                     if (id != -1) {
                         showColors = false;
                         guiTextFields[selectedTextField].setFocused(true);
-                        guiTextFields[selectedTextField].writeText("{" + "\u222B" + Integer.toHexString(GuiColor.values()[id].getNumber()) + "}");
+                        guiTextFields[selectedTextField].writeText("{" + (char) 8747 + Integer.toHexString(GuiColor.values()[id].getNumber()) + "}");
                         update();
                         noTextFieldClick = true;
 
@@ -375,7 +367,7 @@ public class GuiMoarSign extends GuiBase {
                     if (button.inRect(x, y)) {
                         showTextStyles = false;
                         guiTextFields[selectedTextField].setFocused(true);
-                        guiTextFields[selectedTextField].writeText("{" + "\u222B" + button.getStyleChar(x, y) + "}");
+                        guiTextFields[selectedTextField].writeText("{" + (char) 8747 + button.getStyleChar(x, y) + "}");
                         update();
                         noTextFieldClick = true;
 

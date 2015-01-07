@@ -34,7 +34,7 @@ public class Utils {
     }
 
     public static boolean isUnderlined(String s) {
-        return Pattern.compile("(\\{\u222bn\\})|(\u00a7n)").matcher(s).find();
+        return Pattern.compile("(\\{" + (char) 8747 + "n\\})|(" + (char) 167 + ")").matcher(s).find();
     }
 
 }

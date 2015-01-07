@@ -93,6 +93,6 @@ public enum GuiColor {
      */
     @Override
     public String toString() {
-        return "\u00a7" + Integer.toHexString(number);
+        return (char) 167 + Integer.toHexString(number);
     }
 }

@@ -2,9 +2,15 @@
 	"versionList": [
 		{
 			"mcVersion":"Minecraft 1.7.10",
-			"modVersion":"1.1.2",
+		  "modVersion": "1.1.3",
 			"changeLog": [
-				"Fixed metal signs being more expensive then they should be"
+			  "Fixed text not rendering in gui when sign was placed in certain directions",
+			  "Fixed colored text on some dedicated server",
+			  "Fixed nugget to mineral recipe giving to much back",
+			  "Fixed Color and Style lists rendering behind sign",
+			  "Renamed 'Big Oak Sign' to 'Dark Oak Sign'",
+			  "Fixed 'Biomes O Plenty' Sacred Oak sign texture",
+			  "Added some translations"
 			],
 			"updateURL":"http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2223620/download",
 			"isDirectLink":"true",

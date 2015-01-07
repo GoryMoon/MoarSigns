@@ -10,6 +10,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -82,10 +83,13 @@ public class ModItems {
                     if (mat != null && mat.getItem() != null) {
                         if (isMetal) {
                             mat.stackSize = 1;
-                            crafting.setInventorySlotContents(0, mat);
-                            mat = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
-
+                            if (mat.getItem() instanceof ItemBlock) {
+                                crafting.setInventorySlotContents(0, mat);
+                                mat = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
+                            }
                             ItemStack recNugget = null;
+                            mat.stackSize = 1;
+
                             if (!s.material.gotNugget) {
                                 String unlocName = mat.getUnlocalizedName();
                                 for (int i = 0; i < Info.NUGGET_INGOT_UNLOCS.length; i++) {
@@ -101,7 +105,6 @@ public class ModItems {
                                     }
                                 }
                             } else {
-                                mat.stackSize = 1;
                                 crafting.setInventorySlotContents(0, mat);
                                 recNugget = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
                             }
