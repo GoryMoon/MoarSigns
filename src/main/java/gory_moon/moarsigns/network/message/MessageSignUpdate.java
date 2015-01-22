@@ -12,6 +12,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.WorldServer;
 
+import java.nio.charset.Charset;
+
 public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignUpdate, IMessage> {
 
     public int x, y, z;
@@ -57,7 +59,6 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
         lockedChanges = buf.readBoolean();
 
         for (int i = 0; i < 4; i++) {
-            int textLength = buf.readInt();
             byte[] line = new byte[buf.readInt()];
             buf.readBytes(line);
             text[i] = new String(line, Charset.forName("utf-8"));
