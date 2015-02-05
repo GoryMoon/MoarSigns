@@ -1,20 +1,14 @@
 {
-	"versionList": [
-		{
-			"mcVersion":"Minecraft 1.7.10",
-		  "modVersion": "1.1.3",
-			"changeLog": [
-			  "Fixed text not rendering in gui when sign was placed in certain directions",
-			  "Fixed colored text on some dedicated server",
-			  "Fixed nugget to mineral recipe giving to much back",
-			  "Fixed Color and Style lists rendering behind sign",
-			  "Renamed 'Big Oak Sign' to 'Dark Oak Sign'",
-			  "Fixed 'Biomes O Plenty' Sacred Oak sign texture",
-			  "Added some translations"
-			],
-		  "updateURL": "http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2223965/download",
-			"isDirectLink":"true",
-			"newFileName":""
-		}
-	]
+  "versionList": [
+	{
+	  "mcVersion": "Minecraft 1.7.10",
+	  "modVersion": "1.1.4",
+	  "changeLog": [
+		"Fixed colored text not encode and decode properly on servers"
+	  ],
+	  "updateURL": "http://minecraft.curseforge.com/mc-mods/79243-moarsigns/files/2223965/download",
+	  "isDirectLink": "true",
+	  "newFileName": ""
+	}
+  ]
 }

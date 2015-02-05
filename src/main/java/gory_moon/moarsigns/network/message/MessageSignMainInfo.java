@@ -13,6 +13,8 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 
+import java.nio.charset.Charset;
+
 public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSignMainInfo, IMessage> {
 
     public int x, y, z;
@@ -69,8 +71,9 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
             lockedChanges = buf.readBoolean();
 
             for (int i = 0; i < 4; i++) {
-                int textLength = buf.readInt();
-                text[i] = new String(buf.readBytes(textLength).array());
+                byte[] line = new byte[buf.readInt()];
+                buf.readBytes(line);
+                text[i] = new String(line, Charset.forName("utf-8"));
             }
         }
     }
@@ -94,8 +97,9 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
             buf.writeBoolean(lockedChanges);
 
             for (int i = 0; i < 4; i++) {
-                buf.writeInt(text[i].getBytes().length);
-                buf.writeBytes(text[i].getBytes());
+                byte[] bytes = text[i].getBytes(Charset.forName("utf-8"));
+                buf.writeInt(bytes.length);
+                buf.writeBytes(bytes);
             }
         } else {
             buf.writeBoolean(false);
