@@ -72,12 +72,14 @@ item.moarsign.signtoolbox.EDIT_MODE.name=Sign Toolbox §7(Edit)§r
 item.moarsign.signtoolbox.ROTATE_MODE.name=Sign Toolbox §6(Rotate)§r
 item.moarsign.signtoolbox.COPY_MODE.name=Sign Toolbox §9(Copy)§r
 item.moarsign.signtoolbox.MOVE_MODE.name=Sign Toolbox §e(Move)§r
+item.moarsign.signtoolbox.EXCHANGE_MODE.name=Sign Toolbox §3(Exchange)§r
 
-item.moarsign.description:signtoolbox.change=Hold [%1] while right clicking to change mode
-item.moarsign.description:signtoolbox.edit=
-item.moarsign.description:signtoolbox.rotate=
-item.moarsign.description:signtoolbox.copy=
-item.moarsign.description:signtoolbox.move=
+item.moarsign:signtoolbox.description.change=Hold [%1] while right clicking to change mode
+item.moarsign:signtoolbox.description.edit=[%1][Right click][%2] a sign to edit
+item.moarsign:signtoolbox.description.rotate=[%1][Right click][%2] a sign to cycle trough all rotations
+item.moarsign:signtoolbox.description.move=[%1]Right click[%2] on a sign to pick it up[%3][%1]Right click[%2] to place it, like a normal sign[%4]Can't change mode when sign is picked up
+item.moarsign:signtoolbox.description.copy=[%1][%2->Cmd|Ctrl][%3] + [%1]Right click[%3] on a sign to copy all info[%4]Right click[%3] on a sign to paste the info
+item.moarsign:signtoolbox.description.exchange=Opens an interface where you can exchange[%1]signs of the same material
 
 # Nuggets
 item.moarsign.diamond_nugget.name=Diamond Nugget

@@ -1,16 +1,17 @@
 package gory_moon.moarsigns.lib;
 
 public enum ToolBoxModes {
-    EDIT_MODE(0),
-    ROTATE_MODE(1),
-    COPY_MODE(2),
-    MOVE_MODE(3);
+    EDIT_MODE,
+    ROTATE_MODE,
+    MOVE_MODE,
+    COPY_MODE,
+    EXCHANGE_MODE;
 
 
     private int id;
 
-    ToolBoxModes(int id) {
-        this.id = id;
+    ToolBoxModes() {
+        this.id = ordinal();
     }
 
     public int getID() {
