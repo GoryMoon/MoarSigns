@@ -1,4 +1,4 @@
-package gory_moon.moarsigns.client.interfaces;
+package gory_moon.moarsigns.client.interfaces.sign;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;

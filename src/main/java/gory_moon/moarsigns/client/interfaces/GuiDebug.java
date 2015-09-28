@@ -1,5 +1,6 @@
 package gory_moon.moarsigns.client.interfaces;
 
+import gory_moon.moarsigns.client.interfaces.containers.ContainerDebug;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;

@@ -1,6 +1,8 @@
 package gory_moon.moarsigns.client.interfaces;
 
 import cpw.mods.fml.common.network.IGuiHandler;
+import gory_moon.moarsigns.client.interfaces.containers.ContainerDebug;
+import gory_moon.moarsigns.client.interfaces.containers.ContainerExchange;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -8,6 +10,9 @@ import net.minecraft.world.World;
 
 public class GuiHandler implements IGuiHandler {
 
+    public static final int DEBUG_TILE = 0;
+    public static final int DEBUG_ITEM = 1;
+    public static final int EXCHANGE = 2;
     private IInventory tempInv;
 
     public GuiHandler() {
@@ -106,9 +111,11 @@ public class GuiHandler implements IGuiHandler {
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
         switch (ID) {
-            case 0:
-            case 1:
+            case DEBUG_TILE:
+            case DEBUG_ITEM:
                 return new ContainerDebug(player.inventory, ID, tempInv);
+            case EXCHANGE:
+                return new ContainerExchange(player.inventory);
         }
 
         return null;
@@ -118,9 +125,11 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
         switch (ID) {
-            case 0:
-            case 1:
+            case DEBUG_TILE:
+            case DEBUG_ITEM:
                 return new GuiDebug(player.inventory, ID, world, x, y, z, tempInv);
+            case EXCHANGE:
+                return new GuiExchange(player.inventory);
         }
 
         return null;

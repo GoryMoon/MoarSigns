@@ -1,7 +1,7 @@
-package gory_moon.moarsigns.client.interfaces.buttons;
+package gory_moon.moarsigns.client.interfaces.sign.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
-import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
+import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
 import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.GuiScreen;
 

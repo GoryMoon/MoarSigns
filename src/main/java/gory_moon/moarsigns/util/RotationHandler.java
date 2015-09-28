@@ -2,7 +2,7 @@ package gory_moon.moarsigns.util;
 
 import gory_moon.moarsigns.blocks.BlockMoarSign;
 import gory_moon.moarsigns.blocks.Blocks;
-import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
+import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.world.World;
 

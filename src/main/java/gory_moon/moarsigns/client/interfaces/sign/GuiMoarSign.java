@@ -1,9 +1,12 @@
-package gory_moon.moarsigns.client.interfaces;
+package gory_moon.moarsigns.client.interfaces.sign;
 
 import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gory_moon.moarsigns.client.interfaces.buttons.*;
+import gory_moon.moarsigns.client.interfaces.GuiBase;
+import gory_moon.moarsigns.client.interfaces.GuiColor;
+import gory_moon.moarsigns.client.interfaces.GuiColorButton;
+import gory_moon.moarsigns.client.interfaces.sign.buttons.*;
 import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignUpdate;

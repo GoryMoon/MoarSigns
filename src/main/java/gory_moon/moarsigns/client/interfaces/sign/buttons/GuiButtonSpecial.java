@@ -1,4 +1,4 @@
-package gory_moon.moarsigns.client.interfaces.buttons;
+package gory_moon.moarsigns.client.interfaces.sign.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 

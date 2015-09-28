@@ -1,5 +1,8 @@
-package gory_moon.moarsigns.client.interfaces;
+package gory_moon.moarsigns.client.interfaces.sign;
 
+import gory_moon.moarsigns.client.interfaces.GuiBase;
+import gory_moon.moarsigns.client.interfaces.GuiColor;
+import gory_moon.moarsigns.client.interfaces.GuiRectangle;
 import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;

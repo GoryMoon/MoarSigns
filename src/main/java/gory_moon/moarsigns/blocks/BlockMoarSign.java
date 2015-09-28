@@ -71,32 +71,25 @@ public class BlockMoarSign extends BlockContainer {
 
     @Override
     public void randomDisplayTick(World world, int x, int y, int z, Random random) {
-        TileEntity entity = world.getTileEntity(x, y, z);
-        if (entity instanceof TileEntityMoarSign) {
-            TileEntityMoarSign sign = (TileEntityMoarSign) entity;
-            SignInfo info = SignRegistry.get(sign.texture_name);
-            if (info != null && info.property != null) info.property.randomDisplayTick(world, x, y, z, random);
+        SignInfo signInfo = getSignInfo(world, x, y, z);
+        if (signInfo != null && signInfo.property != null) {
+            signInfo.property.randomDisplayTick(world, x, y, z, random);
         }
     }
 
     @Override
     public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if (tileEntity instanceof TileEntityMoarSign) {
-            TileEntityMoarSign sign = (TileEntityMoarSign) tileEntity;
-            SignInfo info = SignRegistry.get(sign.texture_name);
-            if (info != null && info.property != null) info.property.onEntityCollidedWithBlock(world, x, y, z, entity);
+        SignInfo signInfo = getSignInfo(world, x, y, z);
+        if (signInfo != null && signInfo.property != null) {
+            signInfo.property.onEntityCollidedWithBlock(world, x, y, z, entity);
         }
     }
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if (tileEntity instanceof TileEntityMoarSign) {
-            TileEntityMoarSign sign = (TileEntityMoarSign) tileEntity;
-            SignInfo info = SignRegistry.get(sign.texture_name);
-            if (info != null && info.property != null)
-                return info.property.onRightClick(world, x, y, z, player, side, hitX, hitY, hitZ);
+        SignInfo signInfo = getSignInfo(world, x, y, z);
+        if (signInfo != null && signInfo.property != null) {
+            return signInfo.property.onRightClick(world, x, y, z, player, side, hitX, hitY, hitZ);
         }
         return false;
     }
@@ -310,7 +303,7 @@ public class BlockMoarSign extends BlockContainer {
         TileEntity entity = world.getTileEntity(x, y, z);
         if (entity instanceof TileEntityMoarSign) {
             TileEntityMoarSign tileEntity = (TileEntityMoarSign) entity;
-            if (tileEntity.isRemovedByPlayerAndCreative) return ret;
+            if (tileEntity.removeNoDrop) return ret;
 
             ret.add(ModItems.sign.createMoarItemStack(tileEntity.texture_name, tileEntity.isMetal));
         }
@@ -321,7 +314,7 @@ public class BlockMoarSign extends BlockContainer {
     public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
         TileEntity entity = world.getTileEntity(x, y, z);
         if (entity instanceof TileEntityMoarSign)
-            ((TileEntityMoarSign) entity).isRemovedByPlayerAndCreative = player.capabilities.isCreativeMode;
+            ((TileEntityMoarSign) entity).removeNoDrop = player.capabilities.isCreativeMode;
         return super.removedByPlayer(world, player, x, y, z, false);
     }
 
@@ -350,5 +343,16 @@ public class BlockMoarSign extends BlockContainer {
         }
 
         return !super.canPlaceBlockAt(world, x, y, z) && world.getBlock(x, y, z).getMaterial().isSolid();
+    }
+
+    public SignInfo getSignInfo(World world, int x, int y, int z) {
+
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity instanceof TileEntityMoarSign) {
+            TileEntityMoarSign sign = (TileEntityMoarSign) tileEntity;
+            return SignRegistry.get(sign.texture_name);
+        }
+
+        return null;
     }
 }

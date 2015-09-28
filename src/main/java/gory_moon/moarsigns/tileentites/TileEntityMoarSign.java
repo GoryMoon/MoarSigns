@@ -19,20 +19,22 @@ import net.minecraft.util.ResourceLocation;
 
 public class TileEntityMoarSign extends TileEntitySign {
 
+    public static final String NBT_VERSION_TAG = "nbtVersion";
+    public static final String NBT_SETTINGS_TAG = "settings";
+    public static final String NBT_LOCKED_CHANGES_TAG = "lockedChanges";
+    public static final String NBT_METAL_TAG = "isMetal";
+    public static final String NBT_TEXTURE_TAG = "texture";
     private final int NBT_VERSION = 2;
-
     public int[] rowLocations = new int[4];
     public int[] rowSizes = {0, 0, 0, 0};
     public boolean[] visibleRows = {true, true, true, true};
     public boolean[] shadowRows = new boolean[4];
     public boolean lockedChanges;
-
     public boolean isMetal = false;
     public String texture_name;
     public boolean showInGui = false;
-    public boolean isRemovedByPlayerAndCreative;
+    public boolean removeNoDrop;
     private boolean isEditable = true;
-
     private EntityPlayer playerEditing;
     private ResourceLocation resourceLocation;
     private boolean textureReq = false;
@@ -66,7 +68,7 @@ public class TileEntityMoarSign extends TileEntitySign {
 
     public void writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        compound.setInteger("nbtVersion", NBT_VERSION);
+        compound.setInteger(NBT_VERSION_TAG, NBT_VERSION);
 
         for (int i = 0; i < 4; i++) {
             compound.setString("Text" + (i + 1), signText[i]);
@@ -100,17 +102,17 @@ public class TileEntityMoarSign extends TileEntitySign {
         settings.appendTag(hidden);
         settings.appendTag(shadows);
 
-        compound.setTag("settings", settings);
-        compound.setBoolean("lockedChanges", lockedChanges);
-        compound.setBoolean("isMetal", isMetal);
-        compound.setString("texture", texture_name);
+        compound.setTag(NBT_SETTINGS_TAG, settings);
+        compound.setBoolean(NBT_LOCKED_CHANGES_TAG, lockedChanges);
+        compound.setBoolean(NBT_METAL_TAG, isMetal);
+        compound.setString(NBT_TEXTURE_TAG, texture_name);
     }
 
     public void readFromNBT(NBTTagCompound compound) {
         isEditable = false;
         super.readFromNBT(compound);
 
-        int nbtVersion = compound.getInteger("nbtVersion");
+        int nbtVersion = compound.getInteger(NBT_VERSION_TAG);
 
         if (nbtVersion == 1) {
             int fontSize = compound.getInteger("fontSize");
@@ -142,9 +144,9 @@ public class TileEntityMoarSign extends TileEntitySign {
 
         } else if (nbtVersion == 2) {
 
-            lockedChanges = compound.getBoolean("lockedChanges");
+            lockedChanges = compound.getBoolean(NBT_LOCKED_CHANGES_TAG);
 
-            NBTTagList settings = compound.getTagList("settings", 11);
+            NBTTagList settings = compound.getTagList(NBT_SETTINGS_TAG, 11);
 
             for (int i = 0; i < settings.tagCount(); i++) {
                 int[] array = settings.func_150306_c(i);
@@ -170,8 +172,8 @@ public class TileEntityMoarSign extends TileEntitySign {
             }
         }
 
-        isMetal = compound.getBoolean("isMetal");
-        texture_name = compound.getString("texture");
+        isMetal = compound.getBoolean(NBT_METAL_TAG);
+        texture_name = compound.getString(NBT_TEXTURE_TAG);
 
     }
 

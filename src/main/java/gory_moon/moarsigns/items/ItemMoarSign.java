@@ -157,7 +157,8 @@ public class ItemMoarSign extends Item {
                     tileEntity.isMetal = info.isMetal;
                     tileEntity.func_145912_a(player);
 
-                    PacketHandler.INSTANCE.sendTo(new MessageSignOpenGui(tileEntity), (EntityPlayerMP) player);
+                    boolean moving = stack.getTagCompound().hasKey(ItemSignToolbox.SIGN_MOVING_TAG) && stack.getTagCompound().getBoolean(ItemSignToolbox.SIGN_MOVING_TAG);
+                    PacketHandler.INSTANCE.sendTo(new MessageSignOpenGui(tileEntity, moving), (EntityPlayerMP) player);
                 }
 
                 return true;

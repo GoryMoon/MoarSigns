@@ -1,9 +1,9 @@
-package gory_moon.moarsigns.client.interfaces.buttons;
+package gory_moon.moarsigns.client.interfaces.sign.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
-import gory_moon.moarsigns.client.interfaces.GuiMoarSign;
 import gory_moon.moarsigns.client.interfaces.GuiRectangle;
+import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.util.ResourceLocation;
 
