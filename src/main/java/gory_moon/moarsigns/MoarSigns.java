@@ -36,7 +36,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
-@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION)
+@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, certificateFingerprint = "@FINGERPRINT@")
 public class MoarSigns {
 
     private static final String LINK = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/master/version.json";

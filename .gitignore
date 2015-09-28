@@ -1,6 +1,7 @@
 eclipse/
 bin/
 build/
+classes
 out/
 libs/
 .gradle/
@@ -11,4 +12,4 @@ libs/
 *.iml
 *.ipr
 *.iws
-*.properties
+gradle.properties
