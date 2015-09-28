@@ -38,8 +38,9 @@ public final class Localization {
             CHANGE,
             EDIT,
             ROTATE,
+            MOVE,
             COPY,
-            MOVE;
+            EXCHANGE;
 
             private String key;
 
@@ -48,7 +49,7 @@ public final class Localization {
             }
 
             public String translate(String... vars) {
-                return Localization.translateString("item.moarsign.description:signtoolbox." + key, vars);
+                return Localization.translateString("item.moarsign:signtoolbox.description." + key, vars);
             }
         }
 

@@ -225,6 +225,7 @@ public class GuiMoarSign extends GuiBase {
         }
 
         if (key == 1) {
+            this.entitySign.markDirty();
             mc.thePlayer.closeScreen();
         }
     }
@@ -265,7 +266,6 @@ public class GuiMoarSign extends GuiBase {
 
         int i = entitySign.getBlockMetadata();
         entitySign.showInGui = true;
-        int k = i & 7;
 
         GL11.glRotatef(180, 0.0F, 1.0F, 0.0F);
         entitySign.blockMetadata = 2;
@@ -274,6 +274,9 @@ public class GuiMoarSign extends GuiBase {
 
         TileEntityRendererDispatcher.instance.renderTileEntityAt(entitySign, -0.5D, -0.75D, -0.5D, 0.0F);
         GL11.glPopMatrix();
+        entitySign.showInGui = false;
+        entitySign.blockMetadata = i;
+
 
         if (showColors) {
             GL11.glPushMatrix();
