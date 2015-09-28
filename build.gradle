@@ -14,6 +14,7 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
+
 configurations {
     deployerJars
 }
@@ -40,10 +41,15 @@ archivesBaseName = "MoarSigns"
 
 minecraft {
     version = "${config.mc_version}"+ "-" + "${config.forge_version}"
-    runDir = "eclipse/assets"
+    runDir = "eclipse"
 
     replaceIn "ModInfo.java"
     replace "@MOD_VERSION@", config.mod_version
+
+    replaceIn "MoarSigns.java"
+    if (project.hasProperty("ms_sha1_signature")) {
+        replace "@FINGERPRINT@", project.ms_sha1_signature
+    }
 }
 
 dependencies {
@@ -67,7 +73,7 @@ dependencies {
 processResources
 {
     // this will ensure that this task is redone when the versions change.
-    inputs.property "version", config.mod_version
+    inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
 
     // replace stuff in mcmod.info, nothing else
@@ -75,7 +81,7 @@ processResources
         include 'mcmod.info'
 
         // replace version and mcversion
-        expand 'version':config.mod_version, 'mcversion':project.minecraft.version
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
 
     // copy everything else, thats not the mcmod.info
@@ -110,6 +116,44 @@ task sourceJar(type: Jar) {
 artifacts {
     archives devJar
     archives sourceJar
+}
+
+tasks.build.dependsOn('signJar')
+
+if (!project.hasProperty("keystore_location")) // keystore stuff
+    ext.keystore_location = "."
+if (!project.hasProperty("keystore_password")) // keystore stuff
+    ext.keystore_password = ""
+if (!project.hasProperty("ms_keystore_alias")) // keystore stuff
+    ext.ms_keystore_alias = ""
+
+task signJar(dependsOn: ["reobf", "devJar"]) {
+    inputs.dir jar.destinationDir
+    inputs.file keystore_location
+    inputs.property "ms_keystore_alias", ms_keystore_alias
+    inputs.property "keystore_password", keystore_password
+    outputs.dir devJar.destinationDir
+
+    // only sign if the keystore exists
+    onlyIf {
+        return keystore_location != "." && keystore_password != ""
+    }
+    // the actual action.. sign the jar.
+    doLast {
+        jar.destinationDir.eachFile { file ->
+            if (!file.getPath().endsWith(".jar"))
+                return; // skip non-jars
+
+            logger.lifecycle "signing $file"
+            ant.signjar(
+                    destDir: file.getParentFile(), // same place it came from
+                    jar: file,
+                    keystore: keystore_location,
+                    alias: ms_keystore_alias,
+                    storepass: keystore_password
+            )
+        }
+    }
 }
 
 uploadArchives {
@@ -165,3 +209,5 @@ uploadArchives {
         }
     }
 }
+
+idea { module { inheritOutputDirs = true } }
