@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class ButtonTextShadow extends GuiButtonSpecial {
 
-    private int id;
-    private boolean hasShadow;
+    public int id;
+    public boolean hasShadow;
 
     public ButtonTextShadow(int id, int x, int y, boolean hasShadow) {
         super(x, y, 16, 16, hasShadow ? 224: 240, 120);

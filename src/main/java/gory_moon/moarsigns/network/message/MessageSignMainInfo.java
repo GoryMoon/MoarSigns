@@ -128,7 +128,7 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
                     sign.lockedChanges = message.lockedChanges;
                     sign.setResourceLocation(message.texture);
 
-                    if (sign.isEditable()) {
+                    if (sign.func_145914_a()) {
                         System.arraycopy(message.text, 0, sign.signText, 0, 4);
                     }
                     flag = true;

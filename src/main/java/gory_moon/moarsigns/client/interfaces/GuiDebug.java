@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.client.interfaces;
 
 import gory_moon.moarsigns.client.interfaces.containers.ContainerDebug;
+import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -26,8 +27,9 @@ public class GuiDebug extends GuiContainer {
     private Block block;
     private IInventory inventory;
     private Rectangle infoArea;
+    private String[] signText = new String[4];
 
-    public GuiDebug(InventoryPlayer inventory, int ID, World world, int x, int y, int z, IInventory tempInv) {
+    public GuiDebug(InventoryPlayer inventory, int ID, World world, int x, int y, int z, IInventory tempInv, TileEntityMoarSign te) {
         super(new ContainerDebug(inventory, ID, tempInv));
         this.world = world;
         this.x = x;
@@ -41,6 +43,13 @@ public class GuiDebug extends GuiContainer {
             infoArea = new Rectangle(8, 10, 160, 20);
         } else {
             infoArea = new Rectangle(31, 10, 137, 19);
+        }
+
+        TileEntityMoarSign sign = (TileEntityMoarSign) world.getTileEntity(x, y, z);
+        if (sign != null && sign.signText != null) {
+            for (int i = 0; i < sign.signText.length; i++) {
+                signText[i] = sign.signText[i] + (((char) 167) + "r") + GuiColor.CYAN;
+            }
         }
 
         xSize = 178;
@@ -90,7 +99,7 @@ public class GuiDebug extends GuiContainer {
             fontRendererObj.drawString("UN: " + un, x, y1, 0x404040);
             fontRendererObj.drawString("Meta: " + meta, x, y2, 0x404040);
 
-            infoArea.drawString(this, par1, par2, GuiColor.YELLOW + "Unlocalized Name: " + Un + "\n" + GuiColor.LIGHTBLUE + "Meta: " + meta);
+            infoArea.drawString(this, par1, par2, GuiColor.YELLOW + "Unlocalized Name: " + Un + "\n" + GuiColor.LIGHTBLUE + "Meta: " + meta + "\n" + GuiColor.CYAN + Arrays.toString(signText));
 
         }
 

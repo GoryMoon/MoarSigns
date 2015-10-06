@@ -24,6 +24,7 @@ public class TileEntityMoarSign extends TileEntitySign {
     public static final String NBT_LOCKED_CHANGES_TAG = "lockedChanges";
     public static final String NBT_METAL_TAG = "isMetal";
     public static final String NBT_TEXTURE_TAG = "texture";
+
     private final int NBT_VERSION = 2;
     public int[] rowLocations = new int[4];
     public int[] rowSizes = {0, 0, 0, 0};
@@ -50,12 +51,6 @@ public class TileEntityMoarSign extends TileEntitySign {
     public void updateEntity() {
 
         if (worldObj.isRemote) {
-
-            /*if (fontSize != oldFontSize) {
-                rows = Utils.getRows(fontSize);
-                maxLength = Utils.getMaxLength(fontSize);
-                oldFontSize = fontSize;
-            }*/
             if (!textureReq) {
                 textureReq = true;
                 Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
@@ -109,7 +104,6 @@ public class TileEntityMoarSign extends TileEntitySign {
     }
 
     public void readFromNBT(NBTTagCompound compound) {
-        isEditable = false;
         super.readFromNBT(compound);
 
         int nbtVersion = compound.getInteger(NBT_VERSION_TAG);
@@ -172,8 +166,9 @@ public class TileEntityMoarSign extends TileEntitySign {
             }
         }
 
-        isMetal = compound.getBoolean(NBT_METAL_TAG);
-        texture_name = compound.getString(NBT_TEXTURE_TAG);
+        isMetal = compound.hasKey(NBT_METAL_TAG) && compound.getBoolean(NBT_METAL_TAG);
+        if (compound.hasKey(NBT_TEXTURE_TAG)) texture_name = compound.getString(NBT_TEXTURE_TAG);
+        if (texture_name == null || texture_name.isEmpty()) texture_name = "oak_sign";
 
     }
 
@@ -182,11 +177,13 @@ public class TileEntityMoarSign extends TileEntitySign {
         return PacketHandler.INSTANCE.getPacketFrom(new MessageSignMainInfo(this));
     }
 
-    public boolean isEditable() {
+    @Override
+    public boolean func_145914_a() {
         return this.isEditable;
     }
 
     @SideOnly(Side.CLIENT)
+    @Override
     public void setEditable(boolean state) {
         this.isEditable = state;
 

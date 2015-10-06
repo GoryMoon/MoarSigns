@@ -3,9 +3,11 @@ package gory_moon.moarsigns.client.interfaces;
 import cpw.mods.fml.common.network.IGuiHandler;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerDebug;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerExchange;
+import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class GuiHandler implements IGuiHandler {
@@ -124,10 +126,12 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
+        TileEntity te = world.getTileEntity(x, y, z);
+
         switch (ID) {
             case DEBUG_TILE:
             case DEBUG_ITEM:
-                return new GuiDebug(player.inventory, ID, world, x, y, z, tempInv);
+                return new GuiDebug(player.inventory, ID, world, x, y, z, tempInv, (TileEntityMoarSign) te);
             case EXCHANGE:
                 return new GuiExchange(player.inventory);
         }

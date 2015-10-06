@@ -26,8 +26,8 @@ gui.moarsigns:button.title.text.shadow=[%1->Enable|Disable] text shadow
 gui.moarsigns:button.description.cut=Cuts the selected text[%1]to the clipboard
 gui.moarsigns:button.description.copy=Copies the selected text[%1]to the clipboard
 gui.moarsigns:button.description.paste=Pastes text from the clipboard
-gui.moarsigns:button.description.cutsign=Cuts the sign into[%1]the clipboard, ready to[%1]be pasted into a sign[%2]Shift-click to get the[%2]size, location and if hidden
-gui.moarsigns:button.description.copysign=Copies the sign into[%1]the clipboard, ready to[%1]be pasted into a sign[%2]Shift-click to get the[%2]size, location and if hidden
+gui.moarsigns:button.description.cutsign=Cuts the sign into[%1]the clipboard, ready to[%1]be pasted into a sign[%2]Shift-click to get the[%2]size, location, shadow and if hidden
+gui.moarsigns:button.description.copysign=Copies the sign into[%1]the clipboard, ready to[%1]be pasted into a sign[%2]Shift-click to get the[%2]size, location, shadow and if hidden
 gui.moarsigns:button.description.pastesign=Pastes all text from a sign[%1]that is in the clipboard.
 gui.moarsigns:button.description.reset=Erases all text from sign[%1]and resets hidden rows[%1]and text location
 gui.moarsigns:button.description.textstyle=Set the style for[%1]the following text[%1]from the cursor[%2]Tip: Add any color before the this
@@ -80,6 +80,8 @@ item.moarsign:signtoolbox.description.rotate=[%1][Right click][%2] a sign to cyc
 item.moarsign:signtoolbox.description.move=[%1]Right click[%2] on a sign to pick it up[%3][%1]Right click[%2] to place it, like a normal sign[%4]Can't change mode when sign is picked up
 item.moarsign:signtoolbox.description.copy=[%1][%2->Cmd|Ctrl][%3] + [%1]Right click[%3] on a sign to copy all info[%4]Right click[%3] on a sign to paste the info
 item.moarsign:signtoolbox.description.exchange=Opens an interface where you can exchange[%1]signs of the same material
+item.moarsign:signtoolbox.current_text=Text on sign:
+
 
 # Nuggets
 item.moarsign.diamond_nugget.name=Diamond Nugget

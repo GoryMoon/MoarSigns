@@ -32,9 +32,10 @@ public class ButtonCutSign extends GuiButton {
             int[] sizes = guiM.rowSizes;
             int[] locations = guiM.rowLocations;
             boolean[] hidden = guiM.visibleRows;
+            boolean[] shadows = guiM.shadowRows;
 
             for (int i = 0; i < 4; i++) {
-                s += (i > 0 ? "\u001F": "") + sizes[i] + ":" + locations[i] + ":" + (hidden[i] ? 1: 0);
+                s += (i > 0 ? "\u001F" : "") + sizes[i] + ":" + locations[i] + ":" + (hidden[i] ? 1 : 0) + ":" + (shadows[i] ? 1 : 0);
             }
         }
 

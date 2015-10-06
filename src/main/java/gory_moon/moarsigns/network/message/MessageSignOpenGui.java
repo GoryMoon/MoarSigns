@@ -7,7 +7,6 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
-import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -85,8 +84,6 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
             ((TileEntityMoarSign) tileEntity).isMetal = message.isMetal;
             ((TileEntityMoarSign) tileEntity).setResourceLocation(message.texture);
             tileEntity.markDirty();
-
-            PacketHandler.INSTANCE.sendToServer(new MessageSignUpdate((TileEntityMoarSign) tileEntity));
 
             if (!message.isMoving)
                 FMLClientHandler.instance().getClient().displayGuiScreen(new GuiMoarSign((TileEntityMoarSign) tileEntity));

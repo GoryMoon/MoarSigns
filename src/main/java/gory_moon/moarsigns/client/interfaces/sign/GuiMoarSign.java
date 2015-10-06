@@ -31,25 +31,27 @@ public class GuiMoarSign extends GuiBase {
 
     public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
     private final int TEXT_EDIT_AREA = 14;
-    public List<GuiButton> buttons = new ArrayList<GuiButton>();
-    public GuiSignTextField[] guiTextFields = new GuiSignTextField[4];
+
     public int selectedTextField = 0;
     public boolean showColors = false;
     public boolean showTextStyles;
+    public List<GuiButton> buttons = new ArrayList<GuiButton>();
+    public GuiSignTextField[] guiTextFields = new GuiSignTextField[4];
+    public int[] rowSizes = new int[4];
+    public int[] rowLocations = new int[4];
+    public boolean[] visibleRows = new boolean[4];
+    public boolean[] shadowRows = new boolean[4];
     public ArrayList<GuiButton> textButtons = new ArrayList<GuiButton>();
     public ButtonReset buttonErase;
     public ButtonColorPicker buttonColorPicker;
     public ButtonTextStyle buttonTextStyle;
     public ButtonLock buttonLock;
-    public int[] rowSizes = new int[4];
-    public int[] rowLocations = new int[4];
-    public boolean[] visibleRows = new boolean[4];
-    public boolean[] shadowRows = new boolean[4];
     int oldSelectedIndex = -1;
     private GuiColorButton[] colorButtons = new GuiColorButton[16];
     private GuiTextStyleButton[] styleButtons = new GuiTextStyleButton[6];
     private ButtonCutSign buttonCutSign;
     private ButtonCopySign buttonCopySign;
+
     private TileEntityMoarSign entitySign;
 
     public GuiMoarSign(TileEntityMoarSign te) {
@@ -78,11 +80,15 @@ public class GuiMoarSign extends GuiBase {
     public static String[] getSignTextWithCode(String[] array) {
         String[] result = new String[array.length];
 
+        Pattern p = Pattern.compile("(?<=[" + (char) 167 + "])([a-z0-9])+");
         for (int i = 0; i < array.length; i++) {
             String s = array[i];
             if (!s.equals("")) {
-                s = s.replaceAll("(" + (char) 167 + "[a-z0-9])+", "{" + (char) 8747 + "$1}");
-                s = s.replaceAll("([" + (char) 167 + ")])+", "");
+
+                Matcher m = p.matcher(s);
+                while (m.find()) {
+                    s = s.replace((char) 167 + m.group(1), "{" + (char) 8747 + m.group(1) + "}");
+                }
             }
             result[i] = s;
         }
@@ -98,10 +104,13 @@ public class GuiMoarSign extends GuiBase {
         buttonList.clear();
         buttons.clear();
         Keyboard.enableRepeatEvents(true);
+        entitySign.setEditable(false);
 
         String[] text = getSignTextWithCode(entitySign.signText);
+        rowSizes = Arrays.copyOf(entitySign.rowSizes, entitySign.rowSizes.length);
         rowLocations = Arrays.copyOf(entitySign.rowLocations, entitySign.rowLocations.length);
         visibleRows = Arrays.copyOf(entitySign.visibleRows, entitySign.visibleRows.length);
+        shadowRows = Arrays.copyOf(entitySign.shadowRows, entitySign.shadowRows.length);
 
         int k = 0;
         int j;

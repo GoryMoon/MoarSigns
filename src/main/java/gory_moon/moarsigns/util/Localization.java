@@ -40,7 +40,8 @@ public final class Localization {
             ROTATE,
             MOVE,
             COPY,
-            EXCHANGE;
+            EXCHANGE,
+            CURRENT_TEXT;
 
             private String key;
 
@@ -49,7 +50,8 @@ public final class Localization {
             }
 
             public String translate(String... vars) {
-                return Localization.translateString("item.moarsign:signtoolbox.description." + key, vars);
+                String s = (ordinal() < 6 ? "description." : "") + key;
+                return Localization.translateString("item.moarsign:signtoolbox." + s, vars);
             }
         }
 

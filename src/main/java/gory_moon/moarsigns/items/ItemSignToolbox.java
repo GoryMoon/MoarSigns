@@ -6,9 +6,9 @@ import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.MoarSignsCreativeTab;
 import gory_moon.moarsigns.blocks.BlockMoarSign;
 import gory_moon.moarsigns.client.interfaces.GuiColor;
+import gory_moon.moarsigns.client.interfaces.GuiHandler;
 import gory_moon.moarsigns.lib.ToolBoxModes;
 import gory_moon.moarsigns.network.PacketHandler;
-import gory_moon.moarsigns.network.message.MessageSignMainInfo;
 import gory_moon.moarsigns.network.message.MessageSignOpenGui;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Localization;
@@ -29,9 +29,12 @@ import net.minecraft.world.World;
 import java.util.Collections;
 import java.util.List;
 
+import static gory_moon.moarsigns.lib.ToolBoxModes.EXCHANGE_MODE;
 import static gory_moon.moarsigns.lib.ToolBoxModes.values;
 
 public class ItemSignToolbox extends Item {
+
+    public static final String SIGN_MOVING_TAG = "SignMoving";
 
     public ItemSignToolbox() {
         setUnlocalizedName("moarsign.signtoolbox");
@@ -44,8 +47,13 @@ public class ItemSignToolbox extends Item {
         if (!world.isRemote) {
             MovingObjectPosition.MovingObjectType hit = FMLClientHandler.instance().getClient().objectMouseOver.typeOfHit;
 
-            if (hit == MovingObjectPosition.MovingObjectType.MISS && player.isSneaking() && !isMoving(stack)) {
-                return rotateModes(stack);
+            if (hit == MovingObjectPosition.MovingObjectType.MISS) {
+                int mode = isMoving(stack) ? 2 : stack.getItemDamage();
+                if (player.isSneaking() && !isMoving(stack)) {
+                    return rotateModes(stack);
+                } else if (ToolBoxModes.values()[mode] == EXCHANGE_MODE) {
+                    doExchange(world, 0, 0, 0, player);
+                }
             }
         }
         return super.onItemRightClick(stack, world, player);
@@ -54,7 +62,6 @@ public class ItemSignToolbox extends Item {
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
-            System.out.println("Right click X:" + x + ", Y:" + y + ", Z:" + z);
             int mode = isMoving(stack) ? 2 : stack.getItemDamage();
             switch (ToolBoxModes.values()[mode]) {
                 case EDIT_MODE:
@@ -91,7 +98,6 @@ public class ItemSignToolbox extends Item {
         }
     }
 
-
     private void doCopy(World world, int x, int y, int z, ItemStack stack) {
         NBTTagCompound signInfo = stack.getTagCompound();
         if (GuiScreen.isCtrlKeyDown()) {
@@ -100,16 +106,21 @@ public class ItemSignToolbox extends Item {
             if (tileEntity instanceof TileEntityMoarSign) {
                 signInfo = new NBTTagCompound();
                 tileEntity.writeToNBT(signInfo);
+                signInfo.removeTag(TileEntityMoarSign.NBT_TEXTURE_TAG);
+                signInfo.removeTag(TileEntityMoarSign.NBT_METAL_TAG);
+                stack.setTagCompound(signInfo);
             }
         } else if (signInfo != null) {
             TileEntity tileEntity = world.getTileEntity(x, y, z);
 
             if (tileEntity instanceof TileEntityMoarSign) {
                 tileEntity.readFromNBT(signInfo);
-                signInfo = null;
+                tileEntity.xCoord = x;
+                tileEntity.yCoord = y;
+                tileEntity.zCoord = z;
+                world.markBlockForUpdate(x, y, z);
             }
         }
-        stack.setTagCompound(signInfo);
     }
 
     private boolean doMove(World world, int x, int y, int z, ItemStack stack, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
@@ -158,13 +169,11 @@ public class ItemSignToolbox extends Item {
                 }
 
                 TileEntityMoarSign entityMoarSign = (TileEntityMoarSign) world.getTileEntity(x, y, z);
-                System.out.println(entityMoarSign + ", " + "X:" + x + ", Y:" + y + ", Z:" + z);
                 entityMoarSign.readFromNBT(signInfo);
                 entityMoarSign.xCoord = x;
                 entityMoarSign.yCoord = y;
                 entityMoarSign.zCoord = z;
-
-                PacketHandler.INSTANCE.sendTo(new MessageSignMainInfo(entityMoarSign), (EntityPlayerMP) player);
+                world.markBlockForUpdate(x, y, z);
 
                 signInfo = null;
                 stack = toggleMoving(stack);
@@ -176,7 +185,7 @@ public class ItemSignToolbox extends Item {
     }
 
     private void doExchange(World world, int x, int y, int z, EntityPlayer player) {
-        FMLNetworkHandler.openGui(player, MoarSigns.instance, 1, world, x, y, z);
+        FMLNetworkHandler.openGui(player, MoarSigns.instance, GuiHandler.EXCHANGE, world, x, y, z);
     }
 
     private ItemStack rotateModes(ItemStack stack) {
@@ -203,9 +212,13 @@ public class ItemSignToolbox extends Item {
         switch (ToolBoxModes.values()[mode]) {
             case COPY_MODE:
                 str += "\n" + GuiColor.GRAY + Localization.ITEM.SIGNTOOLBOX.COPY.translate(GuiColor.LIGHTGRAY.toString() + "[", (Minecraft.isRunningOnMac ? "0": "1"), "]" + GuiColor.GRAY.toString(), "\n" + GuiColor.LIGHTGRAY.toString() + "[");
+                if (stack.getTagCompound() != null)
+                    str += "\n" + GuiColor.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_TEXT.translate() + getFormattedData(stack.getTagCompound());
                 break;
             case MOVE_MODE:
                 str += "\n" + GuiColor.GRAY + Localization.ITEM.SIGNTOOLBOX.MOVE.translate(GuiColor.LIGHTGRAY.toString() + "[", "]" + GuiColor.GRAY.toString(), "\n" + GuiColor.GRAY.toString(), "\n" + GuiColor.RED.toString());
+                if (stack.getTagCompound() != null)
+                    str += "\n" + GuiColor.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_TEXT.translate() + getFormattedData(stack.getTagCompound());
                 break;
             case EXCHANGE_MODE:
                 str += "\n" + GuiColor.GRAY + Localization.ITEM.SIGNTOOLBOX.EXCHANGE.translate("\n" + GuiColor.GRAY.toString());
@@ -217,6 +230,16 @@ public class ItemSignToolbox extends Item {
         String[] strList = str.split("\n");
         for (int i = 0; i < strList.length; i++) strList[i] = strList[i].trim();
         Collections.addAll(list, strList);
+    }
+
+    private String getFormattedData(NBTTagCompound compound) {
+        String s = "\n";
+
+        for (int i = 0; i < 4; i++) {
+            s += GuiColor.WHITE + "[" + GuiColor.GRAY + compound.getString("Text" + (i + 1)) + GuiColor.WHITE + "]\n";
+        }
+
+        return s;
     }
 
     private boolean isMoving(ItemStack stack) {
@@ -231,16 +254,5 @@ public class ItemSignToolbox extends Item {
         }
         return stack;
     }
-
-    private ItemStack toggleMoving(ItemStack stack) {
-        if (stack.getItemDamage() == 2) {
-            stack.setItemDamage(6);
-        } else if (isMoving(stack)) {
-            stack.setItemDamage(2);
-        }
-        return stack;
-    }
-
-    public static final String SIGN_MOVING_TAG = "SignMoving";
 
 }

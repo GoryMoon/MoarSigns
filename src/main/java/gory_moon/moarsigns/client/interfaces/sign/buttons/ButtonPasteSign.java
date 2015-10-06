@@ -45,11 +45,18 @@ public class ButtonPasteSign extends GuiButton {
                     guiM.rowSizes[i] = Integer.parseInt(values[0]);
                     guiM.rowLocations[i] = Integer.parseInt(values[1]);
                     guiM.visibleRows[i] = Integer.parseInt(values[2]) == 1;
+                    guiM.shadowRows[i] = Integer.parseInt(values[3]) == 1;
 
                     for (GuiButton button : guiM.buttons) {
                         if (button instanceof ButtonShowHide) {
                             if (((ButtonShowHide) button).id == i) {
                                 ((ButtonShowHide) button).isHidden = !guiM.visibleRows[i];
+                            }
+                        }
+
+                        if (button instanceof ButtonTextShadow) {
+                            if (((ButtonTextShadow) button).id == i) {
+                                ((ButtonTextShadow) button).setShadow(guiM, guiM.shadowRows[i]);
                             }
                         }
                     }
