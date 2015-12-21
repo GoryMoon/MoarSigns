@@ -283,7 +283,7 @@ public class BlockMoarSign extends BlockContainer {
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
         TileEntityMoarSign tileEntity = (TileEntityMoarSign) world.getTileEntity(x, y, z);
         String s = tileEntity.texture_name;
         s = s != null ? s: "null";

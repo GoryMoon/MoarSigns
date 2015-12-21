@@ -41,6 +41,7 @@ public final class Localization {
             MOVE,
             COPY,
             EXCHANGE,
+            CURRENT_SIGN,
             CURRENT_TEXT;
 
             private String key;
