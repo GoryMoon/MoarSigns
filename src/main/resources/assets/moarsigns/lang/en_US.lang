@@ -2,6 +2,8 @@
 itemGroup.moarSigns=MoarSigns
 item.moarsign.debug.name=Debug
 item.moarsign.sign.dummy=MoarSign
+crafting.moarsign.sign.shaped=MoarSigns Shaped
+crafting.moarsign.sign.shapeless=MoarSigns Shapeless
 
 # -Gui
 gui.moarsigns:button.title.cut=Cut
@@ -74,6 +76,9 @@ item.moarsign.signtoolbox.COPY_MODE.name=Sign Toolbox §9(Copy)§r
 item.moarsign.signtoolbox.MOVE_MODE.name=Sign Toolbox §e(Move)§r
 item.moarsign.signtoolbox.EXCHANGE_MODE.name=Sign Toolbox §b(Exchange)§r
 
+item.moarsign:sign.description.material=Material: [%1]
+item.moarsign:sign.description.material_origin=Origin of material: [%1]
+
 item.moarsign:signtoolbox.description.change=Hold [%1] while right clicking to change mode
 item.moarsign:signtoolbox.description.edit=[%1][Right click][%2] a sign to edit
 item.moarsign:signtoolbox.description.rotate=[%1][Right click][%2] a sign to cycle trough all rotations
@@ -82,7 +87,6 @@ item.moarsign:signtoolbox.description.copy=[%1][%2->Cmd|Ctrl][%3] + [%1]Right cl
 item.moarsign:signtoolbox.description.exchange=Opens an interface where you can exchange[%1]signs of the same material
 item.moarsign:signtoolbox.current_sign=Current sign picked up:
 item.moarsign:signtoolbox.current_text=Text on sign:
-
 
 # Nuggets
 item.moarsign.diamond_nugget.name=Diamond Nugget

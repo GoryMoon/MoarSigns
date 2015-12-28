@@ -4,12 +4,15 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class SignRegistry {
 
     public static final String ALWAYS_ACTIVE_TAG = "activeALL";
+    private static ArrayList<SignInfo> signRegistry;
+    private static ArrayList<SignInfo> activatedSignRegistry;
+    private static HashMap<String, Boolean> activeTags;
 
     static {
         activeTags = Maps.newHashMap();
@@ -18,10 +21,6 @@ public class SignRegistry {
 
         activateTag(ALWAYS_ACTIVE_TAG);
     }
-
-    private static List<SignInfo> signRegistry;
-    private static List<SignInfo> activatedSignRegistry;
-    private static HashMap<String, Boolean> activeTags;
 
     /**
      * Registers a sign
@@ -142,11 +141,46 @@ public class SignRegistry {
         return null;
     }
 
-    public static List<SignInfo> getSignRegistry() {
-        return signRegistry;
+    /**
+     * Gets a clone of the register with all signs
+     *
+     * @return List of {@link gory_moon.moarsigns.api.SignInfo}
+     */
+    @SuppressWarnings("unchecked")
+    public static ArrayList<SignInfo> getSignRegistry() {
+        return (ArrayList<SignInfo>) signRegistry.clone();
     }
 
-    public static List<SignInfo> getActivatedSignRegistry() {
-        return activatedSignRegistry;
+    /**
+     * Gets a clone of the current active signs
+     *
+     * @return List of {@link gory_moon.moarsigns.api.SignInfo}
+     */
+    @SuppressWarnings("unchecked")
+    public static ArrayList<SignInfo> getActivatedSignRegistry() {
+        return (ArrayList<SignInfo>) activatedSignRegistry.clone();
+    }
+
+    /**
+     * Gets a clone of the map of tags that are registered
+     *
+     * @return Map of tags with boolean values
+     */
+    @SuppressWarnings("unchecked")
+    public static HashMap<String, Boolean> getActiveTags() {
+        return (HashMap<String, Boolean>) activeTags.clone();
+    }
+
+    /**
+     * Gets the amount of tags that are active
+     *
+     * @return Amount of active tags
+     */
+    public static int getActiveTagsAmount() {
+        int i = 0;
+        for (boolean b : activeTags.values()) {
+            if (b) i++;
+        }
+        return i;
     }
 }

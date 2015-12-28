@@ -14,16 +14,16 @@ public class ButtonTextSize extends GuiButtonSpecial {
     private boolean increase;
 
     public ButtonTextSize(int id, int x, int y, boolean increase) {
-        super(x, y, 16, 16, increase ? 224: 240, 24);
+        super(x, y, 16, 16, increase ? 224 : 240, 24);
         this.increase = increase;
         this.id = id;
     }
 
     @Override
     public String getButtonInfo(GuiBase gui) {
-        String change = GuiColor.LIGHTGRAY + (increase ? "+": "-");
+        String change = GuiColor.LIGHTGRAY + (increase ? "+" : "-");
         return Localization.GUI.BUTTONS.TEXT_SIZE.translateTitles(
-                increase ? GuiColor.LIME.toString(): GuiColor.RED.toString(), increase ? "0": "1")
+                increase ? GuiColor.LIME.toString() : GuiColor.RED.toString(), increase ? "0" : "1")
                 + newLine +
                 Localization.GUI.BUTTONS.TEXT_SIZE.translateDescriptions(
                         newLine, "\n" + GuiColor.WHITE,
@@ -35,9 +35,9 @@ public class ButtonTextSize extends GuiButtonSpecial {
     public void action(GuiBase gui) {
         GuiMoarSign guiM = ((GuiMoarSign) gui);
 
-        int change = GuiScreen.isShiftKeyDown() ? 10: 1;
+        int change = GuiScreen.isShiftKeyDown() ? 10 : 1;
 
-        guiM.changeTextSize(id, increase ? change: -change);
+        guiM.changeTextSize(id, increase ? change : -change);
 
         ArrayList<Integer> ids = new ArrayList<Integer>();
         if (guiM.buttonLock.getState()) {
@@ -46,7 +46,7 @@ public class ButtonTextSize extends GuiButtonSpecial {
                     int nextID = ((ButtonTextSize) next).id;
                     if (!ids.contains(nextID)) {
                         ids.add(nextID);
-                        guiM.changeTextSize(nextID, increase ? change: -change);
+                        guiM.changeTextSize(nextID, increase ? change : -change);
                     }
                 }
             }

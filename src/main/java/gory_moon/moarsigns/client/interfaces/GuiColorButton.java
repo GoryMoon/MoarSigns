@@ -16,11 +16,11 @@ public class GuiColorButton extends GuiRectangle {
 
     @Override
     public void draw(GuiBase gui, int srcX, int srcY) {
-        Gui.drawRect(x, y, x + w, y + h, inRect(srcX, srcY) ? color1: color2);
+        Gui.drawRect(x, y, x + w, y + h, inRect(srcX, srcY) ? color1 : color2);
     }
 
     public int getId(GuiBase gui, int x, int y) {
-        return inRect(x, y) ? id: -1;
+        return inRect(x, y) ? id : -1;
     }
 
 }

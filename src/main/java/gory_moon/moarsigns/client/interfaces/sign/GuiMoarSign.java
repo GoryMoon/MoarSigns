@@ -226,13 +226,13 @@ public class GuiMoarSign extends GuiBase {
 
         if (key == 200) {
             guiTextFields[selectedTextField].setFocused(false);
-            selectedTextField = selectedTextField - 1 < 0 ? 3: selectedTextField - 1;
+            selectedTextField = selectedTextField - 1 < 0 ? 3 : selectedTextField - 1;
             guiTextFields[selectedTextField].setFocused(true);
         }
 
         if (key == 208 || key == 28 || key == 156) {
             guiTextFields[selectedTextField].setFocused(false);
-            selectedTextField = selectedTextField + 1 > 3 ? 0: selectedTextField + 1;
+            selectedTextField = selectedTextField + 1 > 3 ? 0 : selectedTextField + 1;
             guiTextFields[selectedTextField].setFocused(true);
         }
 
@@ -438,7 +438,7 @@ public class GuiMoarSign extends GuiBase {
 
         for (int i = 0; i < rowLocations.length; i++) {
             int max = Utils.getMaxTextOffset(rowSizes[i]) - getStyleOffset(i);
-            rowLocations[i] = max > rowLocations[i] ? rowLocations[i]: max;
+            rowLocations[i] = max > rowLocations[i] ? rowLocations[i] : max;
         }
 
         if (!s.equals("")) {
@@ -467,9 +467,9 @@ public class GuiMoarSign extends GuiBase {
             int rowSize = rowSizes[id];
 
             if (change > 0) {
-                rowSizes[id] = rowSize + change <= 20 ? rowSize + change: 20;
+                rowSizes[id] = rowSize + change <= 20 ? rowSize + change : 20;
             } else if (change < 0) {
-                rowSizes[id] = rowSize + change > -1 ? rowSize + change: 0;
+                rowSizes[id] = rowSize + change > -1 ? rowSize + change : 0;
             }
         }
     }
@@ -480,9 +480,9 @@ public class GuiMoarSign extends GuiBase {
 
             if (change > 0) {
                 int max = Utils.getMaxTextOffset(rowSizes[id]) - getStyleOffset(id);
-                rowLocations[id] = max > rowLocation + change ? rowLocation + change: max;
+                rowLocations[id] = max > rowLocation + change ? rowLocation + change : max;
             } else if (change < 0) {
-                rowLocations[id] = rowLocation + change < 0 ? 0: rowLocation + change;
+                rowLocations[id] = rowLocation + change < 0 ? 0 : rowLocation + change;
             }
         }
     }

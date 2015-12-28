@@ -15,7 +15,7 @@ public final class Localization {
                 int endPos = result.indexOf("]");
                 if (endPos != -1) {
                     String[] options = result.substring(pos + optionCheck.length(), endPos).split("\\|");
-                    int pickedOption = vars[i].equals("1") ? 1: 0;
+                    int pickedOption = vars[i].equals("1") ? 1 : 0;
                     if (options.length > pickedOption) {
                         String opt = options[pickedOption];
                         result = result.substring(0, pos) + opt + result.substring(endPos + 1);
@@ -33,7 +33,22 @@ public final class Localization {
 
     public static class ITEM {
 
-        public static enum SIGNTOOLBOX {
+        public enum SIGN {
+            MATERIAL,
+            MATERIAL_ORIGIN;
+
+            private String key;
+
+            SIGN() {
+                this.key = toString().toLowerCase();
+            }
+
+            public String translate(String... vars) {
+                return Localization.translateString("item.moarsign:sign.description." + key, vars);
+            }
+        }
+
+        public enum SIGNTOOLBOX {
 
             CHANGE,
             EDIT,
@@ -46,7 +61,7 @@ public final class Localization {
 
             private String key;
 
-            private SIGNTOOLBOX() {
+            SIGNTOOLBOX() {
                 this.key = toString().toLowerCase();
             }
 
@@ -60,7 +75,7 @@ public final class Localization {
 
     public static class GUI {
 
-        public static enum BUTTONS {
+        public enum BUTTONS {
 
             CUT,
             COPY,
@@ -79,7 +94,7 @@ public final class Localization {
 
             private String key;
 
-            private BUTTONS() {
+            BUTTONS() {
                 this.key = toString().toLowerCase().replaceAll("_", ".");
             }
 
@@ -92,7 +107,7 @@ public final class Localization {
             }
         }
 
-        public static enum COLORS {
+        public enum COLORS {
             BLACK,
             BLUE,
             GREEN,
@@ -112,7 +127,7 @@ public final class Localization {
 
             private String key;
 
-            private COLORS() {
+            COLORS() {
                 this.key = toString().toLowerCase();
             }
 
@@ -121,7 +136,7 @@ public final class Localization {
             }
         }
 
-        public static enum TEXTSTYLES {
+        public enum TEXTSTYLES {
             RANDOM,
             BOLD,
             STRIKETHROUGH,
@@ -131,7 +146,7 @@ public final class Localization {
 
             private String key;
 
-            private TEXTSTYLES() {
+            TEXTSTYLES() {
                 this.key = toString().toLowerCase();
             }
 

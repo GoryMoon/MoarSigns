@@ -23,11 +23,11 @@ public abstract class GuiButton extends GuiRectangle {
     }
 
     public void drawButton(GuiBase gui, int mouseX, int mouseY) {
-        int buttonType = isDisabled ? 60: inRect(mouseX, mouseY) ? 20: 0;
+        int buttonType = isDisabled ? 60 : inRect(mouseX, mouseY) ? 20 : 0;
 
         super.draw(gui, buttonType, 204);
 
-        gui.drawTexturedModalRect(x + 2, y + 2, srcX, isDisabled ? 224: 240, 16, 16);
+        gui.drawTexturedModalRect(x + 2, y + 2, srcX, isDisabled ? 224 : 240, 16, 16);
     }
 
     public void hoverText(GuiBase gui, int x, int y) {

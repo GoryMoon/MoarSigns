@@ -81,11 +81,11 @@ public class TileEntityMoarSign extends TileEntitySign {
 
         int[] visible = new int[5];
         visible[0] = 2;
-        for (int i = 0; i < 4; i++) visible[i + 1] = visibleRows[i] ? 1: 0;
+        for (int i = 0; i < 4; i++) visible[i + 1] = visibleRows[i] ? 1 : 0;
 
         int[] shadow = new int[5];
         shadow[0] = 3;
-        for (int i = 0; i < 4; i++) shadow[i + 1] = shadowRows[i] ? 1: 0;
+        for (int i = 0; i < 4; i++) shadow[i + 1] = shadowRows[i] ? 1 : 0;
 
         NBTTagIntArray locations = new NBTTagIntArray(loc);
         NBTTagIntArray sizes = new NBTTagIntArray(size);
@@ -128,7 +128,7 @@ public class TileEntityMoarSign extends TileEntitySign {
 
             int textOffset = compound.getInteger("textOffset");
             for (int i = 0; i < 4; i++) {
-                int temp = Math.abs(textOffset) + rowLocations[i] - (textOffset != 0 ? 2: 0);
+                int temp = Math.abs(textOffset) + rowLocations[i] - (textOffset != 0 ? 2 : 0);
 
                 if (temp < 0) temp = 0;
 

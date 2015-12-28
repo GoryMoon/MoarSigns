@@ -5,9 +5,12 @@ import gory_moon.moarsigns.MoarSignsCreativeTab;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
+import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignOpenGui;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
+import gory_moon.moarsigns.util.Localization;
+import gory_moon.moarsigns.util.Utils;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,11 +33,27 @@ public class ItemMoarSign extends Item {
         hasSubtypes = true;
     }
 
+    public static String getTextureFromNBTFull(NBTTagCompound compound) {
+        return compound != null && compound.hasKey("SignTexture") ? compound.getString("SignTexture") : "";
+    }
+
+    public static String getTextureFromNBT(NBTTagCompound compound) {
+        String texture = getTextureFromNBTFull(compound);
+        if (texture.contains("\\")) texture = texture.split("\\\\")[1];
+        if (texture.contains("/")) texture = texture.split("/")[1];
+        return texture;
+    }
+
+    public static SignInfo getInfo(NBTTagCompound compound) {
+        String texture = getTextureFromNBTFull(compound);
+        return SignRegistry.get(texture);
+    }
+
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
         if (info == null) return super.getUnlocalizedName() + ".sign.dummy";
-        return super.getUnlocalizedName() + ".sign." + (info.material.path.equals("") ? "": info.material.path.replace("/", "") + ".") + getTextureFromNBT(stack.getTagCompound());
+        return super.getUnlocalizedName() + ".sign." + (info.material.path.equals("") ? "" : info.material.path.replace("/", "") + ".") + getTextureFromNBT(stack.getTagCompound());
     }
 
     @SuppressWarnings("unchecked")
@@ -44,9 +63,9 @@ public class ItemMoarSign extends Item {
 
         for (SignInfo info : signRegistry) {
             String path = info.material.path;
-            String loc = info.isMetal ? "metal/": "wood/";
-            IIcon icon = register.registerIcon(info.modId.toLowerCase() + ":" + loc + (path.equals("") ? "": path.replace("\\", "/")) + info.itemName);
-            MoarSigns.icons.put((path.equals("") ? "": path) + info.itemName, icon);
+            String loc = info.isMetal ? "metal/" : "wood/";
+            IIcon icon = register.registerIcon(info.modId.toLowerCase() + ":" + loc + (path.equals("") ? "" : path.replace("\\", "/")) + info.itemName);
+            MoarSigns.icons.put((path.equals("") ? "" : path) + info.itemName, icon);
         }
     }
 
@@ -71,7 +90,7 @@ public class ItemMoarSign extends Item {
         if (info == null) return MoarSigns.icons.get("oak_sign");
 
         String path = info.material.path;
-        return MoarSigns.icons.get((path.equals("") ? "": path) + info.itemName);
+        return MoarSigns.icons.get((path.equals("") ? "" : path) + info.itemName);
     }
 
     @Override
@@ -80,22 +99,11 @@ public class ItemMoarSign extends Item {
     }
 
     public ItemStack createMoarItemStack(String signName, boolean isMetal) {
-        ItemStack itemStack = new ItemStack(this, 1, (isMetal ? 1: 0));
+        ItemStack itemStack = new ItemStack(this, 1, (isMetal ? 1 : 0));
         NBTTagCompound compound = new NBTTagCompound();
         compound.setString("SignTexture", signName.replace("\\", "/"));
         itemStack.setTagCompound(compound);
         return itemStack;
-    }
-
-    public String getTextureFromNBTFull(NBTTagCompound compound) {
-        return compound != null && compound.hasKey("SignTexture") ? compound.getString("SignTexture"): "";
-    }
-
-    public String getTextureFromNBT(NBTTagCompound compound) {
-        String texture = compound != null && compound.hasKey("SignTexture") ? compound.getString("SignTexture"): "";
-        if (texture.contains("\\")) texture = texture.split("\\\\")[1];
-        if (texture.contains("/")) texture = texture.split("/")[1];
-        return texture;
     }
 
     @Override
@@ -148,7 +156,6 @@ public class ItemMoarSign extends Item {
 
                 if (tileEntity != null) {
                     String texture = getTextureFromNBTFull(stack.getTagCompound());
-
                     SignInfo info = SignRegistry.get(texture);
 
                     if (info == null) return false;
@@ -169,6 +176,11 @@ public class ItemMoarSign extends Item {
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean extraInfo) {
-        //list.add("Sign texture: " + getTextureFromNBT(stack.getTagCompound()));
+        SignInfo info = getInfo(stack.getTagCompound());
+        String modName = info.activateTag.equals(SignRegistry.ALWAYS_ACTIVE_TAG) ? "Minecraft" : info.activateTag;
+        list.add(Localization.ITEM.SIGN.MATERIAL_ORIGIN.translate(GuiColor.WHITE + Utils.getModName(modName)));
+        if (extraInfo) {
+            list.add(Localization.ITEM.SIGN.MATERIAL.translate(GuiColor.WHITE + info.material.materialName));
+        }
     }
 }

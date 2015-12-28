@@ -48,6 +48,11 @@ public class ItemSignToolbox extends Item {
     }
 
     @Override
+    public boolean isDamageable() {
+        return true;
+    }
+
+    @Override
     public void registerIcons(IIconRegister register) {
         for (int i = 0; i < ToolBoxModes.values().length; i++) {
             icons[i] = register.registerIcon(Info.TEXTURE_LOCATION + ":" + "toolbox/" + ToolBoxModes.values()[i].toString().toLowerCase());
@@ -214,7 +219,7 @@ public class ItemSignToolbox extends Item {
 
     private ItemStack rotateModes(ItemStack stack) {
         int mode = stack.getItemDamage();
-        mode = mode + 1 >= 5 ? 0: mode + 1;
+        mode = mode + 1 >= 5 ? 0 : mode + 1;
         stack.setItemDamage(mode);
         return stack;
     }
@@ -235,7 +240,7 @@ public class ItemSignToolbox extends Item {
         int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
         switch (ToolBoxModes.values()[mode]) {
             case COPY_MODE:
-                str += "\n" + GuiColor.GRAY + Localization.ITEM.SIGNTOOLBOX.COPY.translate(GuiColor.LIGHTGRAY.toString() + "[", (Minecraft.isRunningOnMac ? "0": "1"), "]" + GuiColor.GRAY.toString(), "\n" + GuiColor.LIGHTGRAY.toString() + "[");
+                str += "\n" + GuiColor.GRAY + Localization.ITEM.SIGNTOOLBOX.COPY.translate(GuiColor.LIGHTGRAY.toString() + "[", (Minecraft.isRunningOnMac ? "0" : "1"), "]" + GuiColor.GRAY.toString(), "\n" + GuiColor.LIGHTGRAY.toString() + "[");
                 if (stack.getTagCompound() != null)
                     str += "\n" + GuiColor.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_TEXT.translate() + getFormattedData(stack.getTagCompound());
                 break;

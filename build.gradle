@@ -41,7 +41,7 @@ archivesBaseName = "MoarSigns"
 
 minecraft {
     version = "${config.mc_version}"+ "-" + "${config.forge_version}"
-    runDir = "eclipse"
+    runDir = "run"
 
     replaceIn "ModInfo.java"
     replace "@MOD_VERSION@", config.mod_version
@@ -52,8 +52,35 @@ minecraft {
     }
 }
 
+repositories {
+
+    maven { // NEI and friends
+        name 'Chickenbones'
+        url 'http://chickenbones.net/maven/'
+    }
+
+    maven {
+        name "ic2"
+        url "http://maven.ic2.player.to/"
+    }
+
+    ivy {
+        name "MineTweaker3"
+        artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-[revision].[ext]"
+    }
+}
+
 dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
+
+    compile "codechicken:CodeChickenLib:" + config.mc_version + "-" + config.cclib_version + ":dev"
+    compile "codechicken:CodeChickenCore:" + config.mc_version + "-" + config.ccc_version + ":dev"
+    compile "codechicken:NotEnoughItems:" + config.mc_version + "-" + config.nei_version + ":dev"
+
+    compile "net.industrial-craft:industrialcraft-2:" + config.ic2_version + ":dev"
+    compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24'
+
+    compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar'
 
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..

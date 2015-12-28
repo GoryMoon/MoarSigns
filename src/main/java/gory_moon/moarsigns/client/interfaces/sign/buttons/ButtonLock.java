@@ -34,7 +34,7 @@ public class ButtonLock extends GuiButtonToggleable {
 
     @Override
     public void drawButton(GuiBase gui, int mouseX, int mouseY) {
-        super.draw(gui, (getState() ? srcX + 16: srcX), (inRect(mouseX, mouseY) ? srcX + 16: srcX));
+        super.draw(gui, (getState() ? srcX + 16 : srcX), (inRect(mouseX, mouseY) ? srcX + 16 : srcX));
     }
 
     public void unlock(GuiBase gui) {

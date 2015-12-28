@@ -53,7 +53,7 @@ public class RotationHandler {
                     testing = false;
                 }
             }
-            rotate(tileEntity, side);
+            setRotation(tileEntity, side);
         } else {
             if (GuiMoarSign.isShiftKeyDown()) {
                 if (meta == 0) {
@@ -68,12 +68,18 @@ public class RotationHandler {
                     meta++;
                 }
             }
-            rotate(tileEntity, meta);
+            setRotation(tileEntity, meta);
         }
     }
 
     public static void rotate(TileEntityMoarSign tileEntity, int rotation) {
-        if (rotation > 15 || tileEntity.getWorldObj().isRemote) return;
+        if (tileEntity.getWorldObj().isRemote) return;
+        for (int i = 0; i < rotation; i++)
+            rotate(tileEntity);
+    }
+
+    public static void setRotation(TileEntityMoarSign tileEntity, int rotation) {
+        if (rotation < 0 || rotation > 15 || tileEntity.getWorldObj().isRemote) return;
         World world = tileEntity.getWorldObj();
         world.setBlockMetadataWithNotify(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, rotation, 3);
     }

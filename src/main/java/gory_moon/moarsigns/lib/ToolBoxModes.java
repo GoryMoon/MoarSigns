@@ -7,18 +7,11 @@ public enum ToolBoxModes {
     COPY_MODE,
     EXCHANGE_MODE;
 
-
-    private int id;
-
-    ToolBoxModes() {
-        this.id = ordinal();
-    }
-
     public int getID() {
-        return id;
+        return ordinal();
     }
 
     public boolean equals(int testID) {
-        return this.id == testID;
+        return getID() == testID;
     }
 }

@@ -18,4 +18,14 @@ public class MaterialInfo {
         this.material = material;
     }
 
+
+    /**
+     * Only to be used when making recipes
+     *
+     * @param materialName
+     */
+    public MaterialInfo(String materialName) {
+        this(materialName, null, false, null);
+    }
+
 }

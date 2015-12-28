@@ -23,7 +23,7 @@ public class GuiTextStyleButton extends GuiRectangle {
     @Override
     public void draw(GuiBase gui, int srcX, int srcY) {
         GL11.glPushMatrix();
-        Gui.drawRect(x, y, x + w, y + h, inRect(srcX, srcY) ? 0xffb2b2b2: 0xff424242);
+        Gui.drawRect(x, y, x + w, y + h, inRect(srcX, srcY) ? 0xffb2b2b2 : 0xff424242);
 
         GL11.glColor3f(1.0F, 1.0F, 1.0F);
         gui.getFontRenderer().drawString(((char) 167) + "" + getStyleChar(srcX, srcY) + "AaBbCc", x + 5, y + 5, GuiColor.WHITE.getARGB());
@@ -32,7 +32,7 @@ public class GuiTextStyleButton extends GuiRectangle {
 
     @SuppressWarnings("unused")
     public int getId(int x, int y) {
-        return inRect(x, y) ? id: -1;
+        return inRect(x, y) ? id : -1;
     }
 
     @SuppressWarnings("unused")

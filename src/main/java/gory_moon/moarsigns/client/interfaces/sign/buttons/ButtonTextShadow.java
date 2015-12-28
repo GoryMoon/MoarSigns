@@ -12,24 +12,24 @@ public class ButtonTextShadow extends GuiButtonSpecial {
     public boolean hasShadow;
 
     public ButtonTextShadow(int id, int x, int y, boolean hasShadow) {
-        super(x, y, 16, 16, hasShadow ? 224: 240, 120);
+        super(x, y, 16, 16, hasShadow ? 224 : 240, 120);
         this.id = id;
         this.hasShadow = hasShadow;
     }
 
     @Override
     public void drawButton(GuiBase gui, int mouseX, int mouseY) {
-        int srcX = hasShadow ? 224: 240;
-        int buttonType = isDisabled ? srcY + h * 2: inRect(mouseX, mouseY) ? srcY + h: srcY;
+        int srcX = hasShadow ? 224 : 240;
+        int buttonType = isDisabled ? srcY + h * 2 : inRect(mouseX, mouseY) ? srcY + h : srcY;
 
         super.draw(gui, srcX, buttonType);
     }
 
     @Override
     public String getButtonInfo(GuiBase gui) {
-        return Localization.GUI.BUTTONS.TEXT_SHADOW.translateTitles(hasShadow ? "1": "0")
+        return Localization.GUI.BUTTONS.TEXT_SHADOW.translateTitles(hasShadow ? "1" : "0")
                 + newLine +
-                Localization.GUI.BUTTONS.TEXT_SHADOW.translateDescriptions(hasShadow ? "1": "0");
+                Localization.GUI.BUTTONS.TEXT_SHADOW.translateDescriptions(hasShadow ? "1" : "0");
     }
 
     @Override

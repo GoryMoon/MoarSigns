@@ -32,8 +32,8 @@ public class GuiSignTextField extends GuiTextField {
     public void writeText(String text) {
         String s1 = "";
         String s2 = ChatAllowedCharacters.filerAllowedCharacters(text);
-        int i = cursorPosition < this.selectionEnd ? cursorPosition: this.selectionEnd;
-        int j = cursorPosition < this.selectionEnd ? this.selectionEnd: cursorPosition;
+        int i = cursorPosition < this.selectionEnd ? cursorPosition : this.selectionEnd;
+        int j = cursorPosition < this.selectionEnd ? this.selectionEnd : cursorPosition;
         int k = this.maxRowLength - field_146211_a.getStringWidth(GuiMoarSign.getSignTextWithColor(new String[]{this.text})[0]) - (field_146211_a.getStringWidth(this.text.substring(0, i)) - field_146211_a.getStringWidth(this.text.substring(0, j)));
 
         if (this.text.length() > 0) {
@@ -74,7 +74,7 @@ public class GuiSignTextField extends GuiTextField {
                 char[][] position = {{'{'}, {(char) 8747}, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
                         'd', 'e', 'f', 'k', 'l', 'm', 'n', 'o', 'r'}, {'}'}};
 
-                int offset = getCharIndex(position, this.text.charAt(this.cursorPosition + (flag && cursorPosition != 0 ? p_146175_1_: ((!flag && this.cursorPosition == this.text.length()) ? -1: 0))));
+                int offset = getCharIndex(position, this.text.charAt(this.cursorPosition + (flag && cursorPosition != 0 ? p_146175_1_ : ((!flag && this.cursorPosition == this.text.length()) ? -1 : 0))));
 
                 if (offset > -1 &&
                         (flag && (0 <= cursorPosition - offset - 1) && this.text.length() > this.cursorPosition + (2 - (offset)) &&
@@ -83,15 +83,15 @@ public class GuiSignTextField extends GuiTextField {
                                 isSpecial(this.text.substring(this.cursorPosition - offset, cursorPosition + (3 - offset + 1)))
                         ) {
 
-                    this.selectionEnd = flag ? (cursorPosition + (3 - offset)): (cursorPosition + (3 - offset + 1));
-                    this.cursorPosition = flag ? (cursorPosition - offset - 1): (cursorPosition - offset);
+                    this.selectionEnd = flag ? (cursorPosition + (3 - offset)) : (cursorPosition + (3 - offset + 1));
+                    this.cursorPosition = flag ? (cursorPosition - offset - 1) : (cursorPosition - offset);
 
                     this.writeText("");
 
                 } else {
 
-                    int j = flag ? this.cursorPosition + p_146175_1_: this.cursorPosition;
-                    int k = flag ? this.cursorPosition: this.cursorPosition + p_146175_1_;
+                    int j = flag ? this.cursorPosition + p_146175_1_ : this.cursorPosition;
+                    int k = flag ? this.cursorPosition : this.cursorPosition + p_146175_1_;
                     String s = "";
 
                     if (j >= 0) {
@@ -135,7 +135,7 @@ public class GuiSignTextField extends GuiTextField {
 
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-                pos = arr[i][j] == c ? i: pos;
+                pos = arr[i][j] == c ? i : pos;
             }
         }
 
