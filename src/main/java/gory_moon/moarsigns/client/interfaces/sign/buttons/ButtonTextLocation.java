@@ -1,8 +1,8 @@
 package gory_moon.moarsigns.client.interfaces.sign.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
+import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.GuiScreen;
 
@@ -22,8 +22,8 @@ public class ButtonTextLocation extends GuiButtonSpecial {
     @Override
     public String getButtonInfo(GuiBase gui) {
         return Localization.GUI.BUTTONS.TEXT_POSITION.translateTitles(moveUp ? "0" : "1") + newLine +
-                Localization.GUI.BUTTONS.TEXT_POSITION.translateDescriptions(newLine, "\n" + GuiColor.LIGHTBLUE,
-                        GuiColor.LIGHTGRAY.toString(), "\n" + GuiColor.ORANGE.toString());
+                Localization.GUI.BUTTONS.TEXT_POSITION.translateDescriptions(newLine, "\n" + Colors.LIGHTBLUE,
+                        Colors.LIGHTGRAY.toString(), "\n" + Colors.ORANGE.toString());
     }
 
     @Override

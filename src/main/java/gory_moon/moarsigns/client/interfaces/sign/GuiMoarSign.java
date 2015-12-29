@@ -4,13 +4,13 @@ import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.client.interfaces.GuiBase;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiColorButton;
 import gory_moon.moarsigns.client.interfaces.sign.buttons.*;
 import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignUpdate;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
+import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.client.gui.GuiTextField;
@@ -259,11 +259,11 @@ public class GuiMoarSign extends GuiBase {
             button.drawButton(this, x, y);
         }
 
-        drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 189, guiTop + 126, guiTop + 136, GuiColor.BLACK.getARGB());
-        drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 189, guiTop + 150, guiTop + 162, GuiColor.BLACK.getARGB());
-        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 189, guiTop + 126, GuiColor.BLACK.getARGB());
-        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 181, guiTop + 144, GuiColor.BLACK.getARGB());
-        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 189, guiTop + 162, GuiColor.BLACK.getARGB());
+        drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 189, guiTop + 126, guiTop + 136, Colors.BLACK.getARGB());
+        drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 189, guiTop + 150, guiTop + 162, Colors.BLACK.getARGB());
+        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 189, guiTop + 126, Colors.BLACK.getARGB());
+        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 181, guiTop + 144, Colors.BLACK.getARGB());
+        drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 189, guiTop + 162, Colors.BLACK.getARGB());
 
         for (GuiTextField textField : guiTextFields) textField.drawTextBox();
 
@@ -306,7 +306,7 @@ public class GuiMoarSign extends GuiBase {
             }
             int k1 = 0;
             int j = 0;
-            for (GuiColor color : GuiColor.values()) {
+            for (Colors color : Colors.values()) {
                 drawRect(guiLeft + 152 + 4 + k1 * 14, guiTop + 32 + 4 + j * 14, guiLeft + 152 + 14 + k1 * 14, guiTop + 32 + 14 + j * 14, color.getARGB());
                 if (k1 > 2) {
                     k1 = 0;
@@ -368,7 +368,7 @@ public class GuiMoarSign extends GuiBase {
                     if (id != -1) {
                         showColors = false;
                         guiTextFields[selectedTextField].setFocused(true);
-                        guiTextFields[selectedTextField].writeText("{" + (char) 8747 + Integer.toHexString(GuiColor.values()[id].getNumber()) + "}");
+                        guiTextFields[selectedTextField].writeText("{" + (char) 8747 + Integer.toHexString(Colors.values()[id].getNumber()) + "}");
                         update();
                         noTextFieldClick = true;
 

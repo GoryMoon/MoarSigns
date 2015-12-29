@@ -1,8 +1,8 @@
 package gory_moon.moarsigns.client.interfaces.sign.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
+import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.GuiTextField;
 
@@ -14,7 +14,7 @@ public class ButtonReset extends GuiButton {
 
     @Override
     public String getButtonInfo(GuiBase gui) {
-        return GuiColor.RED + Localization.GUI.BUTTONS.RESET.translateTitles() + newLine + Localization.GUI.BUTTONS.RESET.translateDescriptions(newLine);
+        return Colors.RED + Localization.GUI.BUTTONS.RESET.translateTitles() + newLine + Localization.GUI.BUTTONS.RESET.translateDescriptions(newLine);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package gory_moon.moarsigns.client.interfaces.sign.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
+import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 
 public class ButtonColorPicker extends GuiButtonToggleable {
@@ -13,7 +13,7 @@ public class ButtonColorPicker extends GuiButtonToggleable {
 
     @Override
     public String getButtonInfo(GuiBase gui) {
-        return Localization.GUI.BUTTONS.COLORSELECTOR.translateTitles() + newLine + Localization.GUI.BUTTONS.COLORSELECTOR.translateDescriptions(newLine, newLine + newLine + GuiColor.CYAN.toString());
+        return Localization.GUI.BUTTONS.COLORSELECTOR.translateTitles() + newLine + Localization.GUI.BUTTONS.COLORSELECTOR.translateDescriptions(newLine, newLine + newLine + Colors.CYAN.toString());
     }
 
     @Override

@@ -97,7 +97,7 @@ item.moarsign.copper_nugget_ic2.name=Copper Nugget
 item.moarsign.tin_nugget_ic2.name=Tin Nugget
 item.moarsign.silver_nugget_factorization.name=Silver Nugget
 
-# Vanilla Sign
+# Vanilla Signs
 item.moarsign.sign.oak_sign.name=Oak Sign
 item.moarsign.sign.spruce_sign.name=Spruce Sign
 item.moarsign.sign.birch_sign.name=Birch Sign

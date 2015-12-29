@@ -21,7 +21,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.*;
 
-import static gory_moon.moarsigns.api.IntegrationRegistry.registerIntegration;
+import static gory_moon.moarsigns.api.IntegrationRegistry.*;
 
 public class IntegrationHandler {
 
@@ -33,6 +33,12 @@ public class IntegrationHandler {
         registerIntegration(IndustrialCraft2Integration.class);
         registerIntegration(TinkersConstructIntegration.class);
         registerIntegration(FactorizationIntegration.class);
+
+        registerPlankOreName("plankWood");
+
+        String[] names = {"ingotCopper", "ingotTin", "ingotSilver", "ingotBronze", "ingotSteel", "ingotLead"};
+        for (String name : names) registerMetalGemOreName(name);
+
     }
 
     public static void registerSigns(ArrayList<ItemStack> planks, ArrayList<ItemStack> ingots) {
@@ -55,16 +61,20 @@ public class IntegrationHandler {
         MoarSigns.logger.info("Finished " + (SignRegistry.getActiveTagsAmount() - 1) + " sign integrations");
     }
 
-    public void setupSigns() {
-        ArrayList<ItemStack> planks = OreDictionary.getOres("plankWood");
+    private ArrayList<ItemStack> getOres(ArrayList<String> names) {
+        ArrayList<ItemStack> ores = new ArrayList<ItemStack>();
+        for (String name : names)
+            ores.addAll(OreDictionary.getOres(name));
+        return ores;
+    }
 
-        ArrayList<ItemStack> ingots = new ArrayList<ItemStack>();
-        ingots.addAll(OreDictionary.getOres("ingotCopper"));
-        ingots.addAll(OreDictionary.getOres("ingotTin"));
-        ingots.addAll(OreDictionary.getOres("ingotSilver"));
-        ingots.addAll(OreDictionary.getOres("ingotBronze"));
-        ingots.addAll(OreDictionary.getOres("ingotSteel"));
-        ingots.addAll(OreDictionary.getOres("ingotLead"));
+    public void setupSigns() {
+
+        ArrayList<String> names = IntegrationRegistry.getWoodNames();
+        ArrayList<ItemStack> planks = getOres(names);
+
+        names = IntegrationRegistry.getMetalNames();
+        ArrayList<ItemStack> ingots = getOres(names);
 
         registerSigns(planks, ingots);
 

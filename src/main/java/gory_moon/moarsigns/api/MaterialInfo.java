@@ -22,7 +22,7 @@ public class MaterialInfo {
     /**
      * Only to be used when making recipes
      *
-     * @param materialName
+     * @param materialName Name of material
      */
     public MaterialInfo(String materialName) {
         this(materialName, null, false, null);

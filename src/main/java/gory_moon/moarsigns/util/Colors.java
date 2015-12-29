@@ -1,8 +1,8 @@
-package gory_moon.moarsigns.client.interfaces;
+package gory_moon.moarsigns.util;
 
 import cpw.mods.fml.client.FMLClientHandler;
 
-public enum GuiColor {
+public enum Colors {
     BLACK(0),
     BLUE(1),
     GREEN(2),
@@ -23,7 +23,7 @@ public enum GuiColor {
     private int number;
     private int rgb;
 
-    private GuiColor(int number) {
+    Colors(int number) {
         this.number = number;
         rgb = getRGB(number);
     }

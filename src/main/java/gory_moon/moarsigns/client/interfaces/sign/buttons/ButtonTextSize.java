@@ -1,8 +1,8 @@
 package gory_moon.moarsigns.client.interfaces.sign.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
+import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.GuiScreen;
 
@@ -21,14 +21,14 @@ public class ButtonTextSize extends GuiButtonSpecial {
 
     @Override
     public String getButtonInfo(GuiBase gui) {
-        String change = GuiColor.LIGHTGRAY + (increase ? "+" : "-");
+        String change = Colors.LIGHTGRAY + (increase ? "+" : "-");
         return Localization.GUI.BUTTONS.TEXT_SIZE.translateTitles(
-                increase ? GuiColor.LIME.toString() : GuiColor.RED.toString(), increase ? "0" : "1")
+                increase ? Colors.LIME.toString() : Colors.RED.toString(), increase ? "0" : "1")
                 + newLine +
                 Localization.GUI.BUTTONS.TEXT_SIZE.translateDescriptions(
-                        newLine, "\n" + GuiColor.WHITE,
-                        GuiColor.CYAN + String.valueOf(((GuiMoarSign) gui).rowSizes[id]) + "\n" +
-                                GuiColor.LIGHTBLUE, change + "1\n" + GuiColor.ORANGE, change + "10");
+                        newLine, "\n" + Colors.WHITE,
+                        Colors.CYAN + String.valueOf(((GuiMoarSign) gui).rowSizes[id]) + "\n" +
+                                Colors.LIGHTBLUE, change + "1\n" + Colors.ORANGE, change + "10");
     }
 
     @Override

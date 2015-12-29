@@ -5,10 +5,10 @@ import gory_moon.moarsigns.MoarSignsCreativeTab;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignOpenGui;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
+import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -178,9 +178,9 @@ public class ItemMoarSign extends Item {
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean extraInfo) {
         SignInfo info = getInfo(stack.getTagCompound());
         String modName = info.activateTag.equals(SignRegistry.ALWAYS_ACTIVE_TAG) ? "Minecraft" : info.activateTag;
-        list.add(Localization.ITEM.SIGN.MATERIAL_ORIGIN.translate(GuiColor.WHITE + Utils.getModName(modName)));
+        list.add(Localization.ITEM.SIGN.MATERIAL_ORIGIN.translate(Colors.WHITE + Utils.getModName(modName)));
         if (extraInfo) {
-            list.add(Localization.ITEM.SIGN.MATERIAL.translate(GuiColor.WHITE + info.material.materialName));
+            list.add(Localization.ITEM.SIGN.MATERIAL.translate(Colors.WHITE + info.material.materialName));
         }
     }
 }

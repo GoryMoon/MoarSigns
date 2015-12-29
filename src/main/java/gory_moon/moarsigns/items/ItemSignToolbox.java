@@ -5,13 +5,13 @@ import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.MoarSignsCreativeTab;
 import gory_moon.moarsigns.blocks.BlockMoarSign;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
 import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.lib.ToolBoxModes;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignOpenGui;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
+import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.RotationHandler;
 import net.minecraft.client.Minecraft;
@@ -235,28 +235,28 @@ public class ItemSignToolbox extends Item {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean extraInfo) {
         GameSettings gameSettings = FMLClientHandler.instance().getClient().gameSettings;
-        String str = GuiColor.GRAY + Localization.ITEM.SIGNTOOLBOX.CHANGE.translate(GuiColor.LIGHTGRAY + "[" + GameSettings.getKeyDisplayString(gameSettings.keyBindSneak.getKeyCode()) + "]" + GuiColor.GRAY.toString());
+        String str = Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.CHANGE.translate(Colors.LIGHTGRAY + "[" + GameSettings.getKeyDisplayString(gameSettings.keyBindSneak.getKeyCode()) + "]" + Colors.GRAY.toString());
 
         int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
         switch (ToolBoxModes.values()[mode]) {
             case COPY_MODE:
-                str += "\n" + GuiColor.GRAY + Localization.ITEM.SIGNTOOLBOX.COPY.translate(GuiColor.LIGHTGRAY.toString() + "[", (Minecraft.isRunningOnMac ? "0" : "1"), "]" + GuiColor.GRAY.toString(), "\n" + GuiColor.LIGHTGRAY.toString() + "[");
+                str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.COPY.translate(Colors.LIGHTGRAY.toString() + "[", (Minecraft.isRunningOnMac ? "0" : "1"), "]" + Colors.GRAY.toString(), "\n" + Colors.LIGHTGRAY.toString() + "[");
                 if (stack.getTagCompound() != null)
-                    str += "\n" + GuiColor.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_TEXT.translate() + getFormattedData(stack.getTagCompound());
+                    str += "\n" + Colors.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_TEXT.translate() + getFormattedData(stack.getTagCompound());
                 break;
             case MOVE_MODE:
-                str += "\n" + GuiColor.GRAY + Localization.ITEM.SIGNTOOLBOX.MOVE.translate(GuiColor.LIGHTGRAY.toString() + "[", "]" + GuiColor.GRAY.toString(), "\n" + GuiColor.GRAY.toString(), "\n" + GuiColor.RED.toString());
+                str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.MOVE.translate(Colors.LIGHTGRAY.toString() + "[", "]" + Colors.GRAY.toString(), "\n" + Colors.GRAY.toString(), "\n" + Colors.RED.toString());
                 if (stack.getTagCompound() != null) {
                     String unlocName = stack.getTagCompound().getString(NBT_UNLOCALIZED_NAME);
                     String signName = StatCollector.translateToLocal(unlocName);
-                    str += "\n" + GuiColor.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_SIGN.translate() + " " + GuiColor.WHITE + signName + "\n" + GuiColor.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_TEXT.translate() + getFormattedData(stack.getTagCompound());
+                    str += "\n" + Colors.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_SIGN.translate() + " " + Colors.WHITE + signName + "\n" + Colors.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_TEXT.translate() + getFormattedData(stack.getTagCompound());
                 }
                 break;
             case EXCHANGE_MODE:
-                str += "\n" + GuiColor.GRAY + Localization.ITEM.SIGNTOOLBOX.EXCHANGE.translate("\n" + GuiColor.GRAY.toString());
+                str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.EXCHANGE.translate("\n" + Colors.GRAY.toString());
                 break;
             default:
-                str += "\n" + GuiColor.GRAY + Localization.ITEM.SIGNTOOLBOX.values()[stack.getItemDamage() + 1].translate(GuiColor.LIGHTGRAY.toString(), GuiColor.GRAY.toString());
+                str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.values()[stack.getItemDamage() + 1].translate(Colors.LIGHTGRAY.toString(), Colors.GRAY.toString());
         }
 
         String[] strList = str.split("\n");
@@ -268,7 +268,7 @@ public class ItemSignToolbox extends Item {
         String s = "\n";
 
         for (int i = 0; i < 4; i++) {
-            s += GuiColor.WHITE + "[" + GuiColor.GRAY + compound.getString("Text" + (i + 1)) + GuiColor.WHITE + "]\n";
+            s += Colors.WHITE + "[" + Colors.GRAY + compound.getString("Text" + (i + 1)) + Colors.WHITE + "]\n";
         }
 
         return s;

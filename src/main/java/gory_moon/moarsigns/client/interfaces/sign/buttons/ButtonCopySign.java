@@ -1,8 +1,8 @@
 package gory_moon.moarsigns.client.interfaces.sign.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
+import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
@@ -15,7 +15,7 @@ public class ButtonCopySign extends GuiButton {
 
     @Override
     public String getButtonInfo(GuiBase gui) {
-        return Localization.GUI.BUTTONS.COPYSIGN.translateTitles() + newLine + Localization.GUI.BUTTONS.COPYSIGN.translateDescriptions(newLine, "\n" + GuiColor.LIGHTGRAY);
+        return Localization.GUI.BUTTONS.COPYSIGN.translateTitles() + newLine + Localization.GUI.BUTTONS.COPYSIGN.translateDescriptions(newLine, "\n" + Colors.LIGHTGRAY);
     }
 
     @Override

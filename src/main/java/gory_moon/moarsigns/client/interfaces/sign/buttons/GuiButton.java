@@ -1,9 +1,9 @@
 package gory_moon.moarsigns.client.interfaces.sign.buttons;
 
 import gory_moon.moarsigns.client.interfaces.GuiBase;
-import gory_moon.moarsigns.client.interfaces.GuiColor;
 import gory_moon.moarsigns.client.interfaces.GuiRectangle;
 import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
+import gory_moon.moarsigns.util.Colors;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.util.ResourceLocation;
 
@@ -11,7 +11,7 @@ public abstract class GuiButton extends GuiRectangle {
 
     public boolean isDisabled = false;
     protected int srcX;
-    protected String newLine = "\n" + GuiColor.GRAY.toString();
+    protected String newLine = "\n" + Colors.GRAY.toString();
 
     public GuiButton(int x, int y, int srcX) {
         this(x, y, 20, 20, srcX);
