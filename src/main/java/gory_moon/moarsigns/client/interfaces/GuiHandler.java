@@ -3,6 +3,7 @@ package gory_moon.moarsigns.client.interfaces;
 import cpw.mods.fml.common.network.IGuiHandler;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerDebug;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerExchange;
+import gory_moon.moarsigns.client.interfaces.containers.InventoryExchange;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -117,7 +118,7 @@ public class GuiHandler implements IGuiHandler {
             case DEBUG_ITEM:
                 return new ContainerDebug(player.inventory, ID, tempInv);
             case EXCHANGE:
-                return new ContainerExchange(player.inventory);
+                return new ContainerExchange(player.inventory, new InventoryExchange());
         }
 
         return null;
@@ -133,7 +134,7 @@ public class GuiHandler implements IGuiHandler {
             case DEBUG_ITEM:
                 return new GuiDebug(player.inventory, ID, world, x, y, z, tempInv, (TileEntityMoarSign) te);
             case EXCHANGE:
-                return new GuiExchange(player.inventory);
+                return new GuiExchange(player.inventory, new InventoryExchange());
         }
 
         return null;

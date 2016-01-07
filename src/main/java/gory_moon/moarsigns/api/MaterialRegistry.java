@@ -4,11 +4,11 @@ import com.google.common.collect.Sets;
 import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
-import java.util.Set;
+import java.util.HashSet;
 
 public class MaterialRegistry {
 
-    public static HashMap<String, Set<MaterialInfo>> materialRegistry = new HashMap<String, Set<MaterialInfo>>();
+    public static HashMap<String, HashSet<MaterialInfo>> materialRegistry = new HashMap<String, HashSet<MaterialInfo>>();
 
     /**
      * Registers the material used for the signs
@@ -38,8 +38,8 @@ public class MaterialRegistry {
         return info;
     }
 
-    public static Set<MaterialInfo> get(String materialName) {
-        return materialRegistry.containsKey(materialName) ? materialRegistry.get(materialName) : null;
+    public static HashSet<MaterialInfo> get(String materialName) {
+        return materialRegistry.containsKey(materialName) ? materialRegistry.get(materialName): null;
     }
 
     public static boolean contains(MaterialInfo info) {

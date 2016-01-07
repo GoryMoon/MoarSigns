@@ -111,7 +111,7 @@ public class SignRegistry {
     }
 
     /**
-     * Deactivates all signs with the tag an won't register any further ones with that tag
+     * Deactivates all signs with the tag and won't register any further ones with that tag
      *
      * @param tag The tag to deactivate
      */
@@ -139,6 +139,21 @@ public class SignRegistry {
             }
         }
         return null;
+    }
+
+    public static ArrayList<SignInfo> getSignInfoFromMaterials(HashSet<MaterialInfo> materials) {
+        ArrayList<SignInfo> signInfos = Lists.newArrayList();
+
+        for (SignInfo info : signRegistry) {
+            for (MaterialInfo materialInfo : materials) {
+                if (info.material == materialInfo) {
+                    signInfos.add(info);
+                    break;
+                }
+            }
+        }
+
+        return signInfos;
     }
 
     /**

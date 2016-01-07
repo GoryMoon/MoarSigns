@@ -160,9 +160,9 @@ public class ItemMoarSign extends Item {
 
                     if (info == null) return false;
 
-                    tileEntity.setResourceLocation(texture);
                     tileEntity.isMetal = info.isMetal;
                     tileEntity.func_145912_a(player);
+                    tileEntity.setResourceLocation(texture);
 
                     boolean moving = stack.getTagCompound().hasKey(ItemSignToolbox.SIGN_MOVING_TAG) && stack.getTagCompound().getBoolean(ItemSignToolbox.SIGN_MOVING_TAG);
                     PacketHandler.INSTANCE.sendTo(new MessageSignOpenGui(tileEntity, moving), (EntityPlayerMP) player);
