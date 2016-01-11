@@ -165,8 +165,8 @@ public class TileEntityMoarSign extends TileEntitySign {
                 signText[i] = compound.getString("Text" + (i + 1));
             }
         }
-
-        isMetal = compound.hasKey(NBT_METAL_TAG) && compound.getBoolean(NBT_METAL_TAG);
+        if (compound.hasKey(NBT_METAL_TAG))
+            isMetal = compound.getBoolean(NBT_METAL_TAG);
         if (compound.hasKey(NBT_TEXTURE_TAG)) texture_name = compound.getString(NBT_TEXTURE_TAG);
         if (texture_name == null || texture_name.isEmpty()) texture_name = "oak_sign";
 

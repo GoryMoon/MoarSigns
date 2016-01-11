@@ -10,6 +10,7 @@ public class MaterialInfo {
     public boolean gotNugget;
 
     public ItemStack material;
+    public ItemStack materialBlock;
 
     public MaterialInfo(String materialName, String path, boolean gotNugget, ItemStack material) {
         this.materialName = materialName;

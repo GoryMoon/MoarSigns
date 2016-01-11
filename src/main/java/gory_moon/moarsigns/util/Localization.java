@@ -37,14 +37,8 @@ public final class Localization {
             MATERIAL,
             MATERIAL_ORIGIN;
 
-            private String key;
-
-            SIGN() {
-                this.key = toString().toLowerCase();
-            }
-
             public String translate(String... vars) {
-                return Localization.translateString("item.moarsign:sign.description." + key, vars);
+                return Localization.translateString("item.moarsign:sign.description." + toString().toLowerCase(), vars);
             }
         }
 
@@ -56,17 +50,12 @@ public final class Localization {
             MOVE,
             COPY,
             EXCHANGE,
+            PREVIEW,
             CURRENT_SIGN,
             CURRENT_TEXT;
 
-            private String key;
-
-            SIGNTOOLBOX() {
-                this.key = toString().toLowerCase();
-            }
-
             public String translate(String... vars) {
-                String s = (ordinal() < 6 ? "description." : "") + key;
+                String s = (ordinal() < 7 ? "description." : "") + toString().toLowerCase();
                 return Localization.translateString("item.moarsign:signtoolbox." + s, vars);
             }
         }
@@ -125,14 +114,8 @@ public final class Localization {
             YELLOW,
             WHITE;
 
-            private String key;
-
-            COLORS() {
-                this.key = toString().toLowerCase();
-            }
-
             public String translate() {
-                return Localization.translateString("gui.moarsigns:color." + key, "");
+                return Localization.translateString("gui.moarsigns:color." + toString().toLowerCase(), "");
             }
         }
 
@@ -144,14 +127,20 @@ public final class Localization {
             ITALIC,
             RESET;
 
-            private String key;
-
-            TEXTSTYLES() {
-                this.key = toString().toLowerCase();
-            }
 
             public String translate() {
-                return Localization.translateString("gui.moarsigns:textstyle." + key, "");
+                return Localization.translateString("gui.moarsigns:textstyle." + toString().toLowerCase(), "");
+            }
+        }
+
+        public enum PREVIEW {
+            CLICK_SIGN,
+            DRAG,
+            ROTATE,
+            TYPE;
+
+            public String translate() {
+                return Localization.translateString("gui.moarsigns:preview." + toString().toLowerCase(), "\n");
             }
         }
     }

@@ -1,5 +1,7 @@
 package gory_moon.moarsigns.client.interfaces.containers;
 
+import gory_moon.moarsigns.client.interfaces.containers.slots.SlotInput;
+import gory_moon.moarsigns.client.interfaces.containers.slots.SlotSelection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

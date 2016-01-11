@@ -76,6 +76,10 @@ public class IntegrationHandler {
         names = IntegrationRegistry.getMetalNames();
         ArrayList<ItemStack> ingots = getOres(names);
 
+        MoarSigns.logger.info("Ingots");
+        for (ItemStack stack : ingots)
+            MoarSigns.logger.info("Stack: " + stack + ", Unloc: " + stack.getUnlocalizedName());
+
         registerSigns(planks, ingots);
 
         Collections.sort(SignRegistry.getActivatedSignRegistry(), new Comparator<SignInfo>() {
@@ -97,7 +101,7 @@ public class IntegrationHandler {
         };
         InventoryCrafting crafting = new InventoryCrafting(dummyContainer, 3, 3);
 
-        for (Map.Entry<String, Set<MaterialInfo>> materialList : MaterialRegistry.materialRegistry.entrySet()) {
+        for (Map.Entry<String, HashSet<MaterialInfo>> materialList : MaterialRegistry.materialRegistry.entrySet()) {
             for (MaterialInfo material : materialList.getValue()) {
                 ItemStack stack = material.material;
 
@@ -107,7 +111,7 @@ public class IntegrationHandler {
                     }
                     ItemStack stack1 = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
                     if (stack1 != null) {
-                        material.material = stack1;
+                        material.materialBlock = stack1;
                     }
                     for (int i = 0; i < 9; i++) {
                         crafting.setInventorySlotContents(i, null);

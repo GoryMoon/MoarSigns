@@ -69,12 +69,19 @@ gui.moarsigns:textstyle.underline=Underline
 gui.moarsigns:textstyle.italic=Italic
 gui.moarsigns:textstyle.reset=Reset
 
+#  Preview
+gui.moarsigns:preview.click_sign=Click sign to preview it
+gui.moarsigns:preview.drag=Click and drag the[%1]sign to rotate it
+gui.moarsigns:preview.rotate=Rotate sign
+gui.moarsigns:preview.type=Change type
+
 # -Items
 item.moarsign.signtoolbox.EDIT_MODE.name=Sign Toolbox §2(Edit)§r
 item.moarsign.signtoolbox.ROTATE_MODE.name=Sign Toolbox §6(Rotate)§r
 item.moarsign.signtoolbox.COPY_MODE.name=Sign Toolbox §9(Copy)§r
 item.moarsign.signtoolbox.MOVE_MODE.name=Sign Toolbox §e(Move)§r
 item.moarsign.signtoolbox.EXCHANGE_MODE.name=Sign Toolbox §b(Exchange)§r
+item.moarsign.signtoolbox.PREVIEW_MODE.name=Sign Toolbox §d(Preview)§r
 
 item.moarsign:sign.description.material=Material: [%1]
 item.moarsign:sign.description.material_origin=Origin of material: [%1]
@@ -85,8 +92,10 @@ item.moarsign:signtoolbox.description.rotate=[%1][Right click][%2] a sign to cyc
 item.moarsign:signtoolbox.description.move=[%1]Right click[%2] on a sign to pick it up[%3][%1]Right click[%2] to place it, like a normal sign[%4]Can't change mode when sign is picked up
 item.moarsign:signtoolbox.description.copy=[%1][%2->Cmd|Ctrl][%3] + [%1]Right click[%3] on a sign to copy all info[%4]Right click[%3] on a sign to paste the info
 item.moarsign:signtoolbox.description.exchange=Opens an interface where you can exchange[%1]signs of the same material
+item.moarsign:signtoolbox.description.preview=Opens an interface where you can preview[%1]signs as they look in the world
 item.moarsign:signtoolbox.current_sign=Current sign picked up:
 item.moarsign:signtoolbox.current_text=Text on sign:
+
 
 # Nuggets
 item.moarsign.diamond_nugget.name=Diamond Nugget

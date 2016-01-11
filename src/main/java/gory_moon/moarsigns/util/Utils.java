@@ -48,4 +48,28 @@ public class Utils {
         return "Minecraft";
     }
 
+    public static PlacedCoord calculatePlaceSideCoord(PlacedCoord coord) {
+        switch (coord.side) {
+            case 0:
+                coord.y--;
+                break;
+            case 1:
+                coord.y++;
+                break;
+            case 2:
+                coord.z--;
+                break;
+            case 3:
+                coord.z++;
+                break;
+            case 4:
+                coord.x--;
+                break;
+            case 5:
+                coord.x++;
+                break;
+        }
+        return coord;
+    }
+
 }

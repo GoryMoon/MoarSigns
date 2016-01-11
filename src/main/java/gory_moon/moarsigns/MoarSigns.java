@@ -75,7 +75,7 @@ public class MoarSigns {
     }
 
     public ResourceLocation getResourceLocation(String s, boolean isMetal) {
-        ResourceLocation location = textures.get(s);
+        ResourceLocation location = textures.get(isMetal + s);
 
         if (location == null) {
             SignInfo info = SignRegistry.get(s);

@@ -5,7 +5,8 @@ public enum ToolBoxModes {
     ROTATE_MODE,
     MOVE_MODE,
     COPY_MODE,
-    EXCHANGE_MODE;
+    EXCHANGE_MODE,
+    PREVIEW_MODE;
 
     public int getID() {
         return ordinal();

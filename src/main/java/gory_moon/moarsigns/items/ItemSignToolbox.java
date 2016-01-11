@@ -11,9 +11,7 @@ import gory_moon.moarsigns.lib.ToolBoxModes;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignOpenGui;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
-import gory_moon.moarsigns.util.Colors;
-import gory_moon.moarsigns.util.Localization;
-import gory_moon.moarsigns.util.RotationHandler;
+import gory_moon.moarsigns.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -34,6 +32,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static gory_moon.moarsigns.lib.ToolBoxModes.EXCHANGE_MODE;
+import static gory_moon.moarsigns.lib.ToolBoxModes.PREVIEW_MODE;
 
 public class ItemSignToolbox extends Item {
 
@@ -61,7 +60,7 @@ public class ItemSignToolbox extends Item {
 
     @Override
     public IIcon getIconFromDamage(int itemDamage) {
-        if (itemDamage > 4 && !isMoving(itemDamage)) return null;
+        if (itemDamage > 5 && !isMoving(itemDamage)) return null;
         int mode = isMoving(itemDamage) ? 2 : itemDamage;
         return icons[mode];
     }
@@ -77,6 +76,8 @@ public class ItemSignToolbox extends Item {
                     return rotateModes(stack);
                 } else if (ToolBoxModes.values()[mode] == EXCHANGE_MODE) {
                     doExchange(world, 0, 0, 0, player);
+                } else if (ToolBoxModes.values()[mode] == PREVIEW_MODE) {
+                    doPreview(world, 0, 0, 0, player);
                 }
             }
         }
@@ -101,6 +102,9 @@ public class ItemSignToolbox extends Item {
                     break;
                 case EXCHANGE_MODE:
                     doExchange(world, x, y, z, player);
+                    break;
+                case PREVIEW_MODE:
+                    doPreview(world, x, y, z, player);
             }
         }
         return false;
@@ -175,26 +179,11 @@ public class ItemSignToolbox extends Item {
             val = ModItems.sign.onItemUse(moarSignsStack, player, world, x, y, z, side, hitX, hitY, hitZ);
 
             if (val) {
-                switch (side) {
-                    case 0:
-                        y--;
-                        break;
-                    case 1:
-                        y++;
-                        break;
-                    case 2:
-                        z--;
-                        break;
-                    case 3:
-                        z++;
-                        break;
-                    case 4:
-                        x--;
-                        break;
-                    case 5:
-                        x++;
-                        break;
-                }
+                PlacedCoord coord = new PlacedCoord(x, y, z, side);
+                coord = Utils.calculatePlaceSideCoord(coord);
+                x = coord.x;
+                y = coord.y;
+                z = coord.z;
 
                 signInfo.removeTag(NBT_UNLOCALIZED_NAME);
                 TileEntityMoarSign entityMoarSign = (TileEntityMoarSign) world.getTileEntity(x, y, z);
@@ -217,16 +206,20 @@ public class ItemSignToolbox extends Item {
         FMLNetworkHandler.openGui(player, MoarSigns.instance, GuiHandler.EXCHANGE, world, x, y, z);
     }
 
+    private void doPreview(World world, int x, int y, int z, EntityPlayer player) {
+        FMLNetworkHandler.openGui(player, MoarSigns.instance, GuiHandler.PREVIEW, world, x, y, z);
+    }
+
     private ItemStack rotateModes(ItemStack stack) {
         int mode = stack.getItemDamage();
-        mode = mode + 1 >= 5 ? 0 : mode + 1;
+        mode = mode + 1 >= 6 ? 0 : mode + 1;
         stack.setItemDamage(mode);
         return stack;
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        if (stack.getItemDamage() > 4 && !isMoving(stack.getItemDamage())) stack.setItemDamage(0);
+        if (stack.getItemDamage() > 5 && !isMoving(stack.getItemDamage())) stack.setItemDamage(0);
         int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
         return super.getUnlocalizedName(stack) + "." + ToolBoxModes.values()[mode].toString();
     }
@@ -255,6 +248,9 @@ public class ItemSignToolbox extends Item {
             case EXCHANGE_MODE:
                 str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.EXCHANGE.translate("\n" + Colors.GRAY.toString());
                 break;
+            case PREVIEW_MODE:
+                str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.PREVIEW.translate("\n" + Colors.GRAY.toString());
+                break;
             default:
                 str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.values()[stack.getItemDamage() + 1].translate(Colors.LIGHTGRAY.toString(), Colors.GRAY.toString());
         }
@@ -275,12 +271,12 @@ public class ItemSignToolbox extends Item {
     }
 
     private boolean isMoving(int itemDamage) {
-        return (itemDamage & 6) == 6;
+        return (itemDamage & 7) == 7;
     }
 
     private ItemStack toggleMoving(ItemStack stack) {
         if (stack.getItemDamage() == 2) {
-            stack.setItemDamage(6);
+            stack.setItemDamage(7);
         } else if (isMoving(stack.getItemDamage())) {
             stack.setItemDamage(2);
         }

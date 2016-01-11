@@ -18,6 +18,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +105,7 @@ public class ModItems {
                                         OreDictionary.registerOre(Info.NUGGET_ORE_DICTIONARY[i], recNugget.copy());
 
                                         GameRegistry.addShapelessRecipe(recNugget.copy(), mat);
-                                        GameRegistry.addShapedRecipe(mat, "xxx", "xxx", "xxx", 'x', recNugget.copy());
+                                        GameRegistry.addRecipe(new ShapedOreRecipe(mat, "xxx", "xxx", "xxx", 'x', Info.NUGGET_ORE_DICTIONARY[i]));
                                         break;
                                     }
                                 }

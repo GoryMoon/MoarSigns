@@ -1,6 +1,5 @@
 package gory_moon.moarsigns.client.interfaces.containers;
 
-import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.MaterialInfo;
 import gory_moon.moarsigns.api.MaterialRegistry;
 import gory_moon.moarsigns.api.SignInfo;
@@ -18,8 +17,8 @@ import java.util.HashSet;
 
 public class InventoryExchange implements IInventory {
 
-    ItemStack[] inventory;
-    ContainerExchange container;
+    public ItemStack[] inventory;
+    public ContainerExchange container;
 
     public InventoryExchange() {
         super();
@@ -57,7 +56,6 @@ public class InventoryExchange implements IInventory {
         if (signInfo == null) return;
 
         HashSet<MaterialInfo> materials = MaterialRegistry.get(signInfo.material.materialName);
-        MoarSigns.logger.info("MaterialSize: " + (materials != null ? materials.size() : -1));
         if (materials == null || materials.size() < 1) {
             return;
         }

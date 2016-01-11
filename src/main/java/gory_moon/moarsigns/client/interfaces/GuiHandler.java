@@ -16,6 +16,7 @@ public class GuiHandler implements IGuiHandler {
     public static final int DEBUG_TILE = 0;
     public static final int DEBUG_ITEM = 1;
     public static final int EXCHANGE = 2;
+    public static final int PREVIEW = 3;
     private IInventory tempInv;
 
     public GuiHandler() {
@@ -119,6 +120,8 @@ public class GuiHandler implements IGuiHandler {
                 return new ContainerDebug(player.inventory, ID, tempInv);
             case EXCHANGE:
                 return new ContainerExchange(player.inventory, new InventoryExchange());
+            case PREVIEW:
+                return new GuiPreview.ContainerPreview();
         }
 
         return null;
@@ -135,6 +138,8 @@ public class GuiHandler implements IGuiHandler {
                 return new GuiDebug(player.inventory, ID, world, x, y, z, tempInv, (TileEntityMoarSign) te);
             case EXCHANGE:
                 return new GuiExchange(player.inventory, new InventoryExchange());
+            case PREVIEW:
+                return new GuiPreview();
         }
 
         return null;

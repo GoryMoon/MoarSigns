@@ -10,6 +10,7 @@ import gory_moon.moarsigns.network.message.MessageSignOpenGui;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
+import gory_moon.moarsigns.util.PlacedCoord;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -112,26 +113,11 @@ public class ItemMoarSign extends Item {
             return false;
         } else {
 
-            switch (side) {
-                case 0:
-                    y--;
-                    break;
-                case 1:
-                    y++;
-                    break;
-                case 2:
-                    z--;
-                    break;
-                case 3:
-                    z++;
-                    break;
-                case 4:
-                    x--;
-                    break;
-                case 5:
-                    x++;
-                    break;
-            }
+            PlacedCoord coord = new PlacedCoord(x, y, z, side);
+            coord = Utils.calculatePlaceSideCoord(coord);
+            x = coord.x;
+            y = coord.y;
+            z = coord.z;
 
             if (!player.canPlayerEdit(x, y, z, side, stack) || !Blocks.signStandingWood.canPlaceBlockAt(world, x, y, z) || world.isRemote) {
                 return false;

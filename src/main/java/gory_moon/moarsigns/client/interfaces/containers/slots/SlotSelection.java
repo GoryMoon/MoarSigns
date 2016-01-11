@@ -1,6 +1,8 @@
-package gory_moon.moarsigns.client.interfaces.containers;
+package gory_moon.moarsigns.client.interfaces.containers.slots;
 
 
+import gory_moon.moarsigns.client.interfaces.containers.ContainerExchange;
+import gory_moon.moarsigns.client.interfaces.containers.InventoryExchange;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;

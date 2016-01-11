@@ -1,6 +1,6 @@
 package gory_moon.moarsigns.client.particle;
 
-import gory_moon.moarsigns.api.MaterialInfo;
+import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.block.Block;
@@ -15,17 +15,17 @@ public class EntityDiggingFXMoarSigns extends EntityDiggingFX {
 
         TileEntityMoarSign tileEntity = (TileEntityMoarSign) world.getTileEntity(x, y, z);
         if (tileEntity != null && tileEntity.texture_name != null) {
-            MaterialInfo info = SignRegistry.get(tileEntity.texture_name).material;
+            SignInfo info = SignRegistry.get(tileEntity.texture_name);
 
-            if (info != null && info.material != null && info.material.getItem() != null) {
-                Block Mblock = Block.getBlockFromItem(info.material.getItem());
+            if (info != null && info.material != null && info.material.material.getItem() != null) {
+                Block Mblock = Block.getBlockFromItem(info.isMetal ? info.material.materialBlock.getItem() : info.material.material.getItem());
 
-                if (Mblock != null && !Mblock.getUnlocalizedName().equals("tile.ForgeFiller")) {
-                    setParticleIcon(Mblock.getIcon(3, info.material.getItemDamage()));
+                if (Mblock != null && !Mblock.getUnlocalizedName().equals("tile.air") && !Mblock.getUnlocalizedName().equals("tile.ForgeFiller")) {
+                    setParticleIcon(Mblock.getIcon(3, info.isMetal ? info.material.materialBlock.getItemDamage() : info.material.material.getItemDamage()));
                 } else {
-                    Item item = info.material.getItem();
+                    Item item = info.material.material.getItem();
                     if (item != null) {
-                        setParticleIcon(item.getIcon(info.material, 0));
+                        setParticleIcon(item.getIconFromDamage(info.material.material.getItemDamage()));
                     } else {
                         setParticleIcon(tileEntity.isMetal ? Blocks.iron_block.getIcon(side, meta) : Blocks.planks.getIcon(side, meta));
                     }

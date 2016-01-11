@@ -23,7 +23,7 @@ public enum Colors {
     private int number;
     private int rgb;
 
-    Colors(int number) {
+    private Colors(int number) {
         this.number = number;
         rgb = getRGB(number);
     }
