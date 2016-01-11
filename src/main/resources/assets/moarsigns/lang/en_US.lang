@@ -4,6 +4,7 @@ item.moarsign.debug.name=Debug
 item.moarsign.sign.dummy=MoarSign
 crafting.moarsign.sign.shaped=MoarSigns Shaped
 crafting.moarsign.sign.shapeless=MoarSigns Shapeless
+crafting.moarsign.sign.exchange=MoarSigns Exchange
 
 # -Gui
 gui.moarsigns:button.title.cut=Cut

@@ -145,9 +145,9 @@ public class SignRegistry {
     public static ArrayList<SignInfo> getSignInfoFromMaterials(HashSet<MaterialInfo> materials) {
         ArrayList<SignInfo> signInfos = Lists.newArrayList();
 
-        for (SignInfo info : signRegistry) {
+        for (SignInfo info : activatedSignRegistry) {
             for (MaterialInfo materialInfo : materials) {
-                if (info.material == materialInfo) {
+                if (info.material.materialName.equals(materialInfo.materialName)) {
                     signInfos.add(info);
                     break;
                 }

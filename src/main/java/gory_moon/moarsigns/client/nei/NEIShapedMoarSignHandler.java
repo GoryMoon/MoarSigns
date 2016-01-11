@@ -187,7 +187,7 @@ public class NEIShapedMoarSignHandler extends ShapedRecipeHandler {
             ItemStack[] arr$ = stack.items;
 
             for (ItemStack item : arr$) {
-                if (ItemStack.areItemStacksEqual(item, ingredient)) {
+                if (ItemStack.areItemStackTagsEqual(item, ingredient) && ingredient.isItemEqual(item)) {
                     return true;
                 }
             }

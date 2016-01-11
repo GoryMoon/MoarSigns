@@ -1,5 +1,6 @@
 package gory_moon.moarsigns.client.interfaces.containers;
 
+import codechicken.lib.inventory.InventoryUtils;
 import gory_moon.moarsigns.client.interfaces.containers.slots.SlotInput;
 import gory_moon.moarsigns.client.interfaces.containers.slots.SlotSelection;
 import net.minecraft.entity.player.EntityPlayer;
@@ -65,9 +66,10 @@ public class ContainerExchange extends Container {
     }
 
     @Override
-    public void onContainerClosed(EntityPlayer p_75134_1_) {
+    public void onContainerClosed(EntityPlayer player) {
         inventory.clearInventory();
-        super.onContainerClosed(p_75134_1_);
+        InventoryUtils.dropOnClose(player, inventory);
+        super.onContainerClosed(player);
     }
 
     @Override

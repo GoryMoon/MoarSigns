@@ -21,10 +21,14 @@ public class NEIMoarSignConfig implements IConfigureNEI {
         API.hideItem(new ItemStack(Blocks.signWallWood));
         API.hideItem(new ItemStack(ModItems.debug));
 
-        API.registerRecipeHandler(new NEIShapedMoarSignHandler());
-        API.registerUsageHandler(new NEIShapedMoarSignHandler());
-        API.registerRecipeHandler(new NEIShapelessMoarSignHandler());
-        API.registerUsageHandler(new NEIShapelessMoarSignHandler());
+        NEIShapedMoarSignHandler shapedMoarSignHandler = new NEIShapedMoarSignHandler();
+        NEIShapelessMoarSignHandler shapelessMoarSignHandler = new NEIShapelessMoarSignHandler();
+
+        API.registerRecipeHandler(shapedMoarSignHandler);
+        API.registerUsageHandler(shapedMoarSignHandler);
+        API.registerRecipeHandler(shapelessMoarSignHandler);
+        API.registerUsageHandler(shapelessMoarSignHandler);
+        API.registerUsageHandler(new NEIExchangeUsageHandler());
 
         MoarSigns.logger.info("Loaded NEI Integration");
     }

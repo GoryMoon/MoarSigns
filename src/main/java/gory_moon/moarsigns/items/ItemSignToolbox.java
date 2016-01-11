@@ -102,9 +102,10 @@ public class ItemSignToolbox extends Item {
                     break;
                 case EXCHANGE_MODE:
                     doExchange(world, x, y, z, player);
-                    break;
+                    return true;
                 case PREVIEW_MODE:
                     doPreview(world, x, y, z, player);
+                    return true;
             }
         }
         return false;
