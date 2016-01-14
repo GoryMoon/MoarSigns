@@ -76,10 +76,6 @@ public class IntegrationHandler {
         names = IntegrationRegistry.getMetalNames();
         ArrayList<ItemStack> ingots = getOres(names);
 
-        MoarSigns.logger.info("Ingots");
-        for (ItemStack stack : ingots)
-            MoarSigns.logger.info("Stack: " + stack + ", Unloc: " + stack.getUnlocalizedName());
-
         registerSigns(planks, ingots);
 
         Collections.sort(SignRegistry.getActivatedSignRegistry(), new Comparator<SignInfo>() {

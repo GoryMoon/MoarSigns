@@ -9,7 +9,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -122,24 +124,52 @@ public class ShapedMoarSignRecipe implements IRecipe {
         }
     }
 
-    ShapedMoarSignRecipe(ShapedRecipes recipe, Map<ItemStack, String> replacements) {
+    public ShapedMoarSignRecipe(IRecipe recipe, Map<ItemStack, Object> replacements) {
         output = recipe.getRecipeOutput();
-        width = recipe.recipeWidth;
-        height = recipe.recipeHeight;
 
-        input = new Object[recipe.recipeItems.length];
+        ItemStack items[] = null;
+        if (recipe instanceof ShapedRecipes) {
+            ShapedRecipes r = (ShapedRecipes) recipe;
+            width = r.recipeWidth;
+            height = r.recipeHeight;
+            input = new Object[r.recipeItems.length];
+            items = r.recipeItems;
+        } else if (recipe instanceof ShapedOreRecipe) {
+            ShapedOreRecipe r = (ShapedOreRecipe) recipe;
 
-        for (int i = 0; i < input.length; i++) {
-            ItemStack ingred = recipe.recipeItems[i];
+            try {
+                Class clazz = ShapedOreRecipe.class;
+                Field field = clazz.getDeclaredField("width");
+                Field field1 = clazz.getDeclaredField("height");
 
-            if (ingred == null) continue;
+                width = field.getInt(r);
+                height = field1.getInt(r);
+                input = new Object[r.getRecipeSize()];
+                items = (ItemStack[]) r.getInput();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
 
-            input[i] = recipe.recipeItems[i];
+        if (items != null) {
+            for (int i = 0; i < input.length; i++) {
+                ItemStack ingred = items[i];
 
-            for (java.util.Map.Entry<ItemStack, String> replace : replacements.entrySet()) {
-                if (OreDictionary.itemMatches(replace.getKey(), ingred, true)) {
-                    input[i] = OreDictionary.getOres(replace.getValue());
-                    break;
+                if (ingred == null) continue;
+
+                input[i] = items[i];
+
+                for (java.util.Map.Entry<ItemStack, Object> replace : replacements.entrySet()) {
+                    if (OreDictionary.itemMatches(replace.getKey(), ingred, true)) {
+                        if (replace.getValue() instanceof String) {
+                            input[i] = OreDictionary.getOres(String.valueOf(replace.getValue()));
+                        } else if (replace.getValue() instanceof MatchType || replace.getValue() instanceof MaterialInfo) {
+                            input[i] = replace;
+                        }
+                        break;
+                    }
                 }
             }
         }

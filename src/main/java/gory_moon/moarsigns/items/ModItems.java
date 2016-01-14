@@ -1,5 +1,6 @@
 package gory_moon.moarsigns.items;
 
+import com.google.common.collect.Maps;
 import cpw.mods.fml.common.registry.GameRegistry;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe;
@@ -8,6 +9,7 @@ import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.lib.Info;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -16,11 +18,16 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class ModItems {
@@ -44,6 +51,8 @@ public class ModItems {
     }
 
     public static void registerRecipes() {
+
+        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.bookshelf), Items.book, Items.sign);
 
         RecipeSorter.register("moarsigns:shaped", ShapedMoarSignRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped before:minecraft:shapeless");
         RecipeSorter.register("moarsigns:shapeless", ShapelessMoarSignRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
@@ -137,17 +146,40 @@ public class ModItems {
         GameRegistry.addRecipe(new ShapedMoarSignRecipe(generalSign, true, true, "###", "###", " X ", '#', "plankWood", 'X', Items.stick));
         GameRegistry.addRecipe(new ShapedMoarSignRecipe(signToolbox, "rxr", "xsx", "rxr", 'x', "ingotIron", 's', ShapedMoarSignRecipe.MatchType.ALL, 'r', "dyeRed"));
 
-        //TODO replace shaped, shapeless and forge versions of recipes with signs, example: BiblioCraft
-        /*
         ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
+        ItemStack signStack = new ItemStack(Items.sign);
         for (int scan = 0; scan < recipes.size(); scan++) {
             IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
-            ItemStack recipeResult = tmpRecipe.getRecipeOutput();
-            if (ItemStack.areItemStacksEqual(resultItem, recipeResult)) {
-                MoarSigns.logger.info("Replacing Recipe: " + recipes.get(scan) + " -> " + recipeResult);
-                recipes.remove(scan);
+            List input = null;
+
+            if (tmpRecipe instanceof ShapedRecipes) {
+                input = Arrays.asList(((ShapedRecipes) tmpRecipe).recipeItems);
+            } else if (tmpRecipe instanceof ShapelessRecipes) {
+                input = ((ShapelessRecipes) tmpRecipe).recipeItems;
+            } else if (tmpRecipe instanceof ShapedOreRecipe) {
+                input = Arrays.asList(((ShapedOreRecipe) tmpRecipe).getInput());
+            } else if (tmpRecipe instanceof ShapelessOreRecipe) {
+                input = ((ShapelessOreRecipe) tmpRecipe).getInput();
             }
-        }*/
+
+            if (input != null) {
+                for (Object stack : input) {
+                    if (stack instanceof ItemStack && OreDictionary.itemMatches((ItemStack) stack, signStack, false)) {
+                        HashMap<ItemStack, Object> map = Maps.newHashMap();
+                        map.put(signStack, ShapedMoarSignRecipe.MatchType.ALL);
+
+                        IRecipe replacement = null;
+                        if (tmpRecipe instanceof ShapedRecipes || tmpRecipe instanceof ShapedOreRecipe)
+                            GameRegistry.addRecipe(replacement = new ShapedMoarSignRecipe(tmpRecipe, map));
+                        if (tmpRecipe instanceof ShapelessRecipes || tmpRecipe instanceof ShapelessOreRecipe)
+                            GameRegistry.addRecipe(replacement = new ShapelessMoarSignRecipe(tmpRecipe, map));
+
+                        MoarSigns.logger.info("Replacing Recipe: " + tmpRecipe + " (containing " + stack + ") -> " + replacement);
+                        recipes.remove(scan);
+                    }
+                }
+            }
+        }
     }
 
 

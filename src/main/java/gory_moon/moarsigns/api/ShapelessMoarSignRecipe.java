@@ -10,6 +10,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -59,15 +60,18 @@ public class ShapelessMoarSignRecipe implements IRecipe {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    ShapelessMoarSignRecipe(ShapelessRecipes recipe, Map<ItemStack, String> replacements) {
+    public ShapelessMoarSignRecipe(IRecipe recipe, Map<ItemStack, Object> replacements) {
         output = recipe.getRecipeOutput();
 
-        for (ItemStack ingred : ((List<ItemStack>) recipe.recipeItems)) {
+        for (Object ingred : (recipe instanceof ShapelessRecipes ? ((List<Object>) ((ShapelessRecipes) recipe).recipeItems) : ((ShapelessOreRecipe) recipe).getInput())) {
             Object finalObj = ingred;
-            for (Entry<ItemStack, String> replace : replacements.entrySet()) {
-                if (OreDictionary.itemMatches(replace.getKey(), ingred, false)) {
-                    finalObj = OreDictionary.getOres(replace.getValue());
+            for (Entry<ItemStack, Object> replace : replacements.entrySet()) {
+                if (ingred instanceof ItemStack && OreDictionary.itemMatches(replace.getKey(), (ItemStack) ingred, false)) {
+                    if (replace.getValue() instanceof String) {
+                        finalObj = OreDictionary.getOres(String.valueOf(replace.getValue()));
+                    } else if (replace.getValue() instanceof MatchType || replace.getValue() instanceof MaterialInfo) {
+                        finalObj = replace.getValue();
+                    }
                     break;
                 }
             }

@@ -44,6 +44,7 @@ public class ItemSignToolbox extends Item {
         setUnlocalizedName("moarsign.signtoolbox");
         setCreativeTab(MoarSignsCreativeTab.tabMS);
         setHasSubtypes(true);
+        setMaxStackSize(1);
     }
 
     @Override
