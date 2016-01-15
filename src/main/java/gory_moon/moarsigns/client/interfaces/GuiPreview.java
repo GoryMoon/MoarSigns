@@ -179,7 +179,7 @@ public class GuiPreview extends GuiContainer {
             sign.setWorldObj(FMLClientHandler.instance().getWorldClient());
             sign.isMetal = info.isMetal;
             sign.blockType = info.isMetal ? Blocks.signStandingMetal : Blocks.signStandingWood;
-            sign.signText = new String[]{"", "§nThis is some", "§4example §ltext", ""};
+            sign.signText = new String[]{"", (char) 167 + "nThis is some", (char) 167 + "4example " + (char) 167 + "ltext", ""};
             sign.setResourceLocation(texture);
         }
     }

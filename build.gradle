@@ -60,6 +60,11 @@ repositories {
     }
 
     maven {
+        name 'Prof. Mobius'
+        url 'http://mobiusstrip.eu/maven'
+    }
+
+    maven {
         name "ic2"
         url "http://maven.ic2.player.to/"
     }
@@ -76,6 +81,7 @@ dependencies {
     compile "codechicken:CodeChickenLib:" + config.mc_version + "-" + config.cclib_version + ":dev"
     compile "codechicken:CodeChickenCore:" + config.mc_version + "-" + config.ccc_version + ":dev"
     compile "codechicken:NotEnoughItems:" + config.mc_version + "-" + config.nei_version + ":dev"
+    compile "mcp.mobius.waila:Waila:" + config.waila_version + "_" + config.mc_version + ":dev"
 
     compile "net.industrial-craft:industrialcraft-2:" + config.ic2_version + ":dev"
     compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24'

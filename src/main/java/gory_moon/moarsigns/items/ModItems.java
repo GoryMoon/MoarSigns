@@ -9,7 +9,6 @@ import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.lib.Info;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -51,9 +50,6 @@ public class ModItems {
     }
 
     public static void registerRecipes() {
-
-        GameRegistry.addShapelessRecipe(new ItemStack(Blocks.bookshelf), Items.book, Items.sign);
-
         RecipeSorter.register("moarsigns:shaped", ShapedMoarSignRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped before:minecraft:shapeless");
         RecipeSorter.register("moarsigns:shapeless", ShapelessMoarSignRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
         removeRecipesWithResult(new ItemStack(net.minecraft.init.Items.sign, 3));

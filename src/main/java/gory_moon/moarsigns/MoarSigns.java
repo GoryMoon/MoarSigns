@@ -60,6 +60,10 @@ public class MoarSigns {
         proxy.initRenderers();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+
+        if (FMLInterModComms.sendMessage("Waila", "register", "gory_moon.moarsigns.integration.waila.Provider.callbackRegister")) {
+            MoarSigns.logger.info("Loaded Waila Integration");
+        }
     }
 
     @EventHandler
