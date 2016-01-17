@@ -40,7 +40,7 @@ public class NaturaIntegration implements ISignRegistration {
     }
 
     @Override
-    public void registerMetalSigns(ArrayList<ItemStack> ingots) {
+    public void registerMetalSigns(ArrayList<ItemStack> metals) {
 
     }
 

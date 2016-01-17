@@ -31,14 +31,27 @@ public final class Localization {
         return result;
     }
 
+    public static class INTEGRATION {
+
+        public enum WAILA {
+            SHOW_ORIGIN,
+            SHOW_MATERIAL;
+
+            public String translate(String... vars) {
+                return Localization.translateString("integration.moarsigns:waila." + toString().toLowerCase(), vars);
+            }
+        }
+    }
+
     public static class ITEM {
 
         public enum SIGN {
             MATERIAL,
-            MATERIAL_ORIGIN;
+            MATERIAL_ORIGIN,
+            ERROR;
 
             public String translate(String... vars) {
-                return Localization.translateString("item.moarsign:sign.description." + toString().toLowerCase(), vars);
+                return Localization.translateString("item.moarsigns:sign.description." + toString().toLowerCase(), vars);
             }
         }
 
@@ -56,7 +69,7 @@ public final class Localization {
 
             public String translate(String... vars) {
                 String s = (ordinal() < 7 ? "description." : "") + toString().toLowerCase();
-                return Localization.translateString("item.moarsign:signtoolbox." + s, vars);
+                return Localization.translateString("item.moarsigns:signtoolbox." + s, vars);
             }
         }
 

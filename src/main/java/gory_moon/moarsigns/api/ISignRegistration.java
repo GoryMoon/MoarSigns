@@ -16,8 +16,8 @@ public interface ISignRegistration extends IIntegrationInfo {
     /**
      * Called to register signs of metal
      *
-     * @param ingots List of ingots from {@link net.minecraftforge.oredict.OreDictionary}
+     * @param metals List of ingots and metal blocks from {@link net.minecraftforge.oredict.OreDictionary}
      */
-    void registerMetalSigns(ArrayList<ItemStack> ingots);
+    void registerMetalSigns(ArrayList<ItemStack> metals);
 
 }

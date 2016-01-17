@@ -5,6 +5,7 @@ import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.BlockMoarSign;
 import gory_moon.moarsigns.items.ItemMoarSign;
 import gory_moon.moarsigns.items.ModItems;
+import gory_moon.moarsigns.lib.ModInfo;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
@@ -28,12 +29,14 @@ public class Provider implements IWailaDataProvider {
 
         registrar.registerStackProvider(provider, BlockMoarSign.class);
         registrar.registerBodyProvider(provider, BlockMoarSign.class);
+        registrar.addConfig(ModInfo.ID, "showOrigin", Localization.INTEGRATION.WAILA.SHOW_ORIGIN.translate());
+        registrar.addConfig(ModInfo.ID, "showMaterial", Localization.INTEGRATION.WAILA.SHOW_MATERIAL.translate(), false);
     }
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
         TileEntity te = accessor.getTileEntity();
-        if (te != null) {
+        if (te != null && ((TileEntityMoarSign) te).texture_name != null) {
             return ModItems.sign.createMoarItemStack(((TileEntityMoarSign) te).texture_name, ((TileEntityMoarSign) te).isMetal);
         }
         return null;
@@ -48,8 +51,15 @@ public class Provider implements IWailaDataProvider {
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
         if (itemStack != null) {
             SignInfo info = ItemMoarSign.getInfo(itemStack.getTagCompound());
-            String modName = info.activateTag.equals(SignRegistry.ALWAYS_ACTIVE_TAG) ? "Minecraft" : info.activateTag;
-            currenttip.add(Localization.ITEM.SIGN.MATERIAL_ORIGIN.translate(Colors.WHITE + Utils.getModName(modName)));
+            if (info != null) {
+                String modName = info.activateTag.equals(SignRegistry.ALWAYS_ACTIVE_TAG) ? "Minecraft" : info.activateTag;
+                if (config.getConfig("showOrigin"))
+                    currenttip.add(Localization.ITEM.SIGN.MATERIAL_ORIGIN.translate(Colors.WHITE + Utils.getModName(modName)));
+                if (config.getConfig("showMaterial"))
+                    currenttip.add(Localization.ITEM.SIGN.MATERIAL.translate(Colors.WHITE + info.material.materialName));
+            } else {
+                currenttip.add(Colors.RED + Localization.ITEM.SIGN.ERROR.translate());
+            }
         }
         return currenttip;
     }

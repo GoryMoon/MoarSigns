@@ -17,6 +17,7 @@ import gory_moon.moarsigns.client.interfaces.GuiHandler;
 import gory_moon.moarsigns.integration.IntegrationHandler;
 import gory_moon.moarsigns.integration.tweaker.MineTweakerIntegration;
 import gory_moon.moarsigns.items.ModItems;
+import gory_moon.moarsigns.items.NuggetRegistry;
 import gory_moon.moarsigns.lib.ModInfo;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.proxy.CommonProxy;
@@ -50,6 +51,7 @@ public class MoarSigns {
 
         PacketHandler.init();
 
+        NuggetRegistry.init();
         Blocks.init();
         ModItems.init();
     }

@@ -19,8 +19,8 @@ public class SignInfo {
         this.activateTag = activateTag;
     }
 
-    public SignInfo setMetal(boolean isMetal) {
-        this.isMetal = isMetal;
+    public SignInfo setMetal() {
+        this.isMetal = true;
         return this;
     }
 }

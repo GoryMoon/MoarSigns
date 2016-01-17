@@ -31,16 +31,16 @@ public class MinecraftIntegration implements ISignRegistration {
     }
 
     @Override
-    public void registerMetalSigns(ArrayList<ItemStack> ingots) {
+    public void registerMetalSigns(ArrayList<ItemStack> metals) {
         ItemStack iron = new ItemStack(Items.iron_ingot);
         ItemStack gold = new ItemStack(Items.gold_ingot);
         ItemStack diamond = new ItemStack(Items.diamond);
         ItemStack emerald = new ItemStack(Items.emerald);
 
-        SignRegistry.register("iron_sign", null, "iron", "", false, iron, ModInfo.ID).setMetal(true);
-        SignRegistry.register("gold_sign", null, "gold", "", true, gold, ModInfo.ID).setMetal(true);
-        SignRegistry.register("diamond_sign", null, "diamond", "", false, diamond, ModInfo.ID).setMetal(true);
-        SignRegistry.register("emerald_sign", null, "emerald", "", false, emerald, ModInfo.ID).setMetal(true);
+        SignRegistry.register("iron_sign", null, "iron", "", false, iron, ModInfo.ID).setMetal();
+        SignRegistry.register("gold_sign", null, "gold", "", true, gold, ModInfo.ID).setMetal();
+        SignRegistry.register("diamond_sign", null, "diamond", "", false, diamond, ModInfo.ID).setMetal();
+        SignRegistry.register("emerald_sign", null, "emerald", "", false, emerald, ModInfo.ID).setMetal();
     }
 
     @Override

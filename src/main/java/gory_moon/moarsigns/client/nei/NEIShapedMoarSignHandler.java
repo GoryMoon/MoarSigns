@@ -117,7 +117,7 @@ public class NEIShapedMoarSignHandler extends ShapedRecipeHandler {
 
     @Override
     public String getRecipeName() {
-        return StatCollector.translateToLocal("crafting.moarsign.sign.shaped");
+        return StatCollector.translateToLocal("crafting.moarsigns.sign.shaped");
     }
 
     public class CachedMoarSignRecipe extends CachedShapedRecipe {

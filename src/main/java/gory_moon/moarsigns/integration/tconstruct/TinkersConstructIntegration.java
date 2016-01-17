@@ -20,18 +20,18 @@ public class TinkersConstructIntegration implements ISignRegistration {
     }
 
     @Override
-    public void registerMetalSigns(ArrayList<ItemStack> ingots) {
-        for (ItemStack stacks : ingots) {
+    public void registerMetalSigns(ArrayList<ItemStack> metals) {
+        for (ItemStack stacks : metals) {
             if (stacks.getUnlocalizedName().equals("item.tconstruct.Materials.CopperIngot")) {
                 tconstructItem = stacks.copy().getItem();
                 break;
             }
         }
 
-        SignRegistry.register("copper_sign", null, "copper", "tconstruct/", true, new ItemStack(tconstructItem, 1, 9), ModInfo.ID, TCONSTRUCT_TAG).setMetal(true);
-        SignRegistry.register("tin_sign", null, "tin", "tconstruct/", true, new ItemStack(tconstructItem, 1, 10), ModInfo.ID, TCONSTRUCT_TAG).setMetal(true);
-        SignRegistry.register("bronze_sign", null, "bronze", "tconstruct/", true, new ItemStack(tconstructItem, 1, 13), ModInfo.ID, TCONSTRUCT_TAG).setMetal(true);
-        SignRegistry.register("steel_sign", null, "steel", "tconstruct/", true, new ItemStack(tconstructItem, 1, 16), ModInfo.ID, TCONSTRUCT_TAG).setMetal(true);
+        SignRegistry.register("copper_sign", null, "copper", "tconstruct/", true, new ItemStack(tconstructItem, 1, 9), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
+        SignRegistry.register("tin_sign", null, "tin", "tconstruct/", true, new ItemStack(tconstructItem, 1, 10), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
+        SignRegistry.register("bronze_sign", null, "bronze", "tconstruct/", true, new ItemStack(tconstructItem, 1, 13), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
+        SignRegistry.register("steel_sign", null, "steel", "tconstruct/", true, new ItemStack(tconstructItem, 1, 16), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
     }
 
     @Override

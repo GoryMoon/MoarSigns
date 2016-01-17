@@ -97,7 +97,7 @@ public class Api {
     }
 
     /**
-     * Adds a name of metal or gem to list that is given in {@link ISignRegistration#registerMetalSigns(ArrayList)}
+     * Adds a name of metal, MetalBlock or gem to list that is given in {@link ISignRegistration#registerMetalSigns(ArrayList)}
      *
      * @param name Name in ore dictionary
      */

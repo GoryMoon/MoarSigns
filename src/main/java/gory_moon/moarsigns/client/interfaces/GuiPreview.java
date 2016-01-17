@@ -229,7 +229,7 @@ public class GuiPreview extends GuiContainer {
         int i = Mouse.getEventDWheel();
 
         if (i != 0 && this.needsScrollBars()) {
-            int j = ((ContainerPreview) this.inventorySlots).itemList.size() / 5 - 6;
+            int j = (((ContainerPreview) this.inventorySlots).itemList.size() / 5) - 6;
 
             if (i > 0) {
                 i = 1;

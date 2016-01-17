@@ -102,15 +102,15 @@ public class ModItems {
 
                             if (!s.material.gotNugget) {
                                 String unlocName = mat.getUnlocalizedName();
-                                for (int i = 0; i < Info.NUGGET_INGOT_UNLOCS.length; i++) {
+                                for (int i = 0; i < NuggetRegistry.size(); i++) {
 
-                                    if (Info.NUGGET_INGOT_UNLOCS[i].equals(unlocName)) {
-                                        nugget.needed[i] = true;
+                                    if (NuggetRegistry.getIngotName(i).equals(unlocName)) {
+                                        NuggetRegistry.setNeeded(i, true);
                                         recNugget = new ItemStack(nugget, 9, i);
-                                        OreDictionary.registerOre(Info.NUGGET_ORE_DICTIONARY[i], recNugget.copy());
+                                        OreDictionary.registerOre(NuggetRegistry.getOreName(i), recNugget.copy());
 
                                         GameRegistry.addShapelessRecipe(recNugget.copy(), mat);
-                                        GameRegistry.addRecipe(new ShapedOreRecipe(mat, "xxx", "xxx", "xxx", 'x', Info.NUGGET_ORE_DICTIONARY[i]));
+                                        GameRegistry.addRecipe(new ShapedOreRecipe(mat, "xxx", "xxx", "xxx", 'x', NuggetRegistry.getOreName(i)));
                                         break;
                                     }
                                 }
@@ -122,9 +122,9 @@ public class ModItems {
                             if (recNugget != null && recNugget.getItem() != null) {
                                 ItemStack stack1 = stack.copy();
                                 stack1.stackSize = 1;
-                                if (recNugget.getUnlocalizedName().equals("item.moarsign." + nugget.nuggets[0]))
+                                if (recNugget.getUnlocalizedName().equals("item.moarsign." + NuggetRegistry.getUnlocName(0)))
                                     GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "diamondNugget", '/', Items.stick));
-                                else if (recNugget.getUnlocalizedName().equals("item.moarsign." + nugget.nuggets[1]))
+                                else if (recNugget.getUnlocalizedName().equals("item.moarsign." + NuggetRegistry.getUnlocName(1)))
                                     GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetIron", '/', Items.stick));
                                 else
                                     GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', recNugget, '/', Items.stick));

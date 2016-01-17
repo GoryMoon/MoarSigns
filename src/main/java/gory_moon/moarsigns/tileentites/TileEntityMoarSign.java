@@ -100,7 +100,8 @@ public class TileEntityMoarSign extends TileEntitySign {
         compound.setTag(NBT_SETTINGS_TAG, settings);
         compound.setBoolean(NBT_LOCKED_CHANGES_TAG, lockedChanges);
         compound.setBoolean(NBT_METAL_TAG, isMetal);
-        compound.setString(NBT_TEXTURE_TAG, texture_name);
+        if (texture_name != null)
+            compound.setString(NBT_TEXTURE_TAG, texture_name);
     }
 
     public void readFromNBT(NBTTagCompound compound) {

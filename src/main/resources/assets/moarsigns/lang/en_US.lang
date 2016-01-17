@@ -1,10 +1,15 @@
 #General names
 itemGroup.moarSigns=MoarSigns
-item.moarsign.debug.name=Debug
-item.moarsign.sign.dummy=MoarSign
-crafting.moarsign.sign.shaped=MoarSigns Shaped
-crafting.moarsign.sign.shapeless=MoarSigns Shapeless
-crafting.moarsign.sign.exchange=MoarSigns Exchange
+item.moarsigns.debug.name=Debug
+item.moarsigns.sign.error.name=MoarSign §4ERROR§r
+tile.moarsign.sign.name=MoarSign §4ERROR§r
+crafting.moarsigns.sign.shaped=MoarSigns Shaped
+crafting.moarsigns.sign.shapeless=MoarSigns Shapeless
+crafting.moarsigns.sign.exchange=MoarSigns Exchange
+
+# -Integration
+integration.moarsigns:waila.show_origin=Show material origin
+integration.moarsigns:waila.show_material=Show material name
 
 # -Gui
 gui.moarsigns:button.title.cut=Cut
@@ -77,118 +82,136 @@ gui.moarsigns:preview.rotate=Rotate sign
 gui.moarsigns:preview.type=Change type
 
 # -Items
-item.moarsign.signtoolbox.EDIT_MODE.name=Sign Toolbox §2(Edit)§r
-item.moarsign.signtoolbox.ROTATE_MODE.name=Sign Toolbox §6(Rotate)§r
-item.moarsign.signtoolbox.COPY_MODE.name=Sign Toolbox §9(Copy)§r
-item.moarsign.signtoolbox.MOVE_MODE.name=Sign Toolbox §e(Move)§r
-item.moarsign.signtoolbox.EXCHANGE_MODE.name=Sign Toolbox §b(Exchange)§r
-item.moarsign.signtoolbox.PREVIEW_MODE.name=Sign Toolbox §d(Preview)§r
+item.moarsigns.signtoolbox.EDIT_MODE.name=Sign Toolbox §2(Edit)§r
+item.moarsigns.signtoolbox.ROTATE_MODE.name=Sign Toolbox §6(Rotate)§r
+item.moarsigns.signtoolbox.COPY_MODE.name=Sign Toolbox §9(Copy)§r
+item.moarsigns.signtoolbox.MOVE_MODE.name=Sign Toolbox §e(Move)§r
+item.moarsigns.signtoolbox.EXCHANGE_MODE.name=Sign Toolbox §b(Exchange)§r
+item.moarsigns.signtoolbox.PREVIEW_MODE.name=Sign Toolbox §d(Preview)§r
 
-item.moarsign:sign.description.material=Material: [%1]
-item.moarsign:sign.description.material_origin=Origin of material: [%1]
+item.moarsigns:sign.description.material=Material: [%1]
+item.moarsigns:sign.description.material_origin=Origin of material: [%1]
+item.moarsigns:sign.description.error=Error with sign, obtained in an incorrect way
 
-item.moarsign:signtoolbox.description.change=Hold [%1] while right clicking to change mode
-item.moarsign:signtoolbox.description.edit=[%1][Right click][%2] a sign to edit
-item.moarsign:signtoolbox.description.rotate=[%1][Right click][%2] a sign to cycle trough all rotations
-item.moarsign:signtoolbox.description.move=[%1]Right click[%2] on a sign to pick it up[%3][%1]Right click[%2] to place it, like a normal sign[%4]Can't change mode when sign is picked up
-item.moarsign:signtoolbox.description.copy=[%1][%2->Cmd|Ctrl][%3] + [%1]Right click[%3] on a sign to copy all info[%4]Right click[%3] on a sign to paste the info
-item.moarsign:signtoolbox.description.exchange=Opens an interface where you can exchange[%1]signs of the same material
-item.moarsign:signtoolbox.description.preview=Opens an interface where you can preview[%1]signs as they look in the world
-item.moarsign:signtoolbox.current_sign=Current sign picked up:
-item.moarsign:signtoolbox.current_text=Text on sign:
+item.moarsigns:signtoolbox.description.change=Hold [%1] while right clicking to change mode
+item.moarsigns:signtoolbox.description.edit=[%1][Right click][%2] a sign to edit
+item.moarsigns:signtoolbox.description.rotate=[%1][Right click][%2] a sign to cycle trough all rotations
+item.moarsigns:signtoolbox.description.move=[%1]Right click[%2] on a sign to pick it up[%3][%1]Right click[%2] to place it, like a normal sign[%4]Can't change mode when sign is picked up
+item.moarsigns:signtoolbox.description.copy=[%1][%2->Cmd|Ctrl][%3] + [%1]Right click[%3] on a sign to copy all info[%4]Right click[%3] on a sign to paste the info
+item.moarsigns:signtoolbox.description.exchange=Opens an interface where you can exchange[%1]signs of the same material
+item.moarsigns:signtoolbox.description.preview=Opens an interface where you can preview[%1]signs as they look in the world
+item.moarsigns:signtoolbox.current_sign=Current sign picked up:
+item.moarsigns:signtoolbox.current_text=Text on sign:
 
 
 # Nuggets
-item.moarsign.diamond_nugget.name=Diamond Nugget
-item.moarsign.iron_nugget.name=Iron Nugget
-item.moarsign.emerald_nugget.name=Emerald Nugget
-item.moarsign.bronze_nugget_ic2.name=Bronze Nugget
-item.moarsign.copper_nugget_ic2.name=Copper Nugget
-item.moarsign.tin_nugget_ic2.name=Tin Nugget
-item.moarsign.silver_nugget_factorization.name=Silver Nugget
+item.moarsigns.diamond_nugget.name=Diamond Nugget
+item.moarsigns.iron_nugget.name=Iron Nugget
+item.moarsigns.emerald_nugget.name=Emerald Nugget
+item.moarsigns.bronze_nugget_ic2.name=Bronze Nugget
+item.moarsigns.copper_nugget_ic2.name=Copper Nugget
+item.moarsigns.tin_nugget_ic2.name=Tin Nugget
+item.moarsigns.lead_nugget_ic2.name=Lead Nugget
+item.moarsigns.refined_iron_nugget_ic2.name=Refined Iron Nugget
+item.moarsigns.tin_nugget_forestry.name=Tin Nugget
+item.moarsigns.bronze_nugget_forestry.name=Bronze Nugget
+item.moarsigns.copper_nugget_forestry.name=Copper Nugget
+item.moarsigns.silver_nugget_factorization.name=Silver Nugget
 
 # Vanilla Signs
-item.moarsign.sign.oak_sign.name=Oak Sign
-item.moarsign.sign.spruce_sign.name=Spruce Sign
-item.moarsign.sign.birch_sign.name=Birch Sign
-item.moarsign.sign.jungle_sign.name=Jungle Sign
-item.moarsign.sign.acacia_sign.name=Acacia Sign
-item.moarsign.sign.big_oak_sign.name=Dark Oak Sign
+item.moarsigns.sign.oak_sign.name=Oak Sign
+item.moarsigns.sign.spruce_sign.name=Spruce Sign
+item.moarsigns.sign.birch_sign.name=Birch Sign
+item.moarsigns.sign.jungle_sign.name=Jungle Sign
+item.moarsigns.sign.acacia_sign.name=Acacia Sign
+item.moarsigns.sign.big_oak_sign.name=Dark Oak Sign
 
-item.moarsign.sign.iron_sign.name=Iron Sign
-item.moarsign.sign.gold_sign.name=Gold Sign
-item.moarsign.sign.diamond_sign.name=Diamond Sign
-item.moarsign.sign.emerald_sign.name=Emerald Sign
+item.moarsigns.sign.iron_sign.name=Iron Sign
+item.moarsigns.sign.gold_sign.name=Gold Sign
+item.moarsigns.sign.diamond_sign.name=Diamond Sign
+item.moarsigns.sign.emerald_sign.name=Emerald Sign
 
 # Mod Signs
 #Biomes O' Plenty
-item.moarsign.sign.bop.cherry_sign.name=Cherry Sign
-item.moarsign.sign.bop.dark_sign.name=Dark Sign
-item.moarsign.sign.bop.fir_sign.name=Fir Sign
-item.moarsign.sign.bop.hellbark_sign.name=Hellbark Sign
-item.moarsign.sign.bop.holy_sign.name=Loftwood Sign
-item.moarsign.sign.bop.jacaranda_sign.name=Jacaranda Sign
-item.moarsign.sign.bop.magic_sign.name=Magic Sign
-item.moarsign.sign.bop.mahogany_sign.name=Mahogany Sign
-item.moarsign.sign.bop.mangrove_sign.name=Mangrove Sign
-item.moarsign.sign.bop.palm_sign.name=Palm Sign
-item.moarsign.sign.bop.pine_sign.name=Pine Sign
-item.moarsign.sign.bop.redwood_sign.name=Redwood Sign
-item.moarsign.sign.bop.sacred_oak_sign.name=Sacred Oak Sign
-item.moarsign.sign.bop.willow_sign.name=Willow Sign
+item.moarsigns.sign.bop.cherry_sign.name=Cherry Sign
+item.moarsigns.sign.bop.dark_sign.name=Dark Sign
+item.moarsigns.sign.bop.fir_sign.name=Fir Sign
+item.moarsigns.sign.bop.hellbark_sign.name=Hellbark Sign
+item.moarsigns.sign.bop.holy_sign.name=Loftwood Sign
+item.moarsigns.sign.bop.jacaranda_sign.name=Jacaranda Sign
+item.moarsigns.sign.bop.magic_sign.name=Magic Sign
+item.moarsigns.sign.bop.mahogany_sign.name=Mahogany Sign
+item.moarsigns.sign.bop.mangrove_sign.name=Mangrove Sign
+item.moarsigns.sign.bop.palm_sign.name=Palm Sign
+item.moarsigns.sign.bop.pine_sign.name=Pine Sign
+item.moarsigns.sign.bop.redwood_sign.name=Redwood Sign
+item.moarsigns.sign.bop.sacred_oak_sign.name=Sacred Oak Sign
+item.moarsigns.sign.bop.willow_sign.name=Willow Sign
 
 #Forestry
-item.moarsign.sign.for.acacia_sign.name=Acacia Sign
-item.moarsign.sign.for.balsa_sign.name=Balsa Sign
-item.moarsign.sign.for.baobab_sign.name=Baobab Sign
-item.moarsign.sign.for.cherry_sign.name=Cherry Sign
-item.moarsign.sign.for.chestnut_sign.name=Chestnut Sign
-item.moarsign.sign.for.citrus_sign.name=Citrus Sign
-item.moarsign.sign.for.ebony_sign.name=Ebony Sign
-item.moarsign.sign.for.greenheart_sign.name=Greenheart Sign
-item.moarsign.sign.for.kapok_sign.name=Kapok Sign
-item.moarsign.sign.for.larch_sign.name=Larch Sign
-item.moarsign.sign.for.lime_sign.name=Lime Sign
-item.moarsign.sign.for.mahoe_sign.name=Mahoe Sign
-item.moarsign.sign.for.mahogany_sign.name=Mahogany Sign
-item.moarsign.sign.for.maple_sign.name=Maple Sign
-item.moarsign.sign.for.palm_sign.name=Palm Sign
-item.moarsign.sign.for.papaya_sign.name=Papaya Sign
-item.moarsign.sign.for.pine_sign.name=Pine Sign
-item.moarsign.sign.for.plum_sign.name=Plum Sign
-item.moarsign.sign.for.poplar_sign.name=Poplar Sign
-item.moarsign.sign.for.sequoia_sign.name=Sequoia Sign
-item.moarsign.sign.for.teak_sign.name=Teak Sign
-item.moarsign.sign.for.walnut_sign.name=Walnut Sign
-item.moarsign.sign.for.wenge_sign.name=Wenge Sign
-item.moarsign.sign.for.willow_sign.name=Willow Sign
+item.moarsigns.sign.for.acacia_sign.name=Acacia Sign
+item.moarsigns.sign.for.balsa_sign.name=Balsa Sign
+item.moarsigns.sign.for.baobab_sign.name=Baobab Sign
+item.moarsigns.sign.for.cherry_sign.name=Cherry Sign
+item.moarsigns.sign.for.chestnut_sign.name=Chestnut Sign
+item.moarsigns.sign.for.citrus_sign.name=Citrus Sign
+item.moarsigns.sign.for.ebony_sign.name=Ebony Sign
+item.moarsigns.sign.for.greenheart_sign.name=Greenheart Sign
+item.moarsigns.sign.for.kapok_sign.name=Kapok Sign
+item.moarsigns.sign.for.larch_sign.name=Larch Sign
+item.moarsigns.sign.for.lime_sign.name=Lime Sign
+item.moarsigns.sign.for.mahoe_sign.name=Mahoe Sign
+item.moarsigns.sign.for.mahogany_sign.name=Mahogany Sign
+item.moarsigns.sign.for.maple_sign.name=Maple Sign
+item.moarsigns.sign.for.palm_sign.name=Palm Sign
+item.moarsigns.sign.for.papaya_sign.name=Papaya Sign
+item.moarsigns.sign.for.pine_sign.name=Pine Sign
+item.moarsigns.sign.for.plum_sign.name=Plum Sign
+item.moarsigns.sign.for.poplar_sign.name=Poplar Sign
+item.moarsigns.sign.for.sequoia_sign.name=Sequoia Sign
+item.moarsigns.sign.for.teak_sign.name=Teak Sign
+item.moarsigns.sign.for.walnut_sign.name=Walnut Sign
+item.moarsigns.sign.for.wenge_sign.name=Wenge Sign
+item.moarsigns.sign.for.willow_sign.name=Willow Sign
+
+item.moarsigns.sign.for.bronze_sign.name=Bronze Sign
+item.moarsigns.sign.for.tin_sign.name=Tin Sign
+item.moarsigns.sign.for.copper_sign.name=Copper Sign
 
 #Natura
-item.moarsign.sign.natura.bloodwood_sign.name=Bloodwood Sign
-item.moarsign.sign.natura.darkwood_sign.name=Darkwood Sign
-item.moarsign.sign.natura.eucalyptus_sign.name=Eucalyptus Sign
-item.moarsign.sign.natura.fusewood_sign.name=Fusewood Sign
-item.moarsign.sign.natura.ghostwood_sign.name=Ghostwood Sign
-item.moarsign.sign.natura.hopseed_sign.name=Hopseed Sign
-item.moarsign.sign.natura.maple_sign.name=Maple Sign
-item.moarsign.sign.natura.purpleheart_sign.name=Amaranth Sign
-item.moarsign.sign.natura.redwood_sign.name=Redwood Sign
-item.moarsign.sign.natura.sakura_sign.name=Sakura Sign
-item.moarsign.sign.natura.silverbell_sign.name=Silverbell Sign
-item.moarsign.sign.natura.tiger_sign.name=Tigerwood Sign
-item.moarsign.sign.natura.willow_sign.name=Willow Sign
+item.moarsigns.sign.natura.bloodwood_sign.name=Bloodwood Sign
+item.moarsigns.sign.natura.darkwood_sign.name=Darkwood Sign
+item.moarsigns.sign.natura.eucalyptus_sign.name=Eucalyptus Sign
+item.moarsigns.sign.natura.fusewood_sign.name=Fusewood Sign
+item.moarsigns.sign.natura.ghostwood_sign.name=Ghostwood Sign
+item.moarsigns.sign.natura.hopseed_sign.name=Hopseed Sign
+item.moarsigns.sign.natura.maple_sign.name=Maple Sign
+item.moarsigns.sign.natura.purpleheart_sign.name=Amaranth Sign
+item.moarsigns.sign.natura.redwood_sign.name=Redwood Sign
+item.moarsigns.sign.natura.sakura_sign.name=Sakura Sign
+item.moarsigns.sign.natura.silverbell_sign.name=Silverbell Sign
+item.moarsigns.sign.natura.tiger_sign.name=Tigerwood Sign
+item.moarsigns.sign.natura.willow_sign.name=Willow Sign
 
 #IndustrailCraft 2
-item.moarsign.sign.ic2.copper_sign.name=Copper Sign
-item.moarsign.sign.ic2.tin_sign.name=Tin Sign
-item.moarsign.sign.ic2.bronze_sign.name=Bronze Sign
+item.moarsigns.sign.ic2.copper_sign.name=Copper Sign
+item.moarsigns.sign.ic2.tin_sign.name=Tin Sign
+item.moarsigns.sign.ic2.bronze_sign.name=Bronze Sign
+item.moarsigns.sign.ic2.lead_sign.name=Lead Sign
+item.moarsigns.sign.ic2.refinediron_sign.name=Refined Iron Sign
 
 #Tinkers Construct
-item.moarsign.sign.tconstruct.copper_sign.name=Copper Sign
-item.moarsign.sign.tconstruct.tin_sign.name=Tin Sign
-item.moarsign.sign.tconstruct.bronze_sign.name=Bronze Sign
-item.moarsign.sign.tconstruct.steel_sign.name=Steel Sign
+item.moarsigns.sign.tconstruct.copper_sign.name=Copper Sign
+item.moarsigns.sign.tconstruct.tin_sign.name=Tin Sign
+item.moarsigns.sign.tconstruct.bronze_sign.name=Bronze Sign
+item.moarsigns.sign.tconstruct.steel_sign.name=Steel Sign
+
+#Railcraft
+item.moarsigns.sign.railcraft.copper_sign.name=Copper Sign
+item.moarsigns.sign.railcraft.tin_sign.name=Tin Sign
+item.moarsigns.sign.railcraft.lead_sign.name=Lead Sign
+item.moarsigns.sign.railcraft.steel_sign.name=Steel Sign
 
 #Factorization
-item.moarsign.sign.factorization.silver_sign.name=Silver Sign
-item.moarsign.sign.factorization.lead_sign.name=Lead Sign
+item.moarsigns.sign.factorization.silver_sign.name=Silver Sign
+item.moarsigns.sign.factorization.lead_sign.name=Lead Sign

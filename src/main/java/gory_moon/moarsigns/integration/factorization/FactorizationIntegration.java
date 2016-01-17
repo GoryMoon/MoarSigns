@@ -21,8 +21,8 @@ public class FactorizationIntegration implements ISignRegistration {
     }
 
     @Override
-    public void registerMetalSigns(ArrayList<ItemStack> ingots) {
-        for (ItemStack stacks : ingots) {
+    public void registerMetalSigns(ArrayList<ItemStack> metals) {
+        for (ItemStack stacks : metals) {
             if (stacks.getUnlocalizedName().equals("item.factorization:silver_ingot")) {
                 factorizationSilverItem = stacks.copy().getItem();
             }
@@ -32,8 +32,9 @@ public class FactorizationIntegration implements ISignRegistration {
             if (factorizationSilverItem != null && factorizationLeadItem != null) break;
         }
 
-        SignRegistry.register("silver_sign", null, "silver", "factorization/", true, new ItemStack(factorizationSilverItem, 1, 0), ModInfo.ID, FACTORIZATION_TAG).setMetal(true);
-        SignRegistry.register("lead_sign", null, "lead", "factorization/", true, new ItemStack(factorizationLeadItem, 1, 0), ModInfo.ID, FACTORIZATION_TAG).setMetal(true);
+        //TODO Add block material
+        SignRegistry.register("silver_sign", null, "silver", "factorization/", true, new ItemStack(factorizationSilverItem, 1, 0), ModInfo.ID, FACTORIZATION_TAG).setMetal();
+        SignRegistry.register("lead_sign", null, "lead", "factorization/", true, new ItemStack(factorizationLeadItem, 1, 0), ModInfo.ID, FACTORIZATION_TAG).setMetal();
     }
 
     @Override

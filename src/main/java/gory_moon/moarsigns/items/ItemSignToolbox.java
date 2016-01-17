@@ -41,7 +41,7 @@ public class ItemSignToolbox extends Item {
     private IIcon[] icons = new IIcon[ToolBoxModes.values().length];
 
     public ItemSignToolbox() {
-        setUnlocalizedName("moarsign.signtoolbox");
+        setUnlocalizedName("moarsigns.signtoolbox");
         setCreativeTab(MoarSignsCreativeTab.tabMS);
         setHasSubtypes(true);
         setMaxStackSize(1);

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class ItemDebug extends Item {
 
     public ItemDebug() {
-        setUnlocalizedName("moarsign.debug");
+        setUnlocalizedName("moarsigns.debug");
     }
 
     @Override

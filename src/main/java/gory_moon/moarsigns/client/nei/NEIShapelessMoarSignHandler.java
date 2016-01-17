@@ -107,7 +107,7 @@ public class NEIShapelessMoarSignHandler extends ShapelessRecipeHandler {
 
     @Override
     public String getRecipeName() {
-        return StatCollector.translateToLocal("crafting.moarsign.sign.shapeless");
+        return StatCollector.translateToLocal("crafting.moarsigns.sign.shapeless");
     }
 
     public class CachedMoarSignRecipe extends CachedShapelessRecipe {

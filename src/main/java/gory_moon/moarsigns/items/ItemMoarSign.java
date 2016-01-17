@@ -30,7 +30,7 @@ public class ItemMoarSign extends Item {
     public ItemMoarSign() {
         maxStackSize = 16;
         setCreativeTab(MoarSignsCreativeTab.tabMS);
-        setUnlocalizedName("moarsign");
+        setUnlocalizedName("moarsigns");
         hasSubtypes = true;
     }
 
@@ -53,7 +53,7 @@ public class ItemMoarSign extends Item {
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
-        if (info == null) return super.getUnlocalizedName() + ".sign.dummy";
+        if (info == null) return super.getUnlocalizedName() + ".sign.error";
         return super.getUnlocalizedName() + ".sign." + (info.material.path.equals("") ? "" : info.material.path.replace("/", "") + ".") + getTextureFromNBT(stack.getTagCompound());
     }
 
@@ -163,10 +163,14 @@ public class ItemMoarSign extends Item {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean extraInfo) {
         SignInfo info = getInfo(stack.getTagCompound());
-        String modName = info.activateTag.equals(SignRegistry.ALWAYS_ACTIVE_TAG) ? "Minecraft" : info.activateTag;
-        list.add(Localization.ITEM.SIGN.MATERIAL_ORIGIN.translate(Colors.WHITE + Utils.getModName(modName)));
-        if (extraInfo) {
-            list.add(Localization.ITEM.SIGN.MATERIAL.translate(Colors.WHITE + info.material.materialName));
+        if (info != null) {
+            String modName = info.activateTag.equals(SignRegistry.ALWAYS_ACTIVE_TAG) ? "Minecraft" : info.activateTag;
+            list.add(Localization.ITEM.SIGN.MATERIAL_ORIGIN.translate(Colors.WHITE + Utils.getModName(modName)));
+            if (extraInfo) {
+                list.add(Localization.ITEM.SIGN.MATERIAL.translate(Colors.WHITE + info.material.materialName));
+            }
+        } else {
+            list.add(Colors.RED + Localization.ITEM.SIGN.ERROR.translate(Colors.RED.toString()));
         }
     }
 }
