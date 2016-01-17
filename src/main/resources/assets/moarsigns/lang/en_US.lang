@@ -147,9 +147,10 @@ item.moarsigns.sign.bop.pine_sign.name=Pine Sign
 item.moarsigns.sign.bop.redwood_sign.name=Redwood Sign
 item.moarsigns.sign.bop.sacred_oak_sign.name=Sacred Oak Sign
 item.moarsigns.sign.bop.willow_sign.name=Willow Sign
+item.moarsigns.sign.bop.bamboo_sign.name=Bamboo Sign
 
 #Forestry
-item.moarsigns.sign.for.acacia_sign.name=Acacia Sign
+item.moarsigns.sign.for.acacia_sign.name=Desert Acacia Sign
 item.moarsigns.sign.for.balsa_sign.name=Balsa Sign
 item.moarsigns.sign.for.baobab_sign.name=Baobab Sign
 item.moarsigns.sign.for.cherry_sign.name=Cherry Sign
@@ -173,6 +174,12 @@ item.moarsigns.sign.for.teak_sign.name=Teak Sign
 item.moarsigns.sign.for.walnut_sign.name=Walnut Sign
 item.moarsigns.sign.for.wenge_sign.name=Wenge Sign
 item.moarsigns.sign.for.willow_sign.name=Willow Sign
+item.moarsigns.sign.for.giantsequoia_sign.name=Giant Sequoia Sign
+item.moarsigns.sign.for.ipe_sign.name=Ipe Sign
+item.moarsigns.sign.for.padauk_sign.name=Padauk Sign
+item.moarsigns.sign.for.cocobolo_sign.name=Cocobolo Sign
+item.moarsigns.sign.for.zebrawood_sign.name=Zebrawood Sign
+
 
 item.moarsigns.sign.for.bronze_sign.name=Bronze Sign
 item.moarsigns.sign.for.tin_sign.name=Tin Sign
@@ -201,9 +208,15 @@ item.moarsigns.sign.ic2.lead_sign.name=Lead Sign
 item.moarsigns.sign.ic2.refinediron_sign.name=Refined Iron Sign
 
 #Tinkers Construct
+item.moarsigns.sign.tconstruct.cobalt_sign.name=Cobalt Sign
+item.moarsigns.sign.tconstruct.ardite_sign.name=Ardite Sign
+item.moarsigns.sign.tconstruct.manyullyn_sign.name=Manyullyn Sign
 item.moarsigns.sign.tconstruct.copper_sign.name=Copper Sign
 item.moarsigns.sign.tconstruct.tin_sign.name=Tin Sign
+item.moarsigns.sign.tconstruct.aluminum_sign.name=Aluminum Sign
 item.moarsigns.sign.tconstruct.bronze_sign.name=Bronze Sign
+item.moarsigns.sign.tconstruct.aluminumbrass_sign.name=Aluminum Brass Sign
+item.moarsigns.sign.tconstruct.alumite_sign.name=Alumite Sign
 item.moarsigns.sign.tconstruct.steel_sign.name=Steel Sign
 
 #Railcraft

@@ -33,8 +33,7 @@ public class BiomesOPlentyIntegration implements ISignRegistration {
         SignRegistry.register("palm_sign", null, "palm", "bop/", false, new ItemStack(bopItem, 1, 7), ModInfo.ID, BOP_TAG);
         SignRegistry.register("redwood_sign", null, "redwood", "bop/", false, new ItemStack(bopItem, 1, 8), ModInfo.ID, BOP_TAG);
         SignRegistry.register("willow_sign", null, "willow", "bop/", false, new ItemStack(bopItem, 1, 9), ModInfo.ID, BOP_TAG);
-        //TODO see and maybe add the missing plank
-        //SignRegistry.register("", null, "", "bop/", false, new ItemStack(bopItem, 1, 10), ModInfo.ID, BOP_TAG);
+        SignRegistry.register("bamboo_sign", null, "bamboo", "bop/", false, new ItemStack(bopItem, 1, 10), ModInfo.ID, BOP_TAG);
         SignRegistry.register("pine_sign", null, "pine", "bop/", false, new ItemStack(bopItem, 1, 11), ModInfo.ID, BOP_TAG);
         SignRegistry.register("hellbark_sign", null, "hellbark", "bop/", false, new ItemStack(bopItem, 1, 12), ModInfo.ID, BOP_TAG);
         SignRegistry.register("jacaranda_sign", null, "jacaranda", "bop/", false, new ItemStack(bopItem, 1, 13), ModInfo.ID, BOP_TAG);

@@ -303,7 +303,7 @@ public class BlockMoarSign extends BlockContainer {
         TileEntity entity = world.getTileEntity(x, y, z);
         if (entity instanceof TileEntityMoarSign) {
             TileEntityMoarSign tileEntity = (TileEntityMoarSign) entity;
-            if (tileEntity.removeNoDrop) return ret;
+            if (tileEntity.removeNoDrop || tileEntity.texture_name == null) return ret;
 
             ret.add(ModItems.sign.createMoarItemStack(tileEntity.texture_name, tileEntity.isMetal));
         }

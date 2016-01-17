@@ -1,4 +1,4 @@
-package gory_moon.moarsigns.client.nei;
+package gory_moon.moarsigns.integration.nei;
 
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;

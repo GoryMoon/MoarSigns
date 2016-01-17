@@ -37,8 +37,8 @@ public class IntegrationHandler {
 
         registerPlankOreName("plankWood");
 
-        String[] ingotNames = {"ingotCopper", "ingotTin", "ingotSilver", "ingotBronze", "ingotSteel", "ingotLead"};
-        String[] blockNames = {"blockCopper", "blockTin", "blockSilver", "blockBronze", "blockSteel", "blockLead"};
+        String[] ingotNames = {"ingotCopper", "ingotTin", "ingotSilver", "ingotBronze", "ingotSteel", "ingotLead",};
+        String[] blockNames = {"blockCopper", "blockTin", "blockSilver", "blockBronze", "blockSteel", "blockLead", "blockCobalt", "blockArdite", "blockManyullyn", "blockAluminum", "blockAluminumBrass", "blockAlumite"};
         for (String name : ingotNames) registerMetalGemOreName(name);
         for (String name : blockNames) registerMetalGemOreName(name);
     }
@@ -60,7 +60,7 @@ public class IntegrationHandler {
             }
         }
 
-        MoarSigns.logger.info("Finished " + (SignRegistry.getActiveTagsAmount() - 1) + " sign integrations");
+        MoarSigns.logger.info("Finished " + (SignRegistry.getActiveTagsAmount() - 1) + " sign integrations with " + SignRegistry.getActivatedSignRegistry().size() + " sign registered");
     }
 
     private ArrayList<ItemStack> getOres(ArrayList<String> names) {

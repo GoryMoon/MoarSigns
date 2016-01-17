@@ -1,4 +1,4 @@
-package gory_moon.moarsigns.client.nei;
+package gory_moon.moarsigns.integration.nei;
 
 import codechicken.nei.ItemList;
 import codechicken.nei.NEIServerUtils;
@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import static gory_moon.moarsigns.client.nei.NEIMoarSignConfig.moarSigns;
+import static gory_moon.moarsigns.integration.nei.NEIMoarSignConfig.moarSigns;
 
 public class NEIShapedMoarSignHandler extends ShapedRecipeHandler {
     @Override

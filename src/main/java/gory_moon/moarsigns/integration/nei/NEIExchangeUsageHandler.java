@@ -1,4 +1,4 @@
-package gory_moon.moarsigns.client.nei;
+package gory_moon.moarsigns.integration.nei;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
@@ -62,6 +62,7 @@ public class NEIExchangeUsageHandler extends TemplateRecipeHandler {
             String texture = ItemMoarSign.getTextureFromNBTFull(ingredient.getTagCompound());
             SignInfo signInfo = SignRegistry.get(texture);
 
+            if (signInfo == null || signInfo.material == null || signInfo.material.materialName == null) return;
             HashSet<MaterialInfo> materials = MaterialRegistry.get(signInfo.material.materialName);
             if (materials == null || materials.size() <= 1) {
                 return;

@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
+        mavenLocal()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
@@ -69,6 +70,11 @@ repositories {
         url "http://maven.ic2.player.to/"
     }
 
+    maven {
+        name 'DVS1 Maven FS'
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+
     ivy {
         name "MineTweaker3"
         artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-[revision].[ext]"
@@ -83,8 +89,9 @@ dependencies {
     compile "codechicken:NotEnoughItems:" + config.mc_version + "-" + config.nei_version + ":dev"
     compile "mcp.mobius.waila:Waila:" + config.waila_version + "_" + config.mc_version + ":dev"
 
+    compile "tconstruct:TConstruct:${config.mc_version}-${config.tconstruct_version}:deobf"
+
     compile "net.industrial-craft:industrialcraft-2:" + config.ic2_version + ":dev"
-    compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24'
 
     compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar'
 
