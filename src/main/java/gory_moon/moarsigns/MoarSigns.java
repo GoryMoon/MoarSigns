@@ -28,7 +28,19 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 
-@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, certificateFingerprint = "@FINGERPRINT@", dependencies = "before:MineTweaker")
+@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, certificateFingerprint = ModInfo.FINGERPRINT,
+        dependencies =
+                "after:BiomesOPlenty;" +
+                        "after:Forestry;" +
+                        "after:Nature;" +
+                        "after:IC2;" +
+                        "after:TConstruct;" +
+                        "after:Railcraft;" +
+                        "after:ThermalFoundation;" +
+                        "after:factorization;" +
+                        "after:NotEnoughItems;" +
+                        "after:Waila;" +
+                        "after:MineTweaker3;")
 public class MoarSigns {
 
     private static final String LINK = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/master/version.json";

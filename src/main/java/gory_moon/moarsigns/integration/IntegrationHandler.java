@@ -13,6 +13,7 @@ import gory_moon.moarsigns.integration.ic2.IndustrialCraft2Integration;
 import gory_moon.moarsigns.integration.natura.NaturaIntegration;
 import gory_moon.moarsigns.integration.railcraft.RailcraftIntegration;
 import gory_moon.moarsigns.integration.tconstruct.TinkersConstructIntegration;
+import gory_moon.moarsigns.integration.thermalfoundation.ThermalFoundationIntegration;
 import gory_moon.moarsigns.integration.vanilla.MinecraftIntegration;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -34,11 +35,14 @@ public class IntegrationHandler {
         registerIntegration(TinkersConstructIntegration.class);
         registerIntegration(FactorizationIntegration.class);
         registerIntegration(RailcraftIntegration.class);
+        registerIntegration(ThermalFoundationIntegration.class);
 
         registerPlankOreName("plankWood");
 
-        String[] ingotNames = {"ingotCopper", "ingotTin", "ingotSilver", "ingotBronze", "ingotSteel", "ingotLead",};
-        String[] blockNames = {"blockCopper", "blockTin", "blockSilver", "blockBronze", "blockSteel", "blockLead", "blockCobalt", "blockArdite", "blockManyullyn", "blockAluminum", "blockAluminumBrass", "blockAlumite"};
+        String[] ingotNames = {"ingotCopper", "ingotTin", "ingotSilver", "ingotBronze", "ingotSteel", "ingotLead", "ingotCobalt", "ingotArdite", "ingotManyullyn", "ingotAluminum", "ingotAluminumBrass", "ingotAlumite",
+                "ingotNickel", "ingotPlatinum", "ingotMithril", "ingotElectrum", "ingotInvar", "ingotSignalum", "ingotLumium", "ingotEnderium", "ingotFzDarkIron"};
+        String[] blockNames = {"blockCopper", "blockTin", "blockSilver", "blockBronze", "blockSteel", "blockLead", "blockCobalt", "blockArdite", "blockManyullyn", "blockAluminum", "blockAluminumBrass", "blockAlumite",
+                "blockNickel", "blockPlatinum", "blockMithril", "blockEkectrum", "blockInvar", "blockSignalum", "blockLumium", "blockEnderium", "blockFzDarkIron"};
         for (String name : ingotNames) registerMetalGemOreName(name);
         for (String name : blockNames) registerMetalGemOreName(name);
     }
@@ -60,7 +64,7 @@ public class IntegrationHandler {
             }
         }
 
-        MoarSigns.logger.info("Finished " + (SignRegistry.getActiveTagsAmount() - 1) + " sign integrations with " + SignRegistry.getActivatedSignRegistry().size() + " sign registered");
+        MoarSigns.logger.info("Finished " + (SignRegistry.getActiveTagsAmount()) + " sign integrations with " + SignRegistry.getActivatedSignRegistry().size() + " signs registered");
     }
 
     private ArrayList<ItemStack> getOres(ArrayList<String> names) {

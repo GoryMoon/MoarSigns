@@ -96,6 +96,11 @@ public class GuiPreview extends GuiContainer {
             ((ContainerPreview) this.inventorySlots).scrollTo(this.currentScroll);
         }
         super.drawScreen(x, y, renderPartialTicks);
+
+        if (x >= guiLeft + 115 && y >= guiTop + 5 && x < guiLeft + 220 && y < guiTop + 135) {
+            String s = Localization.GUI.PREVIEW.DRAG.translate();
+            drawHoveringText(Arrays.asList(s.split("\n")), x, y, fontRendererObj);
+        }
     }
 
     @Override
@@ -155,13 +160,9 @@ public class GuiPreview extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int x, int y) {
+        super.drawGuiContainerForegroundLayer(x, y);
         if (sign == null)
             fontRendererObj.drawSplitString(Localization.GUI.PREVIEW.CLICK_SIGN.translate(), 120, 10, 70, Colors.LIGHTGRAY.getRGB());
-        if (x >= guiLeft + 130 && y >= guiTop + 25 && x < guiLeft + 210 && y < guiTop + 120) {
-            String s = Localization.GUI.PREVIEW.DRAG.translate();
-            drawHoveringText(Arrays.asList(s.split("\n")), x - guiLeft, y - guiTop, fontRendererObj);
-        }
-        super.drawGuiContainerForegroundLayer(x, y);
     }
 
     private boolean needsScrollBars() {
@@ -202,7 +203,7 @@ public class GuiPreview extends GuiContainer {
 
     public void mouseClicked(int x, int y, int button) {
         if (button == 0) {
-            if (x >= guiLeft + 130 && y >= guiTop + 25 && x < guiLeft + 210 && y < guiTop + 120) {
+            if (x >= guiLeft + 115 && y >= guiTop + 5 && x < guiLeft + 220 && y < guiTop + 135) {
                 int x1 = x - guiLeft;
                 int y1 = y - guiTop;
 

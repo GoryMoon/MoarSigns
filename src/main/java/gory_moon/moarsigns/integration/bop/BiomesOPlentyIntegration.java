@@ -12,13 +12,14 @@ import java.util.ArrayList;
 public class BiomesOPlentyIntegration implements ISignRegistration {
 
     private static final String BOP_TAG = "BiomesOPlenty";
+    private static final String BOP_NAME = "Biomes O' Plenty";
     private Item bopItem = null;
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) {
         for (ItemStack plank : planks) {
             if (plank.getUnlocalizedName().equals("tile.planks.sacredoakPlank")) {
-                bopItem = plank.copy().getItem();
+                bopItem = plank.getItem();
                 break;
             }
         }
@@ -54,5 +55,10 @@ public class BiomesOPlentyIntegration implements ISignRegistration {
     @Override
     public String getIntegrationName() {
         return Utils.getModName(BOP_TAG);
+    }
+
+    @Override
+    public String getModName() {
+        return BOP_NAME;
     }
 }

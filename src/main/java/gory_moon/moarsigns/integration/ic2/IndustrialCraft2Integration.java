@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class IndustrialCraft2Integration implements ISignRegistration {
 
     private static final String IC2_TAG = "IC2";
+    private static final String IC2_NAME = "IndustrialCraft 2";
     private Item item = null;
     private Item blockItem = null;
 
@@ -23,9 +24,9 @@ public class IndustrialCraft2Integration implements ISignRegistration {
     public void registerMetalSigns(ArrayList<ItemStack> metals) {
         for (ItemStack stack : metals) {
             if (stack.getUnlocalizedName().equals("ic2.itemIngotCopper") && item == null) {
-                item = stack.copy().getItem();
+                item = stack.getItem();
             } else if (stack.getUnlocalizedName().equals("ic2.blockMetalCopper") && blockItem == null) {
-                blockItem = stack.copy().getItem();
+                blockItem = stack.getItem();
             }
 
             if (item != null && blockItem != null)
@@ -48,6 +49,11 @@ public class IndustrialCraft2Integration implements ISignRegistration {
     @Override
     public String getIntegrationName() {
         return Utils.getModName(IC2_TAG);
+    }
+
+    @Override
+    public String getModName() {
+        return IC2_NAME;
     }
 
 

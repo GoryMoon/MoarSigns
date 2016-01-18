@@ -1,10 +1,13 @@
 package gory_moon.moarsigns.api;
 
+import net.minecraft.item.EnumRarity;
+
 public class SignInfo {
 
     public String itemName;
     public MaterialInfo material;
     public boolean isMetal;
+    public EnumRarity rarity = EnumRarity.common;
 
     public SignSpecialProperty property;
     public String modId;
@@ -22,5 +25,14 @@ public class SignInfo {
     public SignInfo setMetal() {
         this.isMetal = true;
         return this;
+    }
+
+    public SignInfo setRarity(EnumRarity rarity) {
+        this.rarity = rarity;
+        return this;
+    }
+
+    public SignInfo setRarity(int rarity) {
+        return setRarity(EnumRarity.values()[rarity]);
     }
 }

@@ -81,4 +81,12 @@ public class IntegrationRegistry {
     public static ArrayList<String> getWoodNames() {
         return new ArrayList<String>(woodNames);
     }
+
+    public static ISignRegistration getWithTag(String tag) {
+        for (ISignRegistration registration : signReg)
+            if (registration.getActivateTag() != null && registration.getActivateTag().equals(tag))
+                return registration;
+
+        return null;
+    }
 }

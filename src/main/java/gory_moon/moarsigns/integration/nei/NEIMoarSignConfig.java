@@ -5,6 +5,7 @@ import codechicken.nei.api.IConfigureNEI;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.items.ModItems;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class NEIMoarSignConfig implements IConfigureNEI {
         API.hideItem(new ItemStack(Blocks.signWallMetal));
         API.hideItem(new ItemStack(Blocks.signWallWood));
         API.hideItem(new ItemStack(ModItems.debug));
+
+        API.hideItem(new ItemStack(Items.sign));
 
         NEIShapedMoarSignHandler shapedMoarSignHandler = new NEIShapedMoarSignHandler();
         NEIShapelessMoarSignHandler shapelessMoarSignHandler = new NEIShapelessMoarSignHandler();

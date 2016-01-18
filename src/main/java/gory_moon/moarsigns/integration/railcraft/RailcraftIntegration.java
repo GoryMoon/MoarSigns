@@ -24,11 +24,11 @@ public class RailcraftIntegration implements ISignRegistration {
     public void registerMetalSigns(ArrayList<ItemStack> metals) {
         for (ItemStack stack : metals) {
             if (stack.getUnlocalizedName().equals("item.railcraft.ingot.tin")) {
-                item = stack.copy().getItem();
+                item = stack.getItem();
             }
 
             if (stack.getUnlocalizedName().equals("tile.railcraft.cube.tin")) {
-                itemBlock = stack.copy().getItem();
+                itemBlock = stack.getItem();
             }
 
             if (item != null && itemBlock != null) break;
@@ -48,5 +48,10 @@ public class RailcraftIntegration implements ISignRegistration {
     @Override
     public String getIntegrationName() {
         return Utils.getModName(RAILCRAFT_TAG);
+    }
+
+    @Override
+    public String getModName() {
+        return RAILCRAFT_TAG;
     }
 }

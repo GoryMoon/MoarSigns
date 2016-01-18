@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class ForestryIntegration implements ISignRegistration {
 
     private static final String FORESTRY_TAG = "Forestry";
+    private static final String FORESTRY_NAME = "Forestry for Minecraft";
     private static final String PATH = "for/";
     private Item item = null;
     private Item itemIngot1 = null;
@@ -63,19 +64,19 @@ public class ForestryIntegration implements ISignRegistration {
     public void registerMetalSigns(ArrayList<ItemStack> metals) {
         for (ItemStack stack : metals) {
             if (stack.getUnlocalizedName().equals("item.for.ingotTin") && itemIngot1 == null) {
-                itemIngot1 = stack.copy().getItem();
+                itemIngot1 = stack.getItem();
             }
 
             if (stack.getUnlocalizedName().equals("item.for.ingotBronze") && itemIngot2 == null) {
-                itemIngot2 = stack.copy().getItem();
+                itemIngot2 = stack.getItem();
             }
 
             if (stack.getUnlocalizedName().equals("item.for.ingotCopper") && itemIngot3 == null) {
-                itemIngot3 = stack.copy().getItem();
+                itemIngot3 = stack.getItem();
             }
 
             if (stack.getUnlocalizedName().equals("tile.for.resourceStorage.1") && blockMetal == null) {
-                blockMetal = stack.copy().getItem();
+                blockMetal = stack.getItem();
             }
 
             if (itemIngot1 != null && itemIngot2 != null && itemIngot3 != null && blockMetal != null) break;
@@ -94,5 +95,10 @@ public class ForestryIntegration implements ISignRegistration {
     @Override
     public String getIntegrationName() {
         return Utils.getModName(FORESTRY_TAG);
+    }
+
+    @Override
+    public String getModName() {
+        return FORESTRY_NAME;
     }
 }

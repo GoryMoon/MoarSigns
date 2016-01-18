@@ -21,6 +21,8 @@ public class NuggetRegistry {
         registerNugget("bronze_nugget_forestry", "bronzeNugget", "item.for.ingotBronze", false);
         registerNugget("copper_nugget_forestry", "copperNugget", "item.for.ingotCopper", false);
         registerNugget("silver_nugget_factorization", "nuggetSilver", "item.factorization:silver_ingot", false);
+        registerNugget("lead_nugget_factorization", "nuggetLead", "item.factorization:lead_ingot", false);
+        registerNugget("darkiron_nugget_factorization", "nuggetFzDarkIron", "item.factorization:dark_iron_ingot", false);
     }
 
     public static void registerNugget(String unlocName, String oreName, String ingotName, boolean needed) {

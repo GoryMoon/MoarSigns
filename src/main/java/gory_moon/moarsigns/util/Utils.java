@@ -1,13 +1,19 @@
 package gory_moon.moarsigns.util;
 
+import com.google.common.collect.Maps;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
+import gory_moon.moarsigns.api.ISignRegistration;
+import gory_moon.moarsigns.api.IntegrationRegistry;
 import net.minecraft.client.gui.FontRenderer;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Utils {
+
+    private static HashMap<String, String> modNames = Maps.newHashMap();
 
     private static int[] maxLengths = {90, 82, 76, 70, 66, 62, 58, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 36, 34, 32, 32};
     private static int[] maxTextLocation = {36, 32, 29, 27, 24, 22, 21, 19, 17, 16, 15, 14, 13, 12, 11, 11, 10, 9, 9, 8, 8};
@@ -45,6 +51,16 @@ public class Utils {
         if (mods.containsKey(modID)) {
             return mods.get(modID).getName();
         }
+
+        if (modNames.containsKey(modID))
+            return modNames.get(modID);
+
+        ISignRegistration registration = IntegrationRegistry.getWithTag(modID);
+        if (registration != null) {
+            modNames.put(modID, registration.getModName());
+            return registration.getModName();
+        }
+
         return "Minecraft";
     }
 

@@ -18,7 +18,7 @@ public class NaturaIntegration implements ISignRegistration {
     public void registerWoodenSigns(ArrayList<ItemStack> planks) {
         for (ItemStack plank : planks) {
             if (plank.getUnlocalizedName().equals("block.eucalyptus.NPlanks")) {
-                naturaItem = plank.copy().getItem();
+                naturaItem = plank.getItem();
                 break;
             }
         }
@@ -52,5 +52,10 @@ public class NaturaIntegration implements ISignRegistration {
     @Override
     public String getIntegrationName() {
         return Utils.getModName(NATURA_TAG);
+    }
+
+    @Override
+    public String getModName() {
+        return NATURA_TAG;
     }
 }

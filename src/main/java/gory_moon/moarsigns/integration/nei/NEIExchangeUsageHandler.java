@@ -36,7 +36,7 @@ public class NEIExchangeUsageHandler extends TemplateRecipeHandler {
 
     @Override
     public String getRecipeName() {
-        return StatCollector.translateToLocal("crafting.moarsign.sign.exchange");
+        return StatCollector.translateToLocal("crafting.moarsigns.sign.exchange");
     }
 
     @Override

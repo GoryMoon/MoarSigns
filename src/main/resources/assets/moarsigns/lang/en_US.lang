@@ -117,6 +117,8 @@ item.moarsigns.tin_nugget_forestry.name=Tin Nugget
 item.moarsigns.bronze_nugget_forestry.name=Bronze Nugget
 item.moarsigns.copper_nugget_forestry.name=Copper Nugget
 item.moarsigns.silver_nugget_factorization.name=Silver Nugget
+item.moarsigns.lead_nugget_factorization.name=Lead Nugget
+item.moarsigns.darkiron_nugget_factorization.name=Dark Iron Nugget
 
 # Vanilla Signs
 item.moarsigns.sign.oak_sign.name=Oak Sign
@@ -137,7 +139,7 @@ item.moarsigns.sign.bop.cherry_sign.name=Cherry Sign
 item.moarsigns.sign.bop.dark_sign.name=Dark Sign
 item.moarsigns.sign.bop.fir_sign.name=Fir Sign
 item.moarsigns.sign.bop.hellbark_sign.name=Hellbark Sign
-item.moarsigns.sign.bop.holy_sign.name=Loftwood Sign
+item.moarsigns.sign.bop.holy_sign.name=Ethereal Sign
 item.moarsigns.sign.bop.jacaranda_sign.name=Jacaranda Sign
 item.moarsigns.sign.bop.magic_sign.name=Magic Sign
 item.moarsigns.sign.bop.mahogany_sign.name=Mahogany Sign
@@ -225,6 +227,22 @@ item.moarsigns.sign.railcraft.tin_sign.name=Tin Sign
 item.moarsigns.sign.railcraft.lead_sign.name=Lead Sign
 item.moarsigns.sign.railcraft.steel_sign.name=Steel Sign
 
+#ThermalFoundation
+item.moarsigns.sign.tf.copper_sign.name=Copper Sign
+item.moarsigns.sign.tf.tin_sign.name=Tin Sign
+item.moarsigns.sign.tf.silver_sign.name=Silver Sign
+item.moarsigns.sign.tf.lead_sign.name=Lead Sign
+item.moarsigns.sign.tf.nickel_sign.name=Ferrous Sign
+item.moarsigns.sign.tf.platinum_sign.name=Shiny Sign
+item.moarsigns.sign.tf.mithril_sign.name=Mana Infused Sign
+item.moarsigns.sign.tf.electrum_sign.name=Electrum Sign
+item.moarsigns.sign.tf.invar_sign.name=Invar Sign
+item.moarsigns.sign.tf.bronze_sign.name=Bronze Sign
+item.moarsigns.sign.tf.signalum_sign.name=Signalum Sign
+item.moarsigns.sign.tf.lumium_sign.name=Lumium Sign
+item.moarsigns.sign.tf.enderium_sign.name=Enderium Sign
+
 #Factorization
 item.moarsigns.sign.factorization.silver_sign.name=Silver Sign
 item.moarsigns.sign.factorization.lead_sign.name=Lead Sign
+item.moarsigns.sign.factorization.darkiron_sign.name=Dark Iron Sign

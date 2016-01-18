@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class TinkersConstructIntegration implements ISignRegistration {
 
     private static final String TCONSTRUCT_TAG = "TConstruct";
+    private static final String TCONSTRUCT_NAME = "Tinkers' Construct";
     private Item item = null;
     private Item itemBlock = null;
 
@@ -24,11 +25,11 @@ public class TinkersConstructIntegration implements ISignRegistration {
     public void registerMetalSigns(ArrayList<ItemStack> metals) {
         for (ItemStack stack : metals) {
             if (stack.getUnlocalizedName().equals("item.tconstruct.Materials.CopperIngot") && item == null) {
-                item = stack.copy().getItem();
+                item = stack.getItem();
             }
 
             if (stack.getUnlocalizedName().equals("StorageMetals.Cobalt") && itemBlock == null) {
-                itemBlock = stack.copy().getItem();
+                itemBlock = stack.getItem();
             }
 
             if (item != null && itemBlock != null) break;
@@ -54,5 +55,10 @@ public class TinkersConstructIntegration implements ISignRegistration {
     @Override
     public String getIntegrationName() {
         return Utils.getModName(TCONSTRUCT_TAG);
+    }
+
+    @Override
+    public String getModName() {
+        return TCONSTRUCT_NAME;
     }
 }

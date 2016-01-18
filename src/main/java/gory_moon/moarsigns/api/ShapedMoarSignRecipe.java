@@ -127,13 +127,13 @@ public class ShapedMoarSignRecipe implements IRecipe {
     public ShapedMoarSignRecipe(IRecipe recipe, Map<ItemStack, Object> replacements) {
         output = recipe.getRecipeOutput();
 
-        ItemStack items[] = null;
+        Object[] items = null;
         if (recipe instanceof ShapedRecipes) {
             ShapedRecipes r = (ShapedRecipes) recipe;
             width = r.recipeWidth;
             height = r.recipeHeight;
             input = new Object[r.recipeItems.length];
-            items = r.recipeItems;
+            items = new ItemStack[][]{r.recipeItems};
         } else if (recipe instanceof ShapedOreRecipe) {
             ShapedOreRecipe r = (ShapedOreRecipe) recipe;
 
@@ -141,11 +141,13 @@ public class ShapedMoarSignRecipe implements IRecipe {
                 Class clazz = ShapedOreRecipe.class;
                 Field field = clazz.getDeclaredField("width");
                 Field field1 = clazz.getDeclaredField("height");
+                field.setAccessible(true);
+                field1.setAccessible(true);
 
                 width = field.getInt(r);
                 height = field1.getInt(r);
                 input = new Object[r.getRecipeSize()];
-                items = (ItemStack[]) r.getInput();
+                items = r.getInput();
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -155,18 +157,17 @@ public class ShapedMoarSignRecipe implements IRecipe {
 
         if (items != null) {
             for (int i = 0; i < input.length; i++) {
-                ItemStack ingred = items[i];
+                Object ingred = items[i];
+                input[i] = ingred;
 
-                if (ingred == null) continue;
-
-                input[i] = items[i];
+                if (ingred == null || !(ingred instanceof ItemStack)) continue;
 
                 for (java.util.Map.Entry<ItemStack, Object> replace : replacements.entrySet()) {
-                    if (OreDictionary.itemMatches(replace.getKey(), ingred, true)) {
+                    if (OreDictionary.itemMatches(replace.getKey(), (ItemStack) ingred, true)) {
                         if (replace.getValue() instanceof String) {
                             input[i] = OreDictionary.getOres(String.valueOf(replace.getValue()));
                         } else if (replace.getValue() instanceof MatchType || replace.getValue() instanceof MaterialInfo) {
-                            input[i] = replace;
+                            input[i] = replace.getValue();
                         }
                         break;
                     }

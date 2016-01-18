@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -83,6 +84,15 @@ public class ItemMoarSign extends Item {
             String path = info.material.path;
             list.add(createMoarItemStack(path + info.itemName, info.isMetal));
         }
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack) {
+        SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
+        if (info != null) {
+            return info.rarity;
+        }
+        return EnumRarity.common;
     }
 
     @Override

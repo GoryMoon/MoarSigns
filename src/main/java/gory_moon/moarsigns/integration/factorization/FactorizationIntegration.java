@@ -12,8 +12,11 @@ import java.util.ArrayList;
 public class FactorizationIntegration implements ISignRegistration {
 
     private static final String FACTORIZATION_TAG = "factorization";
-    private Item factorizationSilverItem = null;
-    private Item factorizationLeadItem = null;
+    private static final String FACTORIZATION_NAME = "Factorization";
+    private Item silverItem = null;
+    private Item leadItem = null;
+    private Item darkIronItem = null;
+    private Item itemBlock = null;
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) {
@@ -23,18 +26,29 @@ public class FactorizationIntegration implements ISignRegistration {
     @Override
     public void registerMetalSigns(ArrayList<ItemStack> metals) {
         for (ItemStack stacks : metals) {
-            if (stacks.getUnlocalizedName().equals("item.factorization:silver_ingot")) {
-                factorizationSilverItem = stacks.copy().getItem();
+            if (silverItem == null && stacks.getUnlocalizedName().equals("item.factorization:silver_ingot")) {
+                silverItem = stacks.getItem();
             }
-            if (stacks.getUnlocalizedName().equals("item.factorization:lead_ingot")) {
-                factorizationLeadItem = stacks.copy().getItem();
+
+            if (leadItem == null && stacks.getUnlocalizedName().equals("item.factorization:lead_ingot")) {
+                leadItem = stacks.getItem();
             }
-            if (factorizationSilverItem != null && factorizationLeadItem != null) break;
+
+            if (darkIronItem == null && stacks.getUnlocalizedName().equals("item.factorization:dark_iron_ingot")) {
+                darkIronItem = stacks.getItem();
+            }
+
+            if (itemBlock == null && stacks.getUnlocalizedName().equals("tile.factorization.ResourceBlock.SILVERBLOCK")) {
+                itemBlock = stacks.getItem();
+            }
+
+            if (silverItem != null && leadItem != null && darkIronItem != null && itemBlock != null) break;
         }
 
-        //TODO Add block material
-        SignRegistry.register("silver_sign", null, "silver", "factorization/", true, new ItemStack(factorizationSilverItem, 1, 0), ModInfo.ID, FACTORIZATION_TAG).setMetal();
-        SignRegistry.register("lead_sign", null, "lead", "factorization/", true, new ItemStack(factorizationLeadItem, 1, 0), ModInfo.ID, FACTORIZATION_TAG).setMetal();
+        SignRegistry.register("silver_sign", null, "silver", "factorization/", false, new ItemStack(silverItem), new ItemStack(itemBlock, 1, 1), ModInfo.ID, FACTORIZATION_TAG).setMetal();
+        SignRegistry.register("lead_sign", null, "lead", "factorization/", false, new ItemStack(leadItem), new ItemStack(itemBlock, 1, 2), ModInfo.ID, FACTORIZATION_TAG).setMetal();
+        SignRegistry.register("darkiron_sign", null, "darkiron", "factorization/", false, new ItemStack(darkIronItem), new ItemStack(itemBlock, 1, 3), ModInfo.ID, FACTORIZATION_TAG).setMetal();
+
     }
 
     @Override
@@ -45,5 +59,10 @@ public class FactorizationIntegration implements ISignRegistration {
     @Override
     public String getIntegrationName() {
         return Utils.getModName(FACTORIZATION_TAG);
+    }
+
+    @Override
+    public String getModName() {
+        return FACTORIZATION_NAME;
     }
 }

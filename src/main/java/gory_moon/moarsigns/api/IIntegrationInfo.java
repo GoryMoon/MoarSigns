@@ -5,4 +5,6 @@ public interface IIntegrationInfo {
     String getActivateTag();
 
     String getIntegrationName();
+
+    String getModName();
 }

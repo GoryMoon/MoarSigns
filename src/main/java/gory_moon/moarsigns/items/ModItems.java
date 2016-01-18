@@ -64,14 +64,14 @@ public class ModItems {
         Container dummyContainer = new Container() {
             @Override
             public boolean canInteractWith(EntityPlayer entityplayer) {
-                return false;
+                return true;
             }
 
             @Override
             public void onCraftMatrixChanged(IInventory par1IInventory) {
             }
         };
-        InventoryCrafting crafting = new InventoryCrafting(dummyContainer, 3, 3);
+        InventoryCrafting crafting = new InventoryCrafting(dummyContainer, 2, 2);
 
         for (ItemStack stack : list) {
 

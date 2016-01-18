@@ -29,6 +29,24 @@ public class Api {
     }
 
     /**
+     * Helper method for {@link SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, String)}
+     *
+     * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, String)
+     */
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId) {
+        return SignRegistry.register(itemName, property, materialName, path, gotNugget, materialItemStack, materialBlock, modId);
+    }
+
+    /**
+     * Helper method for {@link SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, String, String)}
+     *
+     * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, String, String)
+     */
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId, String activateTag) {
+        return SignRegistry.register(itemName, property, materialName, path, gotNugget, materialItemStack, materialBlock, modId, activateTag);
+    }
+
+    /**
      * Rotates the sign by one step
      *
      * @param tileEntity The tile entity of the sign that should setRotation
