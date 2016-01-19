@@ -39,8 +39,14 @@ public class Signs {
         MineTweakerAPI.apply(new Add(true, toStack(output), toObjects(ingredients)));
     }
 
-    public static void removeRecipe(IItemStack output) {
+    @ZenMethod
+    public static void removeRecipes(IItemStack output) {
         MineTweakerAPI.apply(new Remove(toStack(output)));
+    }
+
+    @ZenMethod
+    public static void removeRecipes(IItemStack[] output) {
+        MineTweakerAPI.apply(new Remove(toStacks(output)));
     }
 
     @ZenMethod
@@ -64,7 +70,7 @@ public class Signs {
             } else {
                 for (ItemStack stack : Signs.signs) {
                     SignInfo info = ItemMoarSign.getInfo(stack.getTagCompound());
-                    if (((MaterialInfo) ingredient.getInternal()).materialName.equals(info.material.materialName))
+                    if (((MaterialInfo) ingredient.getInternal()).materialName.equals(info.material.materialName) && (((MaterialEntry) ingredient).getModID() == null || ((MaterialEntry) ingredient).getModID().equals(info.activateTag)))
                         signs.add(new MCItemStack(stack));
                 }
             }
@@ -199,44 +205,59 @@ public class Signs {
 
     private static class Remove implements IUndoableAction {
 
-        private final ItemStack output;
-        private IRecipe iRecipe;
+        private final ItemStack[] outputs;
+        private ArrayList<IRecipe> iRecipes;
 
         public Remove(ItemStack output) {
-            this.output = output;
+            this.outputs = new ItemStack[1];
+            this.outputs[0] = output;
+        }
+
+        public Remove(ItemStack[] outputs) {
+            this.outputs = outputs;
         }
 
         @Override
         public void apply() {
-            List<IRecipe> allRecipes = CraftingManager.getInstance().getRecipeList();
-            for (IRecipe recipe : allRecipes) {
-                if ((recipe instanceof ShapedMoarSignRecipe || recipe instanceof ShapelessMoarSignRecipe) && recipe.getRecipeOutput() != null && ItemStack.areItemStacksEqual(recipe.getRecipeOutput(), output)) {
-                    iRecipe = recipe;
-                    break;
+            List allRecipes = CraftingManager.getInstance().getRecipeList();
+            iRecipes = new ArrayList<IRecipe>();
+            for (Object obj : allRecipes) {
+                IRecipe recipe = (IRecipe) obj;
+                for (ItemStack output : outputs) {
+                    if ((recipe instanceof ShapedMoarSignRecipe || recipe instanceof ShapelessMoarSignRecipe) && recipe.getRecipeOutput() != null && ItemStack.areItemStackTagsEqual(recipe.getRecipeOutput(), output)) {
+                        iRecipes.add(recipe);
+                    }
                 }
             }
+            for (IRecipe recipe : iRecipes)
+                CraftingManager.getInstance().getRecipeList().remove(recipe);
 
-            CraftingManager.getInstance().getRecipeList().remove(iRecipe);
         }
 
         @Override
         public boolean canUndo() {
-            return CraftingManager.getInstance().getRecipeList() != null && iRecipe != null;
+            return CraftingManager.getInstance().getRecipeList() != null && iRecipes != null && !iRecipes.isEmpty();
         }
 
         @Override
         public void undo() {
-            CraftingManager.getInstance().getRecipeList().add(iRecipe);
+            CraftingManager.getInstance().getRecipeList().addAll(iRecipes);
         }
 
         @Override
         public String describe() {
-            return "Removing MoarSign recipe for " + output.getDisplayName();
+            String s = "";
+            for (ItemStack output : outputs)
+                s += "Removing MoarSign recipe for " + output.getDisplayName() + "\n";
+            return s;
         }
 
         @Override
         public String describeUndo() {
-            return "Restoring MoarSign recipe for " + output.getDisplayName();
+            String s = "";
+            for (ItemStack output : outputs)
+                s += "Restoring MoarSign recipe for  " + output.getDisplayName() + "\n";
+            return s;
         }
 
         @Override

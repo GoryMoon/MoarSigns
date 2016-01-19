@@ -36,6 +36,8 @@ public class ModItems {
     public static ItemNugget nugget;
     public static ItemSignToolbox signToolbox;
 
+    public static boolean replaceRecipes = true;
+
     public static void init() {
 
         sign = new ItemMoarSign();
@@ -122,56 +124,68 @@ public class ModItems {
                             if (recNugget != null && recNugget.getItem() != null) {
                                 ItemStack stack1 = stack.copy();
                                 stack1.stackSize = 1;
-                                if (recNugget.getUnlocalizedName().equals("item.moarsign." + NuggetRegistry.getUnlocName(0)))
-                                    GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "diamondNugget", '/', Items.stick));
-                                else if (recNugget.getUnlocalizedName().equals("item.moarsign." + NuggetRegistry.getUnlocName(1)))
-                                    GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetIron", '/', Items.stick));
+                                if (recNugget.getUnlocalizedName().equals("item.moarsign." + NuggetRegistry.getUnlocName(0))) {
+                                    GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "diamondNugget", '/', "stickWood"));
+                                    GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetDiamond", '/', "stickWood"));
+                                } else if (recNugget.getUnlocalizedName().equals("item.moarsign." + NuggetRegistry.getUnlocName(1)))
+                                    GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetIron", '/', "stickWood"));
+                                else if (recNugget.getUnlocalizedName().equals("item.moarsign." + NuggetRegistry.getUnlocName(2)))
+                                    GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetEmerald", '/', "stickWood"));
                                 else
-                                    GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', recNugget, '/', Items.stick));
+                                    GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', recNugget, '/', "stickWood"));
                             }
 
                             stack.stackSize = 9;
                         }
-                        GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack, true, true, "XXX", "XXX", " / ", 'X', mat, '/', Items.stick));
+                        if (mat.getUnlocalizedName().equals(Items.diamond.getUnlocalizedName()))
+                            GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack, true, true, "XXX", "XXX", " / ", 'X', "gemDiamond", '/', "stickWood"));
+                        else if (mat.getUnlocalizedName().equals(Items.emerald.getUnlocalizedName()))
+                            GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack, true, true, "XXX", "XXX", " / ", 'X', "gemEmerald", '/', "stickWood"));
+                        else if (mat.getUnlocalizedName().equals(Items.iron_ingot.getUnlocalizedName()))
+                            GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack, true, true, "XXX", "XXX", " / ", 'X', "ingotIron", '/', "stickWood"));
+                        else
+                            GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack, true, true, "XXX", "XXX", " / ", 'X', mat, '/', "stickWood"));
                     }
                     break;
                 }
             }
         }
 
-        GameRegistry.addRecipe(new ShapedMoarSignRecipe(generalSign, true, true, "###", "###", " X ", '#', "plankWood", 'X', Items.stick));
+        GameRegistry.addRecipe(new ShapedMoarSignRecipe(generalSign, true, true, "###", "###", " X ", '#', "plankWood", 'X', "stickWood"));
         GameRegistry.addRecipe(new ShapedMoarSignRecipe(signToolbox, "rxr", "xsx", "rxr", 'x', "ingotIron", 's', ShapedMoarSignRecipe.MatchType.ALL, 'r', "dyeRed"));
 
-        ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
-        ItemStack signStack = new ItemStack(Items.sign);
-        for (int scan = 0; scan < recipes.size(); scan++) {
-            IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
-            List input = null;
+        if (replaceRecipes) {
+            ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
+            ItemStack signStack = new ItemStack(Items.sign);
+            for (int scan = 0; scan < recipes.size(); scan++) {
+                IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
+                List input = null;
 
-            if (tmpRecipe instanceof ShapedRecipes) {
-                input = Arrays.asList(((ShapedRecipes) tmpRecipe).recipeItems);
-            } else if (tmpRecipe instanceof ShapelessRecipes) {
-                input = ((ShapelessRecipes) tmpRecipe).recipeItems;
-            } else if (tmpRecipe instanceof ShapedOreRecipe) {
-                input = Arrays.asList(((ShapedOreRecipe) tmpRecipe).getInput());
-            } else if (tmpRecipe instanceof ShapelessOreRecipe) {
-                input = ((ShapelessOreRecipe) tmpRecipe).getInput();
-            }
+                if (tmpRecipe instanceof ShapedRecipes) {
+                    input = Arrays.asList(((ShapedRecipes) tmpRecipe).recipeItems);
+                } else if (tmpRecipe instanceof ShapelessRecipes) {
+                    input = ((ShapelessRecipes) tmpRecipe).recipeItems;
+                } else if (tmpRecipe instanceof ShapedOreRecipe) {
+                    input = Arrays.asList(((ShapedOreRecipe) tmpRecipe).getInput());
+                } else if (tmpRecipe instanceof ShapelessOreRecipe) {
+                    input = ((ShapelessOreRecipe) tmpRecipe).getInput();
+                }
 
-            if (input != null) {
-                for (Object stack : input) {
-                    if (stack instanceof ItemStack && OreDictionary.itemMatches((ItemStack) stack, signStack, false)) {
-                        HashMap<ItemStack, Object> map = Maps.newHashMap();
-                        map.put(signStack, ShapedMoarSignRecipe.MatchType.ALL);
+                if (input != null) {
+                    for (Object stack : input) {
+                        if (stack instanceof ItemStack && OreDictionary.itemMatches((ItemStack) stack, signStack, false)) {
+                            HashMap<ItemStack, Object> map = Maps.newHashMap();
+                            map.put(signStack, ShapedMoarSignRecipe.MatchType.ALL);
 
-                        IRecipe replacement = null;
-                        if (tmpRecipe instanceof ShapedRecipes || tmpRecipe instanceof ShapedOreRecipe)
-                            GameRegistry.addRecipe(replacement = new ShapedMoarSignRecipe(tmpRecipe, map));
-                        if (tmpRecipe instanceof ShapelessRecipes || tmpRecipe instanceof ShapelessOreRecipe)
-                            GameRegistry.addRecipe(replacement = new ShapelessMoarSignRecipe(tmpRecipe, map));
+                            IRecipe replacement = null;
+                            if (tmpRecipe instanceof ShapedRecipes || tmpRecipe instanceof ShapedOreRecipe)
+                                GameRegistry.addRecipe(replacement = new ShapedMoarSignRecipe(tmpRecipe, map));
+                            if (tmpRecipe instanceof ShapelessRecipes || tmpRecipe instanceof ShapelessOreRecipe)
+                                GameRegistry.addRecipe(replacement = new ShapelessMoarSignRecipe(tmpRecipe, map));
 
-                        MoarSigns.logger.info("Replacing Recipe: " + tmpRecipe + " (containing " + stack + ") -> " + replacement);
-                        recipes.remove(scan);
+                            MoarSigns.logger.info("Replacing Recipe: " + tmpRecipe + " (containing " + stack + ") -> " + replacement);
+                            recipes.remove(scan);
+                        }
                     }
                 }
             }

@@ -9,9 +9,9 @@ public class NuggetRegistry {
     private static ArrayList<NuggetInfo> nuggets = Lists.newArrayList();
 
     public static void init() {
-        registerNugget(0, "diamond_nugget", "diamondNugget", "item.diamond", true);
+        registerNugget(0, "diamond_nugget", "nuggetDiamond", "item.diamond", true);
         registerNugget(1, "iron_nugget", "nuggetIron", "item.ingotIron", true);
-        registerNugget("emerald_nugget", "nuggetEmerald", "item.emerald", true);
+        registerNugget(2, "emerald_nugget", "nuggetEmerald", "item.emerald", true);
         registerNugget("bronze_nugget_ic2", "nuggetBronze", "ic2.itemIngotBronze", false);
         registerNugget("copper_nugget_ic2", "nuggetCopper", "ic2.itemIngotCopper", false);
         registerNugget("tin_nugget_ic2", "nuggetTin", "ic2.itemIngotTin", false);

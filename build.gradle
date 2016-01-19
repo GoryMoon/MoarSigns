@@ -24,6 +24,7 @@ repositories {
     mavenCentral()
 }
 
+apply plugin: 'java'
 apply plugin: 'forge'
 
 // Define properties file
@@ -87,11 +88,7 @@ dependencies {
     compile "codechicken:NotEnoughItems:" + config.mc_version + "-" + config.nei_version + ":dev"
     compile "mcp.mobius.waila:Waila:" + config.waila_version + "_" + config.mc_version + ":dev"
 
-    compile "tconstruct:TConstruct:${config.mc_version}-${config.tconstruct_version}:deobf"
-
-    compile "net.industrial-craft:industrialcraft-2:" + config.ic2_version + ":dev"
-
-    compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar'
+    compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar', group: ''
 
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..

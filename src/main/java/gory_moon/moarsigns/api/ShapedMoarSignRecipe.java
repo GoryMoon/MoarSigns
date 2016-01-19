@@ -133,7 +133,7 @@ public class ShapedMoarSignRecipe implements IRecipe {
             width = r.recipeWidth;
             height = r.recipeHeight;
             input = new Object[r.recipeItems.length];
-            items = new ItemStack[][]{r.recipeItems};
+            items = r.recipeItems;
         } else if (recipe instanceof ShapedOreRecipe) {
             ShapedOreRecipe r = (ShapedOreRecipe) recipe;
 
