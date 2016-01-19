@@ -1,14 +1,46 @@
 {
-  "versionList": [
-	{
-	  "mcVersion": "Minecraft 1.7.10",
-	  "modVersion": "1.1.4",
-	  "changeLog": [
-		"Fixed colored text not encode and decode properly on servers"
-	  ],
-	  "updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2226441/download",
-	  "isDirectLink": "true",
-	  "newFileName": ""
-	}
-  ]
+	"versionList": [
+		{
+			"mcVersion": "Minecraft 1.7.10",
+			"modVersion": "1.2.0",
+			"changeLog": [
+				"Added SignToolBox:",
+				" -Able to edit sings",
+				" -Able to move signs",
+				" -Able to copy signs",
+				" -Able to rotate signs",
+				" -Able to exchange to other signs of same material",
+				" -Able to preview sign",
+				"Added more signs of following types:",
+				" -Dark Iron",
+				" -Cobalt",
+				" -Ardite",
+				" -Manyullyn",
+				" -Aluminum",
+				" -Aluminum Brass",
+				" -Alumite",
+				" -Ferrous",
+				" -Shiny",
+				" -Mana Infused Ingot",
+				" -Invar",
+				" -Signalum",
+				" -Lumium",
+				" -Enderium",
+				" -Giant Seqouia",
+				" -Ipe",
+				" -Padauk",
+				" -Cocobolo",
+				" -Zebrawood",
+				" -Bamboo",
+				"Added replacing if signs in other recipes so they are craftable",
+				"Added NEI support",
+				"Added Waila support",
+				"Added Mine Tweaker 3 support",
+				"Improved API of adding signs"
+			],
+			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2276318/download",
+			"isDirectLink": "true",
+			"newFileName": ""
+		}
+	]
 }
