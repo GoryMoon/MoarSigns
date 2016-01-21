@@ -1,6 +1,6 @@
 package gory_moon.moarsigns.api;
 
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.RotationHandler;
 import net.minecraft.item.ItemStack;

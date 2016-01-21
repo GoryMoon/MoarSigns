@@ -1,5 +1,5 @@
 package gory_moon.moarsigns.integration.nei;
-
+/*
 import codechicken.nei.ItemList;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
@@ -183,3 +183,4 @@ public class NEIShapelessMoarSignHandler extends ShapelessRecipeHandler {
         }
     }
 }
+*/

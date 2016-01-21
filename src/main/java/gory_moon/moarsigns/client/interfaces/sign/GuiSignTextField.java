@@ -11,15 +11,15 @@ public class GuiSignTextField extends GuiTextField {
 
     private int maxRowLength = 90;
 
-    public GuiSignTextField(FontRenderer p_i1032_1_, int p_i1032_2_, int p_i1032_3_, int p_i1032_4_, int p_i1032_5_) {
-        super(p_i1032_1_, p_i1032_2_, p_i1032_3_, p_i1032_4_, p_i1032_5_);
+    public GuiSignTextField(int id, FontRenderer p_i1032_1_, int p_i1032_2_, int p_i1032_3_, int p_i1032_4_, int p_i1032_5_) {
+        super(id, p_i1032_1_, p_i1032_2_, p_i1032_3_, p_i1032_4_, p_i1032_5_);
     }
 
     @Override
     public void setText(String text) {
 
-        if (field_146211_a.getStringWidth(text) > this.maxRowLength + getSpecialsWidth(text)) {
-            this.text = field_146211_a.trimStringToWidth(text, this.maxRowLength + getSpecialsWidth(text));
+        if (fontRendererInstance.getStringWidth(text) > this.maxRowLength + getSpecialsWidth(text)) {
+            this.text = fontRendererInstance.trimStringToWidth(text, this.maxRowLength + getSpecialsWidth(text));
         } else {
             this.text = text;
         }
@@ -31,10 +31,10 @@ public class GuiSignTextField extends GuiTextField {
     @Override
     public void writeText(String text) {
         String s1 = "";
-        String s2 = ChatAllowedCharacters.filerAllowedCharacters(text);
+        String s2 = ChatAllowedCharacters.filterAllowedCharacters(text);
         int i = cursorPosition < this.selectionEnd ? cursorPosition : this.selectionEnd;
         int j = cursorPosition < this.selectionEnd ? this.selectionEnd : cursorPosition;
-        int k = this.maxRowLength - field_146211_a.getStringWidth(GuiMoarSign.getSignTextWithColor(new String[]{this.text})[0]) - (field_146211_a.getStringWidth(this.text.substring(0, i)) - field_146211_a.getStringWidth(this.text.substring(0, j)));
+        int k = this.maxRowLength - fontRendererInstance.getStringWidth(GuiMoarSign.getSignTextWithColor(new String[]{this.text})[0].getUnformattedText()) - (fontRendererInstance.getStringWidth(this.text.substring(0, i)) - fontRendererInstance.getStringWidth(this.text.substring(0, j)));
 
         if (this.text.length() > 0) {
             s1 = s1 + this.text.substring(0, i);
@@ -42,8 +42,8 @@ public class GuiSignTextField extends GuiTextField {
 
         int l;
 
-        if (k < field_146211_a.getStringWidth(s2) && !isSpecial(s2)) {
-            String temp = field_146211_a.trimStringToWidth(s2, k);
+        if (k < fontRendererInstance.getStringWidth(s2) && !isSpecial(s2)) {
+            String temp = fontRendererInstance.trimStringToWidth(s2, k);
             s1 = s1 + temp;
             l = temp.length();
         } else {
@@ -64,6 +64,7 @@ public class GuiSignTextField extends GuiTextField {
         this.moveCursorBy(i - this.getSelectionEnd() + l);
     }
 
+    @Override
     public void deleteFromCursor(int p_146175_1_) {
         if (this.text.length() != 0) {
             if (this.selectionEnd != this.cursorPosition) {
@@ -126,7 +127,7 @@ public class GuiSignTextField extends GuiTextField {
         Matcher m = Pattern.compile("(\\{" + (char) 8747 + "[0-9a-z]\\})").matcher(s);
         int i = 0;
 
-        while (m.find()) i += field_146211_a.getStringWidth(m.group(1));
+        while (m.find()) i += fontRendererInstance.getStringWidth(m.group(1));
         return i;
     }
 

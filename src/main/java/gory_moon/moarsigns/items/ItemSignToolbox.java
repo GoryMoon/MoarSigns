@@ -1,32 +1,32 @@
 package gory_moon.moarsigns.items;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.MoarSignsCreativeTab;
 import gory_moon.moarsigns.blocks.BlockMoarSign;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
-import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.lib.ToolBoxModes;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignOpenGui;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
-import gory_moon.moarsigns.util.*;
+import gory_moon.moarsigns.util.Colors;
+import gory_moon.moarsigns.util.Localization;
+import gory_moon.moarsigns.util.RotationHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +38,7 @@ public class ItemSignToolbox extends Item {
 
     public static final String SIGN_MOVING_TAG = "SignMoving";
     public static final String NBT_UNLOCALIZED_NAME = "SignUnlocalizedName";
-    private IIcon[] icons = new IIcon[ToolBoxModes.values().length];
+    //private IIcon[] icons = new IIcon[ToolBoxModes.values().length];
 
     public ItemSignToolbox() {
         setUnlocalizedName("moarsigns.signtoolbox");
@@ -52,6 +52,8 @@ public class ItemSignToolbox extends Item {
         return true;
     }
 
+    //TODO Icons
+    /*
     @Override
     public void registerIcons(IIconRegister register) {
         for (int i = 0; i < ToolBoxModes.values().length; i++) {
@@ -64,7 +66,7 @@ public class ItemSignToolbox extends Item {
         if (itemDamage > 5 && !isMoving(itemDamage)) return null;
         int mode = isMoving(itemDamage) ? 2 : itemDamage;
         return icons[mode];
-    }
+    }*/
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
@@ -76,9 +78,9 @@ public class ItemSignToolbox extends Item {
                 if (player.isSneaking() && !isMoving(stack.getItemDamage())) {
                     return rotateModes(stack);
                 } else if (ToolBoxModes.values()[mode] == EXCHANGE_MODE) {
-                    doExchange(world, 0, 0, 0, player);
+                    doExchange(world, BlockPos.ORIGIN, player);
                 } else if (ToolBoxModes.values()[mode] == PREVIEW_MODE) {
-                    doPreview(world, 0, 0, 0, player);
+                    doPreview(world, BlockPos.ORIGIN, player);
                 }
             }
         }
@@ -86,41 +88,41 @@ public class ItemSignToolbox extends Item {
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
             switch (ToolBoxModes.values()[mode]) {
                 case EDIT_MODE:
-                    doEdit(world, x, y, z, player);
+                    doEdit(world, pos, player);
                     break;
                 case ROTATE_MODE:
-                    doRotate(world, x, y, z);
+                    doRotate(world, pos);
                     break;
                 case MOVE_MODE:
-                    return doMove(world, x, y, z, stack, player, side, hitX, hitY, hitZ);
+                    return doMove(world, pos, stack, player, side, hitX, hitY, hitZ);
                 case COPY_MODE:
-                    doCopy(world, x, y, z, stack);
+                    doCopy(world, pos, stack);
                     break;
                 case EXCHANGE_MODE:
-                    doExchange(world, x, y, z, player);
+                    doExchange(world, pos, player);
                     return true;
                 case PREVIEW_MODE:
-                    doPreview(world, x, y, z, player);
+                    doPreview(world, pos, player);
                     return true;
             }
         }
         return false;
     }
 
-    private void doRotate(World world, int x, int y, int z) {
-        if (world.getBlock(x, y, z) instanceof BlockMoarSign) {
-            RotationHandler.rotate((TileEntityMoarSign) world.getTileEntity(x, y, z));
+    private void doRotate(World world, BlockPos pos) {
+        if (world.getBlockState(pos).getBlock() instanceof BlockMoarSign) {
+            RotationHandler.rotate((TileEntityMoarSign) world.getTileEntity(pos));
         }
     }
 
-    private void doEdit(World world, int x, int y, int z, EntityPlayer player) {
-        if (world.getBlock(x, y, z) instanceof BlockMoarSign) {
-            TileEntity entity = world.getTileEntity(x, y, z);
+    private void doEdit(World world, BlockPos pos, EntityPlayer player) {
+        if (world.getBlockState(pos).getBlock() instanceof BlockMoarSign) {
+            TileEntity entity = world.getTileEntity(pos);
             if (entity instanceof TileEntityMoarSign) {
                 TileEntityMoarSign tileEntity = (TileEntityMoarSign) entity;
                 PacketHandler.INSTANCE.sendTo(new MessageSignOpenGui(tileEntity, false), (EntityPlayerMP) player);
@@ -128,10 +130,10 @@ public class ItemSignToolbox extends Item {
         }
     }
 
-    private void doCopy(World world, int x, int y, int z, ItemStack stack) {
+    private void doCopy(World world, BlockPos pos, ItemStack stack) {
         NBTTagCompound signInfo = stack.getTagCompound();
         if (GuiScreen.isCtrlKeyDown()) {
-            TileEntity tileEntity = world.getTileEntity(x, y, z);
+            TileEntity tileEntity = world.getTileEntity(pos);
 
             if (tileEntity instanceof TileEntityMoarSign) {
                 signInfo = new NBTTagCompound();
@@ -141,24 +143,22 @@ public class ItemSignToolbox extends Item {
                 stack.setTagCompound(signInfo);
             }
         } else if (signInfo != null) {
-            TileEntity tileEntity = world.getTileEntity(x, y, z);
+            TileEntity tileEntity = world.getTileEntity(pos);
 
             if (tileEntity instanceof TileEntityMoarSign) {
                 tileEntity.readFromNBT(signInfo);
-                tileEntity.xCoord = x;
-                tileEntity.yCoord = y;
-                tileEntity.zCoord = z;
-                world.markBlockForUpdate(x, y, z);
+                tileEntity.setPos(pos);
+                world.markBlockForUpdate(pos);
             }
         }
     }
 
-    private boolean doMove(World world, int x, int y, int z, ItemStack stack, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    private boolean doMove(World world, BlockPos pos, ItemStack stack, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
         boolean val = true;
         NBTTagCompound signInfo = stack.getTagCompound();
 
         if (!isMoving(stack.getItemDamage())) {
-            TileEntity tileEntity = world.getTileEntity(x, y, z);
+            TileEntity tileEntity = world.getTileEntity(pos);
 
             if (tileEntity instanceof TileEntityMoarSign) {
                 TileEntityMoarSign tileEntityMoarSign = (TileEntityMoarSign) tileEntity;
@@ -170,7 +170,7 @@ public class ItemSignToolbox extends Item {
 
                 stack = toggleMoving(stack);
                 tileEntityMoarSign.removeNoDrop = true;
-                world.setBlock(x, y, z, Blocks.air);
+                world.setBlockToAir(pos);
             }
         } else {
             String texture = signInfo.getString(TileEntityMoarSign.NBT_TEXTURE_TAG);
@@ -178,22 +178,16 @@ public class ItemSignToolbox extends Item {
 
             ItemStack moarSignsStack = ModItems.sign.createMoarItemStack(texture, isMetal);
             moarSignsStack.getTagCompound().setBoolean(SIGN_MOVING_TAG, true);
-            val = ModItems.sign.onItemUse(moarSignsStack, player, world, x, y, z, side, hitX, hitY, hitZ);
+            val = ModItems.sign.onItemUse(moarSignsStack, player, world, pos, side, hitX, hitY, hitZ);
 
             if (val) {
-                PlacedCoord coord = new PlacedCoord(x, y, z, side);
-                coord = Utils.calculatePlaceSideCoord(coord);
-                x = coord.x;
-                y = coord.y;
-                z = coord.z;
+                pos = pos.offset(side);
 
                 signInfo.removeTag(NBT_UNLOCALIZED_NAME);
-                TileEntityMoarSign entityMoarSign = (TileEntityMoarSign) world.getTileEntity(x, y, z);
+                TileEntityMoarSign entityMoarSign = (TileEntityMoarSign) world.getTileEntity(pos);
                 entityMoarSign.readFromNBT(signInfo);
-                entityMoarSign.xCoord = x;
-                entityMoarSign.yCoord = y;
-                entityMoarSign.zCoord = z;
-                world.markBlockForUpdate(x, y, z);
+                entityMoarSign.setPos(pos);
+                world.markBlockForUpdate(pos);
 
                 signInfo = null;
                 stack = toggleMoving(stack);
@@ -204,12 +198,12 @@ public class ItemSignToolbox extends Item {
         return !val;
     }
 
-    private void doExchange(World world, int x, int y, int z, EntityPlayer player) {
-        FMLNetworkHandler.openGui(player, MoarSigns.instance, GuiHandler.EXCHANGE, world, x, y, z);
+    private void doExchange(World world, BlockPos pos, EntityPlayer player) {
+        FMLNetworkHandler.openGui(player, MoarSigns.instance, GuiHandler.EXCHANGE, world, pos.getX(), pos.getY(), pos.getZ());
     }
 
-    private void doPreview(World world, int x, int y, int z, EntityPlayer player) {
-        FMLNetworkHandler.openGui(player, MoarSigns.instance, GuiHandler.PREVIEW, world, x, y, z);
+    private void doPreview(World world, BlockPos pos, EntityPlayer player) {
+        FMLNetworkHandler.openGui(player, MoarSigns.instance, GuiHandler.PREVIEW, world, pos.getX(), pos.getY(), pos.getZ());
     }
 
     private ItemStack rotateModes(ItemStack stack) {

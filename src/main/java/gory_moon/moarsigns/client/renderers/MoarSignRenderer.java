@@ -6,10 +6,15 @@ import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiUtilRenderComponents;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+
+import java.util.List;
 
 public class MoarSignRenderer extends TileEntitySpecialRenderer {
 
@@ -20,28 +25,33 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
         this.modelMoarSign = new ModelMoarSign();
     }
 
+    @Override
+    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
+        renderTileEntityMoarSignAt((TileEntityMoarSign) te, x, y, z, partialTicks, destroyStage);
+    }
+
     @SuppressWarnings("unused")
-    public void renderTileEntityMoarSignAt(TileEntityMoarSign tileentity, double x, double y, double z, float partialTickTime) {
-        ResourceLocation texture = tileentity.getResourceLocation();
+    public void renderTileEntityMoarSignAt(TileEntityMoarSign te, double x, double y, double z, float partialTicks, int destroyStage) {
+        ResourceLocation texture = te.getResourceLocation();
 
-        Block block = tileentity.getBlockType();
-        GL11.glPushMatrix();
-        float f1 = 0.6666667F;
-        float f2;
+        Block block = te.getBlockType();
+        GlStateManager.pushMatrix();
+        float f = 0.6666667F;
+        float f1;
 
-        if (!tileentity.showInGui && (block == Blocks.signStandingWood || block == Blocks.signStandingMetal)) {
-            GL11.glTranslatef((float) x + 0.5F, (float) y + 0.75F * f1, (float) z + 0.5F);
-            float f3 = (float) (tileentity.getBlockMetadata() * 360) / 16.0F;
-            GL11.glRotatef(-f3, 0.0F, 1.0F, 0.0F);
+        if (!te.showInGui && (block == Blocks.signStandingWood || block == Blocks.signStandingMetal)) {
+            GlStateManager.translate((float) x + 0.5F, (float) y + 0.75F * f, (float) z + 0.5F);
+            float f2 = (float) (te.getBlockMetadata() * 360) / 16.0F;
+            GlStateManager.rotate(-f2, 0.0F, 1.0F, 0.0F);
             this.modelMoarSign.stick.showModel = true;
         } else {
-            int i = tileentity.getBlockMetadata();
+            int i = te.getBlockMetadata();
 
-            int side = i & 7;
+            int side = !te.showInGui ? i & 7: 2;
 
-            f2 = 0.0F;
+            f1 = 0.0F;
 
-            boolean flatSign = !tileentity.showInGui && ((i & 8) >> 3) == 1;
+            boolean flatSign = !te.showInGui && ((i & 8) >> 3) == 1;
             boolean groundSign = false;
 
             if (flatSign) {
@@ -49,88 +59,113 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
 
                 if (groundSign) {
                     int rotation = (i & 6) >> 1;
-                    f2 = 0F;
+                    f1 = 0F;
 
-                    if (rotation == 1) f2 = 90F;
-                    else if (rotation == 2) f2 = 180F;
-                    else if (rotation == 3) f2 = -90F;
+                    if (rotation == 1) f1 = 90F;
+                    else if (rotation == 2) f1 = 180F;
+                    else if (rotation == 3) f1 = -90F;
                 } else {
                     int rotation = (i & 6) >> 1;
-                    f2 = 180F;
+                    f1 = 180F;
 
-                    if (rotation == 1) f2 = -90F;
-                    else if (rotation == 2) f2 = 0F;
-                    else if (rotation == 3) f2 = 90F;
+                    if (rotation == 1) f1 = -90F;
+                    else if (rotation == 2) f1 = 0F;
+                    else if (rotation == 3) f1 = 90F;
                 }
             } else {
                 if (side == 2) {
-                    f2 = 180.0F;
+                    f1 = 180.0F;
                 }
 
                 if (side == 4) {
-                    f2 = 90.0F;
+                    f1 = 90.0F;
                 }
 
                 if (side == 5) {
-                    f2 = -90.0F;
+                    f1 = -90.0F;
                 }
 
             }
 
-            GL11.glTranslatef((float) x + 0.5F, (float) y + 0.75F * f1, (float) z + 0.5F);
-            GL11.glRotatef(-f2, 0.0F, 1.0F, 0.0F);
-            if (flatSign && !groundSign) GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+            GlStateManager.translate((float) x + 0.5F, (float) y + 0.75F * f, (float) z + 0.5F);
+            GlStateManager.rotate(-f1, 0.0F, 1.0F, 0.0F);
+            if (flatSign && !groundSign) GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
             if (flatSign && groundSign) {
-                GL11.glRotatef(270.0F, 1.0F, 0.0F, 0.0F);
-                GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
+                GlStateManager.rotate(270.0F, 1.0F, 0.0F, 0.0F);
+                GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
             }
-            GL11.glTranslatef(0.0F, -0.3125F, -0.4375F);
+            GlStateManager.translate(0.0F, -0.3125F, -0.4375F);
             this.modelMoarSign.stick.showModel = false;
         }
 
-        if (texture != null) bindTexture(texture);
-        else bindTexture(tempTexture);
-        GL11.glPushMatrix();
-        GL11.glScalef(f1, -f1, -f1);
+        if (destroyStage >= 0)
+        {
+            bindTexture(DESTROY_STAGES[destroyStage]);
+            GlStateManager.matrixMode(5890);
+            GlStateManager.pushMatrix();
+            GlStateManager.scale(4.0F, 2.0F, 1.0F);
+            GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
+            GlStateManager.matrixMode(5888);
+        }
+        else
+        {
+            if (texture != null) bindTexture(texture);
+            else bindTexture(tempTexture);
+        }
+
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.pushMatrix();
+        GlStateManager.scale(f, -f, -f);
         modelMoarSign.render();
-        GL11.glPopMatrix();
-        FontRenderer fontRenderer = func_147498_b();
+        GlStateManager.popMatrix();
 
-        int[] sizes = tileentity.rowSizes;
-        boolean[] rows = tileentity.visibleRows;
-        int[] offset = tileentity.rowLocations;
+        FontRenderer fontRenderer = getFontRenderer();
 
-        for (int row = 0; row < rows.length; row++) {
-            if (!rows[row]) continue;
+        int[] sizes = te.rowSizes;
+        boolean[] rows = te.visibleRows;
+        int[] offset = te.rowLocations;
 
-            float size = sizes[row];
-            GL11.glPushMatrix();
-            f2 = 0.016666668F * f1 + (size / 1000F);
-            GL11.glTranslatef(size > 0 ? 0.01F : 0.0F, 0.5F * f1 - ((float) 0.02 * size) - (size < 2 ? 0 : size < 7 ? 0.01F : size < 11 ? 0.02F : size < 16 ? 0.03F : size < 20 ? 0.035F : 0.037F), 0.07F * f1);
-            GL11.glScalef(f2, -f2, f2);
-            GL11.glNormal3f(0.0F, 0.0F, -1.0F * f2);
-            GL11.glDepthMask(false);
+        if (destroyStage < 0) {
+            for (int row = 0; row < rows.length; row++) {
+                if (te.signText[row] != null) {
+                    if (!rows[row]) continue;
 
-            int maxLength = Utils.getMaxLength((int) size) - Utils.toPixelWidth(fontRenderer, Utils.getStyleOffset(tileentity.signText[row], tileentity.shadowRows[row]));
-            String s = fontRenderer.trimStringToWidth(tileentity.signText[row], Math.min(maxLength, fontRenderer.getStringWidth(tileentity.signText[row])));
+                    float size = sizes[row];
+                    GlStateManager.pushMatrix();
+                    f1 = 0.016666668F * f + (size / 1000F);
+                    GlStateManager.translate(size > 0 ? 0.01F : 0.0F, 0.5F * f - ((float) 0.02 * size) - (size < 2 ? 0 : size < 7 ? 0.01F : size < 11 ? 0.02F : size < 16 ? 0.03F : size < 20 ? 0.035F : 0.037F), 0.07F * f);
+                    GlStateManager.scale(f1, -f1, f1);
+                    GL11.glNormal3f(0.0F, 0.0F, -1.0F * f1);
+                    GlStateManager.depthMask(false);
 
-            GL11.glDisable(GL11.GL_LIGHTING);
+                    IChatComponent ichatcomponent = te.signText[row];
+                    List<IChatComponent> list = GuiUtilRenderComponents.func_178908_a(ichatcomponent, 90, fontRenderer, false, true);
+                    String s = list != null && list.size() > 0 ? ((IChatComponent)list.get(0)).getFormattedText() : "";
 
-            fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, (-tileentity.signText.length * 5) + offset[row] - 2, 0, tileentity.shadowRows[row]);
+                    int maxLength = Utils.getMaxLength((int) size) - Utils.toPixelWidth(fontRenderer, Utils.getStyleOffset(s, te.shadowRows[row]));
+                    s = fontRenderer.trimStringToWidth(s, Math.min(maxLength, fontRenderer.getStringWidth(s)));
 
-            GL11.glEnable(GL11.GL_LIGHTING);
+                    GlStateManager.disableLighting();
 
-            GL11.glDepthMask(true);
-            GL11.glPopMatrix();
+                    fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, (-te.signText.length * 5) + offset[row] - 2, 0, te.shadowRows[row]);
+
+                    GlStateManager.enableLighting();
+
+                    GlStateManager.depthMask(true);
+                    GlStateManager.popMatrix();
+                }
+            }
         }
 
 
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glPopMatrix();
-    }
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.popMatrix();
 
-    @Override
-    public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float partialTickTime) {
-        renderTileEntityMoarSignAt((TileEntityMoarSign) tileentity, x, y, z, partialTickTime);
+        if (destroyStage >= 0)
+        {
+            GlStateManager.matrixMode(5890);
+            GlStateManager.popMatrix();
+            GlStateManager.matrixMode(5888);
+        }
     }
 }

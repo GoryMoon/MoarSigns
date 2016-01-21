@@ -1,6 +1,6 @@
 package gory_moon.moarsigns.api;
 
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 
 import java.util.ArrayList;
 import java.util.HashSet;

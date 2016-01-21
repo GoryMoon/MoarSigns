@@ -9,6 +9,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
@@ -22,31 +23,27 @@ public class GuiDebug extends GuiContainer {
     private static final ResourceLocation texture_world = new ResourceLocation("moarsigns", "textures/gui/debug_block.png");
     private boolean blockInWorld;
     private World world;
-    private int x;
-    private int y;
-    private int z;
+    private BlockPos pos;
     private Block block;
     private IInventory inventory;
     private Rectangle infoArea;
     private String[] signText = new String[4];
 
-    public GuiDebug(InventoryPlayer inventory, int ID, World world, int x, int y, int z, IInventory tempInv, TileEntityMoarSign te) {
+    public GuiDebug(InventoryPlayer inventory, int ID, World world, BlockPos pos, IInventory tempInv, TileEntityMoarSign te) {
         super(new ContainerDebug(inventory, ID, tempInv));
         this.world = world;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.pos = pos;
         this.inventory = tempInv;
         blockInWorld = ID == 0;
 
         if (blockInWorld) {
-            block = world.getBlock(x, y, z);
+            block = world.getBlockState(pos).getBlock();
             infoArea = new Rectangle(8, 10, 160, 20);
         } else {
             infoArea = new Rectangle(31, 10, 137, 19);
         }
 
-        TileEntityMoarSign sign = (TileEntityMoarSign) world.getTileEntity(x, y, z);
+        TileEntityMoarSign sign = (TileEntityMoarSign) world.getTileEntity(pos);
         if (sign != null && sign.signText != null) {
             for (int i = 0; i < sign.signText.length; i++) {
                 signText[i] = sign.signText[i] + (((char) 167) + "r") + Colors.CYAN;
@@ -76,7 +73,6 @@ public class GuiDebug extends GuiContainer {
         if (blockInWorld) {
             if (block != null) {
                 Un = block.getUnlocalizedName();
-                meta = world.getBlockMetadata(this.x, y, z);
                 x = 10;
                 y1 = 12;
                 y2 = 20;

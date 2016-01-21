@@ -1,6 +1,6 @@
 package gory_moon.moarsigns.integration;
 
-import cpw.mods.fml.common.Loader;
+import net.minecraftforge.fml.common.Loader;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.IntegrationRegistry;

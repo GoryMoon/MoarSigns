@@ -1,6 +1,8 @@
 package gory_moon.moarsigns.client.interfaces;
 
-import cpw.mods.fml.common.network.IGuiHandler;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.IChatComponent;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerDebug;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerExchange;
 import gory_moon.moarsigns.client.interfaces.containers.InventoryExchange;
@@ -21,6 +23,12 @@ public class GuiHandler implements IGuiHandler {
 
     public GuiHandler() {
         tempInv = new IInventory() {
+
+            @Override
+            public IChatComponent getDisplayName() {
+                return null;
+            }
+
             ItemStack stack;
 
             @Override
@@ -50,7 +58,7 @@ public class GuiHandler implements IGuiHandler {
             }
 
             @Override
-            public ItemStack getStackInSlotOnClosing(int i) {
+            public ItemStack removeStackFromSlot(int i) {
                 ItemStack item = getStackInSlot(i);
 
                 setInventorySlotContents(i, null);
@@ -70,12 +78,12 @@ public class GuiHandler implements IGuiHandler {
             }
 
             @Override
-            public String getInventoryName() {
+            public String getName() {
                 return "DummyInventory";
             }
 
             @Override
-            public boolean hasCustomInventoryName() {
+            public boolean hasCustomName() {
                 return false;
             }
 
@@ -95,18 +103,37 @@ public class GuiHandler implements IGuiHandler {
             }
 
             @Override
-            public void openInventory() {
+            public void openInventory(EntityPlayer player) {
 
             }
 
             @Override
-            public void closeInventory() {
+            public void closeInventory(EntityPlayer player) {
 
             }
-
             @Override
             public boolean isItemValidForSlot(int i, ItemStack itemstack) {
                 return true;
+            }
+
+            @Override
+            public int getField(int id) {
+                return 0;
+            }
+
+            @Override
+            public void setField(int id, int value) {
+
+            }
+
+            @Override
+            public int getFieldCount() {
+                return 0;
+            }
+
+            @Override
+            public void clear() {
+
             }
         };
     }
@@ -130,12 +157,13 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
-        TileEntity te = world.getTileEntity(x, y, z);
+        BlockPos pos  = new BlockPos(x, y, z);
+        TileEntity te = world.getTileEntity(pos);
 
         switch (ID) {
             case DEBUG_TILE:
             case DEBUG_ITEM:
-                return new GuiDebug(player.inventory, ID, world, x, y, z, tempInv, (TileEntityMoarSign) te);
+                return new GuiDebug(player.inventory, ID, world, pos, tempInv, (TileEntityMoarSign) te);
             case EXCHANGE:
                 return new GuiExchange(player.inventory, new InventoryExchange());
             case PREVIEW:

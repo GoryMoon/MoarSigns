@@ -1,5 +1,5 @@
 package gory_moon.moarsigns.integration.nei;
-
+/*
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import gory_moon.moarsigns.MoarSigns;
@@ -43,3 +43,4 @@ public class NEIMoarSignConfig implements IConfigureNEI {
         return "1.0";
     }
 }
+*/

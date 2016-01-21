@@ -1,26 +1,28 @@
 package gory_moon.moarsigns.items;
 
-import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.MoarSignsCreativeTab;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
+import gory_moon.moarsigns.blocks.BlockMoarSignStanding;
+import gory_moon.moarsigns.blocks.BlockMoarSignWall;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignOpenGui;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
-import gory_moon.moarsigns.util.PlacedCoord;
 import gory_moon.moarsigns.util.Utils;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -58,6 +60,9 @@ public class ItemMoarSign extends Item {
         return super.getUnlocalizedName() + ".sign." + (info.material.path.equals("") ? "" : info.material.path.replace("/", "") + ".") + getTextureFromNBT(stack.getTagCompound());
     }
 
+
+    //TODO Icons
+    /*
     @SuppressWarnings("unchecked")
     @Override
     public void registerIcons(IIconRegister register) {
@@ -70,6 +75,21 @@ public class ItemMoarSign extends Item {
             MoarSigns.icons.put((path.equals("") ? "" : path) + info.itemName, icon);
         }
     }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int pass) {
+        SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
+        if (info == null) return MoarSigns.icons.get("oak_sign");
+
+        String path = info.material.path;
+        return MoarSigns.icons.get((path.equals("") ? "" : path) + info.itemName);
+    }
+
+    @Override
+    public IIcon getIconIndex(ItemStack stack) {
+        return getIcon(stack, 0);
+    }
+    */
 
     @Override
     public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
@@ -92,21 +112,7 @@ public class ItemMoarSign extends Item {
         if (info != null) {
             return info.rarity;
         }
-        return EnumRarity.common;
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int pass) {
-        SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
-        if (info == null) return MoarSigns.icons.get("oak_sign");
-
-        String path = info.material.path;
-        return MoarSigns.icons.get((path.equals("") ? "" : path) + info.itemName);
-    }
-
-    @Override
-    public IIcon getIconIndex(ItemStack stack) {
-        return getIcon(stack, 0);
+        return EnumRarity.COMMON;
     }
 
     public ItemStack createMoarItemStack(String signName, boolean isMetal) {
@@ -118,50 +124,50 @@ public class ItemMoarSign extends Item {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-        if (!world.getBlock(x, y, z).getMaterial().isSolid()) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (!world.getBlockState(pos).getBlock().getMaterial().isSolid()) {
             return false;
         } else {
+            pos = pos.offset(side);
 
-            PlacedCoord coord = new PlacedCoord(x, y, z, side);
-            coord = Utils.calculatePlaceSideCoord(coord);
-            x = coord.x;
-            y = coord.y;
-            z = coord.z;
-
-            if (!player.canPlayerEdit(x, y, z, side, stack) || !Blocks.signStandingWood.canPlaceBlockAt(world, x, y, z) || world.isRemote) {
+            if (!player.canPlayerEdit(pos, side, stack) || !Blocks.signStandingWood.canPlaceBlockAt(world, pos)) {
                 return false;
+            } else if (world.isRemote) {
+                return true;
             } else {
-                if (side == 1 && !player.isSneaking()) {
+
+                if (side == EnumFacing.UP && !player.isSneaking()) {
                     int rotation = MathHelper.floor_double((double) ((player.rotationYaw + 180.0F) * 16.0F / 360.0F) + 0.5D) & 15;
-                    if (stack.getItemDamage() == 0) world.setBlock(x, y, z, Blocks.signStandingWood, rotation, 3);
-                    else if (stack.getItemDamage() == 1) world.setBlock(x, y, z, Blocks.signStandingMetal, rotation, 3);
+                    if (stack.getItemDamage() == 0) world.setBlockState(pos, Blocks.signStandingWood.getDefaultState().withProperty(BlockMoarSignStanding.ROTATION, rotation), 3);
+                    else if (stack.getItemDamage() == 1) world.setBlockState(pos, Blocks.signStandingMetal.getDefaultState().withProperty(BlockMoarSignStanding.ROTATION, rotation), 3);
 
                 } else {
-                    if (side == 0 || side == 1) {
-                        int rotation = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-                        side += (rotation << 1);
-                        side += 8;
+                    int rotation = 0;
+                    if (side == EnumFacing.DOWN || side == EnumFacing.UP) {
+                        rotation = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
                     }
-                    if (stack.getItemDamage() == 0) world.setBlock(x, y, z, Blocks.signWallWood, side, 3);
-                    else if (stack.getItemDamage() == 1) world.setBlock(x, y, z, Blocks.signWallMetal, side, 3);
+                    if (stack.getItemDamage() == 0) world.setBlockState(pos, Blocks.signWallWood.getDefaultState().withProperty(BlockMoarSignWall.FACING, side).withProperty(BlockMoarSignWall.ROTATION, rotation), 3);
+                    else if (stack.getItemDamage() == 1) world.setBlockState(pos, Blocks.signWallMetal.getDefaultState().withProperty(BlockMoarSignWall.FACING, side).withProperty(BlockMoarSignWall.ROTATION, rotation), 3);
                 }
 
                 if (!player.capabilities.isCreativeMode) --stack.stackSize;
-                TileEntityMoarSign tileEntity = (TileEntityMoarSign) world.getTileEntity(x, y, z);
+                TileEntity tileEntity = world.getTileEntity(pos);
 
-                if (tileEntity != null) {
+                if (tileEntity instanceof TileEntityMoarSign && !ItemBlock.setTileEntityNBT(world, player, pos, stack)) {
+                    TileEntityMoarSign te = (TileEntityMoarSign) tileEntity;
                     String texture = getTextureFromNBTFull(stack.getTagCompound());
                     SignInfo info = SignRegistry.get(texture);
 
                     if (info == null) return false;
 
-                    tileEntity.isMetal = info.isMetal;
-                    tileEntity.func_145912_a(player);
-                    tileEntity.setResourceLocation(texture);
+                    te.isMetal = info.isMetal;
+                    te.setPlayer(player);
+                    te.setResourceLocation(texture);
+
+                    //player.openEditSign((TileEntitySign)te);
 
                     boolean moving = stack.getTagCompound().hasKey(ItemSignToolbox.SIGN_MOVING_TAG) && stack.getTagCompound().getBoolean(ItemSignToolbox.SIGN_MOVING_TAG);
-                    PacketHandler.INSTANCE.sendTo(new MessageSignOpenGui(tileEntity, moving), (EntityPlayerMP) player);
+                    PacketHandler.INSTANCE.sendTo(new MessageSignOpenGui(te, moving), (EntityPlayerMP) player);
                 }
 
                 return true;

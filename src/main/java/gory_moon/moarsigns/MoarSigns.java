@@ -1,28 +1,25 @@
 package gory_moon.moarsigns;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
 import gory_moon.moarsigns.integration.IntegrationHandler;
-import gory_moon.moarsigns.integration.tweaker.MineTweakerIntegration;
 import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.items.NuggetRegistry;
 import gory_moon.moarsigns.lib.ModInfo;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.proxy.CommonProxy;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -52,7 +49,8 @@ public class MoarSigns {
     public static CommonProxy proxy;
 
     public static Logger logger = LogManager.getLogger("MoarSigns");
-    public static HashMap<String, IIcon> icons = new HashMap<String, IIcon>();
+    //TODO Icons
+    //public static HashMap<String, IIcon> icons = new HashMap<String, IIcon>();
     private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
 
     @EventHandler
@@ -75,9 +73,10 @@ public class MoarSigns {
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
-        if (FMLInterModComms.sendMessage("Waila", "register", "gory_moon.moarsigns.integration.waila.Provider.callbackRegister")) {
+        //TODO Waila
+        /*if (FMLInterModComms.sendMessage("Waila", "register", "gory_moon.moarsigns.integration.waila.Provider.callbackRegister")) {
             MoarSigns.logger.info("Loaded Waila Integration");
-        }
+        }*/
     }
 
     @EventHandler
@@ -87,9 +86,10 @@ public class MoarSigns {
         new IntegrationHandler().setupSigns();
         ModItems.registerRecipes();
 
-        if (Loader.isModLoaded("MineTweaker3")) {
+        //TODO MineTweaker3
+        /*if (Loader.isModLoaded("MineTweaker3")) {
             MineTweakerIntegration.register();
-        }
+        }*/
     }
 
     public ResourceLocation getResourceLocation(String s, boolean isMetal) {

@@ -1,7 +1,14 @@
 package gory_moon.moarsigns.tileentites;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import com.google.gson.JsonParseException;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.CommandResultStats;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.*;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
@@ -15,9 +22,8 @@ import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.util.ResourceLocation;
 
-public class TileEntityMoarSign extends TileEntitySign {
+public class TileEntityMoarSign extends TileEntitySign implements ITickable {
 
     public static final String NBT_VERSION_TAG = "nbtVersion";
     public static final String NBT_SETTINGS_TAG = "settings";
@@ -25,7 +31,7 @@ public class TileEntityMoarSign extends TileEntitySign {
     public static final String NBT_METAL_TAG = "isMetal";
     public static final String NBT_TEXTURE_TAG = "texture";
 
-    private final int NBT_VERSION = 2;
+    private final int NBT_VERSION = 3;
     public int[] rowLocations = new int[4];
     public int[] rowSizes = {0, 0, 0, 0};
     public boolean[] visibleRows = {true, true, true, true};
@@ -47,14 +53,18 @@ public class TileEntityMoarSign extends TileEntitySign {
         }
     }
 
+    public void setBlockType(Block block) {
+        blockType = block;
+    }
+
     @Override
-    public void updateEntity() {
+    public void update() {
 
         if (worldObj.isRemote) {
             if (!textureReq) {
                 textureReq = true;
-                Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
-                worldObj.addBlockEvent(xCoord, yCoord, zCoord, block, 0, 0);
+                Block block = worldObj.getBlockState(pos).getBlock();
+                worldObj.addBlockEvent(pos, block, 0, 0);
             }
             SignInfo sign = SignRegistry.get(texture_name);
             if (sign != null && sign.property != null) sign.property.onUpdate();
@@ -64,10 +74,6 @@ public class TileEntityMoarSign extends TileEntitySign {
     public void writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         compound.setInteger(NBT_VERSION_TAG, NBT_VERSION);
-
-        for (int i = 0; i < 4; i++) {
-            compound.setString("Text" + (i + 1), signText[i]);
-        }
 
         NBTTagList settings = new NBTTagList();
 
@@ -105,7 +111,80 @@ public class TileEntityMoarSign extends TileEntitySign {
     }
 
     public void readFromNBT(NBTTagCompound compound) {
+        isEditable = false;
         super.readFromNBT(compound);
+
+        ICommandSender icommandsender = new ICommandSender()
+        {
+            /**
+             * Get the name of this object. For players this returns their username
+             */
+            public String getName()
+            {
+                return "Sign";
+            }
+            /**
+             * Get the formatted ChatComponent that will be used for the sender's username in chat
+             */
+            public IChatComponent getDisplayName()
+            {
+                return new ChatComponentText(this.getName());
+            }
+            /**
+             * Send a chat message to the CommandSender
+             */
+            public void addChatMessage(IChatComponent component)
+            {
+            }
+            /**
+             * Returns {@code true} if the CommandSender is allowed to execute the command, {@code false} if not
+             */
+            public boolean canCommandSenderUseCommand(int permLevel, String commandName)
+            {
+                return permLevel <= 2; //Forge: Fixes  MC-75630 - Exploit with signs and command blocks
+            }
+            /**
+             * Get the position in the world. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
+             * return the coordinates 0, 0, 0
+             */
+            public BlockPos getPosition()
+            {
+                return pos;
+            }
+            /**
+             * Get the position vector. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
+             * return 0.0D, 0.0D, 0.0D
+             */
+            public Vec3 getPositionVector()
+            {
+                return new Vec3((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D);
+            }
+            /**
+             * Get the world, if available. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
+             * return the overworld
+             */
+            public World getEntityWorld()
+            {
+                return worldObj;
+            }
+            /**
+             * Returns the entity associated with the command sender. MAY BE NULL!
+             */
+            public Entity getCommandSenderEntity()
+            {
+                return null;
+            }
+            /**
+             * Returns true if the command sender should be sent feedback about executed commands
+             */
+            public boolean sendCommandFeedback()
+            {
+                return false;
+            }
+            public void setCommandStat(CommandResultStats.Type type, int amount)
+            {
+            }
+        };
 
         int nbtVersion = compound.getInteger(NBT_VERSION_TAG);
 
@@ -119,14 +198,6 @@ public class TileEntityMoarSign extends TileEntitySign {
                 visibleRows[i] = true;
             }
 
-            for (int i = 0; i < 4; ++i) {
-                signText[i] = compound.getString("Text" + (i + 1));
-
-                if (i > rows) {
-                    signText[i] = "";
-                }
-            }
-
             int textOffset = compound.getInteger("textOffset");
             for (int i = 0; i < 4; i++) {
                 int temp = Math.abs(textOffset) + rowLocations[i] - (textOffset != 0 ? 2 : 0);
@@ -137,14 +208,14 @@ public class TileEntityMoarSign extends TileEntitySign {
             }
 
 
-        } else if (nbtVersion == 2) {
+        } else if (nbtVersion == 2 || nbtVersion == 3) {
 
             lockedChanges = compound.getBoolean(NBT_LOCKED_CHANGES_TAG);
 
             NBTTagList settings = compound.getTagList(NBT_SETTINGS_TAG, 11);
 
             for (int i = 0; i < settings.tagCount(); i++) {
-                int[] array = settings.func_150306_c(i);
+                int[] array = settings.getIntArrayAt(i);
                 if (array[0] == 0) {
                     System.arraycopy(array, 1, rowLocations, 0, 4);
                 } else if (array[0] == 1) {
@@ -160,15 +231,26 @@ public class TileEntityMoarSign extends TileEntitySign {
                 }
 
             }
+        }
 
+        for (int i = 0; i < 4; ++i) {
+            String s = compound.getString("Text" + (i + 1));
 
-            for (int i = 0; i < 4; ++i) {
-                signText[i] = compound.getString("Text" + (i + 1));
+            try  {
+                IChatComponent ichatcomponent = IChatComponent.Serializer.jsonToComponent(s);
+
+                try {
+                    this.signText[i] = ChatComponentProcessor.processComponent(icommandsender, ichatcomponent, (Entity)null);
+                } catch (CommandException var7) {
+                    this.signText[i] = ichatcomponent;
+                }
+            } catch (JsonParseException var8) {
+                this.signText[i] = new ChatComponentText(s);
             }
         }
-        if (compound.hasKey(NBT_METAL_TAG))
-            isMetal = compound.getBoolean(NBT_METAL_TAG);
-        if (compound.hasKey(NBT_TEXTURE_TAG)) texture_name = compound.getString(NBT_TEXTURE_TAG);
+
+        if (compound.hasKey(NBT_METAL_TAG))     isMetal = compound.getBoolean(NBT_METAL_TAG);
+        if (compound.hasKey(NBT_TEXTURE_TAG))   texture_name = compound.getString(NBT_TEXTURE_TAG);
         if (texture_name == null || texture_name.isEmpty()) texture_name = "oak_sign";
 
     }
@@ -179,7 +261,7 @@ public class TileEntityMoarSign extends TileEntitySign {
     }
 
     @Override
-    public boolean func_145914_a() {
+    public boolean getIsEditable() {
         return this.isEditable;
     }
 
@@ -207,12 +289,12 @@ public class TileEntityMoarSign extends TileEntitySign {
     }
 
     @Override
-    public void func_145912_a(EntityPlayer par1EntityPlayer) {
+    public void setPlayer(EntityPlayer par1EntityPlayer) {
         this.playerEditing = par1EntityPlayer;
     }
 
     @Override
-    public EntityPlayer func_145911_b() {
+    public EntityPlayer getPlayer() {
         return this.playerEditing;
     }
 }

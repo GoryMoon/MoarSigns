@@ -1,8 +1,10 @@
 package gory_moon.moarsigns.client.interfaces.sign;
 
 import com.google.common.collect.Lists;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColorButton;
 import gory_moon.moarsigns.client.interfaces.sign.buttons.*;
@@ -20,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,14 +55,15 @@ public class GuiMoarSign extends GuiBase {
     private ButtonCutSign buttonCutSign;
     private ButtonCopySign buttonCopySign;
 
+    private boolean initied = false;
     private TileEntityMoarSign entitySign;
 
     public GuiMoarSign(TileEntityMoarSign te) {
         entitySign = te;
     }
 
-    public static String[] getSignTextWithColor(String[] array) {
-        String[] result = new String[array.length];
+    public static IChatComponent[] getSignTextWithColor(String[] array) {
+        IChatComponent[] result = new IChatComponent[array.length];
 
         Pattern p = Pattern.compile("(?<=[" + (char) 8747 + "])([a-z0-9])(?=\\})+");
         for (int i = 0; i < array.length; i++) {
@@ -71,18 +75,18 @@ public class GuiMoarSign extends GuiBase {
                     s = s.replace("{" + (char) 8747 + m.group(1) + "}", (char) 167 + m.group(1));
                 }
             }
-            result[i] = s;
+            result[i] = new ChatComponentText(s);
         }
 
         return result;
     }
 
-    public static String[] getSignTextWithCode(String[] array) {
+    public static String[] getSignTextWithCode(IChatComponent[] array) {
         String[] result = new String[array.length];
 
         Pattern p = Pattern.compile("(?<=[" + (char) 167 + "])([a-z0-9])+");
         for (int i = 0; i < array.length; i++) {
-            String s = array[i];
+            String s = array[i].getUnformattedText();
             if (!s.equals("")) {
 
                 Matcher m = p.matcher(s);
@@ -137,7 +141,7 @@ public class GuiMoarSign extends GuiBase {
                 textButtons.add(btnSha);
             }
 
-            guiTextFields[i] = new GuiSignTextField(fontRendererObj, guiLeft + TEXT_EDIT_AREA + 17, row, 90, 16);
+            guiTextFields[i] = new GuiSignTextField(i, fontRendererObj, guiLeft + TEXT_EDIT_AREA + 17, row, 90, 16);
             guiTextFields[i].setText(text[i]);
             k++;
         }
@@ -181,6 +185,7 @@ public class GuiMoarSign extends GuiBase {
         buttonList.add(new net.minecraft.client.gui.GuiButton(0, guiLeft + 12, guiTop + 174, I18n.format("gui.done", new Object[0])));
 
         update();
+        initied = true;
     }
 
     @Override
@@ -190,7 +195,8 @@ public class GuiMoarSign extends GuiBase {
 
         for (int i = 0; i < entitySign.signText.length; i++) {
             int maxLength = Utils.getMaxLength(rowSizes[i]);
-            entitySign.signText[i] = fontRendererObj.trimStringToWidth(entitySign.signText[i], Math.min(fontRendererObj.getStringWidth(entitySign.signText[i]), maxLength - toPixelWidth(getStyleOffset(i))));
+            String s = fontRendererObj.trimStringToWidth(entitySign.signText[i].getUnformattedText(), Math.min(fontRendererObj.getStringWidth(entitySign.signText[i].getUnformattedText()), maxLength - toPixelWidth(getStyleOffset(i))));
+            entitySign.signText[i] = new ChatComponentText(s);
         }
 
         PacketHandler.INSTANCE.sendToServer(new MessageSignUpdate(entitySign));
@@ -218,7 +224,7 @@ public class GuiMoarSign extends GuiBase {
             int index = 0;
             for (GuiTextField textField : guiTextFields) {
                 if (textField.isFocused()) textField.textboxKeyTyped(typedChar, key);
-                entitySign.signText[index++] = textField.getText();
+                entitySign.signText[index++] = new ChatComponentText(textField.getText());
             }
         }
 
@@ -255,8 +261,10 @@ public class GuiMoarSign extends GuiBase {
         GL11.glColor4f(1, 1, 1, 1);
         bindTexture(texture);
 
-        for (GuiButton button : buttons) {
-            button.drawButton(this, x, y);
+        if (initied) {
+            for (GuiButton button : buttons) {
+                button.drawButton(this, x, y);
+            }
         }
 
         drawVerticalLine(guiLeft + TEXT_EDIT_AREA + 189, guiTop + 126, guiTop + 136, Colors.BLACK.getARGB());
@@ -280,14 +288,12 @@ public class GuiMoarSign extends GuiBase {
         entitySign.showInGui = true;
 
         GL11.glRotatef(180, 0.0F, 1.0F, 0.0F);
-        entitySign.blockMetadata = 2;
 
         GL11.glTranslatef(0.0F, -0.8F, 0.0F);
 
         TileEntityRendererDispatcher.instance.renderTileEntityAt(entitySign, -0.5D, -0.75D, -0.5D, 0.0F);
         GL11.glPopMatrix();
         entitySign.showInGui = false;
-        entitySign.blockMetadata = i;
 
 
         if (showColors) {
@@ -352,11 +358,11 @@ public class GuiMoarSign extends GuiBase {
             }
         }
 
-        for (GuiButton button : buttons) button.hoverText(this, x, y);
+        if (initied) for (GuiButton button : buttons) button.hoverText(this, x, y);
     }
 
     @Override
-    protected void mouseClicked(int x, int y, int b) {
+    protected void mouseClicked(int x, int y, int b) throws IOException {
         super.mouseClicked(x, y, b);
         if (b == 0) {
             boolean noTextFieldClick = false;
@@ -451,7 +457,7 @@ public class GuiMoarSign extends GuiBase {
             buttonErase.isDisabled = true;
         }
 
-        entitySign.signText = getSignTextWithColor(array);
+        System.arraycopy(getSignTextWithColor(array), 0, entitySign.signText, 0, entitySign.signText.length);
         entitySign.rowLocations = Arrays.copyOf(rowLocations, rowLocations.length);
         entitySign.visibleRows = Arrays.copyOf(visibleRows, visibleRows.length);
         entitySign.rowSizes = Arrays.copyOf(rowSizes, rowSizes.length);

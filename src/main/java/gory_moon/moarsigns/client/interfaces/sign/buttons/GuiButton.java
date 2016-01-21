@@ -44,7 +44,7 @@ public abstract class GuiButton extends GuiRectangle {
     public boolean onClick(GuiMoarSign gui, int x, int y) {
         if (inRect(x, y)) {
             action(gui);
-            gui.mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
+            gui.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
             return true;
         }
         return false;

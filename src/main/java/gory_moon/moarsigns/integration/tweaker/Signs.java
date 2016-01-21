@@ -1,5 +1,5 @@
 package gory_moon.moarsigns.integration.tweaker;
-
+/*
 import gory_moon.moarsigns.api.MaterialInfo;
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe;
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe.MatchType;
@@ -266,3 +266,4 @@ public class Signs {
         }
     }
 }
+*/

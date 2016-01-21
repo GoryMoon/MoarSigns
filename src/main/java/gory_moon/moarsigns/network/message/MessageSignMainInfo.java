@@ -1,23 +1,27 @@
 package gory_moon.moarsigns.network.message;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSignMainInfo, IMessage> {
 
-    public int x, y, z;
+    public BlockPos pos;
 
     public String texture;
     public boolean isMetal;
@@ -28,16 +32,14 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
     public boolean[] shadowRows = new boolean[4];
     public boolean lockedChanges;
 
-    public String[] text = new String[]{"", "", "", ""};
+    public IChatComponent[] text;
 
     @SuppressWarnings("unused")
     public MessageSignMainInfo() {
     }
 
-    public MessageSignMainInfo(int x, int y, int z, String texture, boolean isMetal, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean[] shadowRows, boolean lockedChanges, String[] text) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public MessageSignMainInfo(BlockPos pos, String texture, boolean isMetal, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean[] shadowRows, boolean lockedChanges, IChatComponent[] text) {
+        this.pos = pos;
         this.texture = texture;
         this.isMetal = isMetal;
         this.rowLocations = rowLocations;
@@ -49,60 +51,63 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
     }
 
     public MessageSignMainInfo(TileEntityMoarSign tileEntity) {
-        this(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.texture_name, tileEntity.isMetal,
+        this(tileEntity.getPos(), tileEntity.texture_name, tileEntity.isMetal,
                 tileEntity.rowLocations, tileEntity.rowSizes, tileEntity.visibleRows, tileEntity.shadowRows, tileEntity.lockedChanges, tileEntity.signText);
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        this.x = buf.readInt();
-        this.y = buf.readInt();
-        this.z = buf.readInt();
+        PacketBuffer packetBuf = new PacketBuffer(buf);
+        pos = packetBuf.readBlockPos();
+        text = new IChatComponent[4];
 
-        if (buf.readBoolean()) {
-            int textureLength = buf.readInt();
-            this.texture = new String(buf.readBytes(textureLength).array());
-            this.isMetal = buf.readBoolean();
+        if (packetBuf.readBoolean()) {
+            int textureLength = packetBuf.readInt();
+            this.texture = new String(packetBuf.readBytes(textureLength).array(), Charset.forName("utf-8"));
+            this.isMetal = packetBuf.readBoolean();
 
-            for (int i = 0; i < 4; i++) rowLocations[i] = buf.readInt();
-            for (int i = 0; i < 4; i++) rowSizes[i] = buf.readInt();
-            for (int i = 0; i < 4; i++) visibleRows[i] = buf.readBoolean();
-            for (int i = 0; i < 4; i++) shadowRows[i] = buf.readBoolean();
-            lockedChanges = buf.readBoolean();
+            for (int i = 0; i < 4; i++) rowLocations[i] = packetBuf.readInt();
+            for (int i = 0; i < 4; i++) rowSizes[i] = packetBuf.readInt();
+            for (int i = 0; i < 4; i++) visibleRows[i] = packetBuf.readBoolean();
+            for (int i = 0; i < 4; i++) shadowRows[i] = packetBuf.readBoolean();
+            lockedChanges = packetBuf.readBoolean();
 
             for (int i = 0; i < 4; i++) {
-                byte[] line = new byte[buf.readInt()];
-                buf.readBytes(line);
-                text[i] = new String(line, Charset.forName("utf-8"));
+                try {
+                    text[i] = packetBuf.readChatComponent();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        buf.writeInt(x);
-        buf.writeInt(y);
-        buf.writeInt(z);
+        PacketBuffer packetBuf = new PacketBuffer(buf);
+        packetBuf.writeBlockPos(pos);
 
         if (texture != null && rowLocations != null && rowSizes != null && visibleRows != null && text != null) {
-            buf.writeBoolean(true);
-            buf.writeInt(texture.length());
-            buf.writeBytes(texture.getBytes());
-            buf.writeBoolean(isMetal);
+            packetBuf.writeBoolean(true);
+            packetBuf.writeInt(texture.length());
+            packetBuf.writeBytes(texture.getBytes(Charset.forName("utf-8")));
+            packetBuf.writeBoolean(isMetal);
 
-            for (int i = 0; i < 4; i++) buf.writeInt(rowLocations[i]);
-            for (int i = 0; i < 4; i++) buf.writeInt(rowSizes[i]);
-            for (int i = 0; i < 4; i++) buf.writeBoolean(visibleRows[i]);
-            for (int i = 0; i < 4; i++) buf.writeBoolean(shadowRows[i]);
-            buf.writeBoolean(lockedChanges);
+            for (int i = 0; i < 4; i++) packetBuf.writeInt(rowLocations[i]);
+            for (int i = 0; i < 4; i++) packetBuf.writeInt(rowSizes[i]);
+            for (int i = 0; i < 4; i++) packetBuf.writeBoolean(visibleRows[i]);
+            for (int i = 0; i < 4; i++) packetBuf.writeBoolean(shadowRows[i]);
+            packetBuf.writeBoolean(lockedChanges);
 
             for (int i = 0; i < 4; i++) {
-                byte[] bytes = text[i].getBytes(Charset.forName("utf-8"));
-                buf.writeInt(bytes.length);
-                buf.writeBytes(bytes);
+                try {
+                    packetBuf.writeChatComponent(text[i]);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         } else {
-            buf.writeBoolean(false);
+            buf.writeBoolean(true);
         }
     }
 
@@ -115,8 +120,9 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
         boolean flag = false;
 
         if (message.texture != null && message.rowLocations != null && message.rowSizes != null && message.visibleRows != null && message.shadowRows != null && message.text != null) {
-            if (world.blockExists(message.x, message.y, message.z)) {
-                tileEntity = world.getTileEntity(message.x, message.y, message.z);
+            if (world.isBlockLoaded(message.pos)) {
+                tileEntity = world.getTileEntity(message.pos);
+
                 if (tileEntity instanceof TileEntityMoarSign) {
                     TileEntityMoarSign sign = (TileEntityMoarSign) tileEntity;
 
@@ -128,15 +134,16 @@ public class MessageSignMainInfo implements IMessage, IMessageHandler<MessageSig
                     sign.lockedChanges = message.lockedChanges;
                     sign.setResourceLocation(message.texture);
 
-                    if (sign.func_145914_a()) {
+                    if (sign.getIsEditable()) {
                         System.arraycopy(message.text, 0, sign.signText, 0, 4);
+                        sign.markDirty();
                     }
                     flag = true;
                 }
             }
             if (!flag && FMLClientHandler.instance().getClient().thePlayer != null) {
-                MoarSigns.logger.info("Unable to locate sign at " + message.x + ", " + message.y + ", " + message.z);
-                FMLClientHandler.instance().getClient().thePlayer.addChatMessage(new ChatComponentText("Unable to locate sign at " + message.x + ", " + message.y + ", " + message.z));
+                MoarSigns.logger.info("Unable to locate sign at " + message.pos.toString());
+                FMLClientHandler.instance().getClient().thePlayer.addChatMessage(new ChatComponentText("Unable to locate sign at " + message.pos.getX() + ", " + message.pos.getY() + ", " + message.pos.getZ()));
             }
         } else {
             MoarSigns.logger.error("An error with packages occurred");

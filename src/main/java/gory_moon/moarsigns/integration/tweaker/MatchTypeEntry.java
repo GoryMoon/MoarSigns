@@ -1,5 +1,5 @@
 package gory_moon.moarsigns.integration.tweaker;
-
+/*
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe.MatchType;
 import minetweaker.api.item.*;
 import minetweaker.api.liquid.ILiquidStack;
@@ -101,3 +101,4 @@ public class MatchTypeEntry implements IIngredient {
         return modID;
     }
 }
+*/

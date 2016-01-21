@@ -1,6 +1,6 @@
 package gory_moon.moarsigns.blocks;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.block.Block;
@@ -16,11 +16,11 @@ public class Blocks {
 
     public static void init() {
 
-        signStandingWood = new BlockMoarSign(Material.wood, true).setStepSound(Block.soundTypeWood).setHardness(1.0F).setResistance(5.0F);
-        signWallWood = new BlockMoarSign(Material.wood, false).setStepSound(Block.soundTypeWood).setHardness(1.0F).setResistance(5.0F);
+        signStandingWood = new BlockMoarSignStanding(Material.wood, true).setStepSound(Block.soundTypeWood).setHardness(1.0F).setResistance(5.0F);
+        signWallWood = new BlockMoarSignWall(Material.wood, false).setStepSound(Block.soundTypeWood).setHardness(1.0F).setResistance(5.0F);
 
-        signStandingMetal = new BlockMoarSign(Material.iron, true).setStepSound(Block.soundTypeMetal).setHardness(2.0F).setResistance(10.0F);
-        signWallMetal = new BlockMoarSign(Material.iron, false).setStepSound(Block.soundTypeMetal).setHardness(2.0F).setResistance(10.0F);
+        signStandingMetal = new BlockMoarSignStanding(Material.iron, true).setStepSound(Block.soundTypeMetal).setHardness(2.0F).setResistance(10.0F);
+        signWallMetal = new BlockMoarSignWall(Material.iron, false).setStepSound(Block.soundTypeMetal).setHardness(2.0F).setResistance(10.0F);
 
         signStandingWood.setHarvestLevel("axe", 0);
         signWallWood.setHarvestLevel("axe", 0);

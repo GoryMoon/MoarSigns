@@ -1,6 +1,6 @@
 package gory_moon.moarsigns.util;
 
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 public enum Colors {
     BLACK(0),

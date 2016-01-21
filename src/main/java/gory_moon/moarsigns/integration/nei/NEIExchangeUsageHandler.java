@@ -1,5 +1,5 @@
 package gory_moon.moarsigns.integration.nei;
-
+/*
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
@@ -122,3 +122,4 @@ public class NEIExchangeUsageHandler extends TemplateRecipeHandler {
     }
 
 }
+*/

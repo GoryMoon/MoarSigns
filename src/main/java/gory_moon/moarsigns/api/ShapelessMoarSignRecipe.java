@@ -9,12 +9,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -63,7 +63,7 @@ public class ShapelessMoarSignRecipe implements IRecipe {
     public ShapelessMoarSignRecipe(IRecipe recipe, Map<ItemStack, Object> replacements) {
         output = recipe.getRecipeOutput();
 
-        for (Object ingred : (recipe instanceof ShapelessRecipes ? ((List<Object>) ((ShapelessRecipes) recipe).recipeItems) : ((ShapelessOreRecipe) recipe).getInput())) {
+        for (Object ingred : (recipe instanceof ShapelessRecipes ? ((ShapelessRecipes) recipe).recipeItems : ((ShapelessOreRecipe) recipe).getInput())) {
             Object finalObj = ingred;
             for (Entry<ItemStack, Object> replace : replacements.entrySet()) {
                 if (ingred instanceof ItemStack && OreDictionary.itemMatches(replace.getKey(), (ItemStack) ingred, false)) {
@@ -92,6 +92,11 @@ public class ShapelessMoarSignRecipe implements IRecipe {
     @Override
     public ItemStack getRecipeOutput() {
         return output;
+    }
+
+    @Override
+    public ItemStack[] getRemainingItems(InventoryCrafting inv) {
+        return ForgeHooks.defaultRecipeGetRemainingItems(inv);
     }
 
     @Override

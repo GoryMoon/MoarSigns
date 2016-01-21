@@ -11,6 +11,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -109,7 +112,7 @@ public class InventoryExchange implements IInventory {
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int slot) {
+    public ItemStack removeStackFromSlot(int slot) {
         ItemStack stack = getStackInSlot(slot);
 
         if (stack == null) {
@@ -126,13 +129,18 @@ public class InventoryExchange implements IInventory {
     }
 
     @Override
-    public String getInventoryName() {
+    public String getName() {
         return "Exchange Inventory";
     }
 
     @Override
-    public boolean hasCustomInventoryName() {
+    public boolean hasCustomName() {
         return false;
+    }
+
+    @Override
+    public IChatComponent getDisplayName() {
+        return (IChatComponent)(this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatComponentTranslation(this.getName(), new Object[0]));
     }
 
     @Override
@@ -150,15 +158,42 @@ public class InventoryExchange implements IInventory {
     }
 
     @Override
-    public void openInventory() {
+    public void openInventory(EntityPlayer player) {
+
     }
 
     @Override
-    public void closeInventory() {
+    public void closeInventory(EntityPlayer player) {
+
     }
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack stack) {
         return !(stack != null && (stack.getItem() instanceof ItemSignToolbox)) && i == inventory.length && stack != null && stack.getItem() instanceof ItemMoarSign;
     }
+
+    @Override
+    public int getField(int id) {
+        return 0;
+    }
+
+    @Override
+    public void setField(int id, int value) {
+
+    }
+
+    @Override
+    public int getFieldCount() {
+        return 0;
+    }
+
+    @Override
+    public void clear() {
+        for (int i = 0; i < inventory.length; ++i)
+        {
+            inventory[i] = null;
+        }
+    }
+
+
 }

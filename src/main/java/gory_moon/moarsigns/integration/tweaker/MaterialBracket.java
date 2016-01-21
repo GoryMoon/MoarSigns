@@ -1,5 +1,5 @@
 package gory_moon.moarsigns.integration.tweaker;
-
+/*
 import gory_moon.moarsigns.api.MaterialInfo;
 import minetweaker.IBracketHandler;
 import minetweaker.annotations.BracketHandler;
@@ -88,3 +88,4 @@ public class MaterialBracket implements IBracketHandler {
         }
     }
 }
+*/

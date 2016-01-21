@@ -1,17 +1,14 @@
 package gory_moon.moarsigns.items;
 
-import gory_moon.moarsigns.lib.Info;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 
 import java.util.List;
 
 public class ItemNugget extends Item {
 
-    private IIcon[] icons = new IIcon[NuggetRegistry.size()];
+    //private IIcon[] icons = new IIcon[NuggetRegistry.size()];
 
     public ItemNugget() {
         hasSubtypes = true;
@@ -24,6 +21,8 @@ public class ItemNugget extends Item {
         return super.getUnlocalizedName() + "." + NuggetRegistry.getUnlocName(stack.getItemDamage());
     }
 
+    //TODO Icons
+    /*
     @Override
     public void registerIcons(IIconRegister register) {
         for (int i = 0; i < NuggetRegistry.size(); i++) {
@@ -35,6 +34,7 @@ public class ItemNugget extends Item {
     public IIcon getIconFromDamage(int dmg) {
         return dmg >= 0 && dmg < NuggetRegistry.size() ? icons[dmg] : null;
     }
+    */
 
     @SuppressWarnings("unchecked")
     @Override

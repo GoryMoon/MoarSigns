@@ -1,6 +1,8 @@
 package gory_moon.moarsigns.client.interfaces;
 
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
@@ -22,6 +24,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -179,8 +182,9 @@ public class GuiPreview extends GuiContainer {
 
             sign.setWorldObj(FMLClientHandler.instance().getWorldClient());
             sign.isMetal = info.isMetal;
-            sign.blockType = info.isMetal ? Blocks.signStandingMetal : Blocks.signStandingWood;
-            sign.signText = new String[]{"", (char) 167 + "nThis is some", (char) 167 + "4example " + (char) 167 + "ltext", ""};
+            sign.setBlockType(info.isMetal ? Blocks.signStandingMetal : Blocks.signStandingWood);
+            IChatComponent[] components = new IChatComponent[]{null, new ChatComponentText((char) 167 + "nThis is some"), new ChatComponentText((char) 167 + "4example " + (char) 167 + "ltext"), null};
+            System.arraycopy(components, 0, sign.signText, 0, sign.signText.length);
             sign.setResourceLocation(texture);
         }
     }
@@ -201,7 +205,8 @@ public class GuiPreview extends GuiContainer {
         super.mouseClickMove(x, y, button, timeSinceClicked);
     }
 
-    public void mouseClicked(int x, int y, int button) {
+    @Override
+    public void mouseClicked(int x, int y, int button) throws IOException {
         if (button == 0) {
             if (x >= guiLeft + 115 && y >= guiTop + 5 && x < guiLeft + 220 && y < guiTop + 135) {
                 int x1 = x - guiLeft;
@@ -216,16 +221,17 @@ public class GuiPreview extends GuiContainer {
         super.mouseClicked(x, y, button);
     }
 
-    public void mouseMovedOrUp(int x, int y, int button) {
+    @Override
+    public void mouseReleased(int x, int y, int button) {
         if (isDraging && button == 0) {
             isSpinning = true;
             isDraging = false;
         }
-        super.mouseMovedOrUp(x, y, button);
+        super.mouseReleased(x, y, button);
     }
 
     @Override
-    public void handleMouseInput() {
+    public void handleMouseInput() throws IOException {
         super.handleMouseInput();
         int i = Mouse.getEventDWheel();
 

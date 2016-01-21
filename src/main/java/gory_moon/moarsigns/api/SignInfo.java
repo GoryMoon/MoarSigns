@@ -7,7 +7,7 @@ public class SignInfo {
     public String itemName;
     public MaterialInfo material;
     public boolean isMetal;
-    public EnumRarity rarity = EnumRarity.common;
+    public EnumRarity rarity = EnumRarity.COMMON;
 
     public SignSpecialProperty property;
     public String modId;

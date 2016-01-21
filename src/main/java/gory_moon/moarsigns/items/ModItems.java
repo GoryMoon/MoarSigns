@@ -1,7 +1,7 @@
 package gory_moon.moarsigns.items;
 
 import com.google.common.collect.Maps;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe;
 import gory_moon.moarsigns.api.ShapelessMoarSignRecipe;

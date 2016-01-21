@@ -1,14 +1,14 @@
 package gory_moon.moarsigns.items;
 
-import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
 import gory_moon.moarsigns.MoarSigns;
-import gory_moon.moarsigns.lib.Info;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
 public class ItemDebug extends Item {
 
@@ -16,10 +16,13 @@ public class ItemDebug extends Item {
         setUnlocalizedName("moarsigns.debug");
     }
 
+    //TODO Icon
+    /*
     @Override
     public void registerIcons(IIconRegister register) {
         itemIcon = register.registerIcon(Info.TEXTURE_LOCATION + ":" + "debug_item");
     }
+    */
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
@@ -36,10 +39,10 @@ public class ItemDebug extends Item {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int hitX, float hitY, float hitZ, float par10) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote) return false;
 
-        FMLNetworkHandler.openGui(player, MoarSigns.instance, 0, world, x, y, z);
+        FMLNetworkHandler.openGui(player, MoarSigns.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
 
         return true;
     }
