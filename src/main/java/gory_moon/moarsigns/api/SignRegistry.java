@@ -204,6 +204,11 @@ public class SignRegistry {
         return null;
     }
 
+
+    /**
+     * @param materials Materials to search with
+     * @return A list of {@link gory_moon.moarsigns.api.SignInfo}
+     */
     public static ArrayList<SignInfo> getSignInfoFromMaterials(HashSet<MaterialInfo> materials) {
         ArrayList<SignInfo> signInfos = Lists.newArrayList();
 
@@ -239,6 +244,14 @@ public class SignRegistry {
         return (ArrayList<SignInfo>) activatedSignRegistry.clone();
     }
 
+    public static ArrayList<String> getTextureLocations() {
+        ArrayList<String> list = Lists.newArrayList();
+        for (SignInfo info: signRegistry) {
+            list.add(info.material.path.replace("/", ".") + info.material.materialName);
+        }
+        return list;
+    }
+
     /**
      * Gets a clone of the map of tags that are registered
      *
@@ -260,5 +273,12 @@ public class SignRegistry {
             if (b) i++;
         }
         return i;
+    }
+
+    public static void clear() {
+        signRegistry.clear();
+        activatedSignRegistry.clear();
+        activeTags.clear();
+        activateTag(ALWAYS_ACTIVE_TAG);
     }
 }

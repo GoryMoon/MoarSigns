@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.network.message;
 
 import gory_moon.moarsigns.MoarSigns;
+import gory_moon.moarsigns.network.ServerMessageHandler;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,12 +13,11 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.io.IOException;
 
-public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignUpdate, IMessage> {
+public class MessageSignUpdate implements IMessage {
 
     public BlockPos pos;
 
@@ -88,43 +88,45 @@ public class MessageSignUpdate implements IMessage, IMessageHandler<MessageSignU
         }
     }
 
-    @Override
-    public IMessage onMessage(MessageSignUpdate message, MessageContext ctx) {
-        EntityPlayerMP player = ctx.getServerHandler().playerEntity;
-        player.markPlayerActive();
+    public static class Handler extends ServerMessageHandler<MessageSignUpdate> {
 
-        WorldServer worldserver = MinecraftServer.getServer().worldServerForDimension(player.dimension);
-        BlockPos pos = message.pos;
+        @Override
+        protected void handle(MessageSignUpdate message, MessageContext ctx) {
+            EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+            player.markPlayerActive();
 
-        if (worldserver.isBlockLoaded(pos)) {
+            WorldServer worldserver = MinecraftServer.getServer().worldServerForDimension(player.dimension);
+            BlockPos pos = message.pos;
 
-            TileEntity tileentity = worldserver.getTileEntity(pos);
+            if (worldserver.isBlockLoaded(pos)) {
 
-            if (tileentity instanceof TileEntityMoarSign) {
-                TileEntityMoarSign tileentitysign = (TileEntityMoarSign) tileentity;
+                TileEntity tileentity = worldserver.getTileEntity(pos);
 
-                if (!tileentitysign.getIsEditable() || tileentitysign.getPlayer() != player) {
-                    MoarSigns.logger.warn("Player " + player.getName() + " just tried to change non-editable sign");
-                    return null;
+                if (tileentity instanceof TileEntityMoarSign) {
+                    TileEntityMoarSign tileentitysign = (TileEntityMoarSign) tileentity;
+
+                    if (!tileentitysign.getIsEditable() || tileentitysign.getPlayer() != player) {
+                        MoarSigns.logger.warn("Player " + player.getName() + " just tried to change non-editable sign");
+                        return;
+                    }
+
+                    tileentitysign.rowLocations = message.rowLocations;
+                    tileentitysign.rowSizes = message.rowSizes;
+                    tileentitysign.visibleRows = message.visibleRows;
+                    tileentitysign.shadowRows = message.shadowRows;
+                    tileentitysign.lockedChanges = message.lockedChanges;
+
+                    IChatComponent[] components = message.text;
+
+                    for (int i = 0; i < components.length; ++i) {
+                        tileentitysign.signText[i] = new ChatComponentText(components[i].getUnformattedText());
+                    }
+
+                    tileentitysign.markDirty();
+                    worldserver.markBlockForUpdate(pos);
+
                 }
-
-                tileentitysign.rowLocations = message.rowLocations;
-                tileentitysign.rowSizes = message.rowSizes;
-                tileentitysign.visibleRows = message.visibleRows;
-                tileentitysign.shadowRows = message.shadowRows;
-                tileentitysign.lockedChanges = message.lockedChanges;
-
-                IChatComponent[] components = message.text;
-
-                for (int i = 0; i < components.length; ++i) {
-                    tileentitysign.signText[i] = new ChatComponentText(components[i].getUnformattedText());
-                }
-
-                tileentitysign.markDirty();
-                worldserver.markBlockForUpdate(pos);
-
             }
         }
-        return null;
     }
 }

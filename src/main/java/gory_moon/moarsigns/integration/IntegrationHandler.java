@@ -47,8 +47,8 @@ public class IntegrationHandler {
         for (String name : blockNames) registerMetalGemOreName(name);
     }
 
-    public static void registerSigns(ArrayList<ItemStack> planks, ArrayList<ItemStack> ingots) {
-        MoarSigns.logger.info("Starting sign integrations");
+    public static void registerSigns(ArrayList<ItemStack> planks, ArrayList<ItemStack> ingots, boolean log) {
+        if (log) MoarSigns.logger.info("Starting sign integrations");
 
         ArrayList<ISignRegistration> signReg = IntegrationRegistry.getSignReg();
 
@@ -60,11 +60,11 @@ public class IntegrationHandler {
         for (ISignRegistration reg : signReg) {
             if (reg.getActivateTag() != null && reg.getIntegrationName() != null && Loader.isModLoaded(reg.getActivateTag())) {
                 SignRegistry.activateTag(reg.getActivateTag());
-                MoarSigns.logger.info("Loaded " + reg.getIntegrationName() + " SignIntegration");
+                if (log) MoarSigns.logger.info("Loaded " + reg.getIntegrationName() + " SignIntegration");
             }
         }
 
-        MoarSigns.logger.info("Finished " + (SignRegistry.getActiveTagsAmount()) + " sign integrations with " + SignRegistry.getActivatedSignRegistry().size() + " signs registered");
+        if (log) MoarSigns.logger.info("Finished " + (SignRegistry.getActiveTagsAmount()) + " sign integrations with " + SignRegistry.getActivatedSignRegistry().size() + " signs registered");
     }
 
     private ArrayList<ItemStack> getOres(ArrayList<String> names) {
@@ -72,6 +72,24 @@ public class IntegrationHandler {
         for (String name : names)
             ores.addAll(OreDictionary.getOres(name));
         return ores;
+    }
+
+    public void preSetupSigns() {
+
+        ArrayList<String> names = IntegrationRegistry.getWoodNames();
+        ArrayList<ItemStack> planks = getOres(names);
+
+        names = IntegrationRegistry.getMetalNames();
+        ArrayList<ItemStack> ingots = getOres(names);
+
+        registerSigns(planks, ingots, false);
+
+        Collections.sort(SignRegistry.getActivatedSignRegistry(), new Comparator<SignInfo>() {
+            @Override
+            public int compare(SignInfo o1, SignInfo o2) {
+                return (o1.isMetal && !o2.isMetal) ? 1 : ((o1.isMetal) ? 0 : (o2.isMetal ? -1 : (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ? 0 : (o1.material.path.equals(o2.material.path) ? (o1.itemName.compareToIgnoreCase(o2.itemName)) : (o1.material.path.compareTo(o2.material.path))))));
+            }
+        });
     }
 
     public void setupSigns() {
@@ -82,7 +100,7 @@ public class IntegrationHandler {
         names = IntegrationRegistry.getMetalNames();
         ArrayList<ItemStack> ingots = getOres(names);
 
-        registerSigns(planks, ingots);
+        registerSigns(planks, ingots, true);
 
         Collections.sort(SignRegistry.getActivatedSignRegistry(), new Comparator<SignInfo>() {
             @Override

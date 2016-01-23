@@ -9,14 +9,13 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
-public class MoarSignRenderer extends TileEntitySpecialRenderer {
+public class MoarSignRenderer extends TileEntitySpecialRenderer<TileEntityMoarSign> {
 
     private ModelMoarSign modelMoarSign;
     private ResourceLocation tempTexture = new ResourceLocation("textures/entity/sign.png");
@@ -26,12 +25,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
-        renderTileEntityMoarSignAt((TileEntityMoarSign) te, x, y, z, partialTicks, destroyStage);
-    }
-
-    @SuppressWarnings("unused")
-    public void renderTileEntityMoarSignAt(TileEntityMoarSign te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void renderTileEntityAt(TileEntityMoarSign te, double x, double y, double z, float partialTicks, int destroyStage) {
         ResourceLocation texture = te.getResourceLocation();
 
         Block block = te.getBlockType();
@@ -136,6 +130,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer {
                     GlStateManager.translate(size > 0 ? 0.01F : 0.0F, 0.5F * f - ((float) 0.02 * size) - (size < 2 ? 0 : size < 7 ? 0.01F : size < 11 ? 0.02F : size < 16 ? 0.03F : size < 20 ? 0.035F : 0.037F), 0.07F * f);
                     GlStateManager.scale(f1, -f1, f1);
                     GL11.glNormal3f(0.0F, 0.0F, -1.0F * f1);
+                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                     GlStateManager.depthMask(false);
 
                     IChatComponent ichatcomponent = te.signText[row];

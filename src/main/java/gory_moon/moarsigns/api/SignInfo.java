@@ -35,4 +35,14 @@ public class SignInfo {
     public SignInfo setRarity(int rarity) {
         return setRarity(EnumRarity.values()[rarity]);
     }
+
+    @Override
+    public String toString() {
+        return String.format("[SignInfo]: \n\tItemName: %1$s\n" +
+                "\tMaterial: %2$s\n" +
+                "\tRarity: %3$s\n" +
+                "\tProperty: %4$s\n" +
+                "\tModID: %5$s\n" +
+                "\tActivateTag: %6$s", itemName, material, rarity.rarityName, property, modId, activateTag);
+    }
 }

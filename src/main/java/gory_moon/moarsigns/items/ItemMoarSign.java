@@ -136,10 +136,13 @@ public class ItemMoarSign extends Item {
                 return true;
             } else {
 
+                SignInfo info = getInfo(stack.getTagCompound());
+                if (info == null) return false;
+                String texture_path = info.material.path.replace("/", ".") + info.material.materialName;
                 if (side == EnumFacing.UP && !player.isSneaking()) {
                     int rotation = MathHelper.floor_double((double) ((player.rotationYaw + 180.0F) * 16.0F / 360.0F) + 0.5D) & 15;
-                    if (stack.getItemDamage() == 0) world.setBlockState(pos, Blocks.signStandingWood.getDefaultState().withProperty(BlockMoarSignStanding.ROTATION, rotation), 3);
-                    else if (stack.getItemDamage() == 1) world.setBlockState(pos, Blocks.signStandingMetal.getDefaultState().withProperty(BlockMoarSignStanding.ROTATION, rotation), 3);
+                    if (stack.getItemDamage() == 0) world.setBlockState(pos, Blocks.signStandingWood.getDefaultState().withProperty(BlockMoarSignStanding.ROTATION, rotation).withProperty(BlockMoarSignStanding.TEXTURE, texture_path), 3);
+                    else if (stack.getItemDamage() == 1) world.setBlockState(pos, Blocks.signStandingMetal.getDefaultState().withProperty(BlockMoarSignStanding.ROTATION, rotation).withProperty(BlockMoarSignStanding.TEXTURE, texture_path), 3);
 
                 } else {
                     int rotation = 0;
@@ -156,15 +159,10 @@ public class ItemMoarSign extends Item {
                 if (tileEntity instanceof TileEntityMoarSign && !ItemBlock.setTileEntityNBT(world, player, pos, stack)) {
                     TileEntityMoarSign te = (TileEntityMoarSign) tileEntity;
                     String texture = getTextureFromNBTFull(stack.getTagCompound());
-                    SignInfo info = SignRegistry.get(texture);
-
-                    if (info == null) return false;
 
                     te.isMetal = info.isMetal;
                     te.setPlayer(player);
                     te.setResourceLocation(texture);
-
-                    //player.openEditSign((TileEntitySign)te);
 
                     boolean moving = stack.getTagCompound().hasKey(ItemSignToolbox.SIGN_MOVING_TAG) && stack.getTagCompound().getBoolean(ItemSignToolbox.SIGN_MOVING_TAG);
                     PacketHandler.INSTANCE.sendTo(new MessageSignOpenGui(te, moving), (EntityPlayerMP) player);

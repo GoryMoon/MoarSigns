@@ -61,15 +61,17 @@ public class MoarSigns {
 
         PacketHandler.init();
 
+        proxy.init();
         NuggetRegistry.init();
         Blocks.init();
         ModItems.init();
+
+        proxy.preInit();
     }
 
     @EventHandler
     @SuppressWarnings("unused")
     public void load(FMLInitializationEvent event) {
-        proxy.initRenderers();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 

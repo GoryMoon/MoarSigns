@@ -14,10 +14,10 @@ public class PacketHandler {
     public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.CHANNEL);
 
     public static void init() {
-        INSTANCE.registerMessage(MessageSignMainInfo.class, MessageSignMainInfo.class, 0, Side.CLIENT);
-        INSTANCE.registerMessage(MessageSignOpenGui.class, MessageSignOpenGui.class, 1, Side.CLIENT);
-        INSTANCE.registerMessage(MessageSignUpdate.class, MessageSignUpdate.class, 2, Side.SERVER);
-        INSTANCE.registerMessage(MessageSignRotate.class, MessageSignRotate.class, 3, Side.CLIENT);
+        INSTANCE.registerMessage(MessageSignMainInfo.Handler.class, MessageSignMainInfo.class, 0, Side.CLIENT);
+        INSTANCE.registerMessage(MessageSignOpenGui.Handler.class, MessageSignOpenGui.class, 1, Side.CLIENT);
+        INSTANCE.registerMessage(MessageSignUpdate.Handler.class, MessageSignUpdate.class, 2, Side.SERVER);
+        INSTANCE.registerMessage(MessageSignRotate.Handler.class, MessageSignRotate.class, 3, Side.CLIENT);
     }
 
 }

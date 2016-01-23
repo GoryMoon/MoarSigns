@@ -57,6 +57,8 @@ public class ModItems {
         removeRecipesWithResult(new ItemStack(net.minecraft.init.Items.sign, 3));
 
         List<SignInfo> signRegistry = SignRegistry.getActivatedSignRegistry();
+        for (SignInfo info: signRegistry)
+            MoarSigns.logger.info(info.toString());
 
         ArrayList<ItemStack> list = new ArrayList<ItemStack>();
         sign.getSubItemStacks(list);

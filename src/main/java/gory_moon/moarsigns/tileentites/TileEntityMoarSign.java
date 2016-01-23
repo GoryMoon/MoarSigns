@@ -31,7 +31,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
     public static final String NBT_METAL_TAG = "isMetal";
     public static final String NBT_TEXTURE_TAG = "texture";
 
-    private final int NBT_VERSION = 3;
+    private final int NBT_VERSION = 2;
     public int[] rowLocations = new int[4];
     public int[] rowSizes = {0, 0, 0, 0};
     public boolean[] visibleRows = {true, true, true, true};
@@ -59,7 +59,6 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
 
     @Override
     public void update() {
-
         if (worldObj.isRemote) {
             if (!textureReq) {
                 textureReq = true;
@@ -208,7 +207,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             }
 
 
-        } else if (nbtVersion == 2 || nbtVersion == 3) {
+        } else if (nbtVersion == 2) {
 
             lockedChanges = compound.getBoolean(NBT_LOCKED_CHANGES_TAG);
 
@@ -296,5 +295,10 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
     @Override
     public EntityPlayer getPlayer() {
         return this.playerEditing;
+    }
+
+    @Override
+    public boolean canRenderBreaking() {
+        return true;
     }
 }

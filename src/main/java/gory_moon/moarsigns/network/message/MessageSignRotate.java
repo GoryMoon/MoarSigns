@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.network.message;
 
 import gory_moon.moarsigns.blocks.BlockMoarSign;
+import gory_moon.moarsigns.network.ClientMessageHandler;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
@@ -9,14 +10,11 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.nio.charset.Charset;
 
-public class MessageSignRotate implements IMessage, IMessageHandler<MessageSignRotate, IMessage> {
+public class MessageSignRotate implements IMessage{
 
     BlockPos pos;
     int meta;
@@ -51,19 +49,18 @@ public class MessageSignRotate implements IMessage, IMessageHandler<MessageSignR
         packetBuf.writeBytes(texture.getBytes(Charset.forName("utf-8")));
     }
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public IMessage onMessage(MessageSignRotate message, MessageContext ctx) {
+    public static class Handler extends ClientMessageHandler<MessageSignRotate> {
 
-        World world = FMLClientHandler.instance().getClient().theWorld;
-        Block block = world.getBlockState(message.pos).getBlock();
+        @Override
+        protected void handle(MessageSignRotate message, MessageContext ctx) {
+            World world = FMLClientHandler.instance().getClient().theWorld;
+            Block block = world.getBlockState(message.pos).getBlock();
 
-        if (block instanceof BlockMoarSign) {
-            TileEntityMoarSign sign = (TileEntityMoarSign) world.getTileEntity(message.pos);
-            world.setBlockState(message.pos, block.getStateFromMeta(meta));
-            sign.setResourceLocation(message.texture);
+            if (block instanceof BlockMoarSign) {
+                TileEntityMoarSign sign = (TileEntityMoarSign) world.getTileEntity(message.pos);
+                world.setBlockState(message.pos, block.getStateFromMeta(message.meta));
+                sign.setResourceLocation(message.texture);
+            }
         }
-
-        return null;
     }
 }

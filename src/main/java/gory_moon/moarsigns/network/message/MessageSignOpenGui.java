@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.network.message;
 
 import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
+import gory_moon.moarsigns.network.ClientMessageHandler;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -9,14 +10,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.nio.charset.Charset;
 
-public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSignOpenGui, IMessage> {
+public class MessageSignOpenGui implements IMessage {
 
     public BlockPos pos;
 
@@ -64,24 +62,26 @@ public class MessageSignOpenGui implements IMessage, IMessageHandler<MessageSign
         packetBuf.writeBoolean(isMoving);
     }
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public IMessage onMessage(MessageSignOpenGui message, MessageContext ctx) {
-        WorldClient world = FMLClientHandler.instance().getClient().theWorld;
-        TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.pos);
 
-        if (!(tileEntity instanceof TileEntityMoarSign)) {
-            tileEntity = new TileEntityMoarSign();
-            tileEntity.setWorldObj(FMLClientHandler.instance().getClient().theWorld);
-            tileEntity.setPos(message.pos);
+    public static class Handler extends ClientMessageHandler<MessageSignOpenGui> {
+
+        @Override
+        protected void handle(MessageSignOpenGui message, MessageContext ctx) {
+            WorldClient world = FMLClientHandler.instance().getClient().theWorld;
+            TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.pos);
+
+            if (!(tileEntity instanceof TileEntityMoarSign)) {
+                tileEntity = new TileEntityMoarSign();
+                tileEntity.setWorldObj(FMLClientHandler.instance().getClient().theWorld);
+                tileEntity.setPos(message.pos);
+            }
+
+            ((TileEntityMoarSign) tileEntity).isMetal = message.isMetal;
+            ((TileEntityMoarSign) tileEntity).setResourceLocation(message.texture);
+            tileEntity.markDirty();
+
+            if (!message.isMoving)
+                FMLClientHandler.instance().getClient().displayGuiScreen(new GuiMoarSign((TileEntityMoarSign) tileEntity));
         }
-
-        ((TileEntityMoarSign) tileEntity).isMetal = message.isMetal;
-        ((TileEntityMoarSign) tileEntity).setResourceLocation(message.texture);
-        tileEntity.markDirty();
-
-        if (!message.isMoving)
-            FMLClientHandler.instance().getClient().displayGuiScreen(new GuiMoarSign((TileEntityMoarSign) tileEntity));
-        return null;
     }
 }
