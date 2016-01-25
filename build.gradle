@@ -164,42 +164,20 @@ artifacts {
     archives sourceJar
 }
 
-tasks.build.dependsOn('signJar')
+uploadArchives.dependsOn signJar
+build.dependsOn signJar
 
-if (!project.hasProperty("keystore_location")) // keystore stuff
-    ext.keystore_location = "."
-if (!project.hasProperty("keystore_password")) // keystore stuff
-    ext.keystore_password = ""
-if (!project.hasProperty("ms_keystore_alias")) // keystore stuff
-    ext.ms_keystore_alias = ""
-
-task signJar(dependsOn: ["reobf", "devJar"]) {
-    inputs.dir jar.destinationDir
-    inputs.file keystore_location
-    inputs.property "ms_keystore_alias", ms_keystore_alias
-    inputs.property "keystore_password", keystore_password
-    outputs.dir devJar.destinationDir
-
-    // only sign if the keystore exists
+task signJar(type: SignJar, dependsOn: ["jar", "devJar"]) {
     onlyIf {
-        return keystore_location != "." && keystore_password != ""
+        project.hasProperty('keystore_location')
     }
-    // the actual action.. sign the jar.
-    doLast {
-        jar.destinationDir.eachFile { file ->
-            if (!file.getPath().endsWith(".jar"))
-                return; // skip non-jars
 
-            logger.lifecycle "signing $file"
-            ant.signjar(
-                    destDir: file.getParentFile(), // same place it came from
-                    jar: file,
-                    keystore: keystore_location,
-                    alias: ms_keystore_alias,
-                    storepass: keystore_password
-            )
-        }
-    }
+    keyStore = project.hasProperty('keystore_location') ? project.getProperty('keystore_location') : "";
+    storePass = project.hasProperty('keystore_password') ? project.getProperty('keystore_password') : "";
+    alias = project.hasProperty('ms_keystore_alias') ? project.getProperty('ms_keystore_alias') : "";
+    keyPass = project.hasProperty('keystore_password') ? project.getProperty('keystore_password') : "";
+    inputFile = jar.archivePath
+    outputFile = jar.archivePath
 }
 
 uploadArchives {
