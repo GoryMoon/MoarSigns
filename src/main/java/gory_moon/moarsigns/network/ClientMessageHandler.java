@@ -4,8 +4,6 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class ClientMessageHandler<REQ extends IMessage> implements IMessageHandler<REQ, IMessage> {
 
@@ -20,7 +18,6 @@ public abstract class ClientMessageHandler<REQ extends IMessage> implements IMes
         return null;
     }
 
-    @SideOnly(Side.CLIENT)
     protected abstract void handle(REQ message, MessageContext ctx);
 
 }

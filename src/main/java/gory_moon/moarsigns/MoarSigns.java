@@ -66,7 +66,7 @@ public class MoarSigns {
         Blocks.init();
         ModItems.init();
 
-        proxy.preInit();
+        proxy.postInit();
     }
 
     @EventHandler
@@ -75,10 +75,9 @@ public class MoarSigns {
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
-        //TODO Waila
-        /*if (FMLInterModComms.sendMessage("Waila", "register", "gory_moon.moarsigns.integration.waila.Provider.callbackRegister")) {
+        if (FMLInterModComms.sendMessage("Waila", "register", "gory_moon.moarsigns.integration.waila.Provider.callbackRegister")) {
             MoarSigns.logger.info("Loaded Waila Integration");
-        }*/
+        }
     }
 
     @EventHandler

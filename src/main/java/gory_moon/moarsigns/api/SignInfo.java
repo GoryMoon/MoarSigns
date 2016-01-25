@@ -38,7 +38,7 @@ public class SignInfo {
 
     @Override
     public String toString() {
-        return String.format("[SignInfo]: \n\tItemName: %1$s\n" +
+        return String.format("\n[SignInfo]: \n\tItemName: %1$s\n" +
                 "\tMaterial: %2$s\n" +
                 "\tRarity: %3$s\n" +
                 "\tProperty: %4$s\n" +

@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.tileentites;
 
 import com.google.gson.JsonParseException;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.ICommandSender;
@@ -252,6 +253,11 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
         if (compound.hasKey(NBT_TEXTURE_TAG))   texture_name = compound.getString(NBT_TEXTURE_TAG);
         if (texture_name == null || texture_name.isEmpty()) texture_name = "oak_sign";
 
+    }
+
+    @Override
+    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+        return (oldState.getBlock() != newSate.getBlock());
     }
 
     @Override

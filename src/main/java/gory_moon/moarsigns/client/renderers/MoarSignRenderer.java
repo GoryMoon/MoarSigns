@@ -1,7 +1,7 @@
 package gory_moon.moarsigns.client.renderers;
 
 import gory_moon.moarsigns.blocks.Blocks;
-import gory_moon.moarsigns.client.ModelMoarSign;
+import gory_moon.moarsigns.client.models.ModelMoarSign;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;

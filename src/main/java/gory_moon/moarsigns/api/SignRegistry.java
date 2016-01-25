@@ -244,10 +244,18 @@ public class SignRegistry {
         return (ArrayList<SignInfo>) activatedSignRegistry.clone();
     }
 
-    public static ArrayList<String> getTextureLocations() {
+    public static ArrayList<String> getTextureLocations(boolean includeModID) {
+        ArrayList<String> list = getTextureLocations(false, includeModID);
+        list.addAll(getTextureLocations(true, includeModID));
+        return list;
+    }
+
+    public static ArrayList<String> getTextureLocations(boolean isMetal, boolean includeModID) {
         ArrayList<String> list = Lists.newArrayList();
         for (SignInfo info: signRegistry) {
-            list.add(info.material.path.replace("/", ".") + info.material.materialName);
+            if (info.isMetal == isMetal) {
+                list.add((includeModID ? info.modId + ":": "") + "signs/" + (info.material.path.replace("/", "_") + info.itemName));
+            }
         }
         return list;
     }

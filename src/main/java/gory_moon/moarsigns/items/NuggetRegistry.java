@@ -61,6 +61,15 @@ public class NuggetRegistry {
         return nuggets.get(i).oreName;
     }
 
+    public static ArrayList<String> getNames() {
+        ArrayList<String> names = new ArrayList<String>();
+
+        for (NuggetInfo nugget: nuggets)
+            names.add("nuggets/" + nugget.unlocName);
+
+        return names;
+    }
+
     public static class NuggetInfo {
 
         public String unlocName;

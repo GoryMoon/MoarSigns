@@ -2,9 +2,7 @@ package gory_moon.moarsigns.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
@@ -14,37 +12,35 @@ import net.minecraft.world.World;
 
 public class BlockMoarSignWall extends BlockMoarSign {
 
-    public static final IProperty FACING = PropertyDirection.create("facing");
-    public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 3);
+    public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
     public BlockMoarSignWall(Material material, boolean freeStand) {
         super(material, freeStand);
-        setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(ROTATION, 0));
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(ROTATION, meta);
     }
 
     @Override
     protected BlockState createBlockState() {
-        return new BlockState(this, FACING, ROTATION);
+        return new BlockState(this, ROTATION, FACING);
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta) {
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        int meta = getMetaFromState(state);
         boolean flatSign = ((meta & 8) >> 3) == 1;
-        int rotation = flatSign ? 0: (meta & 6) >> 1;
-        int facing = flatSign ? ((meta & 1) == 0 ? 1: 0): (meta & 7);
-        return getDefaultState().withProperty(FACING, EnumFacing.getFront(facing)).withProperty(ROTATION, rotation);
+        int facing = flatSign ? (meta & 1): (meta & 7);
+        return state.withProperty(FACING, EnumFacing.getFront(facing));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state) {
-        EnumFacing facing = ((EnumFacing) state.getValue(FACING));
-        int meta = facing.getIndex();
-        meta += (state.getValue(ROTATION) << 1);
-
-        if (facing == EnumFacing.DOWN || facing == EnumFacing.UP)
-            meta += 8;
-
-        return meta;
+    public int getMetaFromState(IBlockState state)
+    {
+        return state.getValue(ROTATION);
     }
 
     @Override
@@ -110,11 +106,31 @@ public class BlockMoarSignWall extends BlockMoarSign {
 
     @Override
     public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighbor) {
-        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+        boolean flag;
+        int rotation = world.getBlockState(pos).getValue(ROTATION);
+        EnumFacing facing = EnumFacing.getFront(rotation & 7);
 
-        if (!world.getBlockState(pos.offset(enumfacing.getOpposite())).getBlock().getMaterial().isSolid())
-        {
-            this.dropBlockAsItem(world, pos, state, 0);
+
+        boolean flatSign = ((rotation & 8) >> 3) == 1;
+        boolean groundSign;
+
+        if (flatSign) {
+            groundSign = (rotation & 1) == 1;
+
+            if (groundSign) {
+                flag = !(world.getBlockState(pos.down()).getBlock().getMaterial().isSolid());
+            } else {
+                flag = !(world.getBlockState(pos.up()).getBlock().getMaterial().isSolid());
+            }
+        } else {
+
+            flag = !(facing == EnumFacing.NORTH && world.getBlockState(pos.south()).getBlock().getMaterial().isSolid());
+
+            if (world.getBlockState(pos.offset(facing.getOpposite())).getBlock().getMaterial().isSolid())
+                flag = false;
+        }
+
+        if (flag) {
             world.setBlockToAir(pos);
         }
     }

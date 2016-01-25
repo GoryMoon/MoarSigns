@@ -52,22 +52,6 @@ public class ItemSignToolbox extends Item {
         return true;
     }
 
-    //TODO Icons
-    /*
-    @Override
-    public void registerIcons(IIconRegister register) {
-        for (int i = 0; i < ToolBoxModes.values().length; i++) {
-            icons[i] = register.registerIcon(Info.TEXTURE_LOCATION + ":" + "toolbox/" + ToolBoxModes.values()[i].toString().toLowerCase());
-        }
-    }
-
-    @Override
-    public IIcon getIconFromDamage(int itemDamage) {
-        if (itemDamage > 5 && !isMoving(itemDamage)) return null;
-        int mode = isMoving(itemDamage) ? 2 : itemDamage;
-        return icons[mode];
-    }*/
-
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (!world.isRemote) {

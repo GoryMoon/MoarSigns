@@ -57,8 +57,6 @@ public class ModItems {
         removeRecipesWithResult(new ItemStack(net.minecraft.init.Items.sign, 3));
 
         List<SignInfo> signRegistry = SignRegistry.getActivatedSignRegistry();
-        for (SignInfo info: signRegistry)
-            MoarSigns.logger.info(info.toString());
 
         ArrayList<ItemStack> list = new ArrayList<ItemStack>();
         sign.getSubItemStacks(list);
@@ -110,9 +108,10 @@ public class ModItems {
 
                                     if (NuggetRegistry.getIngotName(i).equals(unlocName)) {
                                         NuggetRegistry.setNeeded(i, true);
-                                        recNugget = new ItemStack(nugget, 9, i);
+                                        recNugget = new ItemStack(nugget, 1, i);
                                         OreDictionary.registerOre(NuggetRegistry.getOreName(i), recNugget.copy());
 
+                                        recNugget.stackSize = 9;
                                         GameRegistry.addShapelessRecipe(recNugget.copy(), mat);
                                         GameRegistry.addRecipe(new ShapedOreRecipe(mat, "xxx", "xxx", "xxx", 'x', NuggetRegistry.getOreName(i)));
                                         break;
@@ -126,6 +125,7 @@ public class ModItems {
                             if (recNugget != null && recNugget.getItem() != null) {
                                 ItemStack stack1 = stack.copy();
                                 stack1.stackSize = 1;
+                                recNugget.stackSize = 1;
                                 if (recNugget.getUnlocalizedName().equals("item.moarsign." + NuggetRegistry.getUnlocName(0))) {
                                     GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "diamondNugget", '/', "stickWood"));
                                     GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetDiamond", '/', "stickWood"));

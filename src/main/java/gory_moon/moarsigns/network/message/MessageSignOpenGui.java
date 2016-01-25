@@ -11,6 +11,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.nio.charset.Charset;
 
@@ -66,6 +68,7 @@ public class MessageSignOpenGui implements IMessage {
     public static class Handler extends ClientMessageHandler<MessageSignOpenGui> {
 
         @Override
+        @SideOnly(Side.CLIENT)
         protected void handle(MessageSignOpenGui message, MessageContext ctx) {
             WorldClient world = FMLClientHandler.instance().getClient().theWorld;
             TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.pos);

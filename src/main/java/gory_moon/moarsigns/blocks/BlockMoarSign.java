@@ -6,6 +6,7 @@ import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.entity.Entity;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockMoarSign extends BlockContainer {
+
+    public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
 
     public BlockMoarSign(Material material, boolean freeStand) {
         super(material);
@@ -286,43 +289,8 @@ public class BlockMoarSign extends BlockContainer {
     }
 
     @Override
-    protected boolean func_181087_e(World world, BlockPos pos) {
-        return func_181086_a(world, pos, EnumFacing.NORTH) ||
-                func_181086_a(world, pos, EnumFacing.SOUTH) ||
-                func_181086_a(world, pos, EnumFacing.WEST) ||
-                func_181086_a(world, pos, EnumFacing.EAST) ||
-                func_181086_a(world, pos, EnumFacing.DOWN) ||
-                func_181086_a(world, pos, EnumFacing.UP);
-    }
-
-    @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return !this.func_181087_e(world, pos) && super.canPlaceBlockAt(world, pos);
-/*
-        boolean flatSign = ((meta & 8) >> 3) == 1;
-        int side = flatSign ? meta & 1 : meta & 7;
-        switch (side) {
-            case 0:
-                y++;
-                break;
-            case 1:
-                y--;
-                break;
-            case 2:
-                z++;
-                break;
-            case 3:
-                z--;
-                break;
-            case 4:
-                x++;
-                break;
-            case 5:
-                x--;
-                break;
-        }
-
-        return !super.canPlaceBlockAt(world, pos) && world.getBlockState(pos).getBlock().getMaterial().isSolid();*/
+        return !this.func_181087_e(world, pos) && world.getBlockState(pos).getBlock().getMaterial().isSolid();
     }
 
     public SignInfo getSignInfo(World world, BlockPos pos) {

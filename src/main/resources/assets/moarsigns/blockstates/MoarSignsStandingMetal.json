@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "normal": { "model": "moarsigns:empty_model" }
+  }
+}

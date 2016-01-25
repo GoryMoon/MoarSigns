@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "moarsigns:items/wood/oak_sign"
+  }
+}

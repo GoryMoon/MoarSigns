@@ -105,7 +105,7 @@ public class MessageSignMainInfo implements IMessage {
                 }
             }
         } else {
-            buf.writeBoolean(true);
+            buf.writeBoolean(false);
         }
     }
     public static class Handler extends ClientMessageHandler<MessageSignMainInfo> {
