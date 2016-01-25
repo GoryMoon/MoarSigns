@@ -2,7 +2,7 @@
 buildscript {
     repositories {
         mavenCentral()
-        mavenLocal()
+        jcenter()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
@@ -42,6 +42,9 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
 version = "${config.mc_version}"+ "-" + "${config.mod_version}"
 group= "se.gory_moon" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MoarSigns"
@@ -50,6 +53,7 @@ minecraft {
     version = "${config.mc_version}"+ "-" + "${config.forge_version}"
     runDir = "run"
 
+    useDepAts = true // Required for JEI
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
     // stable_#            stables are built at the discretion of the MCP team.
@@ -150,34 +154,47 @@ task devJar(type: Jar, dependsOn: 'classes') {
     classifier = 'dev'
 }
 
-/*task sourceJar(type: Jar) {
-    from(sourceSets.main.allSource) {
-        include '**'
-    }
-    extension = 'jar'
-    classifier = 'sources'
-}*/
-
-
 artifacts {
     archives devJar
     archives sourceJar
 }
 
-uploadArchives.dependsOn signJar
-build.dependsOn signJar
+tasks.build.dependsOn('signJar')
 
-task signJar(type: SignJar, dependsOn: ["jar", "devJar"]) {
+if (!project.hasProperty("keystore_location")) // keystore stuff
+    ext.keystore_location = "."
+if (!project.hasProperty("keystore_password")) // keystore stuff
+    ext.keystore_password = ""
+if (!project.hasProperty("ms_keystore_alias")) // keystore stuff
+    ext.ms_keystore_alias = ""
+
+task signJar(dependsOn: ["jar", "devJar"]) {
+    inputs.dir jar.destinationDir
+    inputs.file keystore_location
+    inputs.property "ms_keystore_alias", ms_keystore_alias
+    inputs.property "keystore_password", keystore_password
+    outputs.dir devJar.destinationDir
+
+    // only sign if the keystore exists
     onlyIf {
-        project.hasProperty('keystore_location')
+        return keystore_location != "." && keystore_password != ""
     }
+    // the actual action.. sign the jar.
+    doLast {
+        jar.destinationDir.eachFile { file ->
+            if (!file.getPath().endsWith(".jar"))
+                return; // skip non-jars
 
-    keyStore = project.hasProperty('keystore_location') ? project.getProperty('keystore_location') : "";
-    storePass = project.hasProperty('keystore_password') ? project.getProperty('keystore_password') : "";
-    alias = project.hasProperty('ms_keystore_alias') ? project.getProperty('ms_keystore_alias') : "";
-    keyPass = project.hasProperty('keystore_password') ? project.getProperty('keystore_password') : "";
-    inputFile = jar.archivePath
-    outputFile = jar.archivePath
+            logger.lifecycle "signing $file"
+            ant.signjar(
+                    destDir: file.getParentFile(), // same place it came from
+                    jar: file,
+                    keystore: keystore_location,
+                    alias: ms_keystore_alias,
+                    storepass: keystore_password
+            )
+        }
+    }
 }
 
 uploadArchives {
