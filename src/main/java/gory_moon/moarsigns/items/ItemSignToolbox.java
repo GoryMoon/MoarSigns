@@ -11,8 +11,6 @@ import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.RotationHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -55,7 +53,8 @@ public class ItemSignToolbox extends Item {
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (!world.isRemote) {
-            MovingObjectPosition.MovingObjectType hit = FMLClientHandler.instance().getClient().objectMouseOver.typeOfHit;
+            MovingObjectPosition movingObjectPosition = getMovingObjectPositionFromPlayer(world, player, false);
+            MovingObjectPosition.MovingObjectType hit = movingObjectPosition != null ? movingObjectPosition.typeOfHit: MovingObjectPosition.MovingObjectType.MISS;
 
             if (hit == MovingObjectPosition.MovingObjectType.MISS) {
                 int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
@@ -80,12 +79,12 @@ public class ItemSignToolbox extends Item {
                     doEdit(world, pos, player);
                     break;
                 case ROTATE_MODE:
-                    doRotate(world, pos);
+                    doRotate(world, pos, player);
                     break;
                 case MOVE_MODE:
                     return doMove(world, pos, stack, player, side, hitX, hitY, hitZ);
                 case COPY_MODE:
-                    doCopy(world, pos, stack);
+                    doCopy(world, pos, stack, player);
                     break;
                 case EXCHANGE_MODE:
                     doExchange(world, pos, player);
@@ -98,9 +97,9 @@ public class ItemSignToolbox extends Item {
         return false;
     }
 
-    private void doRotate(World world, BlockPos pos) {
+    private void doRotate(World world, BlockPos pos, EntityPlayer player) {
         if (world.getBlockState(pos).getBlock() instanceof BlockMoarSign) {
-            RotationHandler.rotate((TileEntityMoarSign) world.getTileEntity(pos));
+            RotationHandler.rotate((TileEntityMoarSign) world.getTileEntity(pos), player.isSneaking());
         }
     }
 
@@ -109,14 +108,16 @@ public class ItemSignToolbox extends Item {
             TileEntity entity = world.getTileEntity(pos);
             if (entity instanceof TileEntityMoarSign) {
                 TileEntityMoarSign tileEntity = (TileEntityMoarSign) entity;
+                tileEntity.setEditAble(true);
+                tileEntity.setPlayer(player);
                 PacketHandler.INSTANCE.sendTo(new MessageSignOpenGui(tileEntity, false), (EntityPlayerMP) player);
             }
         }
     }
 
-    private void doCopy(World world, BlockPos pos, ItemStack stack) {
+    public void doCopy(World world, BlockPos pos, ItemStack stack, EntityPlayer player) {
         NBTTagCompound signInfo = stack.getTagCompound();
-        if (GuiScreen.isCtrlKeyDown()) {
+        if (player.isSneaking()) {
             TileEntity tileEntity = world.getTileEntity(pos);
 
             if (tileEntity instanceof TileEntityMoarSign) {
@@ -213,7 +214,7 @@ public class ItemSignToolbox extends Item {
         int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
         switch (ToolBoxModes.values()[mode]) {
             case COPY_MODE:
-                str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.COPY.translate(Colors.LIGHTGRAY.toString() + "[", (Minecraft.isRunningOnMac ? "0" : "1"), "]" + Colors.GRAY.toString(), "\n" + Colors.LIGHTGRAY.toString() + "[");
+                str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.COPY.translate(Colors.LIGHTGRAY.toString() + "[" + GameSettings.getKeyDisplayString(gameSettings.keyBindSneak.getKeyCode()) + "]" + Colors.GRAY.toString(), Colors.LIGHTGRAY.toString() + "[", "]" + Colors.GRAY.toString(), "\n" + Colors.LIGHTGRAY.toString() + "[");
                 if (stack.getTagCompound() != null)
                     str += "\n" + Colors.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_TEXT.translate() + getFormattedData(stack.getTagCompound());
                 break;
@@ -244,7 +245,9 @@ public class ItemSignToolbox extends Item {
         String s = "\n";
 
         for (int i = 0; i < 4; i++) {
-            s += Colors.WHITE + "[" + Colors.GRAY + compound.getString("Text" + (i + 1)) + Colors.WHITE + "]\n";
+            String text = compound.getString("Text" + (i + 1)).replaceFirst("\"", "");
+            int lastPos = text.lastIndexOf("\"");
+            s += Colors.WHITE + "[" + Colors.GRAY + text.substring(0, lastPos < 0 ? text.length(): lastPos) + Colors.WHITE + "]\n";
         }
 
         return s;

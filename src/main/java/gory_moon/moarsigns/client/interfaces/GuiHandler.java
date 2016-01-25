@@ -1,17 +1,18 @@
 package gory_moon.moarsigns.client.interfaces;
 
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.IChatComponent;
-import net.minecraftforge.fml.common.network.IGuiHandler;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerDebug;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerExchange;
+import gory_moon.moarsigns.client.interfaces.containers.ContainerPreview;
 import gory_moon.moarsigns.client.interfaces.containers.InventoryExchange;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
 
@@ -148,7 +149,7 @@ public class GuiHandler implements IGuiHandler {
             case EXCHANGE:
                 return new ContainerExchange(player.inventory, new InventoryExchange());
             case PREVIEW:
-                return new GuiPreview.ContainerPreview();
+                return new ContainerPreview();
         }
 
         return null;

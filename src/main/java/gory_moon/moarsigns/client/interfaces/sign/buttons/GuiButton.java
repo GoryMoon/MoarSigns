@@ -23,7 +23,7 @@ public abstract class GuiButton extends GuiRectangle {
     }
 
     public void drawButton(GuiBase gui, int mouseX, int mouseY) {
-        int buttonType = isDisabled ? 60 : inRect(mouseX, mouseY) ? 20 : 0;
+        int buttonType = isDisabled ? 60 : !gui.isOnOverlay(mouseX, mouseY) && inRect(mouseX, mouseY) ? 20 : 0;
 
         super.draw(gui, buttonType, 204);
 
@@ -42,7 +42,7 @@ public abstract class GuiButton extends GuiRectangle {
     }
 
     public boolean onClick(GuiMoarSign gui, int x, int y) {
-        if (inRect(x, y)) {
+        if (!gui.isOnOverlay(x, y) && inRect(x, y)) {
             action(gui);
             gui.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
             return true;

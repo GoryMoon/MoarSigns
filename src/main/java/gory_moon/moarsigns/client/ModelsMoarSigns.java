@@ -45,6 +45,7 @@ public class ModelsMoarSigns {
         registerItemModel(ModItems.signToolbox, 0, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/edit"));
         registerItemModel(ModItems.signToolbox, 1, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/rotate"));
         registerItemModel(ModItems.signToolbox, 2, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/move"));
+        registerItemModel(ModItems.signToolbox, 7, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/move"));
         registerItemModel(ModItems.signToolbox, 3, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/copy"));
         registerItemModel(ModItems.signToolbox, 4, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/exchange"));
         registerItemModel(ModItems.signToolbox, 5, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/preview"));

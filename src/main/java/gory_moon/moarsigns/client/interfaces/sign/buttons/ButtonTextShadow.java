@@ -20,7 +20,7 @@ public class ButtonTextShadow extends GuiButtonSpecial {
     @Override
     public void drawButton(GuiBase gui, int mouseX, int mouseY) {
         int srcX = hasShadow ? 224 : 240;
-        int buttonType = isDisabled ? srcY + h * 2 : inRect(mouseX, mouseY) ? srcY + h : srcY;
+        int buttonType = isDisabled ? srcY + h * 2 : !gui.isOnOverlay(mouseX, mouseY) && inRect(mouseX, mouseY) ? srcY + h : srcY;
 
         super.draw(gui, srcX, buttonType);
     }

@@ -124,15 +124,15 @@ public class MessageSignMainInfo implements IMessage {
                     if (tileEntity instanceof TileEntityMoarSign) {
                         TileEntityMoarSign sign = (TileEntityMoarSign) tileEntity;
 
-                        sign.isMetal = message.isMetal;
-                        sign.rowLocations = message.rowLocations;
-                        sign.rowSizes = message.rowSizes;
-                        sign.visibleRows = message.visibleRows;
-                        sign.shadowRows = message.shadowRows;
-                        sign.lockedChanges = message.lockedChanges;
-                        sign.setResourceLocation(message.texture);
-
                         if (sign.getIsEditable()) {
+                            sign.isMetal = message.isMetal;
+                            sign.rowLocations = message.rowLocations;
+                            sign.rowSizes = message.rowSizes;
+                            sign.visibleRows = message.visibleRows;
+                            sign.shadowRows = message.shadowRows;
+                            sign.lockedChanges = message.lockedChanges;
+                            sign.setResourceLocation(message.texture);
+
                             System.arraycopy(message.text, 0, sign.signText, 0, 4);
                             sign.markDirty();
                         }

@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.client.interfaces.sign;
 
 import com.google.common.collect.Lists;
+import gory_moon.moarsigns.client.interfaces.GuiRectangle;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,6 +39,8 @@ public class GuiMoarSign extends GuiBase {
     public int selectedTextField = 0;
     public boolean showColors = false;
     public boolean showTextStyles;
+    public GuiRectangle textStyleRect;
+    public GuiRectangle textColorsRect;
     public List<GuiButton> buttons = new ArrayList<GuiButton>();
     public GuiSignTextField[] guiTextFields = new GuiSignTextField[4];
     public int[] rowSizes = new int[4];
@@ -86,15 +89,19 @@ public class GuiMoarSign extends GuiBase {
 
         Pattern p = Pattern.compile("(?<=[" + (char) 167 + "])([a-z0-9])+");
         for (int i = 0; i < array.length; i++) {
-            String s = array[i].getUnformattedText();
-            if (!s.equals("")) {
+            if (array[i] != null) {
+                String s = array[i].getUnformattedText();
+                if (!s.equals("")) {
 
-                Matcher m = p.matcher(s);
-                while (m.find()) {
-                    s = s.replace((char) 167 + m.group(1), "{" + (char) 8747 + m.group(1) + "}");
+                    Matcher m = p.matcher(s);
+                    while (m.find()) {
+                        s = s.replace((char) 167 + m.group(1), "{" + (char) 8747 + m.group(1) + "}");
+                    }
                 }
+                result[i] = s;
+            } else {
+                result[i] = "";
             }
-            result[i] = s;
         }
 
         return result;
@@ -108,7 +115,7 @@ public class GuiMoarSign extends GuiBase {
         buttonList.clear();
         buttons.clear();
         Keyboard.enableRepeatEvents(true);
-        entitySign.setEditable(false);
+        entitySign.setEditAble(false);
 
         String[] text = getSignTextWithCode(entitySign.signText);
         rowSizes = Arrays.copyOf(entitySign.rowSizes, entitySign.rowSizes.length);
@@ -118,7 +125,7 @@ public class GuiMoarSign extends GuiBase {
 
         int k = 0;
         int j;
-        for (int i = 0; i < rowSizes.length; i++) {
+        for (int i = 0; i < 4; i++) {
             int row = guiTop + 100 + k * 18;
             ButtonTextLocation btnText1 = new ButtonTextLocation(i, guiLeft + TEXT_EDIT_AREA + 108, row, true);
             ButtonTextLocation btnText2 = new ButtonTextLocation(i, guiLeft + TEXT_EDIT_AREA + 108, row + 8, false);
@@ -142,7 +149,7 @@ public class GuiMoarSign extends GuiBase {
             }
 
             guiTextFields[i] = new GuiSignTextField(i, fontRendererObj, guiLeft + TEXT_EDIT_AREA + 17, row, 90, 16);
-            guiTextFields[i].setText(text[i]);
+            guiTextFields[i].setText(text[i] != null ? text[i]: "");
             k++;
         }
 
@@ -162,6 +169,8 @@ public class GuiMoarSign extends GuiBase {
         for (int i = 0; i < styleButtons.length; i++) {
             styleButtons[i] = new GuiTextStyleButton(guiLeft + 150 + 5, guiTop + 30 + 5 + 18 * i, 50, 16, i);
         }
+        textStyleRect = new GuiRectangle(guiLeft + 150, guiTop + 30, 60, 116);
+        textColorsRect = new GuiRectangle(guiLeft + 150, guiTop + 30, 65, 65);
 
         buttonCutSign = new ButtonCutSign(guiLeft + 74, guiTop + 10);
         buttonCopySign = new ButtonCopySign(guiLeft + 95, guiTop + 10);
@@ -191,7 +200,7 @@ public class GuiMoarSign extends GuiBase {
     @Override
     public void onGuiClosed() {
         Keyboard.enableRepeatEvents(false);
-        this.entitySign.setEditable(true);
+        this.entitySign.setEditAble(true);
 
         for (int i = 0; i < entitySign.signText.length; i++) {
             int maxLength = Utils.getMaxLength(rowSizes[i]);
@@ -373,6 +382,7 @@ public class GuiMoarSign extends GuiBase {
                     id = button.getId(this, x, y);
                     if (id != -1) {
                         showColors = false;
+                        overlay = null;
                         guiTextFields[selectedTextField].setFocused(true);
                         guiTextFields[selectedTextField].writeText("{" + (char) 8747 + Integer.toHexString(Colors.values()[id].getNumber()) + "}");
                         update();
@@ -387,6 +397,7 @@ public class GuiMoarSign extends GuiBase {
                 for (GuiTextStyleButton button : styleButtons) {
                     if (button.inRect(x, y)) {
                         showTextStyles = false;
+                        overlay = null;
                         guiTextFields[selectedTextField].setFocused(true);
                         guiTextFields[selectedTextField].writeText("{" + (char) 8747 + button.getStyleChar(x, y) + "}");
                         update();
@@ -436,6 +447,9 @@ public class GuiMoarSign extends GuiBase {
 
         String s = "";
         String[] array = new String[guiTextFields.length];
+
+        if (!showColors && !showTextStyles)
+            overlay = null;
 
         for (int i = 0; i < guiTextFields.length; i++) {
             array[i] = guiTextFields[i].getText();

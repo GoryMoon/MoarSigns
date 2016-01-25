@@ -1,15 +1,6 @@
 package gory_moon.moarsigns.tileentites;
 
 import com.google.gson.JsonParseException;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.CommandResultStats;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.*;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
@@ -17,12 +8,19 @@ import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignMainInfo;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.CommandResultStats;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntitySign;
+import net.minecraft.util.*;
+import net.minecraft.world.World;
 
 public class TileEntityMoarSign extends TileEntitySign implements ITickable {
 
@@ -111,7 +109,6 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
     }
 
     public void readFromNBT(NBTTagCompound compound) {
-        isEditable = false;
         super.readFromNBT(compound);
 
         ICommandSender icommandsender = new ICommandSender()
@@ -270,14 +267,17 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
         return this.isEditable;
     }
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void setEditable(boolean state) {
+    public void setEditAble(boolean state) {
         this.isEditable = state;
 
         if (!state) {
             playerEditing = null;
         }
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        setEditAble(editable);
     }
 
     public ResourceLocation getResourceLocation() {
