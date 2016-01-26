@@ -50,10 +50,11 @@ public class Api {
      * Rotates the sign by one step
      *
      * @param tileEntity The tile entity of the sign that should setRotation
+     * @param reverse If the rotation would be in reverse
      */
-    public static void rotateSign(TileEntity tileEntity) {
+    public static void rotateSign(TileEntity tileEntity, boolean reverse) {
         if (tileEntity instanceof TileEntityMoarSign) {
-            RotationHandler.rotate((TileEntityMoarSign) tileEntity);
+            RotationHandler.rotate((TileEntityMoarSign) tileEntity, reverse);
         }
     }
 

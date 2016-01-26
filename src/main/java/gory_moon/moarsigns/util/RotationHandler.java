@@ -2,13 +2,12 @@ package gory_moon.moarsigns.util;
 
 import gory_moon.moarsigns.blocks.BlockMoarSign;
 import gory_moon.moarsigns.blocks.Blocks;
-import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.world.World;
 
 public class RotationHandler {
 
-    public static void rotate(TileEntityMoarSign tileEntity) {
+    public static void rotate(TileEntityMoarSign tileEntity, boolean reverse) {
         if (tileEntity.getWorldObj().isRemote) return;
         World world = tileEntity.getWorldObj();
         int meta = world.getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
@@ -55,7 +54,7 @@ public class RotationHandler {
             }
             setRotation(tileEntity, side);
         } else {
-            if (GuiMoarSign.isShiftKeyDown()) {
+            if (reverse) {
                 if (meta == 0) {
                     meta = 15;
                 } else {
@@ -75,7 +74,7 @@ public class RotationHandler {
     public static void rotate(TileEntityMoarSign tileEntity, int rotation) {
         if (tileEntity.getWorldObj().isRemote) return;
         for (int i = 0; i < rotation; i++)
-            rotate(tileEntity);
+            rotate(tileEntity, false);
     }
 
     public static void setRotation(TileEntityMoarSign tileEntity, int rotation) {

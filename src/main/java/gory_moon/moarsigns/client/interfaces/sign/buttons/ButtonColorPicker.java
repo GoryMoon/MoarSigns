@@ -20,6 +20,7 @@ public class ButtonColorPicker extends GuiButtonToggleable {
     public void action(GuiBase gui) {
         GuiMoarSign guiM = (GuiMoarSign) gui;
         guiM.showColors = true;
+        guiM.overlay = guiM.textColorsRect;
     }
 
     @Override

@@ -18,7 +18,7 @@ public class ButtonShowHide extends GuiButtonSpecial {
     @Override
     public void drawButton(GuiBase gui, int mouseX, int mouseY) {
         int srcX = isHidden ? 224 : 240;
-        int buttonType = inRect(mouseX, mouseY) ? srcY + h : srcY;
+        int buttonType = !gui.isOnOverlay(mouseX, mouseY) && inRect(mouseX, mouseY) ? srcY + h : srcY;
 
         super.draw(gui, srcX, buttonType);
     }

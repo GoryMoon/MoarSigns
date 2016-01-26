@@ -13,7 +13,7 @@ public abstract class GuiButtonSpecial extends GuiButton {
 
     @Override
     public void drawButton(GuiBase gui, int mouseX, int mouseY) {
-        int buttonType = isDisabled ? srcY + h * 2 : inRect(mouseX, mouseY) ? srcY + h : srcY;
+        int buttonType = isDisabled ? srcY + h * 2 : !gui.isOnOverlay(mouseX, mouseY) && inRect(mouseX, mouseY) ? srcY + h : srcY;
 
         super.draw(gui, srcX, buttonType);
     }

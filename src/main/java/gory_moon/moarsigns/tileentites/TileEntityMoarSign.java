@@ -1,7 +1,5 @@
 package gory_moon.moarsigns.tileentites;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
@@ -183,14 +181,17 @@ public class TileEntityMoarSign extends TileEntitySign {
         return this.isEditable;
     }
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void setEditable(boolean state) {
+    public void setEditAble(boolean state) {
         this.isEditable = state;
 
         if (!state) {
             playerEditing = null;
         }
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        setEditAble(editable);
     }
 
     public ResourceLocation getResourceLocation() {

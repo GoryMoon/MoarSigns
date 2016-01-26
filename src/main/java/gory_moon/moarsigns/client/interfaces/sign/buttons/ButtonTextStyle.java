@@ -20,6 +20,7 @@ public class ButtonTextStyle extends GuiButtonToggleable {
     public void action(GuiBase gui) {
         GuiMoarSign guiM = (GuiMoarSign) gui;
         guiM.showTextStyles = true;
+        guiM.overlay = guiM.textStyleRect;
     }
 
     @Override
