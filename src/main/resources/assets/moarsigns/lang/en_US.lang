@@ -3,6 +3,7 @@ itemGroup.moarSigns=MoarSigns
 item.moarsigns.debug.name=Debug
 item.moarsigns.sign.error.name=MoarSign §4ERROR§r
 tile.moarsign.sign.name=MoarSign §4ERROR§r
+crafting.moarsigns.sign.crafting=MoarSigns Crafting
 crafting.moarsigns.sign.shaped=MoarSigns Shaped
 crafting.moarsigns.sign.shapeless=MoarSigns Shapeless
 crafting.moarsigns.sign.exchange=MoarSigns Exchange

@@ -9,10 +9,10 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -137,23 +137,10 @@ public class ShapedMoarSignRecipe implements IRecipe {
             items = r.recipeItems;
         } else if (recipe instanceof ShapedOreRecipe) {
             ShapedOreRecipe r = (ShapedOreRecipe) recipe;
-
-            try {
-                Class clazz = ShapedOreRecipe.class;
-                Field field = clazz.getDeclaredField("width");
-                Field field1 = clazz.getDeclaredField("height");
-                field.setAccessible(true);
-                field1.setAccessible(true);
-
-                width = field.getInt(r);
-                height = field1.getInt(r);
-                input = new Object[r.getRecipeSize()];
-                items = r.getInput();
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            width = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, (ShapedOreRecipe)recipe, "width");
+            height = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, (ShapedOreRecipe)recipe, "height");
+            input = new Object[r.getRecipeSize()];
+            items = r.getInput();
         }
 
         if (items != null) {
