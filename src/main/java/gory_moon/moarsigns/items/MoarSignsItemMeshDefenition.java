@@ -9,6 +9,7 @@ public class MoarSignsItemMeshDefenition implements ItemMeshDefinition {
     @Override
     public ModelResourceLocation getModelLocation(ItemStack stack) {
         SignInfo info = ItemMoarSign.getInfo(stack.getTagCompound());
+        if (info == null) return null;
         String resourcePath = info.material.path.replace("/", "_") + info.itemName;
         return new ModelResourceLocation(info.modId + ":" + "signs/" + resourcePath, "inventory");
     }

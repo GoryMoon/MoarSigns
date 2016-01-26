@@ -2,7 +2,7 @@
 	"versionList": [
 		{
 			"mcVersion": "Minecraft 1.7.10",
-			"modVersion": "1.2.0",
+			"modVersion": "1.2.1",
 			"changeLog": [
 				"Added option to of recipe replacement",
 				"Changed more recipes to use ore dictionary",
@@ -11,6 +11,17 @@
 				"Added removal of recipes by arrays in MineTweaker3 integration"
 			],
 			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2276433/download",
+			"isDirectLink": "true",
+			"newFileName": ""
+		},
+		{
+			"mcVersion": "Minecraft 1.8.9",
+			"modVersion": "2.0.0",
+			"changeLog": [
+				"Updated to Minecraft 1.8.9",
+				"Added JEI integration"
+			],
+			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2277555/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}
