@@ -2,13 +2,11 @@
 	"versionList": [
 		{
 			"mcVersion": "Minecraft 1.7.10",
-			"modVersion": "1.2.1",
+			"modVersion": "1.2.2",
 			"changeLog": [
-				"Added option to of recipe replacement",
-				"Changed more recipes to use ore dictionary",
-				"Fixed crash when converting ShapedRecipes to ShapedMoarSignRecipe",
-				"Fixed MineTweaker3 integration of removing recipes and getting signs",
-				"Added removal of recipes by arrays in MineTweaker3 integration"
+				"Fixed Toolbox usage on dedicated servers",
+				"Fixed tooltip and hover effect showing trough popups in gui",
+				"Fixed a recipe bug"
 			],
 			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2276433/download",
 			"isDirectLink": "true",
