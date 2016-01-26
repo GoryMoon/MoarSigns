@@ -134,10 +134,10 @@ item.moarsigns.sign.emerald_sign.name=Emerald Sign
 # Mod Signs
 #Biomes O' Plenty
 item.moarsigns.sign.bop.cherry_sign.name=Cherry Sign
-item.moarsigns.sign.bop.dark_sign.name=Dark Sign
+item.moarsigns.sign.bop.umbran_sign.name=Umbran Sign
 item.moarsigns.sign.bop.fir_sign.name=Fir Sign
 item.moarsigns.sign.bop.hellbark_sign.name=Hellbark Sign
-item.moarsigns.sign.bop.holy_sign.name=Ethereal Sign
+item.moarsigns.sign.bop.ethereal_sign.name=Ethereal Sign
 item.moarsigns.sign.bop.jacaranda_sign.name=Jacaranda Sign
 item.moarsigns.sign.bop.magic_sign.name=Magic Sign
 item.moarsigns.sign.bop.mahogany_sign.name=Mahogany Sign

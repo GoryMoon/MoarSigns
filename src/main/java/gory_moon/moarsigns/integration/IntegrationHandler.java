@@ -1,21 +1,14 @@
 package gory_moon.moarsigns.integration;
 
-import net.minecraftforge.fml.common.Loader;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.IntegrationRegistry;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.integration.bop.BiomesOPlentyIntegration;
-import gory_moon.moarsigns.integration.factorization.FactorizationIntegration;
-import gory_moon.moarsigns.integration.forestry.ForestryIntegration;
-import gory_moon.moarsigns.integration.ic2.IndustrialCraft2Integration;
-import gory_moon.moarsigns.integration.natura.NaturaIntegration;
-import gory_moon.moarsigns.integration.railcraft.RailcraftIntegration;
-import gory_moon.moarsigns.integration.tconstruct.TinkersConstructIntegration;
-import gory_moon.moarsigns.integration.thermalfoundation.ThermalFoundationIntegration;
 import gory_moon.moarsigns.integration.vanilla.MinecraftIntegration;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -28,14 +21,14 @@ public class IntegrationHandler {
 
     static {
         registerIntegration(MinecraftIntegration.class);
-        registerIntegration(NaturaIntegration.class);
-        registerIntegration(ForestryIntegration.class);
+        //registerIntegration(NaturaIntegration.class);
+        //registerIntegration(ForestryIntegration.class);
         registerIntegration(BiomesOPlentyIntegration.class);
-        registerIntegration(IndustrialCraft2Integration.class);
-        registerIntegration(TinkersConstructIntegration.class);
-        registerIntegration(FactorizationIntegration.class);
-        registerIntegration(RailcraftIntegration.class);
-        registerIntegration(ThermalFoundationIntegration.class);
+        //registerIntegration(IndustrialCraft2Integration.class);
+        //registerIntegration(TinkersConstructIntegration.class);
+        //registerIntegration(FactorizationIntegration.class);
+        //registerIntegration(RailcraftIntegration.class);
+        //registerIntegration(ThermalFoundationIntegration.class);
 
         registerPlankOreName("plankWood");
 
