@@ -30,8 +30,8 @@ public class Provider implements IWailaDataProvider {
 
         registrar.registerStackProvider(provider, BlockMoarSign.class);
         registrar.registerBodyProvider(provider, BlockMoarSign.class);
-        registrar.addConfig(ModInfo.ID, "showOrigin", Localization.INTEGRATION.WAILA.SHOW_ORIGIN.translate());
-        registrar.addConfig(ModInfo.ID, "showMaterial", Localization.INTEGRATION.WAILA.SHOW_MATERIAL.translate(), false);
+        registrar.addConfig(ModInfo.NAME, "showOrigin", Localization.INTEGRATION.WAILA.SHOW_ORIGIN.translate());
+        registrar.addConfig(ModInfo.NAME, "showMaterial", Localization.INTEGRATION.WAILA.SHOW_MATERIAL.translate(), false);
     }
 
     @Override

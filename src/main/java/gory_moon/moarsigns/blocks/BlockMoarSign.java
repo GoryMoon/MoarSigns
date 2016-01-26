@@ -2,8 +2,10 @@ package gory_moon.moarsigns.blocks;
 
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
+import gory_moon.moarsigns.client.particle.EntityDiggingFXMoarSigns;
 import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -75,134 +77,73 @@ public class BlockMoarSign extends BlockContainer {
     @SideOnly(Side.CLIENT)
     @Override
     public boolean addDestroyEffects(World world, BlockPos pos, EffectRenderer effectRenderer) {
-        /*
-        if (!state.getBlock().isAir(worldObj, pos) && !state.getBlock().addDestroyEffects(worldObj, pos, this))
+        IBlockState state = world.getBlockState(pos);
+        int i = 4;
+        for (int j = 0; j < i; ++j)
         {
-            state = state.getBlock().getActualState(state, this.worldObj, pos);
-            int i = 4;
-
-            for (int j = 0; j < i; ++j)
+            for (int k = 0; k < i; ++k)
             {
-                for (int k = 0; k < i; ++k)
+                for (int l = 0; l < i; ++l)
                 {
-                    for (int l = 0; l < i; ++l)
-                    {
-                        double d0 = (double)pos.getX() + ((double)j + 0.5D) / (double)i;
-                        double d1 = (double)pos.getY() + ((double)k + 0.5D) / (double)i;
-                        double d2 = (double)pos.getZ() + ((double)l + 0.5D) / (double)i;
-                        effectRenderer.addEffect((new EntityDiggingFX(this.worldObj, d0, d1, d2, d0 - (double)pos.getX() - 0.5D, d1 - (double)pos.getY() - 0.5D, d2 - (double)pos.getZ() - 0.5D, state)).func_174846_a(pos));
-                    }
+                    double d0 = (double)pos.getX() + ((double)j + 0.5D) / (double)i;
+                    double d1 = (double)pos.getY() + ((double)k + 0.5D) / (double)i;
+                    double d2 = (double)pos.getZ() + ((double)l + 0.5D) / (double)i;
+                    effectRenderer.addEffect((new EntityDiggingFXMoarSigns(world, d0, d1, d2, d0 - (double)pos.getX() - 0.5D, d1 - (double)pos.getY() - 0.5D, d2 - (double)pos.getZ() - 0.5D, pos, state)).func_174846_a(pos));
                 }
             }
         }
 
-        byte b0 = 4;
-        for (int j1 = 0; j1 < b0; ++j1) {
-            for (int k1 = 0; k1 < b0; ++k1) {
-                for (int l1 = 0; l1 < b0; ++l1) {
-                    double d0 = (double) x + ((double) j1 + 0.5D) / (double) b0;
-                    double d1 = (double) y + ((double) k1 + 0.5D) / (double) b0;
-                    double d2 = (double) z + ((double) l1 + 0.5D) / (double) b0;
-                    effectRenderer.addEffect((new EntityDiggingFXMoarSigns(world, d0, d1, d2, d0 - (double) x - 0.5D, d1 - (double) y - 0.5D, d2 - (double) z - 0.5D, x, y, z, this, meta, 3)).applyColourMultiplier(x, y, z));
-                }
-            }
-        }
-
-        return true;*/
-        return false;
+        return true;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public boolean addHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer) {
-        /*IBlockState iblockstate = this.worldObj.getBlockState(pos);
+    public boolean addHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
+        BlockPos pos = target.getBlockPos();
+        EnumFacing side = target.sideHit;
+        IBlockState iblockstate = world.getBlockState(pos);
         Block block = iblockstate.getBlock();
 
-        if (block.getRenderType() != -1)
+        int i = pos.getX();
+        int j = pos.getY();
+        int k = pos.getZ();
+        float f = 0.1F;
+        double d0 = (double)i + world.rand.nextDouble() * (block.getBlockBoundsMaxX() - block.getBlockBoundsMinX() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinX();
+        double d1 = (double)j + world.rand.nextDouble() * (block.getBlockBoundsMaxY() - block.getBlockBoundsMinY() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinY();
+        double d2 = (double)k + world.rand.nextDouble() * (block.getBlockBoundsMaxZ() - block.getBlockBoundsMinZ() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinZ();
+
+        if (side == EnumFacing.DOWN)
         {
-            int i = pos.getX();
-            int j = pos.getY();
-            int k = pos.getZ();
-            float f = 0.1F;
-            double d0 = (double)i + this.rand.nextDouble() * (block.getBlockBoundsMaxX() - block.getBlockBoundsMinX() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinX();
-            double d1 = (double)j + this.rand.nextDouble() * (block.getBlockBoundsMaxY() - block.getBlockBoundsMinY() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinY();
-            double d2 = (double)k + this.rand.nextDouble() * (block.getBlockBoundsMaxZ() - block.getBlockBoundsMinZ() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinZ();
-
-            if (side == EnumFacing.DOWN)
-            {
-                d1 = (double)j + block.getBlockBoundsMinY() - (double)f;
-            }
-
-            if (side == EnumFacing.UP)
-            {
-                d1 = (double)j + block.getBlockBoundsMaxY() + (double)f;
-            }
-
-            if (side == EnumFacing.NORTH)
-            {
-                d2 = (double)k + block.getBlockBoundsMinZ() - (double)f;
-            }
-
-            if (side == EnumFacing.SOUTH)
-            {
-                d2 = (double)k + block.getBlockBoundsMaxZ() + (double)f;
-            }
-
-            if (side == EnumFacing.WEST)
-            {
-                d0 = (double)i + block.getBlockBoundsMinX() - (double)f;
-            }
-
-            if (side == EnumFacing.EAST)
-            {
-                d0 = (double)i + block.getBlockBoundsMaxX() + (double)f;
-            }
-
-            this.addEffect((new EntityDiggingFX(this.worldObj, d0, d1, d2, 0.0D, 0.0D, 0.0D, iblockstate)).func_174846_a(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
+            d1 = (double)j + block.getBlockBoundsMinY() - (double)f;
         }
 
-        int x = target.blockX;
-        int y = target.blockY;
-        int z = target.blockZ;
-        int side = target.sideHit;
-
-        Block block = worldObj.getBlock(x, y, z);
-
-        if (block != null) {
-
-            float f = 0.1F;
-            double d0 = (double) x + worldObj.rand.nextDouble() * (block.getBlockBoundsMaxX() - block.getBlockBoundsMinX() - (double) (f * 2.0F)) + (double) f + block.getBlockBoundsMinX();
-            double d1 = (double) y + worldObj.rand.nextDouble() * (block.getBlockBoundsMaxY() - block.getBlockBoundsMinY() - (double) (f * 2.0F)) + (double) f + block.getBlockBoundsMinY();
-            double d2 = (double) z + worldObj.rand.nextDouble() * (block.getBlockBoundsMaxZ() - block.getBlockBoundsMinZ() - (double) (f * 2.0F)) + (double) f + block.getBlockBoundsMinZ();
-
-            if (side == 0) {
-                d1 = (double) y + block.getBlockBoundsMinY() - (double) f;
-            }
-
-            if (side == 1) {
-                d1 = (double) y + block.getBlockBoundsMaxY() + (double) f;
-            }
-
-            if (side == 2) {
-                d2 = (double) z + block.getBlockBoundsMinZ() - (double) f;
-            }
-
-            if (side == 3) {
-                d2 = (double) z + block.getBlockBoundsMaxZ() + (double) f;
-            }
-
-            if (side == 4) {
-                d0 = (double) x + block.getBlockBoundsMinX() - (double) f;
-            }
-
-            if (side == 5) {
-                d0 = (double) x + block.getBlockBoundsMaxX() + (double) f;
-            }
-
-            effectRenderer.addEffect((new EntityDiggingFXMoarSigns(worldObj, d0, d1, d2, 0.0D, 0.0D, 0.0D, x, y, z, block, worldObj.getBlockMetadata(x, y, z), side)).applyColourMultiplier(x, y, z).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
+        if (side == EnumFacing.UP)
+        {
+            d1 = (double)j + block.getBlockBoundsMaxY() + (double)f;
         }
-        return true;*/
-        return false;
+
+        if (side == EnumFacing.NORTH)
+        {
+            d2 = (double)k + block.getBlockBoundsMinZ() - (double)f;
+        }
+
+        if (side == EnumFacing.SOUTH)
+        {
+            d2 = (double)k + block.getBlockBoundsMaxZ() + (double)f;
+        }
+
+        if (side == EnumFacing.WEST)
+        {
+            d0 = (double)i + block.getBlockBoundsMinX() - (double)f;
+        }
+
+        if (side == EnumFacing.EAST)
+        {
+            d0 = (double)i + block.getBlockBoundsMaxX() + (double)f;
+        }
+
+        effectRenderer.addEffect((new EntityDiggingFXMoarSigns(world, d0, d1, d2, 0.0D, 0.0D, 0.0D, pos, iblockstate)).func_174846_a(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
+        return true;
     }
 
     @Override
