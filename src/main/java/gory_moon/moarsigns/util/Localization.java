@@ -141,8 +141,8 @@ public final class Localization {
             RESET;
 
 
-            public String translate() {
-                return Localization.translateString("gui.moarsigns:textstyle." + toString().toLowerCase(), "");
+            public String translate(String var) {
+                return Localization.translateString("gui.moarsigns:textstyle." + toString().toLowerCase(), var);
             }
         }
 

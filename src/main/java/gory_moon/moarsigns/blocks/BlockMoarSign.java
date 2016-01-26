@@ -34,26 +34,6 @@ public class BlockMoarSign extends BlockContainer {
         setUnlocalizedName("moarsign.sign");
     }
 
-    //TODO Icons
-    /*
-    @SideOnly(Side.CLIENT)
-    @Override
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-        Boolean s = !((TileEntityMoarSign) world.getTileEntity(x, y, z)).isMetal;
-        return s ? Blocks.planks.getIcon(world, x, y, z, side) : Blocks.iron_block.getIcon(world, x, y, z, side);
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public IIcon getIcon(int par1, int par2) {
-        return Blocks.planks.getIcon(par1, par2);
-    }
-
-    @Override
-    public void registerBlockIcons(IIconRegister par1IconRegister) {
-    }
-    */
-
     @Override
     public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state)
     {

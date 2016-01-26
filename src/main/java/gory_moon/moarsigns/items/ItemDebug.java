@@ -16,14 +16,6 @@ public class ItemDebug extends Item {
         setUnlocalizedName("moarsigns.debug");
     }
 
-    //TODO Icon
-    /*
-    @Override
-    public void registerIcons(IIconRegister register) {
-        itemIcon = register.registerIcon(Info.TEXTURE_LOCATION + ":" + "debug_item");
-    }
-    */
-
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (!world.isRemote) {

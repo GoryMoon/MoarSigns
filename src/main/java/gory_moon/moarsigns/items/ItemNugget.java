@@ -21,21 +21,6 @@ public class ItemNugget extends Item {
         return super.getUnlocalizedName() + "." + NuggetRegistry.getUnlocName(stack.getItemDamage());
     }
 
-    //TODO Icons
-    /*
-    @Override
-    public void registerIcons(IIconRegister register) {
-        for (int i = 0; i < NuggetRegistry.size(); i++) {
-            icons[i] = register.registerIcon(Info.TEXTURE_LOCATION + ":" + "nuggets/" + NuggetRegistry.getUnlocName(i));
-        }
-    }
-
-    @Override
-    public IIcon getIconFromDamage(int dmg) {
-        return dmg >= 0 && dmg < NuggetRegistry.size() ? icons[dmg] : null;
-    }
-    */
-
     @SuppressWarnings("unchecked")
     @Override
     public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {

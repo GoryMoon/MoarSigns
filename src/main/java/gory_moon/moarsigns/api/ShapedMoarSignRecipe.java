@@ -13,9 +13,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class ShapedMoarSignRecipe implements IRecipe {
@@ -241,14 +241,22 @@ public class ShapedMoarSignRecipe implements IRecipe {
                         if (target instanceof MatchType) {
                             switch ((MatchType) target) {
                                 case ALL:
-                                    return true;
+                                    continue;
                                 case METAL:
-                                    return info.isMetal;
+                                    if (info.isMetal) {
+                                        continue;
+                                    }
+                                    return false;
                                 case WOOD:
-                                    return !info.isMetal;
+                                    if (!info.isMetal) {
+                                        continue;
+                                    }
+                                    return false;
                             }
                         } else {
-                            return info.material.materialName.equals(((MaterialInfo) target).materialName);
+                            if (!info.material.materialName.equals(((MaterialInfo) target).materialName)) {
+                                return false;
+                            }
                         }
                     } else return false;
                 } else if (target instanceof ItemStack) {
@@ -257,10 +265,10 @@ public class ShapedMoarSignRecipe implements IRecipe {
                     } else if (!OreDictionary.itemMatches((ItemStack) target, slot, false)) {
                         return false;
                     }
-                } else if (target instanceof ArrayList) {
+                } else if (target instanceof List) {
                     boolean matched = false;
 
-                    Iterator<ItemStack> itr = ((ArrayList<ItemStack>) target).iterator();
+                    Iterator<ItemStack> itr = ((List<ItemStack>) target).iterator();
                     while (itr.hasNext() && !matched) {
                         matched = OreDictionary.itemMatches(itr.next(), slot, false);
                     }
@@ -268,7 +276,7 @@ public class ShapedMoarSignRecipe implements IRecipe {
                     if (!matched) {
                         return false;
                     }
-                } else if (target == null && slot != null) {
+                } else if (target == null && slot != null || target != null && slot == null) {
                     return false;
                 }
             }

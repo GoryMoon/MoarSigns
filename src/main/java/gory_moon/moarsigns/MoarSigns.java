@@ -49,8 +49,6 @@ public class MoarSigns {
     public static CommonProxy proxy;
 
     public static Logger logger = LogManager.getLogger("MoarSigns");
-    //TODO Icons
-    //public static HashMap<String, IIcon> icons = new HashMap<String, IIcon>();
     private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
 
     @EventHandler

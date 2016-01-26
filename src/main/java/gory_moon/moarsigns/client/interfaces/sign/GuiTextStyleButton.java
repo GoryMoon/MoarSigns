@@ -41,7 +41,7 @@ public class GuiTextStyleButton extends GuiRectangle {
     }
 
     public String getName() {
-        return names[id].translate();
+        return names[id].translate(id == names.length - 1 ? "\n" + Colors.LIGHTGRAY: "");
     }
 
 }

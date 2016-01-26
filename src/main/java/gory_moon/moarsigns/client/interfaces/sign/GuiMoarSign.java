@@ -363,7 +363,7 @@ public class GuiMoarSign extends GuiBase {
 
             for (GuiTextStyleButton button : styleButtons) {
                 if (button.inRect(x, y))
-                    drawHoveringText(Lists.asList(button.getName(), new String[0]), x, y, fontRendererObj);
+                    drawHoveringText(Arrays.asList(button.getName().split("\n")), x, y, fontRendererObj);
             }
         }
 

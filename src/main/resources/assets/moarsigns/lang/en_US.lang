@@ -38,7 +38,7 @@ gui.moarsigns:button.description.cutsign=Cuts the sign into[%1]the clipboard, re
 gui.moarsigns:button.description.copysign=Copies the sign into[%1]the clipboard, ready to[%1]be pasted into a sign[%2]Shift-click to get the[%2]size, location, shadow and if hidden
 gui.moarsigns:button.description.pastesign=Pastes all text from a sign[%1]that is in the clipboard.
 gui.moarsigns:button.description.reset=Erases all text from sign[%1]and resets hidden rows[%1]and text location
-gui.moarsigns:button.description.textstyle=Set the style for[%1]the following text[%1]from the cursor[%2]Tip: Add any color before the this
+gui.moarsigns:button.description.textstyle=Set the style for the following[%1]textfrom the cursor[%2]Tip: Add any color before the this
 gui.moarsigns:button.description.colorselector=Add color to the text[%1]at the cursor position[%2]Tip: Add this before the style
 gui.moarsigns:button.description.lock=Locks the 3 bottom rows[%1]Changes to the top row[%1]will effect these rows
 
