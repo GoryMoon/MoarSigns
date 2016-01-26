@@ -33,9 +33,7 @@ public class BlockMoarSignStanding extends BlockMoarSign {
 
     public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock)
     {
-        if (!world.getBlockState(pos.down()).getBlock().getMaterial().isSolid())
-        {
-            this.dropBlockAsItem(world, pos, state, 0);
+        if (!world.getBlockState(pos.down()).getBlock().getMaterial().isSolid()) {
             world.setBlockToAir(pos);
         }
     }
