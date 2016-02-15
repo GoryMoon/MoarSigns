@@ -211,7 +211,7 @@ public class BlockMoarSign extends BlockContainer {
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return !this.func_181087_e(world, pos) && world.getBlockState(pos).getBlock().getMaterial().isSolid();
+        return !this.func_181087_e(world, pos) && world.getBlockState(pos).getBlock().isReplaceable(world, pos);
     }
 
     public SignInfo getSignInfo(World world, BlockPos pos) {
