@@ -97,7 +97,7 @@ public class ItemMoarSign extends Item {
         } else {
             pos = pos.offset(side);
 
-            if (!player.canPlayerEdit(pos, side, stack) || !Blocks.signStandingWood.canPlaceBlockAt(world, pos.offset(side.getOpposite()))) {
+            if (!player.canPlayerEdit(pos, side, stack) || !Blocks.signStandingWood.canPlaceBlockAt(world, pos)) {
                 return false;
             } else if (world.isRemote) {
                 return true;

@@ -151,7 +151,7 @@ public class ModItems {
         GameRegistry.addRecipe(new ShapedMoarSignRecipe(generalSign, true, true, "###", "###", " X ", '#', "plankWood", 'X', "stickWood"));
         GameRegistry.addRecipe(new ShapedMoarSignRecipe(signToolbox, "rxr", "xsx", "rxr", 'x', "ingotIron", 's', ShapedMoarSignRecipe.MatchType.ALL, 'r', "dyeRed"));
 
-        if (false && replaceRecipes) {
+        if (replaceRecipes) {
             ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
             ItemStack signStack = new ItemStack(Items.sign);
             for (int scan = 0; scan < recipes.size(); scan++) {
