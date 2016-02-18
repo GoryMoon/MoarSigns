@@ -129,7 +129,7 @@ public class ModItems {
                             GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetDiamond", '/', "stickWood"));
                         } else if (recNugget.getUnlocalizedName().equals("item.moarsigns.iron_nugget"))
                             GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetIron", '/', "stickWood"));
-                        else if (recNugget.getUnlocalizedName().equals("item.moarsigns.emerald_nuget"))
+                        else if (recNugget.getUnlocalizedName().equals("item.moarsigns.emerald_nugget"))
                             GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetEmerald", '/', "stickWood"));
                         else
                             GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', recNugget, '/', "stickWood"));
@@ -146,7 +146,6 @@ public class ModItems {
                 else
                     GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack, true, true, "XXX", "XXX", " / ", 'X', mat, '/', "stickWood"));
             }
-            break;
         }
 
         GameRegistry.addRecipe(new ShapedMoarSignRecipe(generalSign, true, true, "###", "###", " X ", '#', "plankWood", 'X', "stickWood"));

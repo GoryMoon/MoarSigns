@@ -2,13 +2,12 @@
 	"versionList": [
 		{
 			"mcVersion": "Minecraft 1.7.10",
-			"modVersion": "1.2.2",
+			"modVersion": "1.2.3",
 			"changeLog": [
-				"Fixed Toolbox usage on dedicated servers",
-				"Fixed tooltip and hover effect showing trough popups in gui",
-				"Fixed a recipe bug"
+				"Fixed recipes not working correctly",
+				"Added alternative way of removing recipes with MineTweaker"
 			],
-			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2277633/download",
+			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2282410/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}

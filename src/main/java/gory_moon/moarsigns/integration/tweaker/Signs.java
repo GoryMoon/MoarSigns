@@ -17,6 +17,7 @@ import minetweaker.mc1710.item.MCItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import scala.actors.threadpool.Arrays;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
@@ -40,13 +41,23 @@ public class Signs {
     }
 
     @ZenMethod
+    public static void removeRecipes(IIngredient output) {
+        MineTweakerAPI.apply(new Remove(output));
+    }
+
+    @ZenMethod
+    public static void removeRecipes(IIngredient[] output) {
+        MineTweakerAPI.apply(new Remove(output));
+    }
+
+    @ZenMethod
     public static void removeRecipes(IItemStack output) {
-        MineTweakerAPI.apply(new Remove(toStack(output)));
+        MineTweakerAPI.apply(new Remove(output));
     }
 
     @ZenMethod
     public static void removeRecipes(IItemStack[] output) {
-        MineTweakerAPI.apply(new Remove(toStacks(output)));
+        MineTweakerAPI.apply(new Remove(output));
     }
 
     @ZenMethod
@@ -205,15 +216,16 @@ public class Signs {
 
     private static class Remove implements IUndoableAction {
 
-        private final ItemStack[] outputs;
+        private final IIngredient[] outputs;
+        private ArrayList<ItemStack> stackOutputs = new ArrayList<ItemStack>();
         private ArrayList<IRecipe> iRecipes;
 
-        public Remove(ItemStack output) {
-            this.outputs = new ItemStack[1];
+        public Remove(IIngredient output) {
+            this.outputs = new IIngredient[1];
             this.outputs[0] = output;
         }
 
-        public Remove(ItemStack[] outputs) {
+        public Remove(IIngredient[] outputs) {
             this.outputs = outputs;
         }
 
@@ -221,9 +233,17 @@ public class Signs {
         public void apply() {
             List allRecipes = CraftingManager.getInstance().getRecipeList();
             iRecipes = new ArrayList<IRecipe>();
+            for (IIngredient o: outputs) {
+                if (o instanceof MatchTypeEntry || o instanceof MaterialEntry) {
+                    stackOutputs.addAll(Arrays.asList(toStacks(getSigns(o))));
+                } else if (o instanceof IItemStack) {
+                    stackOutputs.add((ItemStack) toObject(o));
+                }
+            }
             for (Object obj : allRecipes) {
                 IRecipe recipe = (IRecipe) obj;
-                for (ItemStack output : outputs) {
+                for (ItemStack output : stackOutputs) {
+                    System.out.println(output.getTagCompound());
                     if ((recipe instanceof ShapedMoarSignRecipe || recipe instanceof ShapelessMoarSignRecipe) && recipe.getRecipeOutput() != null && ItemStack.areItemStackTagsEqual(recipe.getRecipeOutput(), output)) {
                         iRecipes.add(recipe);
                     }
@@ -247,16 +267,16 @@ public class Signs {
         @Override
         public String describe() {
             String s = "";
-            for (ItemStack output : outputs)
-                s += "Removing MoarSign recipe for " + output.getDisplayName() + "\n";
+            for (IIngredient output : outputs)
+                if (output != null ) s += "Removing MoarSign recipe for " + output + "\n";
             return s;
         }
 
         @Override
         public String describeUndo() {
             String s = "";
-            for (ItemStack output : outputs)
-                s += "Restoring MoarSign recipe for  " + output.getDisplayName() + "\n";
+            for (IIngredient output : outputs)
+                if (output != null ) s += "Restoring MoarSign recipe for  " + output + "\n";
             return s;
         }
 
