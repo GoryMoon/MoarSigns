@@ -44,3 +44,7 @@ var signs = mods.MoarSigns.getSigns(<signMaterial:copper>) as IItemStack[];
 //Removes all recipes that is in the array
 //InputArray
 mods.MoarSigns.removeRecipes(signs);
+
+//Alternative way of removes all recipes that matches the input, either material or type, can also be an array of IIngredient
+//InputArray
+mods.MoarSigns.removeRecipes(<signMaterial:diamond>);
