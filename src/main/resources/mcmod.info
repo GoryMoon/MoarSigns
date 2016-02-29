@@ -1,6 +1,6 @@
 [
 {
-  "modid": "MoarSigns",
+  "modid": "moarsigns",
   "name": "MoarSigns",
   "description": "A mod that adds a lot of different signs.",
   "version": "${version}",

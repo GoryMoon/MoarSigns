@@ -8,4 +8,5 @@ public class ModInfo {
     public static final String CHANNEL = ID.toLowerCase();
     public static final String COMMON_PROXY = "gory_moon.moarsigns.proxy.CommonProxy";
     public static final String CLIENT_PROXY = "gory_moon.moarsigns.proxy.ClientProxy";
+    public static final String GUI_FACTORY_CLASS = "gory_moon.moarsigns.client.interfaces.config.GuiFactory";
 }
