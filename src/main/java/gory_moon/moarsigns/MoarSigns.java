@@ -1,5 +1,6 @@
 package gory_moon.moarsigns;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -20,7 +21,6 @@ import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.proxy.CommonProxy;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,7 +58,7 @@ public class MoarSigns {
     @SuppressWarnings("unused")
     public void preInit(FMLPreInitializationEvent event) {
         config =  new Config(event.getSuggestedConfigurationFile()).loadConfig();
-        MinecraftForge.EVENT_BUS.register(config);
+        FMLCommonHandler.instance().bus().register(config);
         FMLInterModComms.sendRuntimeMessage(ModInfo.ID, "VersionChecker", "addVersionCheck", LINK);
 
         PacketHandler.init();

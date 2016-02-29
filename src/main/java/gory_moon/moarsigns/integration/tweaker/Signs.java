@@ -243,7 +243,6 @@ public class Signs {
             for (Object obj : allRecipes) {
                 IRecipe recipe = (IRecipe) obj;
                 for (ItemStack output : stackOutputs) {
-                    System.out.println(output.getTagCompound());
                     if ((recipe instanceof ShapedMoarSignRecipe || recipe instanceof ShapelessMoarSignRecipe) && recipe.getRecipeOutput() != null && ItemStack.areItemStackTagsEqual(recipe.getRecipeOutput(), output)) {
                         iRecipes.add(recipe);
                     }

@@ -1,6 +1,7 @@
 package gory_moon.moarsigns;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.lib.ModInfo;
 import net.minecraftforge.common.config.Configuration;
@@ -39,6 +40,7 @@ public class Config extends Configuration {
             save();
     }
 
+    @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.modID.equals(ModInfo.ID))
             syncConfigs();
