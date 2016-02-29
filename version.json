@@ -13,11 +13,11 @@
 		},
 		{
 			"mcVersion": "Minecraft 1.8.9",
-			"modVersion": "2.0.3",
+			"modVersion": "2.0.4",
 			"changeLog": [
-				"Fixed replacing of sign in recipes ignoring config and always being false"
+				"Added ingame config, requires restart"
 			],
-			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2282409/download",
+			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2284596/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}
