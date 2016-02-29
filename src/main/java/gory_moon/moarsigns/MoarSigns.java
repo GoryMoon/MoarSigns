@@ -5,10 +5,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
@@ -23,12 +20,13 @@ import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.proxy.CommonProxy;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 
-@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, certificateFingerprint = ModInfo.FINGERPRINT,
+@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, certificateFingerprint = ModInfo.FINGERPRINT, guiFactory = ModInfo.GUI_FACTORY_CLASS,
         dependencies =
                 "after:BiomesOPlenty;" +
                         "after:Forestry;" +
@@ -47,6 +45,7 @@ public class MoarSigns {
 
     @Instance(ModInfo.ID)
     public static MoarSigns instance;
+    public Config config;
 
     @SidedProxy(clientSide = ModInfo.CLIENT_PROXY, serverSide = ModInfo.COMMON_PROXY)
     public static CommonProxy proxy;
@@ -58,7 +57,8 @@ public class MoarSigns {
     @EventHandler
     @SuppressWarnings("unused")
     public void preInit(FMLPreInitializationEvent event) {
-        new ConfigHandler(event.getSuggestedConfigurationFile());
+        config =  new Config(event.getSuggestedConfigurationFile()).loadConfig();
+        MinecraftForge.EVENT_BUS.register(config);
         FMLInterModComms.sendRuntimeMessage(ModInfo.ID, "VersionChecker", "addVersionCheck", LINK);
 
         PacketHandler.init();
@@ -89,6 +89,15 @@ public class MoarSigns {
 
         if (Loader.isModLoaded("MineTweaker3")) {
             MineTweakerIntegration.register();
+        }
+    }
+
+    @EventHandler
+    public void invalidFingerprint(FMLFingerprintViolationEvent event) {
+        if (ModInfo.FINGERPRINT.equals("@FINGERPRINT@")) {
+            logger.info("The copy of MoarSigns that you are running is a development version of the mod, and as such may be unstable and/or incomplete.");
+        } else {
+            logger.warn("The copy of MoarSigns that you are running has been modified from the original, and unpredictable things may happen. Please consider re-downloading the original version of the mod.");
         }
     }
 
