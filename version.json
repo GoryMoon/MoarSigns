@@ -2,12 +2,12 @@
 	"versionList": [
 		{
 			"mcVersion": "Minecraft 1.7.10",
-			"modVersion": "1.2.3",
+			"modVersion": "1.2.4",
 			"changeLog": [
-				"Fixed recipes not working correctly",
-				"Added alternative way of removing recipes with MineTweaker"
+				"Added ingame config, requires restart",
+				"Fixed error message from last version"
 			],
-			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2282410/download",
+			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2284573/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		},
