@@ -13,11 +13,13 @@
 		},
 		{
 			"mcVersion": "Minecraft 1.8.9",
-			"modVersion": "2.0.4",
+			"modVersion": "2.1.0",
 			"changeLog": [
-				"Added ingame config, requires restart"
+				"Added Tinkers Construct Integration",
+				"Added Base Metals Integration",
+				"Corrected sorting in creative tab"
 			],
-			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2284596/download",
+			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2292894/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}

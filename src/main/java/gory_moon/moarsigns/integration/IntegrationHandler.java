@@ -3,17 +3,16 @@ package gory_moon.moarsigns.integration;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.IntegrationRegistry;
-import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
+import gory_moon.moarsigns.integration.basemetals.BasemetalsIntegration;
 import gory_moon.moarsigns.integration.bop.BiomesOPlentyIntegration;
+import gory_moon.moarsigns.integration.tconstruct.TinkersConstructIntegration;
 import gory_moon.moarsigns.integration.vanilla.MinecraftIntegration;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import static gory_moon.moarsigns.api.IntegrationRegistry.*;
 
@@ -25,22 +24,24 @@ public class IntegrationHandler {
         //registerIntegration(ForestryIntegration.class);
         registerIntegration(BiomesOPlentyIntegration.class);
         //registerIntegration(IndustrialCraft2Integration.class);
-        //registerIntegration(TinkersConstructIntegration.class);
+        registerIntegration(TinkersConstructIntegration.class);
+        registerIntegration(BasemetalsIntegration.class);
         //registerIntegration(FactorizationIntegration.class);
         //registerIntegration(RailcraftIntegration.class);
         //registerIntegration(ThermalFoundationIntegration.class);
 
         registerPlankOreName("plankWood");
 
-        String[] ingotNames = {"ingotCopper", "ingotTin", "ingotSilver", "ingotBronze", "ingotSteel", "ingotLead", "ingotCobalt", "ingotArdite", "ingotManyullyn", "ingotAluminum", "ingotAluminumBrass", "ingotAlumite",
-                "ingotNickel", "ingotPlatinum", "ingotMithril", "ingotElectrum", "ingotInvar", "ingotSignalum", "ingotLumium", "ingotEnderium", "ingotFzDarkIron"};
-        String[] blockNames = {"blockCopper", "blockTin", "blockSilver", "blockBronze", "blockSteel", "blockLead", "blockCobalt", "blockArdite", "blockManyullyn", "blockAluminum", "blockAluminumBrass", "blockAlumite",
-                "blockNickel", "blockPlatinum", "blockMithril", "blockEkectrum", "blockInvar", "blockSignalum", "blockLumium", "blockEnderium", "blockFzDarkIron"};
+        String[] ingotNames = {"ingotCopper", "ingotTin", "ingotSilver", "ingotBronze", "ingotSteel", "ingotLead", "ingotZinc", "ingotBrass", "ingotCobalt", "ingotArdite", "ingotManyullyn", "ingotAluminum", "ingotAluminumBrass", "ingotAlumite",
+                "ingotNickel", "ingotPlatinum", "ingotMithril", "ingotElectrum", "ingotColdiron", "ingotMithril", "ingotAdamantine", "ingotStarsteel", "ingotAquarium", "ingotInvar", "ingotSignalum", "ingotLumium", "ingotEnderium", "ingotFzDarkIron"};
+        String[] blockNames = {"blockCopper", "blockTin", "blockSilver", "blockBronze", "blockSteel", "blockLead", "blockZinc", "blockBrass", "blockCobalt", "blockArdite", "blockManyullyn", "blockAluminum", "blockAluminumBrass", "blockAlumite",
+                "blockNickel", "blockPlatinum", "blockMithril", "blockElectrum", "blockColdiron", "blockMithril", "blockAdamantine", "blockStarsteel", "blockAquarium", "blockInvar", "blockSignalum", "blockLumium", "blockEnderium", "blockFzDarkIron"};
+
         for (String name : ingotNames) registerMetalGemOreName(name);
         for (String name : blockNames) registerMetalGemOreName(name);
     }
 
-    public static void registerSigns(ArrayList<ItemStack> planks, ArrayList<ItemStack> ingots, boolean log) {
+    private static void registerSigns(ArrayList<ItemStack> planks, ArrayList<ItemStack> ingots, boolean log) {
         if (log) MoarSigns.logger.info("Starting sign integrations");
 
         ArrayList<ISignRegistration> signReg = IntegrationRegistry.getSignReg();
@@ -58,6 +59,8 @@ public class IntegrationHandler {
         }
 
         if (log) MoarSigns.logger.info("Finished " + (SignRegistry.getActiveTagsAmount()) + " sign integrations with " + SignRegistry.getActivatedSignRegistry().size() + " signs registered");
+
+        SignRegistry.sortRegistry();
     }
 
     private ArrayList<ItemStack> getOres(ArrayList<String> names) {
@@ -76,13 +79,6 @@ public class IntegrationHandler {
         ArrayList<ItemStack> ingots = getOres(names);
 
         registerSigns(planks, ingots, false);
-
-        Collections.sort(SignRegistry.getActivatedSignRegistry(), new Comparator<SignInfo>() {
-            @Override
-            public int compare(SignInfo o1, SignInfo o2) {
-                return (o1.isMetal && !o2.isMetal) ? 1 : ((o1.isMetal) ? 0 : (o2.isMetal ? -1 : (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ? 0 : (o1.material.path.equals(o2.material.path) ? (o1.itemName.compareToIgnoreCase(o2.itemName)) : (o1.material.path.compareTo(o2.material.path))))));
-            }
-        });
     }
 
     public void setupSigns() {
@@ -94,13 +90,6 @@ public class IntegrationHandler {
         ArrayList<ItemStack> ingots = getOres(names);
 
         registerSigns(planks, ingots, true);
-
-        Collections.sort(SignRegistry.getActivatedSignRegistry(), new Comparator<SignInfo>() {
-            @Override
-            public int compare(SignInfo o1, SignInfo o2) {
-                return (o1.isMetal && !o2.isMetal) ? 1 : ((o1.isMetal) ? 0 : (o2.isMetal ? -1 : (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ? 0 : (o1.material.path.equals(o2.material.path) ? (o1.itemName.compareToIgnoreCase(o2.itemName)) : (o1.material.path.compareTo(o2.material.path))))));
-            }
-        });
     }
 
 }

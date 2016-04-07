@@ -4,9 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class SignRegistry {
 
@@ -288,5 +286,24 @@ public class SignRegistry {
         activatedSignRegistry.clear();
         activeTags.clear();
         activateTag(ALWAYS_ACTIVE_TAG);
+    }
+
+    public static void sortRegistry() {
+        Collections.sort(activatedSignRegistry, new Comparator<SignInfo>() {
+            @Override
+            public int compare(SignInfo o1, SignInfo o2) {
+                return (o1.isMetal && !o2.isMetal) ?
+                        1 :
+                        (!o1.isMetal && o2.isMetal) ?
+                                -1 :
+                                (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ?
+                                        0 :
+                                        (o1.material.path.equals(o2.material.path) ?
+                                                (o1.itemName.compareToIgnoreCase(o2.itemName)) :
+                                                (o1.material.path.compareTo(o2.material.path))
+                                        )
+                                );
+            }
+        });
     }
 }

@@ -216,6 +216,8 @@ item.moarsigns.sign.tconstruct.copper_sign.name=Copper Sign
 item.moarsigns.sign.tconstruct.tin_sign.name=Tin Sign
 item.moarsigns.sign.tconstruct.aluminum_sign.name=Aluminum Sign
 item.moarsigns.sign.tconstruct.bronze_sign.name=Bronze Sign
+item.moarsigns.sign.tconstruct.knightslime_sign.name=Knightslime Sign
+item.moarsigns.sign.tconstruct.pigiron_sign.name=Pigiron Sign
 item.moarsigns.sign.tconstruct.aluminumbrass_sign.name=Aluminum Brass Sign
 item.moarsigns.sign.tconstruct.alumite_sign.name=Alumite Sign
 item.moarsigns.sign.tconstruct.steel_sign.name=Steel Sign
@@ -240,6 +242,24 @@ item.moarsigns.sign.tf.bronze_sign.name=Bronze Sign
 item.moarsigns.sign.tf.signalum_sign.name=Signalum Sign
 item.moarsigns.sign.tf.lumium_sign.name=Lumium Sign
 item.moarsigns.sign.tf.enderium_sign.name=Enderium Sign
+
+#Base Metals
+item.moarsigns.sign.basemetals.copper_sign.name=Copper Sign
+item.moarsigns.sign.basemetals.silver_sign.name=Silver Sign
+item.moarsigns.sign.basemetals.tin_sign.name=Tin Sign
+item.moarsigns.sign.basemetals.lead_sign.name=Lead Sign
+item.moarsigns.sign.basemetals.nickel_sign.name=Nickel Sign
+item.moarsigns.sign.basemetals.zinc_sign.name=Zinc Sign
+item.moarsigns.sign.basemetals.bronze_sign.name=Bronze Sign
+item.moarsigns.sign.basemetals.brass_sign.name=Brass Sign
+item.moarsigns.sign.basemetals.steel_sign.name=Steel Sign
+item.moarsigns.sign.basemetals.invar_sign.name=Invar Sign
+item.moarsigns.sign.basemetals.electrum_sign.name=Electrum Sign
+item.moarsigns.sign.basemetals.coldiron_sign.name=Cold-Iron Sign
+item.moarsigns.sign.basemetals.mithril_sign.name=Mithril Sign
+item.moarsigns.sign.basemetals.adamantine_sign.name=Adamantine Sign
+item.moarsigns.sign.basemetals.starsteel_sign.name=Star-Steel Sign
+item.moarsigns.sign.basemetals.aquarium_sign.name=Aquarium Sign
 
 #Factorization
 item.moarsigns.sign.factorization.silver_sign.name=Silver Sign

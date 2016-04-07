@@ -36,6 +36,7 @@ import java.util.HashMap;
                         "after:Railcraft;" +
                         "after:ThermalFoundation;" +
                         "after:factorization;" +
+                        "after:basemetals;" +
                         "after:NotEnoughItems;" +
                         "after:Waila;" +
                         "after:MineTweaker3;")
