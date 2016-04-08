@@ -14,36 +14,21 @@ import mezz.jei.api.recipe.transfer.IRecipeTransferRegistry;
 import net.minecraft.inventory.ContainerWorkbench;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 @JEIPlugin
 public class MoarSignsPlugin implements IModPlugin {
-
-    public static IJeiHelpers jeiHelpers;
 
     public static ArrayList<ItemStack> moarSigns = new ArrayList<ItemStack>();
     public static final String CRAFTING = "moarsigns.crafting";
     public static final String EXCHANGE = "moarsigns.exchange";
 
     @Override
-    public void onJeiHelpersAvailable(IJeiHelpers jeiHelpers) {
-        MoarSignsPlugin.jeiHelpers = jeiHelpers;
-        IItemBlacklist blacklist = jeiHelpers.getItemBlacklist();
-        blacklist.addItemToBlacklist(new ItemStack(ModItems.debug));
-    }
-
-    @Override
-    public void onItemRegistryAvailable(IItemRegistry itemRegistry) {
-        for (ItemStack stack : itemRegistry.getItemList()) {
-            if (stack != null && stack.getItem() instanceof ItemMoarSign) {
-                moarSigns.add(stack);
-            }
-        }
-    }
-
-    @Override
-    public void register(IModRegistry registry) {
+    public void register(@Nonnull IModRegistry registry) {
+        IJeiHelpers jeiHelpers = registry.getJeiHelpers();
         IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
+
         registry.addRecipeCategories(
                 new MoarSignCraftingRecipeCategory(guiHelper),
                 new MoarSignsExchangeCategory(guiHelper)
@@ -55,6 +40,14 @@ public class MoarSignsPlugin implements IModPlugin {
                 new ExchangeRecipeHandler()
         );
 
+        for (ItemStack stack : registry.getItemRegistry().getItemList()) {
+            if (stack != null && stack.getItem() instanceof ItemMoarSign) {
+                moarSigns.add(stack);
+            }
+        }
+        IItemBlacklist blacklist = jeiHelpers.getItemBlacklist();
+        blacklist.addItemToBlacklist(new ItemStack(ModItems.debug));
+
         IRecipeTransferRegistry recipeTransferRegistry = registry.getRecipeTransferRegistry();
         recipeTransferRegistry.addRecipeTransferHandler(ContainerWorkbench.class, MoarSignsPlugin.CRAFTING, 1, 9, 10, 36);
 
@@ -64,12 +57,7 @@ public class MoarSignsPlugin implements IModPlugin {
     }
 
     @Override
-    public void onRecipeRegistryAvailable(IRecipeRegistry recipeRegistry) {
-
-    }
-
-    @Override
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+    public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime) {
 
     }
 }

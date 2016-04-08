@@ -1,11 +1,11 @@
 package gory_moon.moarsigns.util;
 
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public final class Localization {
 
     private static String translateString(String key, String... vars) {
-        String result = StatCollector.translateToLocal(key);
+        String result = I18n.translateToLocal(key);
 
         for (int i = 0; i < vars.length; i++) {
             String optionCheck = "[%" + (i + 1) + "->";

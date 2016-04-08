@@ -13,7 +13,7 @@ import mezz.jei.api.recipe.wrapper.ICraftingRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 import javax.annotation.Nonnull;
 
@@ -32,7 +32,7 @@ public class MoarSignCraftingRecipeCategory implements IRecipeCategory {
     public MoarSignCraftingRecipeCategory(IGuiHelper guiHelper) {
         ResourceLocation location = new ResourceLocation("minecraft", "textures/gui/container/crafting_table.png");
         background = guiHelper.createDrawable(location, 29, 16, 116, 54);
-        localizedName = StatCollector.translateToLocal("crafting.moarsigns.sign.crafting");
+        localizedName = I18n.translateToLocal("crafting.moarsigns.sign.crafting");
         craftingGridHelper = guiHelper.createCraftingGridHelper(craftInputSlot1, craftOutputSlot);
     }
 

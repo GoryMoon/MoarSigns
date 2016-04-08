@@ -4,6 +4,7 @@ import gory_moon.moarsigns.client.interfaces.containers.slots.SlotInput;
 import gory_moon.moarsigns.client.interfaces.containers.slots.SlotSelection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.Slot;
@@ -54,21 +55,20 @@ public class ContainerExchange extends Container {
     }
 
     @Override
-    public ItemStack slotClick(int par1, int par2, int par3, EntityPlayer player) {
-
+    public ItemStack func_184996_a(int par1, int dragType, ClickType clickTypeIn, EntityPlayer player) {
         int clickedSlot = par1 - inventory.getSizeInventory();
 
-        if (clickedSlot == toolBoxSlot || (par3 == 2 && par2 == toolBoxSlot)) {
+        if (clickedSlot == toolBoxSlot || (dragType == 2 && par1 == toolBoxSlot)) {
             return null;
         }
 
-        return super.slotClick(par1, par2, par3, player);
+        return super.func_184996_a(par1, dragType, clickTypeIn, player);
     }
 
     @Override
     public void onContainerClosed(EntityPlayer player) {
         inventory.clearInventory();
-        InventoryHelper.func_180176_a(player.worldObj, player, inventory);
+        InventoryHelper.dropInventoryItems(player.worldObj, player, inventory);
         super.onContainerClosed(player);
     }
 

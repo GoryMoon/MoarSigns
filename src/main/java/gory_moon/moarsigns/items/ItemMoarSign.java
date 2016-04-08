@@ -20,9 +20,11 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -91,28 +93,28 @@ public class ItemMoarSign extends Item {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (!world.getBlockState(pos).getBlock().getMaterial().isSolid()) {
-            return false;
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (!world.getBlockState(pos).getMaterial().isSolid()) {
+            return EnumActionResult.PASS;
         } else {
-            pos = pos.offset(side);
+            pos = pos.offset(facing);
 
-            if (!player.canPlayerEdit(pos, side, stack) || !Blocks.signStandingWood.canPlaceBlockAt(world, pos)) {
-                return false;
+            if (!player.canPlayerEdit(pos, facing, stack) || !Blocks.signStandingWood.canPlaceBlockAt(world, pos)) {
+                return EnumActionResult.PASS;
             } else if (world.isRemote) {
-                return true;
+                return EnumActionResult.PASS;
             } else {
 
                 SignInfo info = getInfo(stack.getTagCompound());
-                if (info == null) return false;
-                if (side == EnumFacing.UP && !player.isSneaking()) {
+                if (info == null) return EnumActionResult.PASS;
+                if (facing == EnumFacing.UP && !player.isSneaking()) {
                     int rotation = MathHelper.floor_double((double) ((player.rotationYaw + 180.0F) * 16.0F / 360.0F) + 0.5D) & 15;
                     if (!info.isMetal) world.setBlockState(pos, Blocks.signStandingWood.getDefaultState().withProperty(BlockMoarSign.ROTATION, rotation), 3);
                     else world.setBlockState(pos, Blocks.signStandingMetal.getDefaultState().withProperty(BlockMoarSign.ROTATION, rotation), 3);
 
                 } else {
-                    int finalRotation = side.getIndex();
-                    if (side == EnumFacing.DOWN || side == EnumFacing.UP) {
+                    int finalRotation = facing.getIndex();
+                    if (facing == EnumFacing.DOWN || facing == EnumFacing.UP) {
                         int rotation = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
                         finalRotation += (rotation << 1);
                         finalRotation += 8;
@@ -136,7 +138,7 @@ public class ItemMoarSign extends Item {
                     PacketHandler.INSTANCE.sendTo(new MessageSignOpenGui(te, moving), (EntityPlayerMP) player);
                 }
 
-                return true;
+                return EnumActionResult.SUCCESS;
             }
         }
     }

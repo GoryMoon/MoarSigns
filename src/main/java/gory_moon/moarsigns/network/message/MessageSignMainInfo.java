@@ -7,9 +7,9 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -30,13 +30,13 @@ public class MessageSignMainInfo implements IMessage {
     public boolean[] shadowRows = new boolean[4];
     public boolean lockedChanges;
 
-    public IChatComponent[] text;
+    public ITextComponent[] text;
 
     @SuppressWarnings("unused")
     public MessageSignMainInfo() {
     }
 
-    public MessageSignMainInfo(BlockPos pos, String texture, boolean isMetal, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean[] shadowRows, boolean lockedChanges, IChatComponent[] text) {
+    public MessageSignMainInfo(BlockPos pos, String texture, boolean isMetal, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean[] shadowRows, boolean lockedChanges, ITextComponent[] text) {
         this.pos = pos;
         this.texture = texture;
         this.isMetal = isMetal;
@@ -57,7 +57,7 @@ public class MessageSignMainInfo implements IMessage {
     public void fromBytes(ByteBuf buf) {
         PacketBuffer packetBuf = new PacketBuffer(buf);
         pos = packetBuf.readBlockPos();
-        text = new IChatComponent[4];
+        text = new ITextComponent[4];
 
         if (packetBuf.readBoolean()) {
             int textureLength = packetBuf.readInt();
@@ -98,11 +98,7 @@ public class MessageSignMainInfo implements IMessage {
             packetBuf.writeBoolean(lockedChanges);
 
             for (int i = 0; i < 4; i++) {
-                try {
-                    packetBuf.writeChatComponent(text[i]);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                packetBuf.writeChatComponent(text[i]);
             }
         } else {
             buf.writeBoolean(false);
@@ -141,7 +137,7 @@ public class MessageSignMainInfo implements IMessage {
                 }
                 if (!flag && FMLClientHandler.instance().getClient().thePlayer != null) {
                     MoarSigns.logger.info("Unable to locate sign at " + message.pos.toString());
-                    FMLClientHandler.instance().getClient().thePlayer.addChatMessage(new ChatComponentText("Unable to locate sign at " + message.pos.getX() + ", " + message.pos.getY() + ", " + message.pos.getZ()));
+                    FMLClientHandler.instance().getClient().thePlayer.addChatMessage(new TextComponentString("Unable to locate sign at " + message.pos.getX() + ", " + message.pos.getY() + ", " + message.pos.getZ()));
                 }
             } else {
                 MoarSigns.logger.error("An error with packages occurred");

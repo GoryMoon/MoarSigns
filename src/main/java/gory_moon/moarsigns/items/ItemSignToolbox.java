@@ -18,10 +18,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
@@ -36,7 +40,6 @@ public class ItemSignToolbox extends Item {
 
     public static final String SIGN_MOVING_TAG = "SignMoving";
     public static final String NBT_UNLOCALIZED_NAME = "SignUnlocalizedName";
-    //private IIcon[] icons = new IIcon[ToolBoxModes.values().length];
 
     public ItemSignToolbox() {
         setUnlocalizedName("moarsigns.signtoolbox");
@@ -51,12 +54,12 @@ public class ItemSignToolbox extends Item {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote) {
-            MovingObjectPosition movingObjectPosition = getMovingObjectPositionFromPlayer(world, player, false);
-            MovingObjectPosition.MovingObjectType hit = movingObjectPosition != null ? movingObjectPosition.typeOfHit: MovingObjectPosition.MovingObjectType.MISS;
+            RayTraceResult movingObjectPosition = getMovingObjectPositionFromPlayer(world, player, false);
+            RayTraceResult.Type hit = movingObjectPosition != null ? movingObjectPosition.typeOfHit: RayTraceResult.Type.MISS;
 
-            if (hit == MovingObjectPosition.MovingObjectType.MISS) {
+            if (hit == RayTraceResult.Type.MISS) {
                 int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
                 if (player.isSneaking() && !isMoving(stack.getItemDamage())) {
                     return rotateModes(stack);
@@ -67,11 +70,11 @@ public class ItemSignToolbox extends Item {
                 }
             }
         }
-        return super.onItemRightClick(stack, world, player);
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         if (!world.isRemote) {
             int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
             switch (ToolBoxModes.values()[mode]) {
@@ -82,19 +85,19 @@ public class ItemSignToolbox extends Item {
                     doRotate(world, pos, player);
                     break;
                 case MOVE_MODE:
-                    return doMove(world, pos, stack, player, side, hitX, hitY, hitZ);
+                    return doMove(world, pos, stack, player, hand, side, hitX, hitY, hitZ);
                 case COPY_MODE:
                     doCopy(world, pos, stack, player);
                     break;
                 case EXCHANGE_MODE:
                     doExchange(world, pos, player);
-                    return true;
+                    return EnumActionResult.SUCCESS;
                 case PREVIEW_MODE:
                     doPreview(world, pos, player);
-                    return true;
+                    return EnumActionResult.SUCCESS;
             }
         }
-        return false;
+        return EnumActionResult.PASS;
     }
 
     private void doRotate(World world, BlockPos pos, EntityPlayer player) {
@@ -133,13 +136,13 @@ public class ItemSignToolbox extends Item {
             if (tileEntity instanceof TileEntityMoarSign) {
                 tileEntity.readFromNBT(signInfo);
                 tileEntity.setPos(pos);
-                world.markBlockForUpdate(pos);
+                world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
             }
         }
     }
 
-    private boolean doMove(World world, BlockPos pos, ItemStack stack, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
-        boolean val = true;
+    private EnumActionResult doMove(World world, BlockPos pos, ItemStack stack, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        EnumActionResult val = EnumActionResult.SUCCESS;
         NBTTagCompound signInfo = stack.getTagCompound();
 
         if (!isMoving(stack.getItemDamage())) {
@@ -163,16 +166,16 @@ public class ItemSignToolbox extends Item {
 
             ItemStack moarSignsStack = ModItems.sign.createMoarItemStack(texture, isMetal);
             moarSignsStack.getTagCompound().setBoolean(SIGN_MOVING_TAG, true);
-            val = ModItems.sign.onItemUse(moarSignsStack, player, world, pos, side, hitX, hitY, hitZ);
+            val = ModItems.sign.onItemUse(moarSignsStack, player, world, pos, hand, side, hitX, hitY, hitZ);
 
-            if (val) {
+            if (val == EnumActionResult.SUCCESS) {
                 pos = pos.offset(side);
 
                 signInfo.removeTag(NBT_UNLOCALIZED_NAME);
                 TileEntityMoarSign entityMoarSign = (TileEntityMoarSign) world.getTileEntity(pos);
                 entityMoarSign.readFromNBT(signInfo);
                 entityMoarSign.setPos(pos);
-                world.markBlockForUpdate(pos);
+                world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
                 signInfo = null;
                 stack = toggleMoving(stack);
@@ -180,7 +183,7 @@ public class ItemSignToolbox extends Item {
         }
 
         stack.setTagCompound(signInfo);
-        return !val;
+        return val == EnumActionResult.SUCCESS ? EnumActionResult.PASS: EnumActionResult.SUCCESS;
     }
 
     private void doExchange(World world, BlockPos pos, EntityPlayer player) {
@@ -191,11 +194,11 @@ public class ItemSignToolbox extends Item {
         FMLNetworkHandler.openGui(player, MoarSigns.instance, GuiHandler.PREVIEW, world, pos.getX(), pos.getY(), pos.getZ());
     }
 
-    private ItemStack rotateModes(ItemStack stack) {
+    private ActionResult<ItemStack> rotateModes(ItemStack stack) {
         int mode = stack.getItemDamage();
         mode = mode + 1 >= 6 ? 0 : mode + 1;
         stack.setItemDamage(mode);
-        return stack;
+        return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
     }
 
     @Override
@@ -222,7 +225,7 @@ public class ItemSignToolbox extends Item {
                 str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.MOVE.translate(Colors.LIGHTGRAY.toString() + "[", "]" + Colors.GRAY.toString(), "\n" + Colors.GRAY.toString(), "\n" + Colors.RED.toString());
                 if (stack.getTagCompound() != null) {
                     String unlocName = stack.getTagCompound().getString(NBT_UNLOCALIZED_NAME);
-                    String signName = StatCollector.translateToLocal(unlocName);
+                    String signName = I18n.translateToLocal(unlocName);
                     str += "\n" + Colors.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_SIGN.translate() + " " + Colors.WHITE + signName + "\n" + Colors.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_TEXT.translate() + getFormattedData(stack.getTagCompound());
                 }
                 break;
@@ -245,9 +248,9 @@ public class ItemSignToolbox extends Item {
         String s = "\n";
 
         for (int i = 0; i < 4; i++) {
-            String text = compound.getString("Text" + (i + 1)).replaceFirst("\"", "");
-            int lastPos = text.lastIndexOf("\"");
-            s += Colors.WHITE + "[" + Colors.GRAY + text.substring(0, lastPos < 0 ? text.length(): lastPos) + Colors.WHITE + "]\n";
+            String text = compound.getString("Text" + (i + 1));
+            ITextComponent component = ITextComponent.Serializer.jsonToComponent(text);
+            s += Colors.WHITE + "[" + Colors.GRAY + component.getFormattedText() + Colors.WHITE + "]\n";
         }
 
         return s;

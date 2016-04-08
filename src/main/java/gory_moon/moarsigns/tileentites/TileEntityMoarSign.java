@@ -18,8 +18,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.util.*;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentUtils;
 import net.minecraft.world.World;
 
 public class TileEntityMoarSign extends TileEntitySign implements ITickable {
@@ -123,14 +130,14 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             /**
              * Get the formatted ChatComponent that will be used for the sender's username in chat
              */
-            public IChatComponent getDisplayName()
+            public ITextComponent getDisplayName()
             {
-                return new ChatComponentText(this.getName());
+                return new TextComponentString(this.getName());
             }
             /**
              * Send a chat message to the CommandSender
              */
-            public void addChatMessage(IChatComponent component)
+            public void addChatMessage(ITextComponent component)
             {
             }
             /**
@@ -152,9 +159,9 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
              * Get the position vector. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return 0.0D, 0.0D, 0.0D
              */
-            public Vec3 getPositionVector()
+            public Vec3d getPositionVector()
             {
-                return new Vec3((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D);
+                return new Vec3d((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D);
             }
             /**
              * Get the world, if available. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
@@ -180,6 +187,11 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             }
             public void setCommandStat(CommandResultStats.Type type, int amount)
             {
+            }
+
+            @Override
+            public MinecraftServer getServer() {
+                return worldObj.getMinecraftServer();
             }
         };
 
@@ -234,15 +246,15 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             String s = compound.getString("Text" + (i + 1));
 
             try  {
-                IChatComponent ichatcomponent = IChatComponent.Serializer.jsonToComponent(s);
+                ITextComponent ichatcomponent = ITextComponent.Serializer.jsonToComponent(s);
 
                 try {
-                    this.signText[i] = ChatComponentProcessor.processComponent(icommandsender, ichatcomponent, (Entity)null);
+                    this.signText[i] = TextComponentUtils.processComponent(icommandsender, ichatcomponent, (Entity)null);
                 } catch (CommandException var7) {
                     this.signText[i] = ichatcomponent;
                 }
             } catch (JsonParseException var8) {
-                this.signText[i] = new ChatComponentText(s);
+                this.signText[i] = new TextComponentString(s);
             }
         }
 

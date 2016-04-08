@@ -11,7 +11,7 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 import javax.annotation.Nonnull;
 
@@ -30,7 +30,7 @@ public class MoarSignsExchangeCategory implements IRecipeCategory {
     public MoarSignsExchangeCategory(IGuiHelper guiHelper) {
         ResourceLocation location = new ResourceLocation("moarsigns", "textures/gui/sign_exchange_nei.png");
         background = guiHelper.createDrawable(location, 0, 0, 164, 118);
-        localizedName = StatCollector.translateToLocal("crafting.moarsigns.sign.exchange");
+        localizedName = I18n.translateToLocal("crafting.moarsigns.sign.exchange");
         craftingGridHelper = new ExchangeGridHelper(0, 1);
     }
 

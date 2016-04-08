@@ -5,7 +5,7 @@ import gory_moon.moarsigns.client.interfaces.GuiRectangle;
 import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
 import gory_moon.moarsigns.util.Colors;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.init.SoundEvents;
 
 public abstract class GuiButton extends GuiRectangle {
 
@@ -44,7 +44,7 @@ public abstract class GuiButton extends GuiRectangle {
     public boolean onClick(GuiMoarSign gui, int x, int y) {
         if (!gui.isOnOverlay(x, y) && inRect(x, y)) {
             action(gui);
-            gui.mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+            gui.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.ui_button_click, 1.0F));
             return true;
         }
         return false;

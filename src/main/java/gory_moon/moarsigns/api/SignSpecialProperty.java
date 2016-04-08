@@ -3,8 +3,10 @@ package gory_moon.moarsigns.api;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -29,27 +31,28 @@ public abstract class SignSpecialProperty {
 
     /**
      * A randomly called display update to be able to add particles or other items for display
-     * @param pos   The position of the sign
+     * @param blockState
      * @param world  The world the sign is in
-     * @param state
+     * @param pos   The position of the sign
      * @param random An instance of Random
      */
-    public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random random) {
+    public void randomDisplayTick(IBlockState blockState, World world, BlockPos pos, Random random) {
     }
 
     /**
      * Called when a player is right clicking the sign
-     *
+     *  @param world  The world the sign is in
      * @param pos   The position of the sign
-     * @param world  The world the sign is in
      * @param state
-     *@param player The player that right clicked the sign
+     * @param player The player that right clicked the sign
+     * @param hand
+     * @param heldItem
      * @param side   The side that was right clicked
      * @param hitX   The x location on the side
      * @param hitY   The y location on the side
      * @param hitZ   The z location on the side      @return False if nothing happened otherwise True
-     */
-    public boolean onRightClick(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+     * */
+    public boolean onRightClick(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         return false;
     }
 

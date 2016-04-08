@@ -1,12 +1,14 @@
 package gory_moon.moarsigns.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -14,8 +16,23 @@ public class BlockMoarSignWall extends BlockMoarSign {
 
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
-    public BlockMoarSignWall(Material material, boolean freeStand) {
-        super(material, freeStand);
+    protected static final AxisAlignedBB SIGN_EAST_AABB = new AxisAlignedBB(0.0D, 0.28125D, 0.0D, 0.125D, 0.78125D, 1.0D);
+    protected static final AxisAlignedBB SIGN_WEST_AABB = new AxisAlignedBB(0.875D, 0.28125D, 0.0D, 1.0D, 0.78125D, 1.0D);
+    protected static final AxisAlignedBB SIGN_SOUTH_AABB = new AxisAlignedBB(0.0D, 0.28125D, 0.0D, 1.0D, 0.78125D, 0.125D);
+    protected static final AxisAlignedBB SIGN_NORTH_AABB = new AxisAlignedBB(0.0D, 0.28125D, 0.875D, 1.0D, 0.78125D, 1.0D);
+
+    protected static final AxisAlignedBB SIGN_GROUND0_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.27125D, 1.0D, 0.125D, 0.77125D);
+    protected static final AxisAlignedBB SIGN_GROUND1_AABB = new AxisAlignedBB(0.23125D, 0.0D, 0.0D, 0.73125D, 0.125D, 1.0D);
+    protected static final AxisAlignedBB SIGN_GROUND2_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.23125D, 1.0D, 0.125D, 0.73125D);
+    protected static final AxisAlignedBB SIGN_GROUND3_AABB = new AxisAlignedBB(0.27125D, 0.0D, 0.0D, 0.77125D, 0.125D, 1.0D);
+
+    protected static final AxisAlignedBB SIGN_ROOF0_AABB = new AxisAlignedBB(0.0D, 0.875D, 0.23125D, 1.0D, 1.0D, 0.73125D);
+    protected static final AxisAlignedBB SIGN_ROOF1_AABB = new AxisAlignedBB(0.27125D, 0.875D, 0.0D, 0.77125D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB SIGN_ROOF2_AABB = new AxisAlignedBB(0.0D, 0.875D, 0.27125D, 1.0D, 1.0D, 0.77125D);
+    protected static final AxisAlignedBB SIGN_ROOF3_AABB = new AxisAlignedBB(0.23125D, 0.875D, 0.0D, 0.23125D, 1.0D, 1.0D);
+
+    public BlockMoarSignWall(Material material, SoundType stepSound) {
+        super(material, stepSound);
     }
 
     @Override
@@ -25,8 +42,8 @@ public class BlockMoarSignWall extends BlockMoarSign {
     }
 
     @Override
-    protected BlockState createBlockState() {
-        return new BlockState(this, ROTATION, FACING);
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, ROTATION, FACING);
     }
 
     @Override
@@ -44,15 +61,8 @@ public class BlockMoarSignWall extends BlockMoarSign {
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(IBlockAccess world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         int l = state.getBlock().getMetaFromState(state);
-        float f = 0.28125F;
-        float f1 = 0.78125F;
-        float f2 = 0.0F;
-        float f3 = 1.0F;
-        float f4 = 0.125F;
-        setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 
         EnumFacing side = EnumFacing.getFront(l & 7);
         boolean flatSign = ((l & 8) >> 3) == 1;
@@ -63,43 +73,39 @@ public class BlockMoarSignWall extends BlockMoarSign {
             int rotation = (l & 6) >> 1;
 
             if (groundSign) {
-                setBlockBounds(f2, f2, f - 0.01F, f3, f4, f1 - 0.01F);
                 switch (rotation) {
                     case 1:
-                        setBlockBounds(f - 0.05F, f2, f2, f1 - 0.05F, f4, f3);
-                        break;
+                        return SIGN_GROUND1_AABB;
                     case 2:
-                        setBlockBounds(f2, f2, f - 0.05F, f3, f4, f1 - 0.05F);
-                        break;
+                        return SIGN_GROUND2_AABB;
                     case 3:
-                        setBlockBounds(f - 0.01F, f2, f2, f1 - 0.01F, f4, f3);
+                        return SIGN_GROUND3_AABB;
+                    default:
+                        return SIGN_GROUND0_AABB;
                 }
             } else {
-                setBlockBounds(f2, f3 - f4, f - 0.05F, f3, f3, f1 - 0.05F);
                 switch (rotation) {
                     case 1:
-                        setBlockBounds(f - 0.01F, f3 - f4, f2, f1 - 0.01F, f3, f3);
-                        break;
+                        return SIGN_ROOF1_AABB;
                     case 2:
-                        setBlockBounds(f2, f3 - f4, f - 0.01F, f3, f3, f1 - 0.01F);
-                        break;
+                        return SIGN_ROOF2_AABB;
                     case 3:
-                        setBlockBounds(f - 0.05F, f3 - f4, f2, f1 - 0.05F, f3, f3);
+                        return SIGN_ROOF3_AABB;
+                    default:
+                        return SIGN_ROOF0_AABB;
                 }
             }
         } else {
             switch (side) {
                 case NORTH:
-                    setBlockBounds(f2, f - 0.01F, f3 - f4, f3, f1 - 0.01F, f3);
-                    break;
+                default:
+                    return SIGN_NORTH_AABB;
                 case SOUTH:
-                    setBlockBounds(f2, f - 0.01F, f2, f3, f1 - 0.01F, f4);
-                    break;
+                    return SIGN_SOUTH_AABB;
                 case WEST:
-                    setBlockBounds(f3 - f4, f - 0.01F, f2, f3, f1 - 0.01F, f3);
-                    break;
+                    return SIGN_WEST_AABB;
                 case EAST:
-                    setBlockBounds(f2, f - 0.01F, f2, f4, f1 - 0.01F, f3);
+                    return SIGN_EAST_AABB;
             }
         }
     }
@@ -118,15 +124,15 @@ public class BlockMoarSignWall extends BlockMoarSign {
             groundSign = (rotation & 1) == 1;
 
             if (groundSign) {
-                flag = !(world.getBlockState(pos.down()).getBlock().getMaterial().isSolid());
+                flag = !(world.getBlockState(pos.down()).getMaterial().isSolid());
             } else {
-                flag = !(world.getBlockState(pos.up()).getBlock().getMaterial().isSolid());
+                flag = !(world.getBlockState(pos.up()).getMaterial().isSolid());
             }
         } else {
 
-            flag = !(facing == EnumFacing.NORTH && world.getBlockState(pos.south()).getBlock().getMaterial().isSolid());
+            flag = !(facing == EnumFacing.NORTH && world.getBlockState(pos.south()).getMaterial().isSolid());
 
-            if (world.getBlockState(pos.offset(facing.getOpposite())).getBlock().getMaterial().isSolid())
+            if (world.getBlockState(pos.offset(facing.getOpposite())).getMaterial().isSolid())
                 flag = false;
         }
 

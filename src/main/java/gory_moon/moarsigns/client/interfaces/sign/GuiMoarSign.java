@@ -1,13 +1,9 @@
 package gory_moon.moarsigns.client.interfaces.sign;
 
 import com.google.common.collect.Lists;
-import gory_moon.moarsigns.client.interfaces.GuiRectangle;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColorButton;
+import gory_moon.moarsigns.client.interfaces.GuiRectangle;
 import gory_moon.moarsigns.client.interfaces.sign.buttons.*;
 import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.network.PacketHandler;
@@ -20,6 +16,10 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -65,8 +65,8 @@ public class GuiMoarSign extends GuiBase {
         entitySign = te;
     }
 
-    public static IChatComponent[] getSignTextWithColor(String[] array) {
-        IChatComponent[] result = new IChatComponent[array.length];
+    public static ITextComponent[] getSignTextWithColor(String[] array) {
+        ITextComponent[] result = new ITextComponent[array.length];
 
         Pattern p = Pattern.compile("(?<=[" + (char) 8747 + "])([a-z0-9])(?=\\})+");
         for (int i = 0; i < array.length; i++) {
@@ -78,13 +78,13 @@ public class GuiMoarSign extends GuiBase {
                     s = s.replace("{" + (char) 8747 + m.group(1) + "}", (char) 167 + m.group(1));
                 }
             }
-            result[i] = new ChatComponentText(s);
+            result[i] = new TextComponentString(s);
         }
 
         return result;
     }
 
-    public static String[] getSignTextWithCode(IChatComponent[] array) {
+    public static String[] getSignTextWithCode(ITextComponent[] array) {
         String[] result = new String[array.length];
 
         Pattern p = Pattern.compile("(?<=[" + (char) 167 + "])([a-z0-9])+");
@@ -205,7 +205,7 @@ public class GuiMoarSign extends GuiBase {
         for (int i = 0; i < entitySign.signText.length; i++) {
             int maxLength = Utils.getMaxLength(rowSizes[i]);
             String s = fontRendererObj.trimStringToWidth(entitySign.signText[i].getUnformattedText(), Math.min(fontRendererObj.getStringWidth(entitySign.signText[i].getUnformattedText()), maxLength - toPixelWidth(getStyleOffset(i))));
-            entitySign.signText[i] = new ChatComponentText(s);
+            entitySign.signText[i] = new TextComponentString(s);
         }
 
         PacketHandler.INSTANCE.sendToServer(new MessageSignUpdate(entitySign));
@@ -233,7 +233,7 @@ public class GuiMoarSign extends GuiBase {
             int index = 0;
             for (GuiTextField textField : guiTextFields) {
                 if (textField.isFocused()) textField.textboxKeyTyped(typedChar, key);
-                entitySign.signText[index++] = new ChatComponentText(textField.getText());
+                entitySign.signText[index++] = new TextComponentString(textField.getText());
             }
         }
 

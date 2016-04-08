@@ -4,10 +4,10 @@ import gory_moon.moarsigns.api.SignSpecialProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -20,12 +20,12 @@ public class TestProperty extends SignSpecialProperty {
     public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            player.addPotionEffect(new PotionEffect(Potion.regeneration.getId(), 5000, 5));
+            player.addPotionEffect(new PotionEffect(MobEffects.regeneration, 5000, 5));
         }
     }
 
     @Override
-    public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random random) {
+    public void randomDisplayTick(IBlockState blockState, World world, BlockPos pos, Random random) {
         if (world.isRemote) {
             float pX = pos.getX() + random.nextFloat();
             float pY = pos.getY() + random.nextFloat();

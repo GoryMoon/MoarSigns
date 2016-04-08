@@ -149,6 +149,8 @@ item.moarsigns.sign.bop.redwood_sign.name=Redwood Sign
 item.moarsigns.sign.bop.sacred_oak_sign.name=Sacred Oak Sign
 item.moarsigns.sign.bop.willow_sign.name=Willow Sign
 item.moarsigns.sign.bop.bamboo_sign.name=Bamboo Sign
+item.moarsigns.sign.bop.ebony_sign.name=Ebony Sign
+item.moarsigns.sign.bop.eucalyptus_sign.name=Eucalyptus Sign
 
 #Forestry
 item.moarsigns.sign.for.acacia_sign.name=Desert Acacia Sign

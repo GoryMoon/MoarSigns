@@ -10,7 +10,7 @@ import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityDiggingFXMoarSigns extends EntityDiggingFX {
@@ -26,14 +26,14 @@ public class EntityDiggingFXMoarSigns extends EntityDiggingFX {
 
                 if (Mblock != null && !Mblock.getUnlocalizedName().equals("tile.air") && !Mblock.getUnlocalizedName().equals("tile.ForgeFiller")) {
                     IBlockState state1 = ((ItemBlock)(info.isMetal ? info.material.materialBlock.getItem(): info.material.material.getItem())).block.getStateFromMeta(info.isMetal ? info.material.materialBlock.getItemDamage(): info.material.material.getItemDamage());
-                    setParticleIcon(Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state1));
+                    setParticleTexture(Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state1));
                 } else {
                     Item item = info.material.material.getItem();
                     if (item != null) {
-                        setParticleIcon(Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getParticleIcon(item, info.material.material.getItemDamage()));
+                        setParticleTexture(Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getParticleIcon(item, info.material.material.getItemDamage()));
                     } else {
                         IBlockState state1 = ((info.isMetal ? Blocks.iron_block: Blocks.planks)).getStateFromMeta(0);
-                        setParticleIcon(Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state1));
+                        setParticleTexture(Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state1));
                     }
                 }
             }

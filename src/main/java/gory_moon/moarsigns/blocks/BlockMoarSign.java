@@ -5,8 +5,8 @@ import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.client.particle.EntityDiggingFXMoarSigns;
 import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
@@ -15,10 +15,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,30 +33,67 @@ import java.util.Random;
 public class BlockMoarSign extends BlockContainer {
 
     public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
+    protected static final AxisAlignedBB SIGN_AABB = new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D);
 
-    public BlockMoarSign(Material material, boolean freeStand) {
+    public BlockMoarSign(Material material, SoundType stepSound) {
         super(material);
         setUnlocalizedName("moarsign.sign");
+        setStepSound(stepSound);
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state)
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return SIGN_AABB;
+    }
+
+    @Override
+    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World world, BlockPos pos) {
+        return NULL_AABB;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state)
     {
-        return null;
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public AxisAlignedBB getSelectedBoundingBox(World world, BlockPos pos) {
-        setBlockBoundsBasedOnState(world, pos);
-        return super.getSelectedBoundingBox(world, pos);
+        return false;
     }
 
     @Override
-    public void randomDisplayTick(World world, BlockPos pos, IBlockState state, Random random) {
+    public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean canSpawnInBlock() {
+        return true;
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World var1, int var2) {
+        return new TileEntityMoarSign();
+    }
+
+    @Override
+    public IBlockState withRotation(IBlockState state, Rotation rot) {
+        return state.withProperty(ROTATION, rot.func_185833_a(state.getValue(ROTATION), 16));
+    }
+
+    @Override
+    public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+        return state.withProperty(ROTATION, mirrorIn.mirrorRotation(state.getValue(ROTATION), 16));
+    }
+
+    @Override
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
         SignInfo signInfo = getSignInfo(world, pos);
         if (signInfo != null && signInfo.property != null) {
-            signInfo.property.randomDisplayTick(world, pos, state, random);
+            signInfo.property.randomDisplayTick(state, world, pos, rand);
         }
     }
 
@@ -66,12 +106,19 @@ public class BlockMoarSign extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         SignInfo signInfo = getSignInfo(world, pos);
+        boolean returnVal = true;
         if (signInfo != null && signInfo.property != null) {
-            return signInfo.property.onRightClick(world, pos, state, player, side, hitX, hitY, hitZ);
+            returnVal = signInfo.property.onRightClick(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ);
         }
-        return false;
+
+        if (world.isRemote) {
+            return returnVal;
+        } else {
+            TileEntity tileentity = world.getTileEntity(pos);
+            return returnVal && (tileentity instanceof TileEntityMoarSign && ((TileEntityMoarSign) tileentity).executeCommand(player));
+        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -88,7 +135,7 @@ public class BlockMoarSign extends BlockContainer {
                     double d0 = (double)pos.getX() + ((double)j + 0.5D) / (double)i;
                     double d1 = (double)pos.getY() + ((double)k + 0.5D) / (double)i;
                     double d2 = (double)pos.getZ() + ((double)l + 0.5D) / (double)i;
-                    effectRenderer.addEffect((new EntityDiggingFXMoarSigns(world, d0, d1, d2, d0 - (double)pos.getX() - 0.5D, d1 - (double)pos.getY() - 0.5D, d2 - (double)pos.getZ() - 0.5D, pos, state)).func_174846_a(pos));
+                    effectRenderer.addEffect((new EntityDiggingFXMoarSigns(world, d0, d1, d2, d0 - (double)pos.getX() - 0.5D, d1 - (double)pos.getY() - 0.5D, d2 - (double)pos.getZ() - 0.5D, pos, state)).setBlockPos(pos));
                 }
             }
         }
@@ -96,85 +143,57 @@ public class BlockMoarSign extends BlockContainer {
         return true;
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
-    public boolean addHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
+    public boolean addHitEffects(IBlockState state, World world, RayTraceResult target, EffectRenderer effectRenderer) {
         BlockPos pos = target.getBlockPos();
         EnumFacing side = target.sideHit;
         IBlockState iblockstate = world.getBlockState(pos);
-        Block block = iblockstate.getBlock();
 
         int i = pos.getX();
         int j = pos.getY();
         int k = pos.getZ();
         float f = 0.1F;
-        double d0 = (double)i + world.rand.nextDouble() * (block.getBlockBoundsMaxX() - block.getBlockBoundsMinX() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinX();
-        double d1 = (double)j + world.rand.nextDouble() * (block.getBlockBoundsMaxY() - block.getBlockBoundsMinY() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinY();
-        double d2 = (double)k + world.rand.nextDouble() * (block.getBlockBoundsMaxZ() - block.getBlockBoundsMinZ() - (double)(f * 2.0F)) + (double)f + block.getBlockBoundsMinZ();
+        AxisAlignedBB axisalignedbb = iblockstate.getBoundingBox(world, pos);
+        double d0 = (double)i + world.rand.nextDouble() * (axisalignedbb.maxX - axisalignedbb.minX - (double)(f * 2.0F)) + (double)f + axisalignedbb.minX;
+        double d1 = (double)j + world.rand.nextDouble() * (axisalignedbb.maxY - axisalignedbb.minY - (double)(f * 2.0F)) + (double)f + axisalignedbb.minY;
+        double d2 = (double)k + world.rand.nextDouble() * (axisalignedbb.maxZ - axisalignedbb.minZ - (double)(f * 2.0F)) + (double)f + axisalignedbb.minZ;
 
         if (side == EnumFacing.DOWN)
         {
-            d1 = (double)j + block.getBlockBoundsMinY() - (double)f;
+            d1 = (double)j + axisalignedbb.minY - (double)f;
         }
 
         if (side == EnumFacing.UP)
         {
-            d1 = (double)j + block.getBlockBoundsMaxY() + (double)f;
+            d1 = (double)j + axisalignedbb.maxY + (double)f;
         }
 
         if (side == EnumFacing.NORTH)
         {
-            d2 = (double)k + block.getBlockBoundsMinZ() - (double)f;
+            d2 = (double)k + axisalignedbb.minZ - (double)f;
         }
 
         if (side == EnumFacing.SOUTH)
         {
-            d2 = (double)k + block.getBlockBoundsMaxZ() + (double)f;
+            d2 = (double)k + axisalignedbb.maxZ + (double)f;
         }
 
         if (side == EnumFacing.WEST)
         {
-            d0 = (double)i + block.getBlockBoundsMinX() - (double)f;
+            d0 = (double)i + axisalignedbb.minX - (double)f;
         }
 
         if (side == EnumFacing.EAST)
         {
-            d0 = (double)i + block.getBlockBoundsMaxX() + (double)f;
+            d0 = (double)i + axisalignedbb.maxX + (double)f;
         }
 
-        effectRenderer.addEffect((new EntityDiggingFXMoarSigns(world, d0, d1, d2, 0.0D, 0.0D, 0.0D, pos, iblockstate)).func_174846_a(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
+        effectRenderer.addEffect((new EntityDiggingFXMoarSigns(world, d0, d1, d2, 0.0D, 0.0D, 0.0D, pos, iblockstate)).setBlockPos(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
         return true;
     }
 
     @Override
-    public int getRenderType() {
-        return -1;
-    }
-
-    @Override
-    public boolean isFullCube()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
-    {
-        return true;
-    }
-
-    @Override
-    public boolean isOpaqueCube() {
-        return false;
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World var1, int var2) {
-        return new TileEntityMoarSign();
-    }
-
-    @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         TileEntityMoarSign tileEntity = (TileEntityMoarSign) world.getTileEntity(pos);
         String s = tileEntity.texture_name;
         s = s != null ? s : "null";
@@ -202,16 +221,16 @@ public class BlockMoarSign extends BlockContainer {
     }
 
     @Override
-    public boolean removedByPlayer(World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
         TileEntity entity = world.getTileEntity(pos);
         if (entity instanceof TileEntityMoarSign)
             ((TileEntityMoarSign) entity).removeNoDrop = player.capabilities.isCreativeMode;
-        return super.removedByPlayer(world, pos, player, false);
+        return super.removedByPlayer(state, world, pos, player, false);
     }
 
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return !this.func_181087_e(world, pos) && world.getBlockState(pos).getBlock().isReplaceable(world, pos);
+        return !this.hasInvalidNeighbor(world, pos) && super.canPlaceBlockAt(world, pos);
     }
 
     public SignInfo getSignInfo(World world, BlockPos pos) {

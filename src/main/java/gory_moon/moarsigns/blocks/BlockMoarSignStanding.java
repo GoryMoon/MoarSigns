@@ -1,19 +1,17 @@
 package gory_moon.moarsigns.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockMoarSignStanding extends BlockMoarSign {
 
-    public BlockMoarSignStanding(Material material, boolean freeStand) {
-        super(material, freeStand);
-        float f = 0.25F;
-        float f1 = 1.0F;
-        setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f1, 0.5F + f);
+    public BlockMoarSignStanding(Material material, SoundType stepSound) {
+        super(material, stepSound);
     }
 
     public IBlockState getStateFromMeta(int meta)
@@ -22,8 +20,8 @@ public class BlockMoarSignStanding extends BlockMoarSign {
     }
 
     @Override
-    protected BlockState createBlockState() {
-        return new BlockState(this, ROTATION);
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, ROTATION);
     }
 
     public int getMetaFromState(IBlockState state)
@@ -33,7 +31,7 @@ public class BlockMoarSignStanding extends BlockMoarSign {
 
     public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock)
     {
-        if (!world.getBlockState(pos.down()).getBlock().getMaterial().isSolid()) {
+        if (!world.getBlockState(pos.down()).getMaterial().isSolid()) {
             world.setBlockToAir(pos);
         }
     }

@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Iterator;
+
 public class GuiExchange extends GuiContainer {
 
     private static final ResourceLocation texture = new ResourceLocation("moarsigns", "textures/gui/sign_exchange.png");
@@ -34,8 +36,17 @@ public class GuiExchange extends GuiContainer {
     @Override
     public void updateScreen() {
         super.updateScreen();
-        ItemStack held = player.getCurrentEquippedItem();
-        if (held == null || !(held.getItem() instanceof ItemSignToolbox)) {
+
+        Iterator<ItemStack> held = player.getHeldEquipment().iterator();
+        boolean isHolding = false;
+        while (held.hasNext()) {
+            ItemStack tmp = held.next();
+            if (tmp != null && (tmp.getItem() instanceof ItemSignToolbox)) {
+                isHolding = true;
+            }
+        }
+
+        if (!isHolding) {
             mc.displayGuiScreen(null);
         }
     }

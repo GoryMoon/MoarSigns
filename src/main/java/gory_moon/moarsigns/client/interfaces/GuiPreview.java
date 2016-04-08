@@ -12,11 +12,12 @@ import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -166,7 +167,8 @@ public class GuiPreview extends GuiContainer {
         return ((ContainerPreview) inventorySlots).needsScrollBars();
     }
 
-    protected void handleMouseClick(Slot slot, int slotId, int button, int flag) {
+    @Override
+    protected void handleMouseClick(Slot slot, int slotId, int mouseButton, ClickType type) {
         if (slot != null && slot.getHasStack()) {
             ItemStack stack = slot.getStack();
 
@@ -177,13 +179,14 @@ public class GuiPreview extends GuiContainer {
             sign.setWorldObj(FMLClientHandler.instance().getWorldClient());
             sign.isMetal = info.isMetal;
             sign.setBlockType(info.isMetal ? Blocks.signStandingMetal : Blocks.signStandingWood);
-            IChatComponent[] components = new IChatComponent[]{null, new ChatComponentText((char) 167 + "nThis is some"), new ChatComponentText((char) 167 + "4example " + (char) 167 + "ltext"), null};
+            ITextComponent[] components = new ITextComponent[]{null, new TextComponentString((char) 167 + "nThis is some"), new TextComponentString((char) 167 + "4example " + (char) 167 + "ltext"), null};
             System.arraycopy(components, 0, sign.signText, 0, sign.signText.length);
             sign.setResourceLocation(texture);
         }
     }
 
 
+    @Override
     public void mouseClickMove(int x, int y, int button, long timeSinceClicked) {
         if (isDraging) {
             if (button == 0) {

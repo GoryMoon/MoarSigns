@@ -9,8 +9,8 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
@@ -133,9 +133,9 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer<TileEntityMoarSi
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                     GlStateManager.depthMask(false);
 
-                    IChatComponent ichatcomponent = te.signText[row];
-                    List<IChatComponent> list = GuiUtilRenderComponents.func_178908_a(ichatcomponent, 90, fontRenderer, false, true);
-                    String s = list != null && list.size() > 0 ? ((IChatComponent)list.get(0)).getFormattedText() : "";
+                    ITextComponent ichatcomponent = te.signText[row];
+                    List<ITextComponent> list = GuiUtilRenderComponents.splitText(ichatcomponent, 90, fontRenderer, false, true);
+                    String s = list != null && list.size() > 0 ? ((ITextComponent)list.get(0)).getFormattedText() : "";
 
                     int maxLength = Utils.getMaxLength((int) size) - Utils.toPixelWidth(fontRenderer, Utils.getStyleOffset(s, te.shadowRows[row]));
                     s = fontRenderer.trimStringToWidth(s, Math.min(maxLength, fontRenderer.getStringWidth(s)));

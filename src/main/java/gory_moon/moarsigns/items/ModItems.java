@@ -1,7 +1,6 @@
 package gory_moon.moarsigns.items;
 
 import com.google.common.collect.Maps;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe;
 import gory_moon.moarsigns.api.ShapelessMoarSignRecipe;
@@ -19,6 +18,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -40,15 +40,15 @@ public class ModItems {
 
     public static void init() {
 
-        sign = new ItemMoarSign();
-        debug = new ItemDebug();
-        nugget = new ItemNugget();
-        signToolbox = new ItemSignToolbox();
+        sign = (ItemMoarSign) new ItemMoarSign().setRegistryName(Info.SIGN_ITEM_KEY);
+        debug = (ItemDebug) new ItemDebug().setRegistryName(Info.DEBUG_ITEM_KEY);
+        nugget = (ItemNugget) new ItemNugget().setRegistryName(Info.NUGGET_ITEM_KEY);
+        signToolbox = (ItemSignToolbox) new ItemSignToolbox().setRegistryName(Info.SIGN_TOOLBOX_ITEM_KEY);
 
-        GameRegistry.registerItem(sign, Info.SIGN_ITEM_KEY);
-        GameRegistry.registerItem(debug, Info.DEBUG_ITEM_KEY);
-        GameRegistry.registerItem(nugget, Info.NUGGET_ITEM_KEY);
-        GameRegistry.registerItem(signToolbox, Info.SIGN_TOOLBOX_ITEM_KEY);
+        GameRegistry.register(sign);
+        GameRegistry.register(debug);
+        GameRegistry.register(nugget);
+        GameRegistry.register(signToolbox);
     }
 
     public static void registerRecipes() {

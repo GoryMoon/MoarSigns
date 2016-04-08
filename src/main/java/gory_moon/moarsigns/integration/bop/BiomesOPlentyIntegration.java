@@ -38,6 +38,8 @@ public class BiomesOPlentyIntegration implements ISignRegistration {
         SignRegistry.register("hellbark_sign", null, "hellbark", "bop/", false, new ItemStack(bopItem, 1, 11), ModInfo.ID, BOP_TAG);
         SignRegistry.register("jacaranda_sign", null, "jacaranda", "bop/", false, new ItemStack(bopItem, 1, 12), ModInfo.ID, BOP_TAG);
         SignRegistry.register("mahogany_sign", null, "mahogany", "bop/", false, new ItemStack(bopItem, 1, 13), ModInfo.ID, BOP_TAG);
+        SignRegistry.register("ebony_sign", null, "ebony", "bop/", false, new ItemStack(bopItem, 1, 14), ModInfo.ID, BOP_TAG);
+        SignRegistry.register("eucalyptus_sign", null, "eucalyptus", "bop/", false, new ItemStack(bopItem, 1, 15), ModInfo.ID, BOP_TAG);
 
     }
 
