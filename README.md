@@ -1,6 +1,6 @@
 MoarSigns
 =========
-[![Build Status](https://travis-ci.org/GoryMoon/MoarSigns.svg?branch=master)](https://travis-ci.org/GoryMoon/MoarSigns)
+[![Build Status](https://travis-ci.org/GoryMoon/MoarSigns.svg?branch=1.8.9)](https://travis-ci.org/GoryMoon/MoarSigns)
 
 This is a mod that adds a lot of signs to the game
 
