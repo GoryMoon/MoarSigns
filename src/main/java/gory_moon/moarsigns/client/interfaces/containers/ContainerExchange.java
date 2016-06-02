@@ -55,14 +55,14 @@ public class ContainerExchange extends Container {
     }
 
     @Override
-    public ItemStack func_184996_a(int par1, int dragType, ClickType clickTypeIn, EntityPlayer player) {
-        int clickedSlot = par1 - inventory.getSizeInventory();
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+        int clickedSlot = slotId - inventory.getSizeInventory();
 
-        if (clickedSlot == toolBoxSlot || (dragType == 2 && par1 == toolBoxSlot)) {
+        if (clickedSlot == toolBoxSlot || (dragType == 2 && slotId == toolBoxSlot)) {
             return null;
         }
 
-        return super.func_184996_a(par1, dragType, clickTypeIn, player);
+        return super.slotClick(slotId, dragType, clickTypeIn, player);
     }
 
     @Override

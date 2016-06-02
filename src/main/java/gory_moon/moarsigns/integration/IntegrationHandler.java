@@ -33,9 +33,9 @@ public class IntegrationHandler {
         registerPlankOreName("plankWood");
 
         String[] ingotNames = {"ingotCopper", "ingotTin", "ingotSilver", "ingotBronze", "ingotSteel", "ingotLead", "ingotZinc", "ingotBrass", "ingotCobalt", "ingotArdite", "ingotManyullyn", "ingotAluminum", "ingotAluminumBrass", "ingotAlumite",
-                "ingotNickel", "ingotPlatinum", "ingotMithril", "ingotElectrum", "ingotColdiron", "ingotMithril", "ingotAdamantine", "ingotStarsteel", "ingotAquarium", "ingotInvar", "ingotSignalum", "ingotLumium", "ingotEnderium", "ingotFzDarkIron"};
+                "ingotNickel", "ingotPlatinum", "ingotMithril", "ingotElectrum", "ingotColdiron", "ingotCupronickel", "ingotMithril", "ingotAdamantine", "ingotStarsteel", "ingotAquarium", "ingotInvar", "ingotSignalum", "ingotLumium", "ingotEnderium", "ingotFzDarkIron"};
         String[] blockNames = {"blockCopper", "blockTin", "blockSilver", "blockBronze", "blockSteel", "blockLead", "blockZinc", "blockBrass", "blockCobalt", "blockArdite", "blockManyullyn", "blockAluminum", "blockAluminumBrass", "blockAlumite",
-                "blockNickel", "blockPlatinum", "blockMithril", "blockElectrum", "blockColdiron", "blockMithril", "blockAdamantine", "blockStarsteel", "blockAquarium", "blockInvar", "blockSignalum", "blockLumium", "blockEnderium", "blockFzDarkIron"};
+                "blockNickel", "blockPlatinum", "blockMithril", "blockElectrum", "blockColdiron", "blockCupronickel", "blockMithril", "blockAdamantine", "blockStarsteel", "blockAquarium", "blockInvar", "blockSignalum", "blockLumium", "blockEnderium", "blockFzDarkIron"};
 
         for (String name : ingotNames) registerMetalGemOreName(name);
         for (String name : blockNames) registerMetalGemOreName(name);

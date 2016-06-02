@@ -5,6 +5,7 @@ import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.lib.ModInfo;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -33,10 +34,12 @@ public class MinecraftIntegration implements ISignRegistration {
 
     @Override
     public void registerMetalSigns(ArrayList<ItemStack> metals) {
-        SignRegistry.register("iron_sign", null, "iron", "", false, new ItemStack(Items.iron_ingot), new ItemStack(Blocks.iron_block), ModInfo.ID).setMetal();
-        SignRegistry.register("gold_sign", null, "gold", "", true, new ItemStack(Items.gold_ingot), new ItemStack(Blocks.gold_block), ModInfo.ID).setMetal();
-        SignRegistry.register("diamond_sign", null, "diamond", "", false, new ItemStack(Items.diamond), new ItemStack(Blocks.diamond_block), ModInfo.ID).setMetal();
-        SignRegistry.register("emerald_sign", null, "emerald", "", false, new ItemStack(Items.emerald), new ItemStack(Blocks.emerald_block), ModInfo.ID).setMetal();
+        SignRegistry.register("iron_sign", null, "iron", "", false, new ItemStack(Items.IRON_INGOT), new ItemStack(Blocks.IRON_BLOCK), ModInfo.ID).setMetal();
+        SignRegistry.register("gold_sign", null, "gold", "", true, new ItemStack(Items.GOLD_INGOT), new ItemStack(Blocks.GOLD_BLOCK), ModInfo.ID).setMetal();
+        SignRegistry.register("diamond_sign", null, "diamond", "", false, new ItemStack(Items.DIAMOND), new ItemStack(Blocks.DIAMOND_BLOCK), ModInfo.ID).setMetal();
+        SignRegistry.register("emerald_sign", null, "emerald", "", false, new ItemStack(Items.EMERALD), new ItemStack(Blocks.EMERALD_BLOCK), ModInfo.ID).setMetal();
+        SignRegistry.register("lapis_sign", null, "lapis", "", false, new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()), new ItemStack(Blocks.LAPIS_BLOCK), ModInfo.ID).setMetal();
+        SignRegistry.register("quartz_sign", null, "quartz", "", false, new ItemStack(Items.QUARTZ), new ItemStack(Blocks.QUARTZ_BLOCK), ModInfo.ID).setMetal();
     }
 
     @Override

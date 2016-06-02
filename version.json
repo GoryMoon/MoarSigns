@@ -32,6 +32,17 @@
 			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2293029/download",
 			"isDirectLink": "true",
 			"newFileName": ""
+		},
+		{
+			"mcVersion": "Minecraft 1.9.4",
+			"modVersion": "3.1.0",
+			"changeLog": [
+				"Updated to Minecraft 1.9.4",
+				"Added quartz, lapis, platinum and cupronickel signs"
+			],
+			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2304534/download",
+			"isDirectLink": "true",
+			"newFileName": ""
 		}
 	]
 }

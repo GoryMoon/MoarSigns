@@ -68,14 +68,14 @@ public class GuiMoarSign extends GuiBase {
     public static ITextComponent[] getSignTextWithColor(String[] array) {
         ITextComponent[] result = new ITextComponent[array.length];
 
-        Pattern p = Pattern.compile("(?<=[" + (char) 8747 + "])([a-z0-9])(?=\\})+");
+        Pattern p = Pattern.compile("([" + ((char) 8747) + "]([a-z0-9])(?=\\}))+");
         for (int i = 0; i < array.length; i++) {
             String s = array[i];
             if (!s.equals("")) {
 
                 Matcher m = p.matcher(s);
                 while (m.find()) {
-                    s = s.replace("{" + (char) 8747 + m.group(1) + "}", (char) 167 + m.group(1));
+                    s = s.replace("{" + m.group(0) + "}", ((char) 167) + m.group(2));
                 }
             }
             result[i] = new TextComponentString(s);
@@ -87,15 +87,16 @@ public class GuiMoarSign extends GuiBase {
     public static String[] getSignTextWithCode(ITextComponent[] array) {
         String[] result = new String[array.length];
 
-        Pattern p = Pattern.compile("(?<=[" + (char) 167 + "])([a-z0-9])+");
+        Pattern p = Pattern.compile("([" + ((char) 167) + "]([a-z0-9]))+");
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
+                System.out.println(array[i].getUnformattedText() + ": " + array[i].getUnformattedComponentText() + ": " + array[i].getFormattedText());
                 String s = array[i].getUnformattedText();
                 if (!s.equals("")) {
 
                     Matcher m = p.matcher(s);
                     while (m.find()) {
-                        s = s.replace((char) 167 + m.group(1), "{" + (char) 8747 + m.group(1) + "}");
+                        s = s.replace(m.group(0), "{" + ((char) 8747) + m.group(2) + "}");
                     }
                 }
                 result[i] = s;

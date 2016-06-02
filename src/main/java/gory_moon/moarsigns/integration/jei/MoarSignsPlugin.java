@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.integration.jei;
 
 import gory_moon.moarsigns.MoarSigns;
+import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.integration.jei.crafting.MoarSignCraftingRecipeCategory;
 import gory_moon.moarsigns.integration.jei.crafting.ShapedMoarSignsRecipeHandler;
 import gory_moon.moarsigns.integration.jei.crafting.ShapelessMoarSignsRecipeHandler;
@@ -47,11 +48,17 @@ public class MoarSignsPlugin implements IModPlugin {
         }
         IItemBlacklist blacklist = jeiHelpers.getItemBlacklist();
         blacklist.addItemToBlacklist(new ItemStack(ModItems.debug));
+        blacklist.addItemToBlacklist(new ItemStack(Blocks.signStandingMetal));
+        blacklist.addItemToBlacklist(new ItemStack(Blocks.signStandingWood));
+        blacklist.addItemToBlacklist(new ItemStack(Blocks.signWallMetal));
+        blacklist.addItemToBlacklist(new ItemStack(Blocks.signWallWood));
 
         IRecipeTransferRegistry recipeTransferRegistry = registry.getRecipeTransferRegistry();
         recipeTransferRegistry.addRecipeTransferHandler(ContainerWorkbench.class, MoarSignsPlugin.CRAFTING, 1, 9, 10, 36);
 
         registry.addRecipes(ExchangeRecipeMaker.getExchangeRecipes());
+        registry.addRecipeCategoryCraftingItem(new ItemStack(net.minecraft.init.Blocks.CRAFTING_TABLE), new String[]{CRAFTING});
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.signToolbox, 1, 4), new String[]{EXCHANGE});
 
         MoarSigns.logger.info("Loaded JEI Integration");
     }

@@ -23,9 +23,9 @@ public class ItemDebug extends Item {
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote) {
 
-            RayTraceResult movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
+            RayTraceResult movingobjectposition = this.rayTrace(world, player, true);
 
-            if (movingobjectposition == null) {
+            if (movingobjectposition == null || movingobjectposition.typeOfHit == RayTraceResult.Type.MISS) {
                 FMLNetworkHandler.openGui(player, MoarSigns.instance, 1, world, 0, 0, 0);
                 return ActionResult.newResult(EnumActionResult.SUCCESS, itemStack);
             }

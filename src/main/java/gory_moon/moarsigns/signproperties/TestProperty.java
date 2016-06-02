@@ -20,7 +20,7 @@ public class TestProperty extends SignSpecialProperty {
     public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            player.addPotionEffect(new PotionEffect(MobEffects.regeneration, 5000, 5));
+            player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 5000, 5));
         }
     }
 

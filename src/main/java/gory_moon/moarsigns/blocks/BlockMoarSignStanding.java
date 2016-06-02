@@ -29,10 +29,11 @@ public class BlockMoarSignStanding extends BlockMoarSign {
         return state.getValue(ROTATION);
     }
 
-    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock)
-    {
+    @Override
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn) {
         if (!world.getBlockState(pos.down()).getMaterial().isSolid()) {
             world.setBlockToAir(pos);
         }
     }
+
 }

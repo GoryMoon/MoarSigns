@@ -107,6 +107,8 @@ item.moarsigns:signtoolbox.current_text=Text on sign:
 item.moarsigns.diamond_nugget.name=Diamond Nugget
 item.moarsigns.iron_nugget.name=Iron Nugget
 item.moarsigns.emerald_nugget.name=Emerald Nugget
+item.moarsigns.lapis_nugget.name=Lapis Nugget
+item.moarsigns.quartz_nugget.name=Quartz Nugget
 item.moarsigns.bronze_nugget_ic2.name=Bronze Nugget
 item.moarsigns.copper_nugget_ic2.name=Copper Nugget
 item.moarsigns.tin_nugget_ic2.name=Tin Nugget
@@ -131,6 +133,8 @@ item.moarsigns.sign.iron_sign.name=Iron Sign
 item.moarsigns.sign.gold_sign.name=Gold Sign
 item.moarsigns.sign.diamond_sign.name=Diamond Sign
 item.moarsigns.sign.emerald_sign.name=Emerald Sign
+item.moarsigns.sign.lapis_sign.name=Lapis Sign
+item.moarsigns.sign.quartz_sign.name=Quartz Sign
 
 # Mod Signs
 #Biomes O' Plenty
@@ -262,6 +266,8 @@ item.moarsigns.sign.basemetals.mithril_sign.name=Mithril Sign
 item.moarsigns.sign.basemetals.adamantine_sign.name=Adamantine Sign
 item.moarsigns.sign.basemetals.starsteel_sign.name=Star-Steel Sign
 item.moarsigns.sign.basemetals.aquarium_sign.name=Aquarium Sign
+item.moarsigns.sign.basemetals.cupronickel_sign.name=Cupronickel Sign
+item.moarsigns.sign.basemetals.platinum_sign.name=Platinum Sign
 
 #Factorization
 item.moarsigns.sign.factorization.silver_sign.name=Silver Sign

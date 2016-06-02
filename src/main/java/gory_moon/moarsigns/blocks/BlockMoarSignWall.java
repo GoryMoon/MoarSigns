@@ -111,7 +111,7 @@ public class BlockMoarSignWall extends BlockMoarSign {
     }
 
     @Override
-    public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighbor) {
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn) {
         boolean flag;
         int rotation = world.getBlockState(pos).getValue(ROTATION);
         EnumFacing facing = EnumFacing.getFront(rotation & 7);
@@ -140,4 +140,5 @@ public class BlockMoarSignWall extends BlockMoarSign {
             world.setBlockToAir(pos);
         }
     }
+
 }

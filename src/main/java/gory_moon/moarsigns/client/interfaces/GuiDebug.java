@@ -1,5 +1,6 @@
 package gory_moon.moarsigns.client.interfaces;
 
+import com.google.common.collect.Lists;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerDebug;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Colors;
@@ -12,8 +13,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.opengl.GL11;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -96,7 +99,12 @@ public class GuiDebug extends GuiContainer {
             fontRendererObj.drawString("UN: " + un, x, y1, 0x404040);
             fontRendererObj.drawString("Meta: " + meta, x, y2, 0x404040);
 
-            infoArea.drawString(this, par1, par2, Colors.YELLOW + "Unlocalized Name: " + Un + "\n" + Colors.LIGHTBLUE + "Meta: " + meta + "\n" + Colors.CYAN + Arrays.toString(signText));
+            ArrayList<String> strings = Lists.newArrayList();
+            for (int i: OreDictionary.getOreIDs(blockInWorld ? new ItemStack(block): inventory.getStackInSlot(0))) {
+                strings.add(OreDictionary.getOreName(i));
+            }
+
+            infoArea.drawString(this, par1, par2, Colors.YELLOW + "Unlocalized Name: " + Un + "\n" + Colors.LIGHTBLUE + "Meta: " + meta + "\n" + Colors.LIME + "OreDict: " + Arrays.toString(strings.toArray(new String[strings.size()])) + "\n" + Colors.CYAN + Arrays.toString(signText) );
 
         }
 

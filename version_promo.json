@@ -3,5 +3,8 @@
   "promos": {
     "1.9-latest": "3.0.0",
     "1.9.4-latest": "3.1.0"
+  },
+  "1.9.4": {
+    "3.1.0": "Updated to Minecraft 1.9.4\nAdded quartz, lapis, platinum and cupronickel signs"
   }
 }

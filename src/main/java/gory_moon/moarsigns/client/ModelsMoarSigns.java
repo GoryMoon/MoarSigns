@@ -83,13 +83,13 @@ public class ModelsMoarSigns {
     }
 
     private static void registerBlockModel(Block block) {
-        ResourceLocation resourceLocation = (ResourceLocation) Block.blockRegistry.getNameForObject(block);
+        ResourceLocation resourceLocation = Block.REGISTRY.getNameForObject(block);
 
         registerBlockModel(block, 0, resourceLocation.toString());
     }
 
     private static void registerItemModel(Item item) {
-        ResourceLocation resourceLocation = (ResourceLocation) Item.itemRegistry.getNameForObject(item);
+        ResourceLocation resourceLocation = Item.REGISTRY.getNameForObject(item);
 
         registerItemModel(item, 0, resourceLocation.toString());
     }

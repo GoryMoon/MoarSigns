@@ -10,7 +10,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,6 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -38,7 +39,7 @@ public class BlockMoarSign extends BlockContainer {
     public BlockMoarSign(Material material, SoundType stepSound) {
         super(material);
         setUnlocalizedName("moarsign.sign");
-        setStepSound(stepSound);
+        setSoundType(stepSound);
     }
 
     @Override
@@ -46,8 +47,9 @@ public class BlockMoarSign extends BlockContainer {
         return SIGN_AABB;
     }
 
+    @Nullable
     @Override
-    public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World world, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
         return NULL_AABB;
     }
 
@@ -81,7 +83,7 @@ public class BlockMoarSign extends BlockContainer {
 
     @Override
     public IBlockState withRotation(IBlockState state, Rotation rot) {
-        return state.withProperty(ROTATION, rot.func_185833_a(state.getValue(ROTATION), 16));
+        return state.withProperty(ROTATION, rot.rotate(state.getValue(ROTATION), 16));
     }
 
     @Override
@@ -123,7 +125,7 @@ public class BlockMoarSign extends BlockContainer {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public boolean addDestroyEffects(World world, BlockPos pos, EffectRenderer effectRenderer) {
+    public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager effectRenderer) {
         IBlockState state = world.getBlockState(pos);
         int i = 4;
         for (int j = 0; j < i; ++j)
@@ -144,7 +146,7 @@ public class BlockMoarSign extends BlockContainer {
     }
 
     @Override
-    public boolean addHitEffects(IBlockState state, World world, RayTraceResult target, EffectRenderer effectRenderer) {
+    public boolean addHitEffects(IBlockState state, World world, RayTraceResult target, ParticleManager effectRenderer) {
         BlockPos pos = target.getBlockPos();
         EnumFacing side = target.sideHit;
         IBlockState iblockstate = world.getBlockState(pos);

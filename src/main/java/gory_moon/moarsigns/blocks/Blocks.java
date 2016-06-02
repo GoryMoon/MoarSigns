@@ -18,11 +18,11 @@ public class Blocks {
 
     public static void init() {
 
-        signStandingWood = new BlockMoarSignStanding(Material.wood, SoundType.WOOD).setHardness(1.0F).setResistance(5.0F).setRegistryName(Info.SIGN_STAND_WOOD_KEY);
-        signWallWood = new BlockMoarSignWall(Material.wood, SoundType.WOOD).setHardness(1.0F).setResistance(5.0F).setRegistryName(Info.SIGN_WALL_WOOD_KEY);
+        signStandingWood = new BlockMoarSignStanding(Material.WOOD, SoundType.WOOD).setHardness(1.0F).setResistance(5.0F).setRegistryName(Info.SIGN_STAND_WOOD_KEY);
+        signWallWood = new BlockMoarSignWall(Material.WOOD, SoundType.WOOD).setHardness(1.0F).setResistance(5.0F).setRegistryName(Info.SIGN_WALL_WOOD_KEY);
 
-        signStandingMetal = new BlockMoarSignStanding(Material.iron, SoundType.METAL).setHardness(2.0F).setResistance(10.0F).setRegistryName(Info.SIGN_STAND_METAL_KEY);
-        signWallMetal = new BlockMoarSignWall(Material.iron, SoundType.METAL).setHardness(2.0F).setResistance(10.0F).setRegistryName(Info.SIGN_WALL_METAL_KEY);
+        signStandingMetal = new BlockMoarSignStanding(Material.IRON, SoundType.METAL).setHardness(2.0F).setResistance(10.0F).setRegistryName(Info.SIGN_STAND_METAL_KEY);
+        signWallMetal = new BlockMoarSignWall(Material.IRON, SoundType.METAL).setHardness(2.0F).setResistance(10.0F).setRegistryName(Info.SIGN_WALL_METAL_KEY);
 
         signStandingWood.setHarvestLevel("axe", 0);
         signWallWood.setHarvestLevel("axe", 0);

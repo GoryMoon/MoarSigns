@@ -54,7 +54,7 @@ public class ModItems {
     public static void registerRecipes() {
         RecipeSorter.register("moarsigns:shaped", ShapedMoarSignRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped before:minecraft:shapeless");
         RecipeSorter.register("moarsigns:shapeless", ShapelessMoarSignRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
-        removeRecipesWithResult(new ItemStack(net.minecraft.init.Items.sign, 3));
+        removeRecipesWithResult(new ItemStack(Items.SIGN, 3));
 
         List<SignInfo> signRegistry = SignRegistry.getActivatedSignRegistry();
 
@@ -131,17 +131,21 @@ public class ModItems {
                             GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetIron", '/', "stickWood"));
                         else if (recNugget.getUnlocalizedName().equals("item.moarsigns.emerald_nugget"))
                             GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetEmerald", '/', "stickWood"));
+                        else if (recNugget.getUnlocalizedName().equals("item.moarsigns.lapis_nugget"))
+                            GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetLapis", '/', "stickWood"));
+                        else if (recNugget.getUnlocalizedName().equals("item.moarsigns.quartz_nugget"))
+                            GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', "nuggetQuartz", '/', "stickWood"));
                         else
                             GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack1, true, true, "XXX", "XXX", " / ", 'X', recNugget, '/', "stickWood"));
                     }
 
                     stack.stackSize = 9;
                 }
-                if (mat.getUnlocalizedName().equals(Items.diamond.getUnlocalizedName()))
+                if (mat.getUnlocalizedName().equals(Items.DIAMOND.getUnlocalizedName()))
                     GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack, true, true, "XXX", "XXX", " / ", 'X', "gemDiamond", '/', "stickWood"));
-                else if (mat.getUnlocalizedName().equals(Items.emerald.getUnlocalizedName()))
+                else if (mat.getUnlocalizedName().equals(Items.EMERALD.getUnlocalizedName()))
                     GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack, true, true, "XXX", "XXX", " / ", 'X', "gemEmerald", '/', "stickWood"));
-                else if (mat.getUnlocalizedName().equals(Items.iron_ingot.getUnlocalizedName()))
+                else if (mat.getUnlocalizedName().equals(Items.IRON_INGOT.getUnlocalizedName()))
                     GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack, true, true, "XXX", "XXX", " / ", 'X', "ingotIron", '/', "stickWood"));
                 else
                     GameRegistry.addRecipe(new ShapedMoarSignRecipe(stack, true, true, "XXX", "XXX", " / ", 'X', mat, '/', "stickWood"));
@@ -153,7 +157,7 @@ public class ModItems {
 
         if (replaceRecipes) {
             ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
-            ItemStack signStack = new ItemStack(Items.sign);
+            ItemStack signStack = new ItemStack(Items.SIGN);
             for (int scan = 0; scan < recipes.size(); scan++) {
                 IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
                 List input = null;

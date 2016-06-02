@@ -8,6 +8,7 @@ import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,8 +66,9 @@ public class ContainerPreview extends Container {
     protected void retrySlotClick(int p_75133_1_, int p_75133_2_, boolean p_75133_3_, EntityPlayer p_75133_4_) {
     }
 
+    @Nullable
     @Override
-    public ItemStack func_184996_a(int p_184996_1_, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
         return null;
     }
 

@@ -13,7 +13,7 @@ public class ItemNugget extends Item {
     public ItemNugget() {
         hasSubtypes = true;
         setUnlocalizedName("moarsigns");
-        setCreativeTab(CreativeTabs.tabMaterials);
+        setCreativeTab(CreativeTabs.MATERIALS);
     }
 
     @Override

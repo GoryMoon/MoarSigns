@@ -6,7 +6,7 @@
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "http://www.minecraftforum.net/topic/2621461-",
-  "updateUrl": "",
+  "updateUrl": "https://raw.githubusercontent.com/GoryMoon/MoarSigns/master/version_promo.json",
   "authorList": ["Gory_Moon"],
   "credits": "",
   "logoFile": "",

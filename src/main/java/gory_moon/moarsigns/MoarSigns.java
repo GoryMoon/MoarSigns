@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 
-@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, certificateFingerprint = ModInfo.FINGERPRINT, guiFactory = ModInfo.GUI_FACTORY_CLASS,
+@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, certificateFingerprint = ModInfo.FINGERPRINT, guiFactory = ModInfo.GUI_FACTORY_CLASS, updateJSON = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/master/version_promo.json",
         dependencies =
                 "after:BiomesOPlenty;" +
                         "after:Forestry;" +

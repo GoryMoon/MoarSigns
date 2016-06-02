@@ -62,7 +62,7 @@ public class MessageSignUpdate implements IMessage {
 
         for (int i = 0; i < 4; i++) {
             try {
-                text[i] = packetBuf.readChatComponent();
+                text[i] = packetBuf.readTextComponent();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -81,7 +81,7 @@ public class MessageSignUpdate implements IMessage {
         packetBuf.writeBoolean(lockedChanges);
 
         for (int i = 0; i < 4; i++) {
-            packetBuf.writeChatComponent(text[i]);
+            packetBuf.writeTextComponent(text[i]);
         }
     }
 

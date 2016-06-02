@@ -17,7 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.ITickable;
@@ -28,6 +28,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentUtils;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class TileEntityMoarSign extends TileEntitySign implements ITickable {
 
@@ -76,7 +78,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
         }
     }
 
-    public void writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         compound.setInteger(NBT_VERSION_TAG, NBT_VERSION);
 
@@ -113,6 +115,8 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
         compound.setBoolean(NBT_METAL_TAG, isMetal);
         if (texture_name != null)
             compound.setString(NBT_TEXTURE_TAG, texture_name);
+
+        return compound;
     }
 
     public void readFromNBT(NBTTagCompound compound) {
@@ -261,6 +265,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
         if (compound.hasKey(NBT_METAL_TAG))     isMetal = compound.getBoolean(NBT_METAL_TAG);
         if (compound.hasKey(NBT_TEXTURE_TAG))   texture_name = compound.getString(NBT_TEXTURE_TAG);
         if (texture_name == null || texture_name.isEmpty()) texture_name = "oak_sign";
+        setResourceLocation(texture_name);
 
     }
 
@@ -269,9 +274,11 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
         return (oldState.getBlock() != newSate.getBlock());
     }
 
+    @Nullable
     @Override
-    public Packet getDescriptionPacket() {
-        return PacketHandler.INSTANCE.getPacketFrom(new MessageSignMainInfo(this));
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        PacketHandler.INSTANCE.sendToAll(new MessageSignMainInfo(this));
+        return null;
     }
 
     @Override
@@ -297,7 +304,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
     }
 
     public void setResourceLocation(String texture) {
-        if (!worldObj.isRemote) {
+        if (worldObj != null && !worldObj.isRemote) {
             texture_name = texture;
         } else if (resourceLocation == null) {
             texture_name = texture;

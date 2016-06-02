@@ -56,7 +56,7 @@ public class ItemSignToolbox extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote) {
-            RayTraceResult movingObjectPosition = getMovingObjectPositionFromPlayer(world, player, false);
+            RayTraceResult movingObjectPosition = rayTrace(world, player, false);
             RayTraceResult.Type hit = movingObjectPosition != null ? movingObjectPosition.typeOfHit: RayTraceResult.Type.MISS;
 
             if (hit == RayTraceResult.Type.MISS) {
