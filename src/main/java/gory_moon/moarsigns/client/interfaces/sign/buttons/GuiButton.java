@@ -44,9 +44,13 @@ public abstract class GuiButton extends GuiRectangle {
     public boolean onClick(GuiMoarSign gui, int x, int y) {
         if (!gui.isOnOverlay(x, y) && inRect(x, y)) {
             action(gui);
-            gui.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+            playClickSound(gui);
             return true;
         }
         return false;
+    }
+
+    public void playClickSound(GuiMoarSign gui) {
+        gui.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
     }
 }

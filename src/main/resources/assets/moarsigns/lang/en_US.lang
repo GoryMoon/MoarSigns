@@ -69,6 +69,7 @@ gui.moarsigns:color.yellow=Yellow
 gui.moarsigns:color.white=White
 
 #  Textstyles
+gui.moarsigns:textstyle.example_text=AaBbCc
 gui.moarsigns:textstyle.random=Obfuscate
 gui.moarsigns:textstyle.bold=Bold
 gui.moarsigns:textstyle.strikethrough=Strikethrough
@@ -79,6 +80,8 @@ gui.moarsigns:textstyle.reset=Reset[%1]Turns off all colors and styles
 #  Preview
 gui.moarsigns:preview.click_sign=Click sign to preview it
 gui.moarsigns:preview.drag=Click and drag the[%1]sign to rotate it
+gui.moarsigns:preview.example_text_1=§nThis is some
+gui.moarsigns:preview.example_text_2=§4example §ltext
 
 # -Items
 item.moarsigns.signtoolbox.EDIT_MODE.name=Sign Toolbox §2(Edit)§r

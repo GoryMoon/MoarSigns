@@ -4,6 +4,8 @@ import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
 import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.init.SoundEvents;
 
 public class ButtonColorPicker extends GuiButtonToggleable {
 

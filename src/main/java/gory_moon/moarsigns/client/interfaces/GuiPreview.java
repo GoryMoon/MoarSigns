@@ -179,7 +179,7 @@ public class GuiPreview extends GuiContainer {
             sign.setWorldObj(FMLClientHandler.instance().getWorldClient());
             sign.isMetal = info.isMetal;
             sign.setBlockType(info.isMetal ? Blocks.signStandingMetal : Blocks.signStandingWood);
-            ITextComponent[] components = new ITextComponent[]{null, new TextComponentString((char) 167 + "nThis is some"), new TextComponentString((char) 167 + "4example " + (char) 167 + "ltext"), null};
+            ITextComponent[] components = new ITextComponent[]{null, new TextComponentString(Localization.GUI.PREVIEW.EXAMPLE_TEXT_1.translate()), new TextComponentString(Localization.GUI.PREVIEW.EXAMPLE_TEXT_2.translate()), null};
             System.arraycopy(components, 0, sign.signText, 0, sign.signText.length);
             sign.setResourceLocation(texture);
         }

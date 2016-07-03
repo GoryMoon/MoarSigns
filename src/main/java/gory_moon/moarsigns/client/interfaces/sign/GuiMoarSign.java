@@ -387,9 +387,10 @@ public class GuiMoarSign extends GuiBase {
                         guiTextFields[selectedTextField].setFocused(true);
                         guiTextFields[selectedTextField].writeText("{" + (char) 8747 + Integer.toHexString(Colors.values()[id].getNumber()) + "}");
                         update();
-                        noTextFieldClick = true;
 
                         buttonColorPicker.onClick(this, x, y);
+                        buttonColorPicker.playClickSound(this);
+                        return;
                     }
                 }
             }
@@ -402,9 +403,10 @@ public class GuiMoarSign extends GuiBase {
                         guiTextFields[selectedTextField].setFocused(true);
                         guiTextFields[selectedTextField].writeText("{" + (char) 8747 + button.getStyleChar(x, y) + "}");
                         update();
-                        noTextFieldClick = true;
 
                         buttonTextStyle.onClick(this, x, y);
+                        buttonTextStyle.playClickSound(this);
+                        return;
                     }
                 }
             }

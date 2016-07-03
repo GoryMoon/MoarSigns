@@ -133,6 +133,7 @@ public final class Localization {
         }
 
         public enum TEXTSTYLES {
+            EXAMPLE_TEXT,
             RANDOM,
             BOLD,
             STRIKETHROUGH,
@@ -149,8 +150,8 @@ public final class Localization {
         public enum PREVIEW {
             CLICK_SIGN,
             DRAG,
-            ROTATE,
-            TYPE;
+            EXAMPLE_TEXT_1,
+            EXAMPLE_TEXT_2;
 
             public String translate() {
                 return Localization.translateString("gui.moarsigns:preview." + toString().toLowerCase(), "\n");

@@ -26,7 +26,7 @@ public class GuiTextStyleButton extends GuiRectangle {
         Gui.drawRect(x, y, x + w, y + h, inRect(srcX, srcY) ? 0xffb2b2b2 : 0xff424242);
 
         GL11.glColor3f(1.0F, 1.0F, 1.0F);
-        gui.getFontRenderer().drawString(((char) 167) + "" + getStyleChar(srcX, srcY) + "AaBbCc", x + 5, y + 5, Colors.WHITE.getARGB());
+        gui.getFontRenderer().drawString(((char) 167) + "" + getStyleChar(srcX, srcY) + Localization.GUI.TEXTSTYLES.EXAMPLE_TEXT.translate(""), x + 5, y + 5, Colors.WHITE.getARGB());
         GL11.glPopMatrix();
     }
 
