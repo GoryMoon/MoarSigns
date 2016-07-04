@@ -13,6 +13,7 @@ import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -21,7 +22,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,6 +40,9 @@ public class GuiMoarSign extends GuiBase {
     public boolean showColors = false;
     public boolean showTextStyles;
     public GuiRectangle textStyleRect;
+    public int textStyleMaxWidth = 0;
+    public int textStyleDialogPos = 0;
+    public int colorsDialogPos = 0;
     public GuiRectangle textColorsRect;
     public List<GuiButton> buttons = new ArrayList<GuiButton>();
     public GuiSignTextField[] guiTextFields = new GuiSignTextField[4];
@@ -156,11 +159,28 @@ public class GuiMoarSign extends GuiBase {
 
         if (selectedTextField != -1) guiTextFields[selectedTextField].setFocused(true);
 
+        textStyleRect = new GuiRectangle(guiLeft + 150, guiTop + 30, 60, 116);
+        textColorsRect = new GuiRectangle(guiLeft + 150, guiTop + 30, 65, 65);
+
+        int buttonBase = 18;
+
+        buttons.add(                    new ButtonCut(guiLeft + buttonBase, guiTop + 10));
+        buttons.add(                    new ButtonCopy(guiLeft + buttonBase + 21, guiTop + 10));
+        buttons.add(                    new ButtonPaste(guiLeft + buttonBase + 42, guiTop + 10));
+        buttons.add(buttonCutSign =     new ButtonCutSign(guiLeft + buttonBase + 63, guiTop + 10));
+        buttons.add(buttonCopySign =    new ButtonCopySign(guiLeft + buttonBase + 84, guiTop + 10));
+        buttons.add(                    new ButtonPasteSign(guiLeft + buttonBase + 105, guiTop + 10));
+        buttons.add(buttonErase =       new ButtonReset(guiLeft + buttonBase + 126, guiTop + 10));
+        buttons.add(buttonColorPicker = new ButtonColorPicker(guiLeft + buttonBase + 147, guiTop + 10));
+        buttons.add(buttonTextStyle =   new ButtonTextStyle(guiLeft + buttonBase + 168, guiTop + 10));
+        buttons.add(buttonLock =        new ButtonLock(guiLeft + 181 + TEXT_EDIT_AREA, guiTop + 136, 224));
+
+        colorsDialogPos = (buttonColorPicker.getX() + buttonColorPicker.getW() / 2) - guiLeft - 32;
 
         k = 0;
         j = 0;
         for (int i = 0; i < colorButtons.length; i++) {
-            colorButtons[i] = new GuiColorButton(guiLeft + 150 + 5 + 14 * k, guiTop + 30 + 5 + 14 * j, 12, 12, i, 0xffb2b2b2, 0xff424242);
+            colorButtons[i] = new GuiColorButton(guiLeft + colorsDialogPos + 5 + 14 * k, guiTop + 30 + 5 + 14 * j, 12, 12, i, 0xffb2b2b2, 0xff424242);
             if (k > 2) {
                 k = 0;
                 j++;
@@ -169,28 +189,18 @@ public class GuiMoarSign extends GuiBase {
 
         for (int i = 0; i < styleButtons.length; i++) {
             styleButtons[i] = new GuiTextStyleButton(guiLeft + 150 + 5, guiTop + 30 + 5 + 18 * i, 50, 16, i);
+            int width = fontRendererObj.getStringWidth(styleButtons[i].getDrawnString(this));
+            if (width > textStyleMaxWidth) {
+                textStyleMaxWidth = width + 12;
+            }
         }
-        textStyleRect = new GuiRectangle(guiLeft + 150, guiTop + 30, 60, 116);
-        textColorsRect = new GuiRectangle(guiLeft + 150, guiTop + 30, 65, 65);
 
-        buttonCutSign = new ButtonCutSign(guiLeft + 74, guiTop + 10);
-        buttonCopySign = new ButtonCopySign(guiLeft + 95, guiTop + 10);
-        buttonErase = new ButtonReset(guiLeft + 137, guiTop + 10);
-        buttonColorPicker = new ButtonColorPicker(guiLeft + 158, guiTop + 10);
-        buttonTextStyle = new ButtonTextStyle(guiLeft + 179, guiTop + 10);
-        int LOCK_BASE_POS = 224;
-        buttonLock = new ButtonLock(guiLeft + TEXT_EDIT_AREA + 181, guiTop + 136, LOCK_BASE_POS);
+        textStyleDialogPos = (buttonTextStyle.getX() + buttonTextStyle.getW() / 2) - guiLeft - ((textStyleMaxWidth + 10) / 2);
 
-        buttons.add(new ButtonCut(guiLeft + 11, guiTop + 10));
-        buttons.add(new ButtonCopy(guiLeft + 32, guiTop + 10));
-        buttons.add(new ButtonPaste(guiLeft + 53, guiTop + 10));
-        buttons.add(buttonCutSign);
-        buttons.add(buttonCopySign);
-        buttons.add(new ButtonPasteSign(guiLeft + 116, guiTop + 10));
-        buttons.add(buttonErase);
-        buttons.add(buttonColorPicker);
-        buttons.add(buttonTextStyle);
-        buttons.add(buttonLock);
+        for (GuiTextStyleButton b: styleButtons) {
+            b.setWidth(textStyleMaxWidth);
+            b.setX(textStyleDialogPos + guiLeft + 5);
+        }
 
         buttonList.add(new net.minecraft.client.gui.GuiButton(0, guiLeft + 12, guiTop + 174, I18n.format("gui.done", new Object[0])));
 
@@ -263,12 +273,13 @@ public class GuiMoarSign extends GuiBase {
 
         drawDefaultBackground();
 
-        GL11.glColor4f(1, 1, 1, 1);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
         bindTexture(texture);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
         super.drawScreen(x, y, par3);
-        GL11.glColor4f(1, 1, 1, 1);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+
         bindTexture(texture);
 
         if (initied) {
@@ -285,37 +296,37 @@ public class GuiMoarSign extends GuiBase {
 
         for (GuiTextField textField : guiTextFields) textField.drawTextBox();
 
-        GL11.glColor4f(1, 1, 1, 1);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-        GL11.glPushMatrix();
-        GL11.glTranslatef((float) guiLeft + 112F, (float) guiTop - 27.0F, 40.0F);
+        GlStateManager.pushMatrix();
+
+        GlStateManager.translate((float) guiLeft + 112F, (float) guiTop - 27.0F, 40.0F);
         float scale = 93.75F;
-        GL11.glScalef(-scale, -scale, -scale);
+        GlStateManager.scale(-scale, -scale, -scale);
 
-        GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
 
         int i = entitySign.getBlockMetadata();
         entitySign.showInGui = true;
 
-        GL11.glRotatef(180, 0.0F, 1.0F, 0.0F);
-
-        GL11.glTranslatef(0.0F, -0.8F, 0.0F);
+        GlStateManager.rotate(180, 0.0F, 1.0F, 0.0F);
+        GlStateManager.translate(0.0F, -0.8F, 0.0F);
 
         TileEntityRendererDispatcher.instance.renderTileEntityAt(entitySign, -0.5D, -0.75D, -0.5D, 0.0F);
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
         entitySign.showInGui = false;
 
 
         if (showColors) {
-            GL11.glPushMatrix();
-            GL11.glTranslatef(0.0F, 0.0F, 90.0F);
-            GL11.glDisable(GL11.GL_LIGHTING);
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(0.0F, 0.0F, 90.0F);
+            GlStateManager.disableLighting();
 
             bindTexture(texture);
-            drawTexturedModalRect(guiLeft + 150, guiTop + 30, 0, 0, 60, 60);
-            drawTexturedModalRect(guiLeft + 209, guiTop + 30, 219, 0, 5, 60);
-            drawTexturedModalRect(guiLeft + 150, guiTop + 89, 0, 195, 35, 5);
-            drawTexturedModalRect(guiLeft + 184, guiTop + 89, 194, 195, 30, 5);
+            drawTexturedModalRect(guiLeft + colorsDialogPos, guiTop + 30, 0, 0, 60, 60);
+            drawTexturedModalRect(guiLeft + colorsDialogPos + 59, guiTop + 30, 219, 0, 5, 60);
+            drawTexturedModalRect(guiLeft + colorsDialogPos, guiTop + 89, 0, 195, 35, 5);
+            drawTexturedModalRect(guiLeft + colorsDialogPos + 34, guiTop + 89, 194, 195, 30, 5);
 
             for (GuiColorButton color : colorButtons) {
                 color.draw(this, x, y);
@@ -323,14 +334,15 @@ public class GuiMoarSign extends GuiBase {
             int k1 = 0;
             int j = 0;
             for (Colors color : Colors.values()) {
-                drawRect(guiLeft + 152 + 4 + k1 * 14, guiTop + 32 + 4 + j * 14, guiLeft + 152 + 14 + k1 * 14, guiTop + 32 + 14 + j * 14, color.getARGB());
+                drawRect(guiLeft + colorsDialogPos + 6 + k1 * 14, guiTop + 32 + 4 + j * 14, guiLeft + colorsDialogPos + 16 + k1 * 14, guiTop + 32 + 14 + j * 14, color.getARGB());
                 if (k1 > 2) {
                     k1 = 0;
                     j++;
                 } else k1++;
             }
-            GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glPopMatrix();
+            GlStateManager.enableLighting();
+
+            GlStateManager.popMatrix();
 
             for (GuiColorButton button : colorButtons) {
                 if (button.inRect(x, y)) {
@@ -341,26 +353,30 @@ public class GuiMoarSign extends GuiBase {
         }
 
         if (showTextStyles) {
-            GL11.glPushMatrix();
+            GlStateManager.pushMatrix();
 
-            GL11.glTranslatef(0.0F, 0.0F, 91.0F);
-            GL11.glDisable(GL11.GL_LIGHTING);
+            GlStateManager.translate(0.0F, 0.0F, 91.0F);
+            GlStateManager.disableLighting();
 
             bindTexture(texture);
 
-            drawTexturedModalRect(guiLeft + 150, guiTop + 30, 0, 0, 55, 111);
-            drawTexturedModalRect(guiLeft + 205, guiTop + 30, 219, 0, 5, 111);
+            drawRect(guiLeft + textStyleDialogPos + 5, guiTop + 35, guiLeft + textStyleDialogPos + 5 + textStyleMaxWidth, guiTop + 111 + 30, 0xffc6c6c6);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
-            drawTexturedModalRect(guiLeft + 150, guiTop + 141, 0, 195, 35, 5);
-            drawTexturedModalRect(guiLeft + 180, guiTop + 141, 194, 195, 30, 5);
+            drawTexturedModalRect(guiLeft + textStyleDialogPos, guiTop + 30, 0, 0, 5, 111);
+            drawTexturedModalRect(guiLeft + textStyleDialogPos + 5, guiTop + 30, 5, 0, textStyleMaxWidth, 5);
+            drawTexturedModalRect(guiLeft + textStyleDialogPos + 5 + textStyleMaxWidth, guiTop + 30, 219, 0, 5, 111);
+
+            drawTexturedModalRect(guiLeft + textStyleDialogPos, guiTop + 141, 0, 195, textStyleMaxWidth + 5, 5);
+            drawTexturedModalRect(guiLeft + textStyleDialogPos + 5 + textStyleMaxWidth, guiTop + 141, 219, 195, 5, 5);
 
             zLevel += 100.0F;
             for (GuiTextStyleButton button : styleButtons) {
                 button.draw(this, x, y);
             }
             zLevel -= 100.0F;
-            GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glPopMatrix();
+            GlStateManager.enableLighting();
+            GlStateManager.popMatrix();
 
             for (GuiTextStyleButton button : styleButtons) {
                 if (button.inRect(x, y))
@@ -401,7 +417,7 @@ public class GuiMoarSign extends GuiBase {
                         showTextStyles = false;
                         overlay = null;
                         guiTextFields[selectedTextField].setFocused(true);
-                        guiTextFields[selectedTextField].writeText("{" + (char) 8747 + button.getStyleChar(x, y) + "}");
+                        guiTextFields[selectedTextField].writeText("{" + (char) 8747 + button.getStyleChar() + "}");
                         update();
 
                         buttonTextStyle.onClick(this, x, y);

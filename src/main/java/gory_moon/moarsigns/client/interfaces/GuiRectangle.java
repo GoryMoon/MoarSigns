@@ -28,6 +28,22 @@ public class GuiRectangle {
         this.y = y;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getW() {
+        return w;
+    }
+
+    public int getH() {
+        return h;
+    }
+
     public void draw(GuiBase gui, int srcX, int srcY) {
         gui.drawTexturedModalRect(x, y, srcX, srcY, w, h);
     }

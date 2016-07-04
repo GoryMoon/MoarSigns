@@ -5,6 +5,7 @@ import gory_moon.moarsigns.client.interfaces.GuiRectangle;
 import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
 
@@ -22,12 +23,13 @@ public class GuiTextStyleButton extends GuiRectangle {
 
     @Override
     public void draw(GuiBase gui, int srcX, int srcY) {
-        GL11.glPushMatrix();
+        GlStateManager.pushMatrix();
         Gui.drawRect(x, y, x + w, y + h, inRect(srcX, srcY) ? 0xffb2b2b2 : 0xff424242);
 
-        GL11.glColor3f(1.0F, 1.0F, 1.0F);
-        gui.getFontRenderer().drawString(((char) 167) + "" + getStyleChar(srcX, srcY) + Localization.GUI.TEXTSTYLES.EXAMPLE_TEXT.translate(""), x + 5, y + 5, Colors.WHITE.getARGB());
-        GL11.glPopMatrix();
+        GlStateManager.color(1.0F, 1.0F, 1.0F);
+
+        gui.drawCenteredString(gui.getFontRenderer(), getDrawnString(gui), x + (w / 2), y + 4, Colors.WHITE.getARGB());
+        GlStateManager.popMatrix();
     }
 
     @SuppressWarnings("unused")
@@ -36,12 +38,20 @@ public class GuiTextStyleButton extends GuiRectangle {
     }
 
     @SuppressWarnings("unused")
-    public char getStyleChar(int x, int y) {
+    public char getStyleChar() {
         return style.charAt(id);
     }
 
     public String getName() {
         return names[id].translate(id == names.length - 1 ? "\n" + Colors.LIGHTGRAY: "");
+    }
+
+    public String getDrawnString(GuiBase gui) {
+        return ((char) 167) + "" + getStyleChar() + Localization.GUI.TEXTSTYLES.EXAMPLE_TEXT.translate("");
+    }
+
+    public void setWidth(int w) {
+        this.w = w;
     }
 
 }
