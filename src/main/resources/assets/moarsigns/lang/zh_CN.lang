@@ -69,6 +69,7 @@ gui.moarsigns:color.yellow=黄
 gui.moarsigns:color.white=白
 
 #  Textstyles
+gui.moarsigns:textstyle.example_text=AaBbCc 123456
 gui.moarsigns:textstyle.random=混淆
 gui.moarsigns:textstyle.bold=加粗
 gui.moarsigns:textstyle.strikethrough=删除线
@@ -79,6 +80,8 @@ gui.moarsigns:textstyle.reset=重置所有文本样式及颜色
 #  Preview
 gui.moarsigns:preview.click_sign=点击告示牌以预览
 gui.moarsigns:preview.drag=点击拖拽告示牌以旋转
+gui.moarsigns:preview.example_text_1=§n这是一些
+gui.moarsigns:preview.example_text_2=§4示例§l文字
 
 # -Items
 item.moarsigns.signtoolbox.EDIT_MODE.name=告示牌工具箱§2(编辑)§r
