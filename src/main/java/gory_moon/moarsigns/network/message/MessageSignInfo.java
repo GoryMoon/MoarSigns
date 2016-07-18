@@ -2,22 +2,27 @@ package gory_moon.moarsigns.network.message;
 
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.network.ClientMessageHandler;
+import gory_moon.moarsigns.network.ServerMessageHandler;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-public class MessageSignMainInfo implements IMessage {
+public class MessageSignInfo implements IMessage {
 
     public BlockPos pos;
 
@@ -29,14 +34,13 @@ public class MessageSignMainInfo implements IMessage {
     public boolean[] visibleRows = {true, true, true, true};
     public boolean[] shadowRows = new boolean[4];
     public boolean lockedChanges;
-
     public ITextComponent[] text;
 
     @SuppressWarnings("unused")
-    public MessageSignMainInfo() {
+    public MessageSignInfo() {
     }
 
-    public MessageSignMainInfo(BlockPos pos, String texture, boolean isMetal, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean[] shadowRows, boolean lockedChanges, ITextComponent[] text) {
+    public MessageSignInfo(BlockPos pos, String texture, boolean isMetal, int[] rowLocations, int[] rowSizes, boolean[] visibleRows, boolean[] shadowRows, boolean lockedChanges, ITextComponent[] text) {
         this.pos = pos;
         this.texture = texture;
         this.isMetal = isMetal;
@@ -48,7 +52,7 @@ public class MessageSignMainInfo implements IMessage {
         this.text = text;
     }
 
-    public MessageSignMainInfo(TileEntityMoarSign tileEntity) {
+    public MessageSignInfo(TileEntityMoarSign tileEntity) {
         this(tileEntity.getPos(), tileEntity.texture_name, tileEntity.isMetal,
                 tileEntity.rowLocations, tileEntity.rowSizes, tileEntity.visibleRows, tileEntity.shadowRows, tileEntity.lockedChanges, tileEntity.signText);
     }
@@ -104,10 +108,11 @@ public class MessageSignMainInfo implements IMessage {
             buf.writeBoolean(false);
         }
     }
-    public static class Handler extends ClientMessageHandler<MessageSignMainInfo> {
+
+    /*public static class ClientHandler extends ClientMessageHandler<MessageSignInfo> {
 
         @Override
-        protected void handle(MessageSignMainInfo message, MessageContext ctx) {
+        protected void handle(MessageSignInfo message, MessageContext ctx) {
             WorldClient world = FMLClientHandler.instance().getClient().theWorld;
             TileEntity tileEntity;
 
@@ -141,6 +146,44 @@ public class MessageSignMainInfo implements IMessage {
                 }
             } else {
                 MoarSigns.logger.error("An error with packages occurred");
+            }
+        }
+    }*/
+
+    public static class ServerHandler extends ServerMessageHandler<MessageSignInfo> {
+
+        @Override
+        protected void handle(MessageSignInfo message, MessageContext ctx) {
+            EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+            player.markPlayerActive();
+
+            WorldServer worldserver = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(player.dimension);
+            BlockPos pos = message.pos;
+
+            if (worldserver.isBlockLoaded(pos)) {
+                TileEntity tileentity = worldserver.getTileEntity(pos);
+
+                if (tileentity instanceof TileEntityMoarSign) {
+                    TileEntityMoarSign sign = (TileEntityMoarSign) tileentity;
+
+                    if (!sign.getIsEditable() || sign.getPlayer() != player) {
+                        MoarSigns.logger.warn("Player " + player.getName() + " just tried to change non-editable sign");
+                        return;
+                    }
+
+                    sign.isMetal = message.isMetal;
+                    sign.rowLocations = message.rowLocations;
+                    sign.rowSizes = message.rowSizes;
+                    sign.visibleRows = message.visibleRows;
+                    sign.shadowRows = message.shadowRows;
+                    sign.lockedChanges = message.lockedChanges;
+
+                    System.arraycopy(message.text, 0, sign.signText, 0, 4);
+                    sign.markDirty();
+
+                    IBlockState iblockstate = worldserver.getBlockState(pos);
+                    worldserver.notifyBlockUpdate(pos, iblockstate, iblockstate, 3);
+                }
             }
         }
     }

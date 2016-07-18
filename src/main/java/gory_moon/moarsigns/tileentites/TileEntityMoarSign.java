@@ -5,7 +5,7 @@ import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.network.PacketHandler;
-import gory_moon.moarsigns.network.message.MessageSignMainInfo;
+import gory_moon.moarsigns.network.message.MessageSignInfo;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntitySign;
@@ -28,6 +29,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentUtils;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import javax.annotation.Nullable;
 
@@ -277,8 +279,13 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
-        PacketHandler.INSTANCE.sendToAll(new MessageSignMainInfo(this));
-        return null;
+        return new SPacketUpdateTileEntity(getPos(), 0, writeToNBT(new NBTTagCompound()));
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        readFromNBT(pkt.getNbtCompound());
+        markDirty();
     }
 
     @Override

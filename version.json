@@ -35,11 +35,11 @@
 		},
 		{
 			"mcVersion": "Minecraft 1.9.4",
-			"modVersion": "3.1.1",
+			"modVersion": "3.1.2",
 			"changeLog": [
-				"Updated Chinese translation",
+				"Fixed syncing sign data to players in multiplayer"
 			],
-			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2304534/download",
+			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2316993/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}

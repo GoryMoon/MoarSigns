@@ -7,7 +7,7 @@ import gory_moon.moarsigns.client.interfaces.GuiRectangle;
 import gory_moon.moarsigns.client.interfaces.sign.buttons.*;
 import gory_moon.moarsigns.lib.Info;
 import gory_moon.moarsigns.network.PacketHandler;
-import gory_moon.moarsigns.network.message.MessageSignUpdate;
+import gory_moon.moarsigns.network.message.MessageSignInfo;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
@@ -219,7 +219,7 @@ public class GuiMoarSign extends GuiBase {
             entitySign.signText[i] = new TextComponentString(s);
         }
 
-        PacketHandler.INSTANCE.sendToServer(new MessageSignUpdate(entitySign));
+        PacketHandler.INSTANCE.sendToServer(new MessageSignInfo(entitySign));
     }
 
     @Override
