@@ -3,6 +3,7 @@ package gory_moon.moarsigns.integration.basemetals;
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.ItemStack;
 
@@ -16,11 +17,11 @@ public class BasemetalsIntegration implements ISignRegistration {
     private static final String BASEMETALS_NAME = "Base Metals";
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) {
+    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
     }
 
     @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) {
+    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
         Map<String, BaseItemHelper> items = new HashMap<String, BaseItemHelper>();
 
         for (ItemStack stack : metals) {

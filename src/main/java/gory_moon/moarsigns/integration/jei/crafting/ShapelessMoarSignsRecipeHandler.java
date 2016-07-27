@@ -25,6 +25,12 @@ public class ShapelessMoarSignsRecipeHandler implements IRecipeHandler<Shapeless
 
     @Nonnull
     @Override
+    public String getRecipeCategoryUid(@Nonnull ShapelessMoarSignRecipe recipe) {
+        return MoarSignsPlugin.CRAFTING;
+    }
+
+    @Nonnull
+    @Override
     public IRecipeWrapper getRecipeWrapper(@Nonnull ShapelessMoarSignRecipe recipe) {
         return new ShapelessMoatSignsRecipeWrapper(recipe);
     }

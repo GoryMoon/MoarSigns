@@ -3,6 +3,7 @@ package gory_moon.moarsigns.integration.tconstruct;
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,12 +18,12 @@ public class TinkersConstructIntegration implements ISignRegistration {
     private Item itemBlock = null;
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) {
+    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
 
     }
 
     @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) {
+    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
         for (ItemStack stack : metals) {
             if (stack.getUnlocalizedName().equals("item.tconstruct.ingots.cobalt") && item == null) {
                 item = stack.getItem();
@@ -35,11 +36,11 @@ public class TinkersConstructIntegration implements ISignRegistration {
             if (item != null && itemBlock != null) break;
         }
 
-        SignRegistry.register("cobalt_sign", null, "cobalt", "tconstruct/", true, new ItemStack(item, 1, 0), new ItemStack(itemBlock, 1, 0), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
-        SignRegistry.register("ardite_sign", null, "ardite", "tconstruct/", true, new ItemStack(item, 1, 1), new ItemStack(itemBlock, 1, 1), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
-        SignRegistry.register("manyullyn_sign", null, "manyullyn", "tconstruct/", true, new ItemStack(item, 1, 2), new ItemStack(itemBlock, 1, 2), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
-        SignRegistry.register("knightslime_sign", null, "knightslime", "tconstruct/", true, new ItemStack(item, 1, 3), new ItemStack(itemBlock, 1, 3), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
-        SignRegistry.register("pigiron_sign", null, "pigiron", "tconstruct/", true, new ItemStack(item, 1, 4), new ItemStack(itemBlock, 1, 4), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
+        SignRegistry.register("cobalt_sign",        null, "cobalt",         "tconstruct/", true, new ItemStack(item, 1, 0), new ItemStack(itemBlock, 1, 0), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
+        SignRegistry.register("ardite_sign",        null, "ardite",         "tconstruct/", true, new ItemStack(item, 1, 1), new ItemStack(itemBlock, 1, 1), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
+        SignRegistry.register("manyullyn_sign",     null, "manyullyn",      "tconstruct/", true, new ItemStack(item, 1, 2), new ItemStack(itemBlock, 1, 2), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
+        SignRegistry.register("knightslime_sign",   null, "knightslime",    "tconstruct/", true, new ItemStack(item, 1, 3), new ItemStack(itemBlock, 1, 3), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
+        SignRegistry.register("pigiron_sign",       null, "pigiron",        "tconstruct/", true, new ItemStack(item, 1, 4), new ItemStack(itemBlock, 1, 4), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
         SignRegistry.register("aluminumbrass_sign", null, "aluminum_brass", "tconstruct/", true, new ItemStack(item, 1, 5), new ItemStack(itemBlock, 1, 5), ModInfo.ID, TCONSTRUCT_TAG).setMetal();
 
 

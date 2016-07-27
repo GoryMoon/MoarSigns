@@ -1,20 +1,16 @@
 package gory_moon.moarsigns.network.message;
 
 import gory_moon.moarsigns.MoarSigns;
-import gory_moon.moarsigns.network.ClientMessageHandler;
 import gory_moon.moarsigns.network.ServerMessageHandler;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

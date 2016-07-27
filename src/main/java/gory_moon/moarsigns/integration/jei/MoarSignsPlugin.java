@@ -28,6 +28,8 @@ public class MoarSignsPlugin implements IModPlugin {
     @Override
     public void register(@Nonnull IModRegistry registry) {
         IJeiHelpers jeiHelpers = registry.getJeiHelpers();
+        ISubtypeRegistry subtypeRegistry = jeiHelpers.getSubtypeRegistry();
+        INbtRegistry nbtRegistry = jeiHelpers.getNbtRegistry();
         IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 
         registry.addRecipeCategories(
@@ -46,8 +48,16 @@ public class MoarSignsPlugin implements IModPlugin {
                 moarSigns.add(stack);
             }
         }
+
+        subtypeRegistry.useNbtForSubtypes(
+                ModItems.SIGN
+        );
+        nbtRegistry.useNbtForSubtypes(
+                ModItems.SIGN
+        );
+
         IItemBlacklist blacklist = jeiHelpers.getItemBlacklist();
-        blacklist.addItemToBlacklist(new ItemStack(ModItems.debug));
+        blacklist.addItemToBlacklist(new ItemStack(ModItems.DEBUG));
         blacklist.addItemToBlacklist(new ItemStack(Blocks.signStandingMetal));
         blacklist.addItemToBlacklist(new ItemStack(Blocks.signStandingWood));
         blacklist.addItemToBlacklist(new ItemStack(Blocks.signWallMetal));
@@ -58,7 +68,7 @@ public class MoarSignsPlugin implements IModPlugin {
 
         registry.addRecipes(ExchangeRecipeMaker.getExchangeRecipes());
         registry.addRecipeCategoryCraftingItem(new ItemStack(net.minecraft.init.Blocks.CRAFTING_TABLE), new String[]{CRAFTING});
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.signToolbox, 1, 4), new String[]{EXCHANGE});
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.SIGN_TOOLBOX, 1, 4), new String[]{EXCHANGE});
 
         MoarSigns.logger.info("Loaded JEI Integration");
     }

@@ -1,5 +1,5 @@
 package gory_moon.moarsigns.integration.nei;
-/*
+
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import gory_moon.moarsigns.MoarSigns;
@@ -19,7 +19,7 @@ public class NEIMoarSignConfig implements IConfigureNEI {
         API.hideItem(new ItemStack(Blocks.signStandingWood));
         API.hideItem(new ItemStack(Blocks.signWallMetal));
         API.hideItem(new ItemStack(Blocks.signWallWood));
-        API.hideItem(new ItemStack(ModItems.debug));
+        API.hideItem(new ItemStack(ModItems.DEBUG));
 
         NEIShapedMoarSignHandler shapedMoarSignHandler = new NEIShapedMoarSignHandler();
         NEIShapelessMoarSignHandler shapelessMoarSignHandler = new NEIShapelessMoarSignHandler();
@@ -43,4 +43,3 @@ public class NEIMoarSignConfig implements IConfigureNEI {
         return "1.0";
     }
 }
-*/

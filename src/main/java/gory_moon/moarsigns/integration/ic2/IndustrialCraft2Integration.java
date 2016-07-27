@@ -3,6 +3,7 @@ package gory_moon.moarsigns.integration.ic2;
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,15 +18,15 @@ public class IndustrialCraft2Integration implements ISignRegistration {
     private Item blockItem = null;
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) {
+    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
     }
 
     @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) {
+    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
         for (ItemStack stack : metals) {
-            if (stack.getUnlocalizedName().equals("ic2.itemIngotCopper") && item == null) {
+            if (stack.getUnlocalizedName().equals("ic2.ingot.bronze") && item == null) {
                 item = stack.getItem();
-            } else if (stack.getUnlocalizedName().equals("ic2.blockMetalCopper") && blockItem == null) {
+            } else if (stack.getUnlocalizedName().equals("ic2.resource.bronze_block") && blockItem == null) {
                 blockItem = stack.getItem();
             }
 
@@ -33,11 +34,12 @@ public class IndustrialCraft2Integration implements ISignRegistration {
                 break;
         }
 
-        SignRegistry.register("copper_sign", null, "copper", "ic2/", false, new ItemStack(item, 1, 0), new ItemStack(blockItem, 1, 0), ModInfo.ID, IC2_TAG).setMetal();
-        SignRegistry.register("tin_sign", null, "tin", "ic2/", false, new ItemStack(item, 1, 1), new ItemStack(blockItem, 1, 1), ModInfo.ID, IC2_TAG).setMetal();
-        SignRegistry.register("bronze_sign", null, "bronze", "ic2/", false, new ItemStack(item, 1, 2), new ItemStack(blockItem, 1, 2), ModInfo.ID, IC2_TAG).setMetal();
-        SignRegistry.register("refinediron_sign", null, "steel", "ic2/", false, new ItemStack(item, 1, 3), new ItemStack(blockItem, 1, 5), ModInfo.ID, IC2_TAG).setMetal();
-        SignRegistry.register("lead_sign", null, "lead", "ic2/", false, new ItemStack(item, 1, 5), new ItemStack(blockItem, 1, 4), ModInfo.ID, IC2_TAG).setMetal();
+        SignRegistry.register("bronze_sign",    null, "bronze", "ic2/", false, new ItemStack(item, 1, 1), new ItemStack(blockItem, 1, 5), ModInfo.ID, IC2_TAG).setMetal();
+        SignRegistry.register("copper_sign",    null, "copper", "ic2/", false, new ItemStack(item, 1, 2), new ItemStack(blockItem, 1, 6), ModInfo.ID, IC2_TAG).setMetal();
+        SignRegistry.register("lead_sign",      null, "lead",   "ic2/", false, new ItemStack(item, 1, 3), new ItemStack(blockItem, 1, 7), ModInfo.ID, IC2_TAG).setMetal();
+
+        SignRegistry.register("steel_sign",     null, "steel",  "ic2/", false, new ItemStack(item, 1, 5), new ItemStack(blockItem, 1, 8), ModInfo.ID, IC2_TAG).setMetal();
+        SignRegistry.register("tin_sign",       null, "tin",    "ic2/", false, new ItemStack(item, 1, 6), new ItemStack(blockItem, 1, 9), ModInfo.ID, IC2_TAG).setMetal();
 
     }
 

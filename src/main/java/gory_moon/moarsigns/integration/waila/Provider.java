@@ -38,7 +38,7 @@ public class Provider implements IWailaDataProvider {
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
         TileEntity te = accessor.getTileEntity();
         if (te != null && ((TileEntityMoarSign) te).texture_name != null) {
-            return ModItems.sign.createMoarItemStack(((TileEntityMoarSign) te).texture_name, ((TileEntityMoarSign) te).isMetal);
+            return ModItems.SIGN.createMoarItemStack(((TileEntityMoarSign) te).texture_name, ((TileEntityMoarSign) te).isMetal);
         }
         return null;
     }

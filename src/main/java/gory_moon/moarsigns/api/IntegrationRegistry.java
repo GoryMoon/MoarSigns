@@ -3,6 +3,7 @@ package gory_moon.moarsigns.api;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 
 public class IntegrationRegistry {
@@ -49,10 +50,10 @@ public class IntegrationRegistry {
     /**
      * Adds a name of metal or gem to list that is given in {@link ISignRegistration#registerMetalSigns(ArrayList)}
      *
-     * @param name Name in ore dictionary
+     * @param names Name in ore dictionary
      */
-    public static void registerMetalGemOreName(String name) {
-        metalNames.add(name);
+    public static void registerMetalGemOreName(String... names) {
+        Collections.addAll(metalNames, names);
     }
 
     /**

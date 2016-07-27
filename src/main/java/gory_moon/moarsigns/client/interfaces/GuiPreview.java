@@ -57,7 +57,7 @@ public class GuiPreview extends GuiContainer {
 
         ContainerPreview containerPreview = (ContainerPreview) inventorySlots;
         containerPreview.itemList.clear();
-        ModItems.sign.getSubItemStacks(containerPreview.itemList);
+        ModItems.SIGN.getSubItemStacks(containerPreview.itemList);
     }
 
     @Override

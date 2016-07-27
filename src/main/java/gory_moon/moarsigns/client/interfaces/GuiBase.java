@@ -1,9 +1,9 @@
 package gory_moon.moarsigns.client.interfaces;
 
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 import java.util.List;
 

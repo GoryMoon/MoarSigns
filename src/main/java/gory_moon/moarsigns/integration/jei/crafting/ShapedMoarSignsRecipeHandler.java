@@ -25,6 +25,12 @@ public class ShapedMoarSignsRecipeHandler implements IRecipeHandler<ShapedMoarSi
 
     @Nonnull
     @Override
+    public String getRecipeCategoryUid(@Nonnull ShapedMoarSignRecipe recipe) {
+        return MoarSignsPlugin.CRAFTING;
+    }
+
+    @Nonnull
+    @Override
     public IRecipeWrapper getRecipeWrapper(@Nonnull ShapedMoarSignRecipe recipe) {
         return new ShapedMoatSignsRecipeWrapper(recipe);
     }

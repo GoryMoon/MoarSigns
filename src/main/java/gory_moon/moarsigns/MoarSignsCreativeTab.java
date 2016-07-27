@@ -18,7 +18,7 @@ public class MoarSignsCreativeTab extends CreativeTabs {
     @Override
     public ItemStack getIconItemStack() {
         SignInfo info = SignRegistry.getActivatedSignRegistry().iterator().next();
-        return ModItems.sign.createMoarItemStack(info.material.path + info.itemName, false);
+        return ModItems.SIGN.createMoarItemStack(info.material.path + info.itemName, false);
     }
 
     @Override

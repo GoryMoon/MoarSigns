@@ -1,23 +1,20 @@
 package gory_moon.moarsigns.integration.jei.crafting;
 
-import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.integration.jei.MoarSignsPlugin;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
-import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
+import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.wrapper.ICraftingRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
 import javax.annotation.Nonnull;
 
-public class MoarSignCraftingRecipeCategory implements IRecipeCategory {
+public class MoarSignCraftingRecipeCategory extends BlankRecipeCategory<ICraftingRecipeWrapper> {
 
     private static final int craftOutputSlot = 0;
     private static final int craftInputSlot1 = 1;
@@ -55,17 +52,7 @@ public class MoarSignCraftingRecipeCategory implements IRecipeCategory {
     }
 
     @Override
-    public void drawExtras(Minecraft minecraft) {
-
-    }
-
-    @Override
-    public void drawAnimations(Minecraft minecraft) {
-
-    }
-
-    @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull ICraftingRecipeWrapper recipeWrapper) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
         guiItemStacks.init(craftOutputSlot, false, 94, 18);
@@ -81,12 +68,9 @@ public class MoarSignCraftingRecipeCategory implements IRecipeCategory {
             IShapedCraftingRecipeWrapper wrapper = (IShapedCraftingRecipeWrapper) recipeWrapper;
             craftingGridHelper.setInput(guiItemStacks, wrapper.getInputs(), wrapper.getWidth(), wrapper.getHeight());
             craftingGridHelper.setOutput(guiItemStacks, wrapper.getOutputs());
-        } else if (recipeWrapper instanceof ICraftingRecipeWrapper) {
-            ICraftingRecipeWrapper wrapper = (ICraftingRecipeWrapper) recipeWrapper;
-            craftingGridHelper.setInput(guiItemStacks, wrapper.getInputs());
-            craftingGridHelper.setOutput(guiItemStacks, wrapper.getOutputs());
         } else {
-            MoarSigns.logger.error("RecipeWrapper is not a known crafting wrapper type: {}", recipeWrapper);
+            craftingGridHelper.setInput(guiItemStacks, recipeWrapper.getInputs());
+            craftingGridHelper.setOutput(guiItemStacks, recipeWrapper.getOutputs());
         }
     }
 }

@@ -152,7 +152,7 @@ public class ItemSignToolbox extends Item {
                 TileEntityMoarSign tileEntityMoarSign = (TileEntityMoarSign) tileEntity;
                 signInfo = new NBTTagCompound();
                 tileEntity.writeToNBT(signInfo);
-                ItemStack signStack = ModItems.sign.createMoarItemStack(tileEntityMoarSign.texture_name, tileEntityMoarSign.isMetal);
+                ItemStack signStack = ModItems.SIGN.createMoarItemStack(tileEntityMoarSign.texture_name, tileEntityMoarSign.isMetal);
                 String unlocalizedName = signStack.getUnlocalizedName() + ".name";
                 signInfo.setString(NBT_UNLOCALIZED_NAME, unlocalizedName);
 
@@ -164,9 +164,9 @@ public class ItemSignToolbox extends Item {
             String texture = signInfo.getString(TileEntityMoarSign.NBT_TEXTURE_TAG);
             boolean isMetal = signInfo.getBoolean(TileEntityMoarSign.NBT_METAL_TAG);
 
-            ItemStack moarSignsStack = ModItems.sign.createMoarItemStack(texture, isMetal);
+            ItemStack moarSignsStack = ModItems.SIGN.createMoarItemStack(texture, isMetal);
             moarSignsStack.getTagCompound().setBoolean(SIGN_MOVING_TAG, true);
-            val = ModItems.sign.onItemUse(moarSignsStack, player, world, pos, hand, side, hitX, hitY, hitZ);
+            val = ModItems.SIGN.onItemUse(moarSignsStack, player, world, pos, hand, side, hitX, hitY, hitZ);
 
             if (val == EnumActionResult.SUCCESS) {
                 pos = pos.offset(side);

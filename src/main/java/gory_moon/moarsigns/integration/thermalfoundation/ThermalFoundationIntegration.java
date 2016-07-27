@@ -3,6 +3,7 @@ package gory_moon.moarsigns.integration.thermalfoundation;
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,12 +18,12 @@ public class ThermalFoundationIntegration implements ISignRegistration {
     private Item itemBlock;
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) {
+    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
 
     }
 
     @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) {
+    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
         for (ItemStack stack : metals) {
             if (stack.getUnlocalizedName().equals("item.thermalfoundation.material.ingotTin") && item == null) {
                 item = stack.getItem();
@@ -35,19 +36,19 @@ public class ThermalFoundationIntegration implements ISignRegistration {
             if (item != null && itemBlock != null) break;
         }
 
-        SignRegistry.register("copper_sign", null, "copper", PATH, true, new ItemStack(item, 0, 64), new ItemStack(itemBlock, 0, 0), ModInfo.ID, TF_KEY).setMetal();
-        SignRegistry.register("tin_sign", null, "tin", PATH, true, new ItemStack(item, 0, 65), new ItemStack(itemBlock, 0, 1), ModInfo.ID, TF_KEY).setMetal();
-        SignRegistry.register("silver_sign", null, "silver", PATH, true, new ItemStack(item, 0, 66), new ItemStack(itemBlock, 0, 2), ModInfo.ID, TF_KEY).setMetal();
-        SignRegistry.register("lead_sign", null, "lead", PATH, true, new ItemStack(item, 0, 67), new ItemStack(itemBlock, 0, 3), ModInfo.ID, TF_KEY).setMetal();
-        SignRegistry.register("nickel_sign", null, "nickel", PATH, true, new ItemStack(item, 0, 68), new ItemStack(itemBlock, 0, 4), ModInfo.ID, TF_KEY).setMetal();
-        SignRegistry.register("platinum_sign", null, "platinum", PATH, true, new ItemStack(item, 0, 69), new ItemStack(itemBlock, 0, 5), ModInfo.ID, TF_KEY).setMetal().setRarity(1);
-        SignRegistry.register("mithril_sign", null, "mithril", PATH, true, new ItemStack(item, 0, 70), new ItemStack(itemBlock, 0, 6), ModInfo.ID, TF_KEY).setMetal().setRarity(2);
-        SignRegistry.register("electrum_sign", null, "electrum", PATH, true, new ItemStack(item, 0, 71), new ItemStack(itemBlock, 0, 7), ModInfo.ID, TF_KEY).setMetal();
-        SignRegistry.register("invar_sign", null, "invar", PATH, true, new ItemStack(item, 0, 72), new ItemStack(itemBlock, 0, 8), ModInfo.ID, TF_KEY).setMetal();
-        SignRegistry.register("bronze_sign", null, "bronze", PATH, true, new ItemStack(item, 0, 73), new ItemStack(itemBlock, 0, 9), ModInfo.ID, TF_KEY).setMetal();
-        SignRegistry.register("signalum_sign", null, "signalum", PATH, true, new ItemStack(item, 0, 74), new ItemStack(itemBlock, 0, 10), ModInfo.ID, TF_KEY).setMetal().setRarity(1);
-        SignRegistry.register("lumium_sign", null, "lumium", PATH, true, new ItemStack(item, 0, 75), new ItemStack(itemBlock, 0, 11), ModInfo.ID, TF_KEY).setMetal().setRarity(1);
-        SignRegistry.register("enderium_sign", null, "enderium", PATH, true, new ItemStack(item, 0, 76), new ItemStack(itemBlock, 0, 12), ModInfo.ID, TF_KEY).setMetal().setRarity(2);
+        SignRegistry.register("copper_sign",    null, "copper",     PATH, true, new ItemStack(item, 0, 64), new ItemStack(itemBlock, 0, 0), ModInfo.ID, TF_KEY).setMetal();
+        SignRegistry.register("tin_sign",       null, "tin",        PATH, true, new ItemStack(item, 0, 65), new ItemStack(itemBlock, 0, 1), ModInfo.ID, TF_KEY).setMetal();
+        SignRegistry.register("silver_sign",    null, "silver",     PATH, true, new ItemStack(item, 0, 66), new ItemStack(itemBlock, 0, 2), ModInfo.ID, TF_KEY).setMetal();
+        SignRegistry.register("lead_sign",      null, "lead",       PATH, true, new ItemStack(item, 0, 67), new ItemStack(itemBlock, 0, 3), ModInfo.ID, TF_KEY).setMetal();
+        SignRegistry.register("nickel_sign",    null, "nickel",     PATH, true, new ItemStack(item, 0, 68), new ItemStack(itemBlock, 0, 4), ModInfo.ID, TF_KEY).setMetal();
+        SignRegistry.register("platinum_sign",  null, "platinum",   PATH, true, new ItemStack(item, 0, 69), new ItemStack(itemBlock, 0, 5), ModInfo.ID, TF_KEY).setMetal().setRarity(1);
+        SignRegistry.register("mithril_sign",   null, "mithril",    PATH, true, new ItemStack(item, 0, 70), new ItemStack(itemBlock, 0, 6), ModInfo.ID, TF_KEY).setMetal().setRarity(2);
+        SignRegistry.register("electrum_sign",  null, "electrum",   PATH, true, new ItemStack(item, 0, 71), new ItemStack(itemBlock, 0, 7), ModInfo.ID, TF_KEY).setMetal();
+        SignRegistry.register("invar_sign",     null, "invar",      PATH, true, new ItemStack(item, 0, 72), new ItemStack(itemBlock, 0, 8), ModInfo.ID, TF_KEY).setMetal();
+        SignRegistry.register("bronze_sign",    null, "bronze",     PATH, true, new ItemStack(item, 0, 73), new ItemStack(itemBlock, 0, 9), ModInfo.ID, TF_KEY).setMetal();
+        SignRegistry.register("signalum_sign",  null, "signalum",   PATH, true, new ItemStack(item, 0, 74), new ItemStack(itemBlock, 0, 10), ModInfo.ID, TF_KEY).setMetal().setRarity(1);
+        SignRegistry.register("lumium_sign",    null, "lumium",     PATH, true, new ItemStack(item, 0, 75), new ItemStack(itemBlock, 0, 11), ModInfo.ID, TF_KEY).setMetal().setRarity(1);
+        SignRegistry.register("enderium_sign",  null, "enderium",   PATH, true, new ItemStack(item, 0, 76), new ItemStack(itemBlock, 0, 12), ModInfo.ID, TF_KEY).setMetal().setRarity(2);
 
     }
 

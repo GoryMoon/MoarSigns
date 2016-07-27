@@ -2,7 +2,9 @@ package gory_moon.moarsigns.integration.forestry;
 
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
+import gory_moon.moarsigns.api.SignSpecialProperty;
 import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,57 +13,68 @@ import java.util.ArrayList;
 
 public class ForestryIntegration implements ISignRegistration {
 
-    private static final String FORESTRY_TAG = "Forestry";
+    private static final String FORESTRY_TAG = "forestry";
     private static final String FORESTRY_NAME = "Forestry for Minecraft";
     private static final String PATH = "for/";
     private Item item = null;
+    private Item item2 = null;
     private Item itemIngot1 = null;
     private Item itemIngot2 = null;
     private Item itemIngot3 = null;
     private Item blockMetal = null;
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) {
+    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
         for (ItemStack plank : planks) {
-            if (item == null && plank.getItem().getUnlocalizedName().equals("tile.for.planks")) {
+            if (item == null && plank.getItem().getUnlocalizedName().equals("tile.for.planks.0")) {
                 item = plank.copy().getItem();
-                break;
             }
+
+            if (item2 == null && plank.getItem().getUnlocalizedName().equals("tile.for.planks.1")) {
+                item2 = plank.copy().getItem();
+            }
+
+            if (item != null && item2 != null)
+                break;
         }
 
-        SignRegistry.register("larch_sign", null, "larch", PATH, false, new ItemStack(item, 1, 0), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("teak_sign", null, "teak", PATH, false, new ItemStack(item, 1, 1), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("acacia_sign", null, "acacia", PATH, false, new ItemStack(item, 1, 2), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("lime_sign", null, "lime", PATH, false, new ItemStack(item, 1, 3), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("chestnut_sign", null, "chestnut", PATH, false, new ItemStack(item, 1, 4), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("wenge_sign", null, "wenge", PATH, false, new ItemStack(item, 1, 5), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("baobab_sign", null, "baobab", PATH, false, new ItemStack(item, 1, 6), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("sequoia_sign", null, "sequoia", PATH, false, new ItemStack(item, 1, 7), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("kapok_sign", null, "kapok", PATH, false, new ItemStack(item, 1, 8), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("ebony_sign", null, "ebony", PATH, false, new ItemStack(item, 1, 9), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("mahogany_sign", null, "mahogany", PATH, false, new ItemStack(item, 1, 10), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("balsa_sign", null, "balsa", PATH, false, new ItemStack(item, 1, 11), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("willow_sign", null, "willow", PATH, false, new ItemStack(item, 1, 12), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("walnut_sign", null, "walnut", PATH, false, new ItemStack(item, 1, 13), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("greenheart_sign", null, "greenheart", PATH, false, new ItemStack(item, 1, 14), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("cherry_sign", null, "cherry", PATH, false, new ItemStack(item, 1, 15), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("mahoe_sign", null, "mahoe", PATH, false, new ItemStack(item, 1, 16), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("poplar_sign", null, "poplar", PATH, false, new ItemStack(item, 1, 17), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("palm_sign", null, "palm", PATH, false, new ItemStack(item, 1, 18), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("papaya_sign", null, "papaya", PATH, false, new ItemStack(item, 1, 19), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("pine_sign", null, "pine", PATH, false, new ItemStack(item, 1, 20), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("plum_sign", null, "plum", PATH, false, new ItemStack(item, 1, 21), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("maple_sign", null, "maple", PATH, false, new ItemStack(item, 1, 22), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("citrus_sign", null, "citrus", PATH, false, new ItemStack(item, 1, 23), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("giantsequoia_sign", null, "giant_sequoia", PATH, false, new ItemStack(item, 1, 24), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("ipe_sign", null, "ipe", PATH, false, new ItemStack(item, 1, 25), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("padauk_sign", null, "padauk", PATH, false, new ItemStack(item, 1, 26), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("cocobolo_sign", null, "cocobolo", PATH, false, new ItemStack(item, 1, 27), ModInfo.ID, FORESTRY_TAG);
-        SignRegistry.register("zebrawood_sign", null, "zebrawood", PATH, false, new ItemStack(item, 1, 28), ModInfo.ID, FORESTRY_TAG);
+        registerWood("larch_sign",          null, "larch",          new ItemStack(item, 1, 0));
+        registerWood("teak_sign",           null, "teak",           new ItemStack(item, 1, 1));
+        registerWood("acacia_sign",         null, "acacia",         new ItemStack(item, 1, 2));
+        registerWood("lime_sign",           null, "lime",           new ItemStack(item, 1, 3));
+        registerWood("chestnut_sign",       null, "chestnut",       new ItemStack(item, 1, 4));
+        registerWood("wenge_sign",          null, "wenge",          new ItemStack(item, 1, 5));
+        registerWood("baobab_sign",         null, "baobab",         new ItemStack(item, 1, 6));
+        registerWood("sequoia_sign",        null, "sequoia",        new ItemStack(item, 1, 7));
+        registerWood("kapok_sign",          null, "kapok",          new ItemStack(item, 1, 8));
+        registerWood("ebony_sign",          null, "ebony",          new ItemStack(item, 1, 9));
+        registerWood("mahogany_sign",       null, "mahogany",       new ItemStack(item, 1, 10));
+        registerWood("balsa_sign",          null, "balsa",          new ItemStack(item, 1, 11));
+        registerWood("willow_sign",         null, "willow",         new ItemStack(item, 1, 12));
+        registerWood("walnut_sign",         null, "walnut",         new ItemStack(item, 1, 13));
+        registerWood("greenheart_sign",     null, "greenheart",     new ItemStack(item, 1, 14));
+        registerWood("cherry_sign",         null, "cherry",         new ItemStack(item, 1, 15));
+        registerWood("mahoe_sign",          null, "mahoe",          new ItemStack(item2, 1, 0));
+        registerWood("poplar_sign",         null, "poplar",         new ItemStack(item2, 1, 1));
+        registerWood("palm_sign",           null, "palm",           new ItemStack(item2, 1, 2));
+        registerWood("papaya_sign",         null, "papaya",         new ItemStack(item2, 1, 3));
+        registerWood("pine_sign",           null, "pine",           new ItemStack(item2, 1, 4));
+        registerWood("plum_sign",           null, "plum",           new ItemStack(item2, 1, 5));
+        registerWood("maple_sign",          null, "maple",          new ItemStack(item2, 1, 6));
+        registerWood("citrus_sign",         null, "citrus",         new ItemStack(item2, 1, 7));
+        registerWood("giantsequoia_sign",   null, "giant_sequoia",  new ItemStack(item2, 1, 8));
+        registerWood("ipe_sign",            null, "ipe",            new ItemStack(item2, 1, 9));
+        registerWood("padauk_sign",         null, "padauk",         new ItemStack(item2, 1, 10));
+        registerWood("cocobolo_sign",       null, "cocobolo",       new ItemStack(item2, 1, 11));
+        registerWood("zebrawood_sign",      null, "zebrawood",      new ItemStack(item2, 1, 12));
+    }
+
+    private void registerWood(String name, SignSpecialProperty property, String materialName, ItemStack material) throws IntegrationException {
+        SignRegistry.register(name, property, materialName, PATH, false, material, ModInfo.ID, FORESTRY_TAG);
     }
 
     @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) {
+    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
         for (ItemStack stack : metals) {
             if (stack.getUnlocalizedName().equals("item.for.ingotTin") && itemIngot1 == null) {
                 itemIngot1 = stack.getItem();

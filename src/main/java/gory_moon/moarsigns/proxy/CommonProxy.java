@@ -2,11 +2,15 @@ package gory_moon.moarsigns.proxy;
 
 public class CommonProxy {
 
-    public void init() {
+    public void preInit() {
 
     }
 
-    public void postInit() {
+    public void registerModels() {
+
+    }
+
+    public void init() {
 
     }
 

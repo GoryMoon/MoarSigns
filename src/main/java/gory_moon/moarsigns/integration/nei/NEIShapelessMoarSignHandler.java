@@ -1,10 +1,10 @@
 package gory_moon.moarsigns.integration.nei;
-/*
+
 import codechicken.nei.ItemList;
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.PositionedStack;
+import codechicken.nei.api.stack.PositionedStack;
 import codechicken.nei.recipe.ShapelessRecipeHandler;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import codechicken.nei.util.NEIServerUtils;
 import gory_moon.moarsigns.api.MaterialInfo;
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe.MatchType;
 import gory_moon.moarsigns.api.ShapelessMoarSignRecipe;
@@ -13,7 +13,7 @@ import gory_moon.moarsigns.items.ItemMoarSign;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -107,7 +107,7 @@ public class NEIShapelessMoarSignHandler extends ShapelessRecipeHandler {
 
     @Override
     public String getRecipeName() {
-        return StatCollector.translateToLocal("crafting.moarsigns.sign.shapeless");
+        return I18n.translateToLocal("crafting.moarsigns.sign.shapeless");
     }
 
     public class CachedMoarSignRecipe extends CachedShapelessRecipe {
@@ -183,4 +183,3 @@ public class NEIShapelessMoarSignHandler extends ShapelessRecipeHandler {
         }
     }
 }
-*/

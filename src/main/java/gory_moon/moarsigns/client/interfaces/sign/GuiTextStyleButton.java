@@ -6,7 +6,6 @@ import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.opengl.GL11;
 
 
 public class GuiTextStyleButton extends GuiRectangle {

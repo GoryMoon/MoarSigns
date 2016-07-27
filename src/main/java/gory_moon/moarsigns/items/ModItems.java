@@ -31,24 +31,24 @@ import java.util.List;
 
 public class ModItems {
 
-    public static ItemMoarSign sign;
-    public static ItemDebug debug;
-    public static ItemNugget nugget;
-    public static ItemSignToolbox signToolbox;
+    public static ItemMoarSign SIGN;
+    public static ItemDebug DEBUG;
+    public static ItemNugget NUGGET;
+    public static ItemSignToolbox SIGN_TOOLBOX;
 
     public static boolean replaceRecipes = true;
 
     public static void init() {
 
-        sign = (ItemMoarSign) new ItemMoarSign().setRegistryName(Info.SIGN_ITEM_KEY);
-        debug = (ItemDebug) new ItemDebug().setRegistryName(Info.DEBUG_ITEM_KEY);
-        nugget = (ItemNugget) new ItemNugget().setRegistryName(Info.NUGGET_ITEM_KEY);
-        signToolbox = (ItemSignToolbox) new ItemSignToolbox().setRegistryName(Info.SIGN_TOOLBOX_ITEM_KEY);
+        SIGN = (ItemMoarSign) new ItemMoarSign().setRegistryName(Info.SIGN_ITEM_KEY);
+        DEBUG = (ItemDebug) new ItemDebug().setRegistryName(Info.DEBUG_ITEM_KEY);
+        NUGGET = (ItemNugget) new ItemNugget().setRegistryName(Info.NUGGET_ITEM_KEY);
+        SIGN_TOOLBOX = (ItemSignToolbox) new ItemSignToolbox().setRegistryName(Info.SIGN_TOOLBOX_ITEM_KEY);
 
-        GameRegistry.register(sign);
-        GameRegistry.register(debug);
-        GameRegistry.register(nugget);
-        GameRegistry.register(signToolbox);
+        GameRegistry.register(SIGN);
+        GameRegistry.register(DEBUG);
+        GameRegistry.register(NUGGET);
+        GameRegistry.register(SIGN_TOOLBOX);
     }
 
     public static void registerRecipes() {
@@ -59,7 +59,7 @@ public class ModItems {
         List<SignInfo> signRegistry = SignRegistry.getActivatedSignRegistry();
 
         ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-        sign.getSubItemStacks(list);
+        SIGN.getSubItemStacks(list);
 
         ItemStack generalSign = null;
 
@@ -106,7 +106,7 @@ public class ModItems {
 
                             if (NuggetRegistry.getIngotName(i).equals(unlocName)) {
                                 NuggetRegistry.setNeeded(i, true);
-                                recNugget = new ItemStack(nugget, 1, i);
+                                recNugget = new ItemStack(NUGGET, 1, i);
                                 OreDictionary.registerOre(NuggetRegistry.getOreName(i), recNugget.copy());
 
                                 recNugget.stackSize = 9;
@@ -153,7 +153,7 @@ public class ModItems {
         }
 
         GameRegistry.addRecipe(new ShapedMoarSignRecipe(generalSign, true, true, "###", "###", " X ", '#', "plankWood", 'X', "stickWood"));
-        GameRegistry.addRecipe(new ShapedMoarSignRecipe(signToolbox, "rxr", "xsx", "rxr", 'x', "ingotIron", 's', ShapedMoarSignRecipe.MatchType.ALL, 'r', "dyeRed"));
+        GameRegistry.addRecipe(new ShapedMoarSignRecipe(SIGN_TOOLBOX, "rxr", "xsx", "rxr", 'x', "ingotIron", 's', ShapedMoarSignRecipe.MatchType.ALL, 'r', "dyeRed"));
 
         if (replaceRecipes) {
             ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();

@@ -1,7 +1,7 @@
 package gory_moon.moarsigns.integration.nei;
-/*
+
 import codechicken.lib.gui.GuiDraw;
-import codechicken.nei.PositionedStack;
+import codechicken.nei.api.stack.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import gory_moon.moarsigns.api.MaterialInfo;
 import gory_moon.moarsigns.api.MaterialRegistry;
@@ -12,7 +12,7 @@ import gory_moon.moarsigns.items.ItemMoarSign;
 import gory_moon.moarsigns.items.ModItems;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class NEIExchangeUsageHandler extends TemplateRecipeHandler {
     private static List<ItemStack> getVariationStacks(ArrayList<SignInfo> infos) {
         List<ItemStack> stacks = new ArrayList<ItemStack>();
         for (SignInfo info : infos) {
-            stacks.add(ModItems.sign.createMoarItemStack(info.material.path + info.itemName, info.isMetal));
+            stacks.add(ModItems.SIGN.createMoarItemStack(info.material.path + info.itemName, info.isMetal));
         }
         return stacks;
     }
@@ -36,7 +36,7 @@ public class NEIExchangeUsageHandler extends TemplateRecipeHandler {
 
     @Override
     public String getRecipeName() {
-        return StatCollector.translateToLocal("crafting.moarsigns.sign.exchange");
+        return I18n.translateToLocal("crafting.moarsigns.sign.exchange");
     }
 
     @Override
@@ -122,4 +122,3 @@ public class NEIExchangeUsageHandler extends TemplateRecipeHandler {
     }
 
 }
-*/

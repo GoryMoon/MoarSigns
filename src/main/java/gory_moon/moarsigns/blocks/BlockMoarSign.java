@@ -199,7 +199,7 @@ public class BlockMoarSign extends BlockContainer {
         TileEntityMoarSign tileEntity = (TileEntityMoarSign) world.getTileEntity(pos);
         String s = tileEntity.texture_name;
         s = s != null ? s : "null";
-        return ModItems.sign.createMoarItemStack(s, tileEntity.isMetal);
+        return ModItems.SIGN.createMoarItemStack(s, tileEntity.isMetal);
     }
 
     @Override
@@ -217,7 +217,7 @@ public class BlockMoarSign extends BlockContainer {
             TileEntityMoarSign tileEntity = (TileEntityMoarSign) entity;
             if (tileEntity.removeNoDrop || tileEntity.texture_name == null) return ret;
 
-            ret.add(ModItems.sign.createMoarItemStack(tileEntity.texture_name, tileEntity.isMetal));
+            ret.add(ModItems.SIGN.createMoarItemStack(tileEntity.texture_name, tileEntity.isMetal));
         }
         return ret;
     }

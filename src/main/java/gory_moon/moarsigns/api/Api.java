@@ -1,10 +1,11 @@
 package gory_moon.moarsigns.api;
 
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
+import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.RotationHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class Api {
      *
      * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, String)
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId) {
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId) throws IntegrationException {
         return SignRegistry.register(itemName, property, materialName, path, gotNugget, materialItemStack, modId);
     }
 
@@ -24,7 +25,7 @@ public class Api {
      *
      * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, String, String)
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId, String activateTag) {
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId, String activateTag) throws IntegrationException {
         return SignRegistry.register(itemName, property, materialName, path, gotNugget, materialItemStack, modId, activateTag);
     }
 
@@ -33,7 +34,7 @@ public class Api {
      *
      * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, String)
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId) {
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId) throws IntegrationException {
         return SignRegistry.register(itemName, property, materialName, path, gotNugget, materialItemStack, materialBlock, modId);
     }
 
@@ -42,7 +43,7 @@ public class Api {
      *
      * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, String, String)
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId, String activateTag) {
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId, String activateTag) throws IntegrationException {
         return SignRegistry.register(itemName, property, materialName, path, gotNugget, materialItemStack, materialBlock, modId, activateTag);
     }
 

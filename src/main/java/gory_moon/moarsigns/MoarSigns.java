@@ -63,18 +63,19 @@ public class MoarSigns {
 
         PacketHandler.init();
 
-        proxy.init();
+        proxy.preInit();
         NuggetRegistry.init();
         Blocks.init();
         ModItems.init();
 
-        proxy.postInit();
+        proxy.registerModels();
     }
 
     @EventHandler
     @SuppressWarnings("unused")
     public void load(FMLInitializationEvent event) {
 
+        proxy.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
         if (FMLInterModComms.sendMessage("Waila", "register", "gory_moon.moarsigns.integration.waila.Provider.callbackRegister")) {

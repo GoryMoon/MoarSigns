@@ -37,7 +37,7 @@ public class MoarSignsJeiRecipeHelper {
     public static List<ItemStack> getVariationStacks(ArrayList<SignInfo> infos) {
         List<ItemStack> stacks = new ArrayList<ItemStack>();
         for (SignInfo info : infos) {
-            stacks.add(ModItems.sign.createMoarItemStack(info.material.path + info.itemName, info.isMetal));
+            stacks.add(ModItems.SIGN.createMoarItemStack(info.material.path + info.itemName, info.isMetal));
         }
         return stacks;
     }

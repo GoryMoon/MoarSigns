@@ -21,6 +21,12 @@ public class ExchangeRecipeHandler implements IRecipeHandler<ExchangeRecipe> {
 
     @Nonnull
     @Override
+    public String getRecipeCategoryUid(@Nonnull ExchangeRecipe recipe) {
+        return MoarSignsPlugin.EXCHANGE;
+    }
+
+    @Nonnull
+    @Override
     public IRecipeWrapper getRecipeWrapper(@Nonnull ExchangeRecipe recipe) {
         return recipe;
     }

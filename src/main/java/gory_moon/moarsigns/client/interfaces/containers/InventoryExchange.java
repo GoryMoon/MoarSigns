@@ -71,7 +71,7 @@ public class InventoryExchange implements IInventory {
         int i = 0;
         while (i + 1 < 28 && i < signs.size()) {
             SignInfo info = signs.get(i);
-            inventory[i + 1] = ModItems.sign.createMoarItemStack(info.material.path + info.itemName, info.isMetal);
+            inventory[i + 1] = ModItems.SIGN.createMoarItemStack(info.material.path + info.itemName, info.isMetal);
             i++;
         }
 

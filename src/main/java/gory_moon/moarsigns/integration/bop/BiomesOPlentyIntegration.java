@@ -2,7 +2,9 @@ package gory_moon.moarsigns.integration.bop;
 
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
+import gory_moon.moarsigns.api.SignSpecialProperty;
 import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,10 +15,11 @@ public class BiomesOPlentyIntegration implements ISignRegistration {
 
     private static final String BOP_TAG = "BiomesOPlenty";
     private static final String BOP_NAME = "Biomes O' Plenty";
+    private static final String PATH = "bop/";
     private Item bopItem = null;
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) {
+    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
         for (ItemStack plank : planks) {
             if (plank.getUnlocalizedName().equals("tile.planks_0.sacred_oak_planks")) {
                 bopItem = plank.getItem();
@@ -24,27 +27,31 @@ public class BiomesOPlentyIntegration implements ISignRegistration {
             }
         }
 
-        SignRegistry.register("sacred_oak_sign", null, "sacred_oak", "bop/", false, new ItemStack(bopItem, 1, 0), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("cherry_sign", null, "cherry", "bop/", false, new ItemStack(bopItem, 1, 1), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("umbran_sign", null, "umbran", "bop/", false, new ItemStack(bopItem, 1, 2), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("fir_sign", null, "fir", "bop/", false, new ItemStack(bopItem, 1, 3), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("ethereal_sign", null, "ethereal", "bop/", false, new ItemStack(bopItem, 1, 4), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("magic_sign", null, "magic", "bop/", false, new ItemStack(bopItem, 1, 5), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("mangrove_sign", null, "mangrove", "bop/", false, new ItemStack(bopItem, 1, 6), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("palm_sign", null, "palm", "bop/", false, new ItemStack(bopItem, 1, 7), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("redwood_sign", null, "redwood", "bop/", false, new ItemStack(bopItem, 1, 8), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("willow_sign", null, "willow", "bop/", false, new ItemStack(bopItem, 1, 9), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("pine_sign", null, "pine", "bop/", false, new ItemStack(bopItem, 1, 10), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("hellbark_sign", null, "hellbark", "bop/", false, new ItemStack(bopItem, 1, 11), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("jacaranda_sign", null, "jacaranda", "bop/", false, new ItemStack(bopItem, 1, 12), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("mahogany_sign", null, "mahogany", "bop/", false, new ItemStack(bopItem, 1, 13), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("ebony_sign", null, "ebony", "bop/", false, new ItemStack(bopItem, 1, 14), ModInfo.ID, BOP_TAG);
-        SignRegistry.register("eucalyptus_sign", null, "eucalyptus", "bop/", false, new ItemStack(bopItem, 1, 15), ModInfo.ID, BOP_TAG);
+        registerWood("sacred_oak_sign",    null, "sacred_oak",  new ItemStack(bopItem, 1, 0));
+        registerWood("cherry_sign",        null, "cherry",      new ItemStack(bopItem, 1, 1));
+        registerWood("umbran_sign",        null, "umbran",      new ItemStack(bopItem, 1, 2));
+        registerWood("fir_sign",           null, "fir",         new ItemStack(bopItem, 1, 3));
+        registerWood("ethereal_sign",      null, "ethereal",    new ItemStack(bopItem, 1, 4));
+        registerWood("magic_sign",         null, "magic",       new ItemStack(bopItem, 1, 5));
+        registerWood("mangrove_sign",      null, "mangrove",    new ItemStack(bopItem, 1, 6));
+        registerWood("palm_sign",          null, "palm",        new ItemStack(bopItem, 1, 7));
+        registerWood("redwood_sign",       null, "redwood",     new ItemStack(bopItem, 1, 8));
+        registerWood("willow_sign",        null, "willow",      new ItemStack(bopItem, 1, 9));
+        registerWood("pine_sign",          null, "pine",        new ItemStack(bopItem, 1, 10));
+        registerWood("hellbark_sign",      null, "hellbark",    new ItemStack(bopItem, 1, 11));
+        registerWood("jacaranda_sign",     null, "jacaranda",   new ItemStack(bopItem, 1, 12));
+        registerWood("mahogany_sign",      null, "mahogany",    new ItemStack(bopItem, 1, 13));
+        registerWood("ebony_sign",         null, "ebony",       new ItemStack(bopItem, 1, 14));
+        registerWood("eucalyptus_sign",    null, "eucalyptus",  new ItemStack(bopItem, 1, 15));
 
     }
 
+    private void registerWood(String name, SignSpecialProperty property, String materialName, ItemStack material) throws IntegrationException {
+        SignRegistry.register(name, property, materialName, PATH, false, material, ModInfo.ID, BOP_TAG);
+    }
+
     @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) {
+    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
 
     }
 

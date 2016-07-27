@@ -35,11 +35,17 @@
 		},
 		{
 			"mcVersion": "Minecraft 1.9.4",
-			"modVersion": "3.1.2",
+			"modVersion": "3.2.0",
 			"changeLog": [
-				"Fixed syncing sign data to players in multiplayer"
+				"Added Tinkers Construct Integration",
+				"Added Industrial Craft 2 Integration",
+				"Added Forestry Integration",
+				"Added NotEnoughItems (NEI) Integration",
+				"Fixed JEI Integration not showing individual recipes for signs",
+				"Reformatted some text for the SignToolbox",
+				"Added error if integration of signs fails"
 			],
-			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2316993/download",
+			"updateURL": "http://minecraft.curseforge.com/projects/moarsigns/files/2319183/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}

@@ -2,6 +2,8 @@ package gory_moon.moarsigns.api;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import gory_moon.moarsigns.integration.IntegrationHandler;
+import gory_moon.moarsigns.util.IntegrationException;
 import net.minecraft.item.ItemStack;
 
 import java.util.*;
@@ -45,7 +47,10 @@ public class SignRegistry {
      * @param modId             The modId that registers the sign, used when getting the textures.
      * @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId) {
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId) throws IntegrationException {
+        if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
+            throw new IntegrationException();
+
         MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack, materialBlock);
         return register(itemName, property, info, modId, ALWAYS_ACTIVE_TAG);
     }
@@ -78,7 +83,10 @@ public class SignRegistry {
      * @param activateTag       The tag to active the sign
      * @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId, String activateTag) {
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId, String activateTag) throws IntegrationException {
+        if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
+            throw new IntegrationException();
+
         MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack, materialBlock);
         return register(itemName, property, info, modId, activateTag);
     }
@@ -104,7 +112,10 @@ public class SignRegistry {
      * @param modId             The modId that registers the sign, used when getting the textures.
      * @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId) {
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId) throws IntegrationException {
+        if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
+            throw new IntegrationException();
+
         MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack);
         return register(itemName, property, info, modId, ALWAYS_ACTIVE_TAG);
     }
@@ -134,7 +145,10 @@ public class SignRegistry {
      * @param activateTag       The tag to active the sign
      * @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId, String activateTag) {
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId, String activateTag) throws IntegrationException {
+        if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
+            throw new IntegrationException();
+
         MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack);
         return register(itemName, property, info, modId, activateTag);
     }
@@ -177,7 +191,7 @@ public class SignRegistry {
      * @param tag The tag to deactivate
      */
     @SuppressWarnings("unused")
-    public static void decativateTag(String tag) {
+    public static void deactivateTag(String tag) {
         activeTags.put(tag, false);
 
         for (SignInfo info : activatedSignRegistry) {

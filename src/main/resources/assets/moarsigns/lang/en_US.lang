@@ -102,7 +102,7 @@ item.moarsigns:signtoolbox.description.move=[%1]Right click[%2] on a sign to pic
 item.moarsigns:signtoolbox.description.copy=[%1] + [%2]Right click[%3] on a sign to copy all info[%4]Right click[%3] on a sign to paste the info
 item.moarsigns:signtoolbox.description.exchange=Opens an interface where you can exchange[%1]signs of the same material
 item.moarsigns:signtoolbox.description.preview=Opens an interface where you can preview[%1]signs as they look in the world
-item.moarsigns:signtoolbox.current_sign=Current sign picked up:
+item.moarsigns:signtoolbox.current_sign=Current picked up sign:
 item.moarsigns:signtoolbox.current_text=Text on sign:
 
 
@@ -116,13 +116,32 @@ item.moarsigns.bronze_nugget_ic2.name=Bronze Nugget
 item.moarsigns.copper_nugget_ic2.name=Copper Nugget
 item.moarsigns.tin_nugget_ic2.name=Tin Nugget
 item.moarsigns.lead_nugget_ic2.name=Lead Nugget
-item.moarsigns.refined_iron_nugget_ic2.name=Refined Iron Nugget
+item.moarsigns.steel_nugget_ic2.name=Steel Nugget
 item.moarsigns.tin_nugget_forestry.name=Tin Nugget
 item.moarsigns.bronze_nugget_forestry.name=Bronze Nugget
 item.moarsigns.copper_nugget_forestry.name=Copper Nugget
 item.moarsigns.silver_nugget_factorization.name=Silver Nugget
 item.moarsigns.lead_nugget_factorization.name=Lead Nugget
 item.moarsigns.darkiron_nugget_factorization.name=Dark Iron Nugget
+
+item.moarsigns.aluminium_nugget_techreborn.name=Aluminium Nugget
+item.moarsigns.brass_nugget_techreborn.name=Brass Nugget
+item.moarsigns.chrome_nugget_techreborn.name=Chrome Nugget
+item.moarsigns.copper_nugget_techreborn.name=Copper Nugget
+item.moarsigns.electrum_nugget_techreborn.name=Electrum Nugget
+item.moarsigns.invar_nugget_techreborn.name=Invar Nugget
+item.moarsigns.iridium_nugget_techreborn.name=Iridium Nugget
+item.moarsigns.lead_nugget_techreborn.name=Lead Nugget
+item.moarsigns.nickel_nugget_techreborn.name=Nickel Nugget
+item.moarsigns.platinum_nugget_techreborn.name=Platinum Nugget
+item.moarsigns.silver_nugget_techreborn.name=Silver Nugget
+item.moarsigns.steel_nugget_techreborn.name=Steel Nugget
+item.moarsigns.tin_nugget_techreborn.name=Tin Nugget
+item.moarsigns.titanium_nugget_techreborn.name=Titanium Nugget
+item.moarsigns.tungsten_nugget_techreborn.name=Tungsten Nugget
+item.moarsigns.tungstensteel_nugget_techreborn.name=Tungstensteel Nugget
+item.moarsigns.zinc_nugget_techreborn.name=Zinc Nugget
+item.moarsigns.refinediron_nugget_techreborn.name=Refined Iron Nugget
 
 # Vanilla Signs
 item.moarsigns.sign.oak_sign.name=Oak Sign
@@ -215,7 +234,7 @@ item.moarsigns.sign.ic2.copper_sign.name=Copper Sign
 item.moarsigns.sign.ic2.tin_sign.name=Tin Sign
 item.moarsigns.sign.ic2.bronze_sign.name=Bronze Sign
 item.moarsigns.sign.ic2.lead_sign.name=Lead Sign
-item.moarsigns.sign.ic2.refinediron_sign.name=Refined Iron Sign
+item.moarsigns.sign.ic2.steel_sign.name=Steel Sign
 
 #Tinkers Construct
 item.moarsigns.sign.tconstruct.cobalt_sign.name=Cobalt Sign
@@ -271,6 +290,26 @@ item.moarsigns.sign.basemetals.starsteel_sign.name=Star-Steel Sign
 item.moarsigns.sign.basemetals.aquarium_sign.name=Aquarium Sign
 item.moarsigns.sign.basemetals.cupronickel_sign.name=Cupronickel Sign
 item.moarsigns.sign.basemetals.platinum_sign.name=Platinum Sign
+
+#TechReborn
+item.moarsigns.sign.techreborn.aluminium_sign.name=Aluminium Sign
+item.moarsigns.sign.techreborn.brass_sign.name=Brass Sign
+item.moarsigns.sign.techreborn.chrome_sign.name=Chrome Sign
+item.moarsigns.sign.techreborn.copper_sign.name=Copper Sign
+item.moarsigns.sign.techreborn.electrum_sign.name=Electrum Sign
+item.moarsigns.sign.techreborn.invar_sign.name=Invar Sign
+item.moarsigns.sign.techreborn.iridium_sign.name=Iridium Sign
+item.moarsigns.sign.techreborn.lead_sign.name=Lead Sign
+item.moarsigns.sign.techreborn.nickel_sign.name=Nickel Sign
+item.moarsigns.sign.techreborn.platinum_sign.name=Platinum Sign
+item.moarsigns.sign.techreborn.refinediron_sign.name=Refined Iron Sign
+item.moarsigns.sign.techreborn.silver_sign.name=Silver Sign
+item.moarsigns.sign.techreborn.steel_sign.name=Steel Sign
+item.moarsigns.sign.techreborn.tin_sign.name=Tin Sign
+item.moarsigns.sign.techreborn.titanium_sign.name=Titanium Sign
+item.moarsigns.sign.techreborn.tungsten_sign.name=Tungsten Sign
+item.moarsigns.sign.techreborn.tungstensteel_sign.name=Tungstensteel Sign
+item.moarsigns.sign.techreborn.zinc_sign.name=Zinc Sign
 
 #Factorization
 item.moarsigns.sign.factorization.silver_sign.name=Silver Sign
