@@ -1,5 +1,6 @@
 package gory_moon.moarsigns.items;
 
+import cofh.api.item.IToolHammer;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.MoarSignsCreativeTab;
 import gory_moon.moarsigns.blocks.BlockMoarSign;
@@ -12,6 +13,7 @@ import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.RotationHandler;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -35,8 +37,9 @@ import java.util.List;
 
 import static gory_moon.moarsigns.lib.ToolBoxModes.EXCHANGE_MODE;
 import static gory_moon.moarsigns.lib.ToolBoxModes.PREVIEW_MODE;
+import static gory_moon.moarsigns.lib.ToolBoxModes.ROTATE_MODE;
 
-public class ItemSignToolbox extends Item {
+public class ItemSignToolbox extends Item implements IToolHammer {
 
     public static final String SIGN_MOVING_TAG = "SignMoving";
     public static final String NBT_UNLOCALIZED_NAME = "SignUnlocalizedName";
@@ -100,7 +103,7 @@ public class ItemSignToolbox extends Item {
         return EnumActionResult.PASS;
     }
 
-    private void doRotate(World world, BlockPos pos, EntityPlayer player) {
+    public static void doRotate(World world, BlockPos pos, EntityPlayer player) {
         if (world.getBlockState(pos).getBlock() instanceof BlockMoarSign) {
             RotationHandler.rotate((TileEntityMoarSign) world.getTileEntity(pos), player.isSneaking());
         }
@@ -269,4 +272,14 @@ public class ItemSignToolbox extends Item {
         return stack;
     }
 
+    @Override
+    public boolean isUsable(ItemStack item, EntityLivingBase user, int x, int y, int z) {
+        int mode = isMoving(item.getItemDamage()) ? 2 : item.getItemDamage();
+        return ToolBoxModes.values()[mode] == ROTATE_MODE;
+    }
+
+    @Override
+    public void toolUsed(ItemStack item, EntityLivingBase user, int x, int y, int z) {
+        
+    }
 }

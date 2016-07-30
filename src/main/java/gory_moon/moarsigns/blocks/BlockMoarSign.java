@@ -1,10 +1,19 @@
 package gory_moon.moarsigns.blocks;
 
+import cofh.api.item.IToolHammer;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.client.particle.EntityDiggingFXMoarSigns;
+import gory_moon.moarsigns.items.ItemSignToolbox;
 import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
+import gory_moon.moarsigns.util.Colors;
+import gory_moon.moarsigns.util.Localization;
+import gory_moon.moarsigns.util.Utils;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.IProbeInfoAccessor;
+import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -24,6 +33,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Optional.Interface;
+import net.minecraftforge.fml.common.Optional.Method;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -31,7 +42,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BlockMoarSign extends BlockContainer {
+@Interface(iface = "mcjty.theoneprobe.api.IProbeInfoAccessor", modid = "theoneprobe")
+public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor {
 
     public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
     protected static final AxisAlignedBB SIGN_AABB = new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D);
@@ -109,6 +121,12 @@ public class BlockMoarSign extends BlockContainer {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (heldItem != null && heldItem.getItem() instanceof IToolHammer && ((IToolHammer) heldItem.getItem()).isUsable(heldItem, player, pos.getX(), pos.getY(), pos.getZ())) {
+            ItemSignToolbox.doRotate(world, pos, player);
+            ((IToolHammer) heldItem.getItem()).toolUsed(heldItem, player, pos.getX(), pos.getY(), pos.getZ());
+            return true;
+        }
+
         SignInfo signInfo = getSignInfo(world, pos);
         boolean returnVal = true;
         if (signInfo != null && signInfo.property != null) {
@@ -244,5 +262,20 @@ public class BlockMoarSign extends BlockContainer {
         }
 
         return null;
+    }
+
+    // The One Probe Integration
+    @Method(modid = "theoneprobe")
+    @Override
+    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
+
+        SignInfo info = getSignInfo(world, data.getPos());
+        String modName = info.activateTag.equals(SignRegistry.ALWAYS_ACTIVE_TAG) ? "Minecraft" : info.activateTag;
+
+        probeInfo.text(Colors.LIGHTGRAY + Localization.ITEM.SIGN.MATERIAL_ORIGIN.translate(Colors.WHITE + Utils.getModName(modName)));
+
+        if (mode.equals(ProbeMode.EXTENDED) || mode.equals(ProbeMode.DEBUG)) {
+            probeInfo.text(Colors.LIGHTGRAY + Localization.ITEM.SIGN.MATERIAL.translate(Colors.WHITE + info.material.materialName));
+        }
     }
 }
