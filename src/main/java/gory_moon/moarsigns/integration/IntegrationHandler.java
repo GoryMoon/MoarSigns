@@ -35,7 +35,7 @@ public class IntegrationHandler {
         registerIntegration(IndustrialCraft2Integration.class);
         registerIntegration(TinkersConstructIntegration.class);
         registerIntegration(BasemetalsIntegration.class);
-        //registerIntegration(TechRebornIntegration.class); Currently working on
+        registerIntegration(TechRebornIntegration.class); //TODO Code [✓]. JSON []. Textures: Item: Nuggets [X], Signs [X], Sign blocks [✓]
 
         /* Not updated mods */
         //registerIntegration(NaturaIntegration.class);

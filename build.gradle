@@ -102,10 +102,13 @@ repositories {
 dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
 
-    deobfCompile "mezz.jei:jei_${config.mc_version}:${config.dep_jei_version}"
-    compile "codechicken:CodeChickenLib:" + config.mc_version + "-" + config.cclib_version + ":deobf"
-    compile "codechicken:CodeChickenCore:" + config.mc_version + "-" + config.ccc_version + ":deobf"
-    compile "codechicken:NotEnoughItems:" + config.mc_version + "-" + config.nei_version + ":deobf"
+    compile "mezz.jei:jei_${config.mc_version}:${config.dep_jei_version}"
+    //runtime "mezz.jei:jei_${config.mc_version}:${config.dep_jei_version}"
+
+    compile "codechicken:CodeChickenLib:${config.mc_version}-${config.cclib_version}:deobf"
+    compile "codechicken:CodeChickenCore:${config.mc_version}-${config.ccc_version}:deobf"
+    compile "codechicken:NotEnoughItems:${config.mc_version}-${config.nei_version}:deobf"
+
     compile "mcp.mobius.waila:Waila:" + config.waila_version /*+ "_" + config.mc_version*/ + ":dev"
     deobfCompile "mcjty.theoneprobe:TheOneProbe:1.9.4-1.0.6-17"
 

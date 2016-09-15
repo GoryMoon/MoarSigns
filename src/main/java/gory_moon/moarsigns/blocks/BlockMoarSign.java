@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.blocks;
 
 import cofh.api.item.IToolHammer;
+import crazypants.enderio.api.tool.ITool;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.client.particle.EntityDiggingFXMoarSigns;
@@ -124,6 +125,12 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
         if (heldItem != null && heldItem.getItem() instanceof IToolHammer && ((IToolHammer) heldItem.getItem()).isUsable(heldItem, player, pos.getX(), pos.getY(), pos.getZ())) {
             ItemSignToolbox.doRotate(world, pos, player);
             ((IToolHammer) heldItem.getItem()).toolUsed(heldItem, player, pos.getX(), pos.getY(), pos.getZ());
+            return true;
+        }
+
+        if (heldItem != null && heldItem.getItem() instanceof ITool && ((ITool) heldItem.getItem()).canUse(heldItem, player, pos)) {
+            ItemSignToolbox.doRotate(world, pos, player);
+            ((ITool) heldItem.getItem()).used(heldItem, player, pos);
             return true;
         }
 

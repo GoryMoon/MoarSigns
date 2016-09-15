@@ -93,7 +93,6 @@ public class GuiMoarSign extends GuiBase {
         Pattern p = Pattern.compile("([" + ((char) 167) + "]([a-z0-9]))+");
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
-                System.out.println(array[i].getUnformattedText() + ": " + array[i].getUnformattedComponentText() + ": " + array[i].getFormattedText());
                 String s = array[i].getUnformattedText();
                 if (!s.equals("")) {
 
