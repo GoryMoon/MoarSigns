@@ -12,6 +12,7 @@ import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.proxy.CommonProxy;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -89,6 +90,10 @@ public class MoarSigns {
 
         new IntegrationHandler().setupSigns();
         ModItems.registerRecipes();
+
+        if (Loader.isModLoaded("Quark")) {
+            MoarSigns.logger.warn("Quark is loaded, MoarSigns sign editing might not work correctly");
+        }
 
         //TODO MineTweaker3
         /*if (Loader.isModLoaded("MineTweaker3")) {
