@@ -46,7 +46,7 @@ configFile.withReader {
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-version = "${config.mc_version}"+ "-" + "${config.mod_version}"
+version = "${config.mc_version}-${config.mod_version}.${System.getenv("BUILD_NUMBER") ?: 0}"
 group= "se.gory_moon" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MoarSigns"
 
@@ -64,7 +64,7 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     replaceIn "ModInfo.java"
-    replace "@MOD_VERSION@", config.mod_version
+    replace "@MOD_VERSION@", config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: 0}"
     if (project.hasProperty("ms_sha1_signature")) {
         replace "@FINGERPRINT@", project.ms_sha1_signature
     }
@@ -132,7 +132,7 @@ dependencies {
 processResources
 {
     // this will ensure that this task is redone when the versions change.
-    inputs.property "version", config.mod_version
+    inputs.property "version", config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: 0}"
     inputs.property "mcversion", project.minecraft.version
 
     // replace stuff in mcmod.info, nothing else
@@ -140,7 +140,7 @@ processResources
         include 'mcmod.info'
 
         // replace version and mcversion
-        expand 'version': config.mod_version, 'mcversion': project.minecraft.version
+        expand 'version': config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: 0}", 'mcversion': project.minecraft.version
     }
 
     // copy everything else, thats not the mcmod.info
@@ -171,89 +171,68 @@ artifacts {
 
 tasks.build.dependsOn('signJar')
 
-if (!project.hasProperty("keystore_location")) // keystore stuff
-    ext.keystore_location = "."
-if (!project.hasProperty("keystore_password")) // keystore stuff
-    ext.keystore_password = ""
-if (!project.hasProperty("ms_keystore_alias")) // keystore stuff
-    ext.ms_keystore_alias = ""
-
-task signJar(dependsOn: ["jar", "devJar"]) {
-    inputs.dir jar.destinationDir
-    inputs.file keystore_location
-    inputs.property "ms_keystore_alias", ms_keystore_alias
-    inputs.property "keystore_password", keystore_password
-    outputs.dir devJar.destinationDir
-
-    // only sign if the keystore exists
+task signJar(type: SignJar, dependsOn: ["jar", "devJar"]) {
     onlyIf {
-        return keystore_location != "." && keystore_password != ""
+        project.hasProperty('keystore_location')
     }
-    // the actual action.. sign the jar.
-    doLast {
-        jar.destinationDir.eachFile { file ->
-            if (!file.getPath().endsWith(".jar"))
-                return; // skip non-jars
 
-            logger.lifecycle "signing $file"
-            ant.signjar(
-                    destDir: file.getParentFile(), // same place it came from
-                    jar: file,
-                    keystore: keystore_location,
-                    alias: ms_keystore_alias,
-                    storepass: keystore_password
-            )
-        }
-    }
+    keyStore = project.hasProperty('keystore_location') ? project.getProperty('keystore_location') : "";
+    storePass = project.hasProperty('keystore_password') ? project.getProperty('keystore_password') : "";
+    alias = project.hasProperty('ms_keystore_alias') ? project.getProperty('ms_keystore_alias') : "";
+    keyPass = project.hasProperty('keystore_password') ? project.getProperty('keystore_password') : "";
+    inputFile = jar.archivePath
+    outputFile jar.archivePath
 }
 
 uploadArchives {
     repositories.mavenDeployer {
         if (project.hasProperty("maven_url")) {
-            println 'Publishing to files server'
+            logger.log('Publishing to files server')
 
-            configuration = configurations.deployerJars
             repository(url: project.maven_url) {
-                authentication(userName: project.maven_username, password: project.maven_password)
+                authentication(userName: project.maven_username ?: "", password: project.maven_password ?: "")
             }
-            pom {
-                groupId = project.group
-                version = project.version
-                artifactId = project.archivesBaseName
-            }
+        } else if(project.hasProperty("local_maven")) {
+            repository(url: "file://${project.getProperty('local_maven')}")
+        }
 
-            pom.project {
-                name project.archivesBaseName
-                packaging 'jar'
-                description 'MoarSigns'
+        pom {
+            groupId = project.group
+            version = project.version
+            artifactId = project.archivesBaseName
+        }
+
+        pom.project {
+            name project.archivesBaseName
+            packaging 'jar'
+            description 'MoarSigns'
+            url 'https://github.com/GoryMoon/MoarSigns/'
+
+            scm {
                 url 'https://github.com/GoryMoon/MoarSigns/'
+                connection 'scm:git:git://github.com/GoryMoon/MoarSigns.git'
+                developerConnection 'scm:git:git@github.com/GoryMoon/MoarSigns.git'
+            }
 
-                scm {
-                    url 'https://github.com/GoryMoon/MoarSigns/'
-                    connection 'scm:git:git://github.com/GoryMoon/MoarSigns.git'
-                    developerConnection 'scm:git:git@github.com/GoryMoon/MoarSigns.git'
+            issueManagement {
+                system 'github'
+                url 'https://github.com/GoryMoon/MoarSigns/issues'
+            }
+
+            licenses {
+                license {
+                    name 'GNU Lesser General Public License 3.0'
+                    url 'https://www.gnu.org/licenses/lgpl-3.0.txt'
+                    distribution 'repo'
                 }
+            }
 
-                issueManagement {
-                    system 'github'
-                    url 'https://github.com/GoryMoon/MoarSigns/issues'
-                }
-
-                licenses {
-                    license {
-                        name 'GNU Lesser General Public License 3.0'
-                        url 'https://www.gnu.org/licenses/lgpl-3.0.txt'
-                        distribution 'repo'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'Gory_Moon'
-                        name 'Gory_Moon'
-                        roles {
-                            role 'developer'
-                        }
+            developers {
+                developer {
+                    id 'Gory_Moon'
+                    name 'Gory_Moon'
+                    roles {
+                        role 'developer'
                     }
                 }
             }
