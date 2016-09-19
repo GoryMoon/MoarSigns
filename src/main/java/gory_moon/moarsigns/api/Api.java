@@ -71,7 +71,6 @@ public class Api {
         }
     }
 
-
     /**
      * Sets a specific rotation of a sign
      * Valid values are 0-15
@@ -85,7 +84,6 @@ public class Api {
         }
     }
 
-
     /**
      * Registers a class that implements {@link ISignRegistration}
      * It needs to be registered before {@link FMLPostInitializationEvent}
@@ -95,7 +93,6 @@ public class Api {
     public static <T extends ISignRegistration> void registerSignIntegration(Class<T> clazz) {
         IntegrationRegistry.registerIntegration(clazz);
     }
-
 
     /**
      * Registers a class that implements {@link ISignRegistration}

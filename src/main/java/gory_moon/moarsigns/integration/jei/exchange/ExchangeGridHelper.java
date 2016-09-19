@@ -1,6 +1,6 @@
 package gory_moon.moarsigns.integration.jei.exchange;
 
-import mezz.jei.Internal;
+import gory_moon.moarsigns.integration.jei.MoarSignsPlugin;
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import net.minecraft.item.ItemStack;
@@ -34,7 +34,8 @@ public class ExchangeGridHelper implements ICraftingGridHelper {
         for (int i = 0; i < output.size(); i++) {
             Object recipeItem = output.get(i);
 
-            List<ItemStack> itemStacks = Internal.getStackHelper().toItemStackList(recipeItem);
+
+            List<ItemStack> itemStacks = MoarSignsPlugin.jeiHelpers.getStackHelper().toItemStackList(recipeItem);
             setOutput(guiItemStacks, i, itemStacks);
         }
     }

@@ -1,12 +1,12 @@
 package gory_moon.moarsigns.integration.jei.exchange;
 
-import mezz.jei.plugins.vanilla.VanillaRecipeWrapper;
+import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
 import java.util.Collections;
 import java.util.List;
 
-public class ExchangeRecipe extends VanillaRecipeWrapper {
+public class ExchangeRecipe extends BlankRecipeWrapper {
 
     private final ItemStack input;
     private final List<ItemStack> outputs;

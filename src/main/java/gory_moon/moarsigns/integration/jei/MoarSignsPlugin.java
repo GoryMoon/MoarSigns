@@ -25,11 +25,13 @@ public class MoarSignsPlugin implements IModPlugin {
     public static final String CRAFTING = "moarsigns.crafting";
     public static final String EXCHANGE = "moarsigns.exchange";
 
+    public static IJeiHelpers jeiHelpers;
+
     @Override
     public void register(@Nonnull IModRegistry registry) {
-        IJeiHelpers jeiHelpers = registry.getJeiHelpers();
+        jeiHelpers = registry.getJeiHelpers();
         ISubtypeRegistry subtypeRegistry = jeiHelpers.getSubtypeRegistry();
-        INbtRegistry nbtRegistry = jeiHelpers.getNbtRegistry();
+        ISubtypeRegistry iSubtypeRegistry = jeiHelpers.getSubtypeRegistry();
         IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 
         registry.addRecipeCategories(
@@ -52,7 +54,7 @@ public class MoarSignsPlugin implements IModPlugin {
         subtypeRegistry.useNbtForSubtypes(
                 ModItems.SIGN
         );
-        nbtRegistry.useNbtForSubtypes(
+        subtypeRegistry.useNbtForSubtypes(
                 ModItems.SIGN
         );
 

@@ -2,7 +2,8 @@
   "homepage": "http://minecraft.curseforge.com/projects/moarsigns",
   "promos": {
     "1.9-recommended": "3.0.0",
-    "1.9.4-recommended": "3.3.0"
+    "1.9.4-recommended": "3.3.0",
+    "1.10.2-recommended": "4.0.0.2"
   },
   "1.9.4": {
     "3.3.0": "Added TechReborn Integration\nAdded One Probe Integratio\nMade signs rotatable with EnderIO tool",
@@ -10,5 +11,8 @@
     "3.1.2": "Fixed syncing sign data to players in multiplayer",
     "3.1.1": "Updated Chinese translation",
     "3.1.0": "Updated to Minecraft 1.9.4\nAdded quartz, lapis, platinum and cupronickel signs"
+  },
+  "1.10.2": {
+    "4.0.0.2": "Updated to Minecraft 1.10.2\nFixed JEI integration"
   }
 }

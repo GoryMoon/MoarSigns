@@ -95,7 +95,6 @@ public class IntegrationHandler {
                 SignRegistry.activateTag(reg.getActivateTag());
                 if (log) MoarSigns.logger.info("Loaded " + reg.getIntegrationName() + " SignIntegration");
             }
-
         }
 
         if (log) MoarSigns.logger.info("Finished " + (SignRegistry.getActiveTagsAmount()) + " sign integrations with " + SignRegistry.getActivatedSignRegistry().size() + " signs registered");

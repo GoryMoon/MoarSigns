@@ -4,8 +4,8 @@ import gory_moon.moarsigns.api.MaterialInfo;
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe;
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe.MatchType;
 import gory_moon.moarsigns.integration.jei.MoarSignsJeiRecipeHelper;
+import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
-import mezz.jei.plugins.vanilla.VanillaRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ShapedMoatSignsRecipeWrapper extends VanillaRecipeWrapper implements IShapedCraftingRecipeWrapper {
+public class ShapedMoatSignsRecipeWrapper extends BlankRecipeWrapper implements IShapedCraftingRecipeWrapper {
 
     @Nonnull
     private final ShapedMoarSignRecipe recipe;

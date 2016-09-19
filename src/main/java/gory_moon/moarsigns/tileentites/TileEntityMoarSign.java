@@ -1,7 +1,6 @@
 package gory_moon.moarsigns.tileentites;
 
 import com.google.gson.JsonParseException;
-import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.util.Utils;
@@ -312,7 +311,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             texture_name = texture;
         } else if (resourceLocation == null) {
             texture_name = texture;
-            resourceLocation = MoarSigns.instance.getResourceLocation(texture, isMetal);
+            resourceLocation = Utils.getResourceLocation(texture, isMetal);
         }
     }
 

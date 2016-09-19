@@ -3,17 +3,21 @@ package gory_moon.moarsigns.util;
 import com.google.common.collect.Maps;
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.IntegrationRegistry;
+import gory_moon.moarsigns.api.SignInfo;
+import gory_moon.moarsigns.api.SignRegistry;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Utils {
 
-    private static HashMap<String, String> modNames = Maps.newHashMap();
+    private static LinkedHashMap<String, String> modNames = Maps.newLinkedHashMap();
+    private static LinkedHashMap<String, ResourceLocation> textures = Maps.newLinkedHashMap();
 
     private static int[] maxLengths = {90, 82, 76, 70, 66, 62, 58, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 36, 34, 32, 32};
     private static int[] maxTextLocation = {36, 32, 29, 27, 24, 22, 21, 19, 17, 16, 15, 14, 13, 12, 11, 11, 10, 9, 9, 8, 8};
@@ -62,6 +66,21 @@ public class Utils {
         }
 
         return "Minecraft";
+    }
+
+    public static ResourceLocation getResourceLocation(String s, boolean isMetal) {
+        ResourceLocation location = textures.get(isMetal + s);
+
+        if (location == null) {
+            SignInfo info = SignRegistry.get(s);
+
+            if (info == null) return null;
+
+            location = new ResourceLocation(info.modId.toLowerCase(), "textures/signs/" + (isMetal ? "metal/" : "wood/") + s + ".png");
+            textures.put(s, location);
+        }
+
+        return location;
     }
 
 }

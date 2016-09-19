@@ -5,7 +5,7 @@ import gory_moon.moarsigns.client.interfaces.GuiBase;
 import gory_moon.moarsigns.client.interfaces.GuiColorButton;
 import gory_moon.moarsigns.client.interfaces.GuiRectangle;
 import gory_moon.moarsigns.client.interfaces.sign.buttons.*;
-import gory_moon.moarsigns.lib.Info;
+import gory_moon.moarsigns.lib.Constants;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignInfo;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 @SideOnly(Side.CLIENT)
 public class GuiMoarSign extends GuiBase {
 
-    public static final ResourceLocation texture = new ResourceLocation(Info.TEXTURE_LOCATION, "textures/gui/sign_base.png");
+    public static final ResourceLocation texture = new ResourceLocation(Constants.TEXTURE_LOCATION, "textures/gui/sign_base.png");
     private final int TEXT_EDIT_AREA = 14;
 
     public int selectedTextField = 0;

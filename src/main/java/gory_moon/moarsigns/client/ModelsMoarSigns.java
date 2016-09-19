@@ -4,7 +4,7 @@ import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.items.NuggetRegistry;
-import gory_moon.moarsigns.lib.Info;
+import gory_moon.moarsigns.lib.Constants;
 import gory_moon.moarsigns.lib.ModInfo;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -32,8 +32,8 @@ public class ModelsMoarSigns {
         ArrayList<String> nuggets = NuggetRegistry.getNames();
         addVariantNames(ModItems.NUGGET, nuggets.toArray(new String[nuggets.size()]));
 
-        addVariantNames(ModItems.DEBUG, Info.DEBUG_ITEM_KEY);
-        addVariantNames(ModItems.SIGN_TOOLBOX, Info.SIGN_TOOLBOX_ITEM_KEY + "/edit", Info.SIGN_TOOLBOX_ITEM_KEY + "/rotate", Info.SIGN_TOOLBOX_ITEM_KEY + "/move", Info.SIGN_TOOLBOX_ITEM_KEY + "/copy", Info.SIGN_TOOLBOX_ITEM_KEY + "/exchange", Info.SIGN_TOOLBOX_ITEM_KEY + "/preview");
+        addVariantNames(ModItems.DEBUG, Constants.DEBUG_ITEM_KEY);
+        addVariantNames(ModItems.SIGN_TOOLBOX, Constants.SIGN_TOOLBOX_ITEM_KEY + "/edit", Constants.SIGN_TOOLBOX_ITEM_KEY + "/rotate", Constants.SIGN_TOOLBOX_ITEM_KEY + "/move", Constants.SIGN_TOOLBOX_ITEM_KEY + "/copy", Constants.SIGN_TOOLBOX_ITEM_KEY + "/exchange", Constants.SIGN_TOOLBOX_ITEM_KEY + "/preview");
     }
 
     public static void registerModels() {
@@ -42,13 +42,13 @@ public class ModelsMoarSigns {
             registerItemModel(ModItems.NUGGET, i, getResource("nuggets/" + NuggetRegistry.getUnlocName(i)));
 
         registerItemModel(ModItems.DEBUG);
-        registerItemModel(ModItems.SIGN_TOOLBOX, 0, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/edit"));
-        registerItemModel(ModItems.SIGN_TOOLBOX, 1, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/rotate"));
-        registerItemModel(ModItems.SIGN_TOOLBOX, 2, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/move"));
-        registerItemModel(ModItems.SIGN_TOOLBOX, 7, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/move"));
-        registerItemModel(ModItems.SIGN_TOOLBOX, 3, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/copy"));
-        registerItemModel(ModItems.SIGN_TOOLBOX, 4, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/exchange"));
-        registerItemModel(ModItems.SIGN_TOOLBOX, 5, getResource(Info.SIGN_TOOLBOX_ITEM_KEY + "/preview"));
+        registerItemModel(ModItems.SIGN_TOOLBOX, 0, getResource(Constants.SIGN_TOOLBOX_ITEM_KEY + "/edit"));
+        registerItemModel(ModItems.SIGN_TOOLBOX, 1, getResource(Constants.SIGN_TOOLBOX_ITEM_KEY + "/rotate"));
+        registerItemModel(ModItems.SIGN_TOOLBOX, 2, getResource(Constants.SIGN_TOOLBOX_ITEM_KEY + "/move"));
+        registerItemModel(ModItems.SIGN_TOOLBOX, 7, getResource(Constants.SIGN_TOOLBOX_ITEM_KEY + "/move"));
+        registerItemModel(ModItems.SIGN_TOOLBOX, 3, getResource(Constants.SIGN_TOOLBOX_ITEM_KEY + "/copy"));
+        registerItemModel(ModItems.SIGN_TOOLBOX, 4, getResource(Constants.SIGN_TOOLBOX_ITEM_KEY + "/exchange"));
+        registerItemModel(ModItems.SIGN_TOOLBOX, 5, getResource(Constants.SIGN_TOOLBOX_ITEM_KEY + "/preview"));
     }
 
     private static void addVariantNames(Block block, String... names) {

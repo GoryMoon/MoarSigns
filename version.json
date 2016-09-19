@@ -44,6 +44,17 @@
 			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2330461/download",
 			"isDirectLink": "true",
 			"newFileName": ""
+		},
+		{
+			"mcVersion": "Minecraft 1.10.2",
+			"modVersion": "4.0.0.2",
+			"changeLog": [
+				"Updated to Minecraft 1.10.2",
+				"Fixed JEI integration"
+			],
+			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2331193/download",
+			"isDirectLink": "true",
+			"newFileName": ""
 		}
 	]
 }

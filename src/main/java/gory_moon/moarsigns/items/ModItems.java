@@ -6,7 +6,7 @@ import gory_moon.moarsigns.api.ShapedMoarSignRecipe;
 import gory_moon.moarsigns.api.ShapelessMoarSignRecipe;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
-import gory_moon.moarsigns.lib.Info;
+import gory_moon.moarsigns.lib.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
@@ -40,10 +40,10 @@ public class ModItems {
 
     public static void init() {
 
-        SIGN = (ItemMoarSign) new ItemMoarSign().setRegistryName(Info.SIGN_ITEM_KEY);
-        DEBUG = (ItemDebug) new ItemDebug().setRegistryName(Info.DEBUG_ITEM_KEY);
-        NUGGET = (ItemNugget) new ItemNugget().setRegistryName(Info.NUGGET_ITEM_KEY);
-        SIGN_TOOLBOX = (ItemSignToolbox) new ItemSignToolbox().setRegistryName(Info.SIGN_TOOLBOX_ITEM_KEY);
+        SIGN = (ItemMoarSign) new ItemMoarSign().setRegistryName(Constants.SIGN_ITEM_KEY);
+        DEBUG = (ItemDebug) new ItemDebug().setRegistryName(Constants.DEBUG_ITEM_KEY);
+        NUGGET = (ItemNugget) new ItemNugget().setRegistryName(Constants.NUGGET_ITEM_KEY);
+        SIGN_TOOLBOX = (ItemSignToolbox) new ItemSignToolbox().setRegistryName(Constants.SIGN_TOOLBOX_ITEM_KEY);
 
         GameRegistry.register(SIGN);
         GameRegistry.register(DEBUG);

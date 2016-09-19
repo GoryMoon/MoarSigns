@@ -1,7 +1,5 @@
 package gory_moon.moarsigns;
 
-import gory_moon.moarsigns.api.SignInfo;
-import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
 import gory_moon.moarsigns.integration.IntegrationHandler;
@@ -10,8 +8,6 @@ import gory_moon.moarsigns.items.NuggetRegistry;
 import gory_moon.moarsigns.lib.ModInfo;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.proxy.CommonProxy;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -25,44 +21,45 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashMap;
-
-@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, certificateFingerprint = ModInfo.FINGERPRINT, guiFactory = ModInfo.GUI_FACTORY_CLASS, updateJSON = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/master/version_promo.json",
+@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, certificateFingerprint = ModInfo.FINGERPRINT, acceptedMinecraftVersions = "[1.10]", guiFactory = ModInfo.GUI_FACTORY_CLASS, updateJSON = MoarSigns.FORGE_PROMO,
         dependencies =
                 "after:BiomesOPlenty;" +
-                        "after:Forestry;" +
-                        "after:Nature;" +
-                        "after:IC2;" +
-                        "after:TConstruct;" +
-                        "after:Railcraft;" +
-                        "after:ThermalFoundation;" +
-                        "after:factorization;" +
-                        "after:basemetals;" +
-                        "after:NotEnoughItems;" +
-                        "after:Waila;" +
-                        "after:MineTweaker3;")
+                "after:Forestry;" +
+                "after:Nature;" +
+                "after:IC2;" +
+                "after:TConstruct;" +
+                "after:Railcraft;" +
+                "after:ThermalFoundation;" +
+                "after:factorization;" +
+                "after:basemetals;" +
+                "after:techreborn;" +
+                "after:NotEnoughItems;" +
+                "after:Waila;" +
+                "after:MineTweaker3;")
 public class MoarSigns {
 
+    private static final String WAILA_PROVIDER = "gory_moon.moarsigns.integration.waila.Provider.callbackRegister";
     private static final String LINK = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/master/version.json";
+    static final String FORGE_PROMO = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/master/version_promo.json";
 
     @Instance(ModInfo.ID)
     public static MoarSigns instance;
-    public Config config;
 
     @SidedProxy(clientSide = ModInfo.CLIENT_PROXY, serverSide = ModInfo.COMMON_PROXY)
     public static CommonProxy proxy;
 
     public static Logger logger = LogManager.getLogger("MoarSigns");
-    private static HashMap<String, ResourceLocation> textures = new HashMap<String, ResourceLocation>();
 
     @EventHandler
     @SuppressWarnings("unused")
     public void preInit(FMLPreInitializationEvent event) {
-        config = new Config(event.getSuggestedConfigurationFile()).loadConfig();
-        MinecraftForge.EVENT_BUS.register(config);
-        FMLInterModComms.sendRuntimeMessage(ModInfo.ID, "VersionChecker", "addVersionCheck", LINK);
-
+        ConfigHandler.instance().loadDefaultConfig(event);
         PacketHandler.init();
+
+        FMLInterModComms.sendMessage("VersionChecker", "addVersionCheck", LINK);
+        if (FMLInterModComms.sendMessage("Waila", "register", WAILA_PROVIDER)) {
+            MoarSigns.logger.info("Loaded Waila Integration");
+        }
 
         proxy.preInit();
         NuggetRegistry.init();
@@ -75,19 +72,13 @@ public class MoarSigns {
     @EventHandler
     @SuppressWarnings("unused")
     public void load(FMLInitializationEvent event) {
-
         proxy.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-
-        if (FMLInterModComms.sendMessage("Waila", "register", "gory_moon.moarsigns.integration.waila.Provider.callbackRegister")) {
-            MoarSigns.logger.info("Loaded Waila Integration");
-        }
     }
 
     @EventHandler
     @SuppressWarnings("unused")
     public void modsLoaded(FMLPostInitializationEvent event) {
-
         new IntegrationHandler().setupSigns();
         ModItems.registerRecipes();
 
@@ -95,24 +86,9 @@ public class MoarSigns {
             MoarSigns.logger.warn("Quark is loaded, MoarSigns sign editing might not work correctly");
         }
 
-        //TODO MineTweaker3
         /*if (Loader.isModLoaded("MineTweaker3")) {
             MineTweakerIntegration.register();
         }*/
     }
 
-    public ResourceLocation getResourceLocation(String s, boolean isMetal) {
-        ResourceLocation location = textures.get(isMetal + s);
-
-        if (location == null) {
-            SignInfo info = SignRegistry.get(s);
-
-            if (info == null) return null;
-
-            location = new ResourceLocation(info.modId.toLowerCase(), "textures/signs/" + (isMetal ? "metal/" : "wood/") + s + ".png");
-            textures.put(s, location);
-        }
-
-        return location;
-    }
 }
