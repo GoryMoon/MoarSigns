@@ -249,16 +249,18 @@ public class GuiMoarSign extends GuiBase {
 
         update();
 
-        if (key == 200) {
-            guiTextFields[selectedTextField].setFocused(false);
-            selectedTextField = selectedTextField - 1 < 0 ? 3 : selectedTextField - 1;
-            guiTextFields[selectedTextField].setFocused(true);
-        }
+        if (selectedTextField != -1) {
+            if (key == 200) {
+                guiTextFields[selectedTextField].setFocused(false);
+                selectedTextField = selectedTextField - 1 < 0 ? 3 : selectedTextField - 1;
+                guiTextFields[selectedTextField].setFocused(true);
+            }
 
-        if (key == 208 || key == 28 || key == 156) {
-            guiTextFields[selectedTextField].setFocused(false);
-            selectedTextField = selectedTextField + 1 > 3 ? 0 : selectedTextField + 1;
-            guiTextFields[selectedTextField].setFocused(true);
+            if (key == 208 || key == 28 || key == 156) {
+                guiTextFields[selectedTextField].setFocused(false);
+                selectedTextField = selectedTextField + 1 > 3 ? 0 : selectedTextField + 1;
+                guiTextFields[selectedTextField].setFocused(true);
+            }
         }
 
         if (key == 1) {

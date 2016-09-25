@@ -48,7 +48,7 @@ compileJava {
     sourceCompatibility = targetCompatibility = "1.7"
 }
 
-version = "${config.mc_version}-${config.mod_version}.${System.getenv("BUILD_NUMBER") ?: 2}"
+version = "${config.mc_version}-${config.mod_version}.${System.getenv("BUILD_NUMBER") ?: config.local_build}"
 group= "se.gory_moon" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MoarSigns"
 
@@ -66,7 +66,7 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     replaceIn "ModInfo.java"
-    replace "@MOD_VERSION@", config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: 2}"
+    replace "@MOD_VERSION@", config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: config.local_build}"
     if (project.hasProperty("ms_sha1_signature")) {
         replace "@FINGERPRINT@", project.ms_sha1_signature
     }
@@ -115,7 +115,7 @@ dependencies {
 processResources
 {
     // this will ensure that this task is redone when the versions change.
-    inputs.property "version", config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: 2}"
+    inputs.property "version", config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: config.local_build}"
     inputs.property "mcversion", project.minecraft.version
 
     // replace stuff in mcmod.info, nothing else
@@ -123,7 +123,7 @@ processResources
         include 'mcmod.info'
 
         // replace version and mcversion
-        expand 'version': config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: 2}", 'mcversion': project.minecraft.version
+        expand 'version': config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: config.local_build}", 'mcversion': project.minecraft.version
     }
 
     // copy everything else, thats not the mcmod.info
