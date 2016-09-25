@@ -46,7 +46,7 @@ configFile.withReader {
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-version = "${config.mc_version}-${config.mod_version}.${System.getenv("BUILD_NUMBER") ?: 0}"
+version = "${config.mc_version}-${config.mod_version}.${System.getenv("BUILD_NUMBER") ?: config.local_build}"
 group= "se.gory_moon" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "MoarSigns"
 
@@ -64,7 +64,7 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     replaceIn "ModInfo.java"
-    replace "@MOD_VERSION@", config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: 0}"
+    replace "@MOD_VERSION@", config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: config.local_build}"
     if (project.hasProperty("ms_sha1_signature")) {
         replace "@FINGERPRINT@", project.ms_sha1_signature
     }
@@ -132,7 +132,7 @@ dependencies {
 processResources
 {
     // this will ensure that this task is redone when the versions change.
-    inputs.property "version", config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: 0}"
+    inputs.property "version", config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: config.local_build}"
     inputs.property "mcversion", project.minecraft.version
 
     // replace stuff in mcmod.info, nothing else
@@ -140,7 +140,7 @@ processResources
         include 'mcmod.info'
 
         // replace version and mcversion
-        expand 'version': config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: 0}", 'mcversion': project.minecraft.version
+        expand 'version': config.mod_version + ".${System.getenv("BUILD_NUMBER") ?: config.local_build}", 'mcversion': project.minecraft.version
     }
 
     // copy everything else, thats not the mcmod.info
@@ -181,13 +181,13 @@ task signJar(type: SignJar, dependsOn: ["jar", "devJar"]) {
     alias = project.hasProperty('ms_keystore_alias') ? project.getProperty('ms_keystore_alias') : "";
     keyPass = project.hasProperty('keystore_password') ? project.getProperty('keystore_password') : "";
     inputFile = jar.archivePath
-    outputFile jar.archivePath
+    outputFile = jar.archivePath
 }
 
 uploadArchives {
     repositories.mavenDeployer {
         if (project.hasProperty("maven_url")) {
-            logger.log('Publishing to files server')
+            logger.info('Publishing to files server')
 
             repository(url: project.maven_url) {
                 authentication(userName: project.maven_username ?: "", password: project.maven_password ?: "")

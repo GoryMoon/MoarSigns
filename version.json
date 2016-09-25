@@ -35,13 +35,11 @@
 		},
 		{
 			"mcVersion": "Minecraft 1.9.4",
-			"modVersion": "3.3.0",
+			"modVersion": "3.3.1",
 			"changeLog": [
-				"Added TechReborn Integration",
-				"Added One Probe Integration",
-				"Made signs rotatable with EnderIO tool"
+				"Fixed crash bug when trying to change textfield with no selected"
 			],
-			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2330461/download",
+			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2332375/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}
