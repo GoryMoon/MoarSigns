@@ -1,5 +1,6 @@
 package gory_moon.moarsigns.blocks;
 
+import com.girafi.passthroughsigns.api.IPassable;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -11,8 +12,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Optional;
 
-public class BlockMoarSignWall extends BlockMoarSign {
+@Optional.Interface(modid = "passthroughsigns", iface = "com.girafi.passthroughsigns.api.IPassable")
+public class BlockMoarSignWall extends BlockMoarSign implements IPassable {
 
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
@@ -141,4 +144,9 @@ public class BlockMoarSignWall extends BlockMoarSign {
         }
     }
 
+    @Override
+    @Optional.Method(modid = "passthroughsigns")
+    public boolean canBePassed(World world, BlockPos pos, EnumPassableType type) {
+        return type == EnumPassableType.WALL_BLOCK;
+    }
 }
