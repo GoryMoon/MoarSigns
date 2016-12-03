@@ -2,6 +2,7 @@ package gory_moon.moarsigns.api;
 
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe.MatchType;
 import gory_moon.moarsigns.items.ItemMoarSign;
+import gory_moon.moarsigns.util.IMoarSignsRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -18,7 +19,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class ShapelessMoarSignRecipe implements IRecipe {
+public class ShapelessMoarSignRecipe implements IMoarSignsRecipe {
 
     private ItemStack output = null;
     private ArrayList<Object> input = new ArrayList<Object>();
@@ -160,11 +161,11 @@ public class ShapelessMoarSignRecipe implements IRecipe {
         return required.isEmpty();
     }
 
-    public ArrayList<Object> getInput() {
-        return this.input;
+    public Object[] getInput() {
+        return this.input.toArray();
     }
 
-    public ShapelessMoarSignRecipe setNEINBTDifferent(boolean nbtDiff) {
+    public IMoarSignsRecipe setNEINBTDifferent(boolean nbtDiff) {
         neiNBTDifferent = nbtDiff;
         return this;
     }

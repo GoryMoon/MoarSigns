@@ -30,6 +30,16 @@ public class ExchangeGridHelper implements ICraftingGridHelper {
     }
 
     @Override
+    public void setInputStacks(IGuiItemStackGroup guiItemStacks, List<List<ItemStack>> input) {
+        guiItemStacks.set(craftInputSlot, input.get(0));
+    }
+
+    @Override
+    public void setInputStacks(IGuiItemStackGroup guiItemStacks, List<List<ItemStack>> input, int width, int height) {
+
+    }
+
+    @Override
     public void setOutput(@Nonnull IGuiItemStackGroup guiItemStacks, @Nonnull List<ItemStack> output) {
         for (int i = 0; i < output.size(); i++) {
             Object recipeItem = output.get(i);

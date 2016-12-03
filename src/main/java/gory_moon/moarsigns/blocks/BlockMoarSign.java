@@ -122,7 +122,7 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (heldItem != null && heldItem.getItem() instanceof IToolHammer && ((IToolHammer) heldItem.getItem()).isUsable(heldItem, player, pos.getX(), pos.getY(), pos.getZ())) {
+        if (heldItem != null && heldItem.getItem() instanceof IToolHammer && !(heldItem.getItem() instanceof ItemSignToolbox) && ((IToolHammer) heldItem.getItem()).isUsable(heldItem, player, pos.getX(), pos.getY(), pos.getZ())) {
             ItemSignToolbox.doRotate(world, pos, player);
             ((IToolHammer) heldItem.getItem()).toolUsed(heldItem, player, pos.getX(), pos.getY(), pos.getZ());
             return true;

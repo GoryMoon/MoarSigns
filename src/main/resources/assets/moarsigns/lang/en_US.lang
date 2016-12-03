@@ -97,7 +97,7 @@ item.moarsigns:sign.description.error=Error with sign, obtained in an incorrect 
 
 item.moarsigns:signtoolbox.description.change=Hold [%1] while right clicking to change mode
 item.moarsigns:signtoolbox.description.edit=[%1][Right click][%2] a sign to edit
-item.moarsigns:signtoolbox.description.rotate=[%1][Right click][%2] a sign to cycle trough all rotations
+item.moarsigns:signtoolbox.description.rotate=[%1][Right click][%2] a sign to cycle trough all rotations[%3]Holding [%4] rotates in the reverse
 item.moarsigns:signtoolbox.description.move=[%1]Right click[%2] on a sign to pick it up[%3][%1]Right click[%2] to place it, like a normal sign[%4]Can't change mode when sign is picked up
 item.moarsigns:signtoolbox.description.copy=[%1] + [%2]Right click[%3] on a sign to copy all info[%4]Right click[%3] on a sign to paste the info
 item.moarsigns:signtoolbox.description.exchange=Opens an interface where you can exchange[%1]signs of the same material

@@ -7,15 +7,16 @@ import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
-import mezz.jei.api.recipe.IRecipeCategory;
-import mezz.jei.api.recipe.IRecipeWrapper;
+import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.BlankRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
 import javax.annotation.Nonnull;
 
-public class MoarSignsExchangeCategory implements IRecipeCategory {
+public class MoarSignsExchangeCategory extends BlankRecipeCategory<ExchangeRecipe> {
 
     private static final int craftOutputSlot = 0;
     private static final int craftInputSlot1 = 1;
@@ -63,7 +64,7 @@ public class MoarSignsExchangeCategory implements IRecipeCategory {
     }
 
     @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
+    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull ExchangeRecipe recipeWrapper) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
         guiItemStacks.init(craftOutputSlot, true, 74, 12);
@@ -75,10 +76,31 @@ public class MoarSignsExchangeCategory implements IRecipeCategory {
             }
         }
 
-        if (recipeWrapper instanceof ExchangeRecipe) {
+        if (recipeWrapper != null) {
             ExchangeRecipe wrapper = (ExchangeRecipe) recipeWrapper;
-            craftingGridHelper.setInput(guiItemStacks, wrapper.getInputs());
+            craftingGridHelper.setInputStacks(guiItemStacks, wrapper.getInputs());
             craftingGridHelper.setOutput(guiItemStacks, wrapper.getOutputs());
+        } else {
+            MoarSigns.logger.error("RecipeWrapper is not a known crafting wrapper type: {}", recipeWrapper);
+        }
+    }
+
+    @Override
+    public void setRecipe(IRecipeLayout recipeLayout, ExchangeRecipe recipeWrapper, IIngredients ingredients) {
+        IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+
+        guiItemStacks.init(craftOutputSlot, true, 74, 12);
+
+        for (int y = 0; y < 4; ++y) {
+            for (int x = 0; x < 9; ++x) {
+                int index = craftInputSlot1 + x + (y * 9);
+                guiItemStacks.init(index, false, 2 + x * 18, 42 + y * 18);
+            }
+        }
+
+        if (recipeWrapper != null) {
+            craftingGridHelper.setInputStacks(guiItemStacks, ingredients.getInputs(ItemStack.class));
+            craftingGridHelper.setOutput(guiItemStacks, ingredients.getOutputs(ItemStack.class));
         } else {
             MoarSigns.logger.error("RecipeWrapper is not a known crafting wrapper type: {}", recipeWrapper);
         }

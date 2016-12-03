@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.api;
 
 import gory_moon.moarsigns.items.ItemMoarSign;
+import gory_moon.moarsigns.util.IMoarSignsRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -18,7 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class ShapedMoarSignRecipe implements IRecipe {
+public class ShapedMoarSignRecipe implements IMoarSignsRecipe {
 
     //Added in for future ease of change, but hard coded for now.
     private static final int MAX_CRAFT_GRID_WIDTH = 3;
@@ -277,7 +278,7 @@ public class ShapedMoarSignRecipe implements IRecipe {
         return this;
     }
 
-    public ShapedMoarSignRecipe setNEINBTDifferent(boolean nbtDiff) {
+    public IMoarSignsRecipe setNEINBTDifferent(boolean nbtDiff) {
         neiNBTDifferent = nbtDiff;
         return this;
     }

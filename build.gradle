@@ -96,16 +96,16 @@ repositories {
 }
 
 dependencies {
-    deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
+    deployerJars "org.apache.maven.wagon:wagon-ftp:2.10"
 
     deobfCompile "mezz.jei:jei_${config.mc_version}:${config.jei_version}:api"
     runtime "mezz.jei:jei_${config.mc_version}:${config.jei_version}"
 
-    provided "codechicken:CodeChickenLib:${config.mc_version}-${config.cclib_version}:deobf"
-    provided "codechicken:CodeChickenCore:${config.mc_version}-${config.ccc_version}:deobf"
-    provided "codechicken:NotEnoughItems:${config.mc_version}-${config.nei_version}:deobf"
+    deobfProvided "codechicken:CodeChickenLib:${config.mc_version}-${config.cclib_version}:universal"
+    deobfProvided "codechicken:CodeChickenCore:${config.mc_version}-${config.ccc_version}:universal"
+    deobfProvided "codechicken:NotEnoughItems:${config.mc_version}-${config.nei_version}:universal"
 
-    compile "mcp.mobius.waila:Waila:" + config.waila_version /*+ "_" + config.mc_version*/ + ":dev"
+    deobfCompile "mcp.mobius.waila:Waila:" + config.waila_version /*+ "_" + config.mc_version*/
     deobfCompile "mcjty.theoneprobe:TheOneProbe:1.10-${config.top_version}"
 
     //compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar', group: ''
@@ -168,54 +168,57 @@ task signJar(type: SignJar, dependsOn: ["jar", "devJar"]) {
 }
 
 uploadArchives {
-    repositories.mavenDeployer {
-        if (project.hasProperty("maven_url")) {
-            logger.info('Publishing to files server')
+    repositories {
+        mavenDeployer {
+            if (project.hasProperty("maven_url")) {
+                logger.info('Publishing to files server')
+                configuration = configurations.deployerJars
 
-            repository(url: project.maven_url) {
-                authentication(userName: project.maven_username ?: "", password: project.maven_password ?: "")
-            }
-        } else if(project.hasProperty("local_maven")) {
-            repository(url: "file://${project.getProperty('local_maven')}")
-        }
-
-        pom {
-            groupId = project.group
-            version = project.version
-            artifactId = project.archivesBaseName
-        }
-
-        pom.project {
-            name project.archivesBaseName
-            packaging 'jar'
-            description 'MoarSigns'
-            url 'https://github.com/GoryMoon/MoarSigns/'
-
-            scm {
-                url 'https://github.com/GoryMoon/MoarSigns/'
-                connection 'scm:git:git://github.com/GoryMoon/MoarSigns.git'
-                developerConnection 'scm:git:git@github.com/GoryMoon/MoarSigns.git'
-            }
-
-            issueManagement {
-                system 'github'
-                url 'https://github.com/GoryMoon/MoarSigns/issues'
-            }
-
-            licenses {
-                license {
-                    name 'GNU Lesser General Public License 3.0'
-                    url 'https://www.gnu.org/licenses/lgpl-3.0.txt'
-                    distribution 'repo'
+                repository(url: project.maven_url) {
+                    authentication(userName: project.maven_username ?: "", password: project.maven_password ?: "")
                 }
+            } else if (project.hasProperty("local_maven")) {
+                repository(url: "file://${project.getProperty('local_maven')}")
             }
 
-            developers {
-                developer {
-                    id 'Gory_Moon'
-                    name 'Gory_Moon'
-                    roles {
-                        role 'developer'
+            pom {
+                groupId = project.group
+                version = project.version
+                artifactId = project.archivesBaseName
+            }
+
+            pom.project {
+                name project.archivesBaseName
+                packaging 'jar'
+                description 'MoarSigns'
+                url 'https://github.com/GoryMoon/MoarSigns/'
+
+                scm {
+                    url 'https://github.com/GoryMoon/MoarSigns/'
+                    connection 'scm:git:git://github.com/GoryMoon/MoarSigns.git'
+                    developerConnection 'scm:git:git@github.com/GoryMoon/MoarSigns.git'
+                }
+
+                issueManagement {
+                    system 'github'
+                    url 'https://github.com/GoryMoon/MoarSigns/issues'
+                }
+
+                licenses {
+                    license {
+                        name 'GNU Lesser General Public License 3.0'
+                        url 'https://www.gnu.org/licenses/lgpl-3.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'Gory_Moon'
+                        name 'Gory_Moon'
+                        roles {
+                            role 'developer'
+                        }
                     }
                 }
             }

@@ -118,7 +118,7 @@ public class GuiMoarSign extends GuiBase {
         buttonList.clear();
         buttons.clear();
         Keyboard.enableRepeatEvents(true);
-        entitySign.setEditAble(false);
+        entitySign.setEditable(false);
 
         String[] text = getSignTextWithCode(entitySign.signText);
         rowSizes = Arrays.copyOf(entitySign.rowSizes, entitySign.rowSizes.length);
@@ -210,7 +210,7 @@ public class GuiMoarSign extends GuiBase {
     @Override
     public void onGuiClosed() {
         Keyboard.enableRepeatEvents(false);
-        this.entitySign.setEditAble(true);
+        this.entitySign.setEditable(true);
 
         for (int i = 0; i < entitySign.signText.length; i++) {
             int maxLength = Utils.getMaxLength(rowSizes[i]);

@@ -35,9 +35,7 @@ import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 import java.util.Collections;
 import java.util.List;
 
-import static gory_moon.moarsigns.lib.ToolBoxModes.EXCHANGE_MODE;
-import static gory_moon.moarsigns.lib.ToolBoxModes.PREVIEW_MODE;
-import static gory_moon.moarsigns.lib.ToolBoxModes.ROTATE_MODE;
+import static gory_moon.moarsigns.lib.ToolBoxModes.*;
 
 public class ItemSignToolbox extends Item implements IToolHammer {
 
@@ -114,7 +112,7 @@ public class ItemSignToolbox extends Item implements IToolHammer {
             TileEntity entity = world.getTileEntity(pos);
             if (entity instanceof TileEntityMoarSign) {
                 TileEntityMoarSign tileEntity = (TileEntityMoarSign) entity;
-                tileEntity.setEditAble(true);
+                tileEntity.setEditable(true);
                 tileEntity.setPlayer(player);
                 PacketHandler.INSTANCE.sendTo(new MessageSignOpenGui(tileEntity, false), (EntityPlayerMP) player);
             }
@@ -228,8 +226,10 @@ public class ItemSignToolbox extends Item implements IToolHammer {
                 str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.MOVE.translate(Colors.LIGHTGRAY.toString() + "[", "]" + Colors.GRAY.toString(), "\n" + Colors.GRAY.toString(), "\n" + Colors.RED.toString());
                 if (stack.getTagCompound() != null) {
                     String unlocName = stack.getTagCompound().getString(NBT_UNLOCALIZED_NAME);
-                    String signName = I18n.translateToLocal(unlocName);
-                    str += "\n" + Colors.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_SIGN.translate() + " " + Colors.WHITE + signName + "\n" + Colors.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_TEXT.translate() + getFormattedData(stack.getTagCompound());
+                    if (!unlocName.isEmpty()) {
+                        String signName = I18n.translateToLocal(unlocName);
+                        str += "\n" + Colors.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_SIGN.translate() + " " + Colors.WHITE + signName + "\n" + Colors.LIGHTGRAY + Localization.ITEM.SIGNTOOLBOX.CURRENT_TEXT.translate() + getFormattedData(stack.getTagCompound());
+                    }
                 }
                 break;
             case EXCHANGE_MODE:
@@ -238,8 +238,11 @@ public class ItemSignToolbox extends Item implements IToolHammer {
             case PREVIEW_MODE:
                 str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.PREVIEW.translate("\n" + Colors.GRAY.toString());
                 break;
-            default:
-                str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.values()[stack.getItemDamage() + 1].translate(Colors.LIGHTGRAY.toString(), Colors.GRAY.toString());
+            case ROTATE_MODE:
+                str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.ROTATE.translate(Colors.LIGHTGRAY.toString(), Colors.GRAY.toString(), "\n" + Colors.GRAY, Colors.LIGHTGRAY + "[" + GameSettings.getKeyDisplayString(gameSettings.keyBindSneak.getKeyCode()) + "]" + Colors.GRAY.toString());
+                break;
+            case EDIT_MODE:
+                str += "\n" + Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.EDIT.translate(Colors.LIGHTGRAY.toString(), Colors.GRAY.toString());
         }
 
         String[] strList = str.split("\n");

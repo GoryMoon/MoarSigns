@@ -45,11 +45,13 @@
 		},
 		{
 			"mcVersion": "Minecraft 1.10.2",
-			"modVersion": "4.0.1.4",
+			"modVersion": "4.1.0.5",
 			"changeLog": [
-				"Fixed crash bug when trying to change textfield with no selected"
+				"Added PassthroughSigns integration",
+				"Updated JEI version and integration to look more like normal crafting",
+				"Fixed rotation of signs with the SignToolbox"
 			],
-			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2332377/download",
+			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2351770/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}

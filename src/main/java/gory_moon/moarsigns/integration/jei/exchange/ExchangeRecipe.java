@@ -1,5 +1,6 @@
 package gory_moon.moarsigns.integration.jei.exchange;
 
+import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
@@ -14,6 +15,12 @@ public class ExchangeRecipe extends BlankRecipeWrapper {
     public ExchangeRecipe(ItemStack input, List<ItemStack> outputs) {
         this.input = input;
         this.outputs = outputs;
+    }
+
+    @Override
+    public void getIngredients(IIngredients ingredients) {
+        ingredients.setInputs(ItemStack.class, Collections.singletonList(input));
+        ingredients.setOutputs(ItemStack.class, outputs);
     }
 
     @Override

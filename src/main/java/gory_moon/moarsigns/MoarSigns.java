@@ -83,7 +83,7 @@ public class MoarSigns {
         ModItems.registerRecipes();
 
         if (Loader.isModLoaded("Quark")) {
-            MoarSigns.logger.warn("Quark is loaded, MoarSigns sign editing might not work correctly");
+            MoarSigns.logger.warn("Quark is loaded, MoarSigns sign editing might not work as intended");
         }
 
         /*if (Loader.isModLoaded("MineTweaker3")) {

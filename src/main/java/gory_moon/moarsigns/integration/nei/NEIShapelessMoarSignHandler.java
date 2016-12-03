@@ -5,6 +5,7 @@ import codechicken.nei.api.stack.PositionedStack;
 import codechicken.nei.recipe.ShapelessRecipeHandler;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import codechicken.nei.util.NEIServerUtils;
+import com.google.common.collect.Lists;
 import gory_moon.moarsigns.api.MaterialInfo;
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe.MatchType;
 import gory_moon.moarsigns.api.ShapelessMoarSignRecipe;
@@ -96,7 +97,7 @@ public class NEIShapelessMoarSignHandler extends ShapelessRecipeHandler {
     }
 
     private CachedMoarSignRecipe forgeShapelessRecipe(ShapelessMoarSignRecipe recipe) {
-        ArrayList<Object> items = recipe.getInput();
+        ArrayList<Object> items = Lists.newArrayList(recipe.getInput());
 
         for (Object item : items)
             if (item instanceof List && ((List<?>) item).isEmpty())

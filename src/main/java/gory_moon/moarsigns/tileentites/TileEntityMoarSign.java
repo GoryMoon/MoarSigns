@@ -23,8 +23,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentUtils;
+import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -51,6 +53,8 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
     private EntityPlayer playerEditing;
     private ResourceLocation resourceLocation;
     private boolean textureReq = false;
+
+    private final CommandResultStats stats = new CommandResultStats();
 
     public TileEntityMoarSign() {
         super();
@@ -114,6 +118,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
         if (texture_name != null)
             compound.setString(NBT_TEXTURE_TAG, texture_name);
 
+        stats.writeStatsToNBT(compound);
         return compound;
     }
 
@@ -265,6 +270,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
         if (texture_name == null || texture_name.isEmpty()) texture_name = "oak_sign";
         setResourceLocation(texture_name);
 
+        stats.readStatsFromNBT(compound);
     }
 
     @Override
@@ -289,17 +295,18 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
         return this.isEditable;
     }
 
-    public void setEditAble(boolean state) {
+    @Override
+    public boolean onlyOpsCanSetNbt() {
+        return true;
+    }
+
+    @Override
+    public void setEditable(boolean state) {
         this.isEditable = state;
 
         if (!state) {
             playerEditing = null;
         }
-    }
-
-    @Override
-    public void setEditable(boolean editable) {
-        setEditAble(editable);
     }
 
     public ResourceLocation getResourceLocation() {
@@ -328,5 +335,98 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
     @Override
     public boolean canRenderBreaking() {
         return true;
+    }
+
+    @Override
+    public boolean executeCommand(final EntityPlayer playerIn) {
+        ICommandSender icommandsender = new ICommandSender() {
+            /**
+             * Get the name of this object. For players this returns their username
+             */
+            public String getName() {
+                return playerIn.getName();
+            }
+            /**
+             * Get the formatted ChatComponent that will be used for the sender's username in chat
+             */
+            public ITextComponent getDisplayName() {
+                return playerIn.getDisplayName();
+            }
+            /**
+             * Send a chat message to the CommandSender
+             */
+            public void addChatMessage(ITextComponent component) {
+            }
+            /**
+             * Returns {@code true} if the CommandSender is allowed to execute the command, {@code false} if not
+             */
+            public boolean canCommandSenderUseCommand(int permLevel, String commandName) {
+                return permLevel <= 2;
+            }
+            /**
+             * Get the position in the world. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
+             * return the coordinates 0, 0, 0
+             */
+            public BlockPos getPosition()
+            {
+                return pos;
+            }
+            /**
+             * Get the position vector. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
+             * return 0.0D, 0.0D, 0.0D
+             */
+            public Vec3d getPositionVector() {
+                return new Vec3d((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D);
+            }
+            /**
+             * Get the world, if available. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
+             * return the overworld
+             */
+            public World getEntityWorld() {
+                return playerIn.getEntityWorld();
+            }
+            /**
+             * Returns the entity associated with the command sender. MAY BE NULL!
+             */
+            public Entity getCommandSenderEntity() {
+                return playerIn;
+            }
+            /**
+             * Returns true if the command sender should be sent feedback about executed commands
+             */
+            public boolean sendCommandFeedback() {
+                return false;
+            }
+            public void setCommandStat(CommandResultStats.Type type, int amount) {
+                if (worldObj != null && !worldObj.isRemote) {
+                    stats.setCommandStatForSender(worldObj.getMinecraftServer(), this, type, amount);
+                }
+            }
+            /**
+             * Get the Minecraft server instance
+             */
+            public MinecraftServer getServer() {
+                return playerIn.getServer();
+            }
+        };
+
+        for (ITextComponent itextcomponent : this.signText) {
+            Style style = itextcomponent == null ? null : itextcomponent.getStyle();
+
+            if (style != null && style.getClickEvent() != null) {
+                ClickEvent clickevent = style.getClickEvent();
+
+                if (clickevent.getAction() == ClickEvent.Action.RUN_COMMAND) {
+                    playerIn.getServer().getCommandManager().executeCommand(icommandsender, clickevent.getValue());
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public CommandResultStats getStats() {
+        return stats;
     }
 }
