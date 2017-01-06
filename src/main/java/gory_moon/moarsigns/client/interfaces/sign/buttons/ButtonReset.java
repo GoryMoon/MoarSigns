@@ -31,9 +31,12 @@ public class ButtonReset extends GuiButton {
             }
         }
 
-        for (int i = 0; i < guiM.visibleRows.length; i++) guiM.visibleRows[i] = true;
-        for (int i = 0; i < 4; i++) guiM.rowLocations[i] = 2 + 10 * i;
-        for (int i = 0; i < guiM.rowSizes.length; i++) guiM.rowSizes[i] = 0;
+        for (int i = 0; i < guiM.visibleRows.length; i++)
+            guiM.visibleRows[i] = true;
+        for (int i = 0; i < 4; i++)
+            guiM.rowLocations[i] = 2 + 10 * i;
+        for (int i = 0; i < guiM.rowSizes.length; i++)
+            guiM.rowSizes[i] = 0;
 
         guiM.buttonLock.unlock(gui);
     }

@@ -3,20 +3,12 @@ package gory_moon.moarsigns.integration.techreborn;
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.api.SignSpecialProperty;
-import gory_moon.moarsigns.integration.IntegrationHandler;
-import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class TechRebornIntegration implements ISignRegistration {
@@ -42,8 +34,8 @@ public class TechRebornIntegration implements ISignRegistration {
                 blockItem1 = stack.getItem();
             } else if (stack.getUnlocalizedName().equals("tile.techreborn.storage2.tungstensteel") && blockItem2 == null)
 
-            if (item != null && blockItem1 != null && blockItem2 != null)
-                break;
+                if (item != null && blockItem1 != null && blockItem2 != null)
+                    break;
         }
 
         registerMetal("aluminium_sign",     null, "aluminium",      new ItemStack(item, 1, 0),  new ItemStack(blockItem1, 1, 1));
@@ -68,7 +60,7 @@ public class TechRebornIntegration implements ISignRegistration {
     }
 
     private void registerMetal(String name, SignSpecialProperty property, String materialName, ItemStack material, ItemStack materialBlock) throws IntegrationException {
-        SignRegistry.register(name, property, materialName, PATH, false, material, ModInfo.ID, TECHREBORN_TAG).setMetal();
+        SignRegistry.register(name, property, materialName, PATH, false, material, materialBlock, Reference.MODID, TECHREBORN_TAG).setMetal();
     }
 
     @Override

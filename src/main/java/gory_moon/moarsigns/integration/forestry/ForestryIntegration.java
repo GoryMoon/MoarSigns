@@ -3,7 +3,7 @@ package gory_moon.moarsigns.integration.forestry;
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.api.SignSpecialProperty;
-import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
@@ -70,7 +70,7 @@ public class ForestryIntegration implements ISignRegistration {
     }
 
     private void registerWood(String name, SignSpecialProperty property, String materialName, ItemStack material) throws IntegrationException {
-        SignRegistry.register(name, property, materialName, PATH, false, material, ModInfo.ID, FORESTRY_TAG);
+        SignRegistry.register(name, property, materialName, PATH, false, material, Reference.MODID, FORESTRY_TAG);
     }
 
     @Override
@@ -92,12 +92,13 @@ public class ForestryIntegration implements ISignRegistration {
                 blockMetal = stack.getItem();
             }
 
-            if (itemIngot1 != null && itemIngot2 != null && itemIngot3 != null && blockMetal != null) break;
+            if (itemIngot1 != null && itemIngot2 != null && itemIngot3 != null && blockMetal != null)
+                break;
         }
 
-        SignRegistry.register("tin_sign", null, "tin", PATH, false, new ItemStack(itemIngot1), new ItemStack(blockMetal, 1, 2), ModInfo.ID, FORESTRY_TAG).setMetal();
-        SignRegistry.register("bronze_sign", null, "bronze", PATH, false, new ItemStack(itemIngot2), new ItemStack(blockMetal, 1, 3), ModInfo.ID, FORESTRY_TAG).setMetal();
-        SignRegistry.register("copper_sign", null, "copper", PATH, false, new ItemStack(itemIngot3), new ItemStack(blockMetal, 1, 1), ModInfo.ID, FORESTRY_TAG).setMetal();
+        SignRegistry.register("tin_sign", null, "tin", PATH, false, new ItemStack(itemIngot1), new ItemStack(blockMetal, 1, 2), Reference.MODID, FORESTRY_TAG).setMetal();
+        SignRegistry.register("bronze_sign", null, "bronze", PATH, false, new ItemStack(itemIngot2), new ItemStack(blockMetal, 1, 3), Reference.MODID, FORESTRY_TAG).setMetal();
+        SignRegistry.register("copper_sign", null, "copper", PATH, false, new ItemStack(itemIngot3), new ItemStack(blockMetal, 1, 1), Reference.MODID, FORESTRY_TAG).setMetal();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package gory_moon.moarsigns;
 
 import gory_moon.moarsigns.items.ModItems;
-import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.lib.Reference;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
@@ -17,16 +17,20 @@ public class ConfigHandler {
 
     /* SINGLETON */
     private static ConfigHandler _instance = null;
+
     private ConfigHandler() {
         _instance = this;
         MinecraftForge.EVENT_BUS.register(this);
     }
-    public static ConfigHandler instance(){	return _instance == null ? new ConfigHandler() : _instance;	}
-	/* === */
 
-    public  Configuration config = null;
+    public static ConfigHandler instance() {
+        return _instance == null ? new ConfigHandler() : _instance;
+    }
+    /* === */
 
-    public void loadDefaultConfig(FMLPreInitializationEvent event){
+    public Configuration config = null;
+
+    public void loadDefaultConfig(FMLPreInitializationEvent event) {
         config = new Configuration(event.getSuggestedConfigurationFile());
 
         syncConfigs();
@@ -52,7 +56,7 @@ public class ConfigHandler {
 
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.getModID().equals(ModInfo.ID))
+        if (event.getModID().equals(Reference.MODID))
             syncConfigs();
     }
 

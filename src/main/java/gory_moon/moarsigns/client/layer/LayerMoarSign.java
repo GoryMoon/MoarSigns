@@ -7,11 +7,14 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 /**
  * Just playing around a bit, no permanent code
  */
+@SideOnly(Side.CLIENT)
 public class LayerMoarSign implements LayerRenderer {
 
     private ModelMoarSign modelMoarSign;
@@ -25,7 +28,7 @@ public class LayerMoarSign implements LayerRenderer {
     @Override
     public void doRenderLayer(EntityLivingBase entityLivingbase, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         if (entityLivingbase.getName().equals("Gory_Moon") && !entityLivingbase.isInvisible()) {
-            float sneak = entityLivingbase.isSneaking()? 0.1F: 0.0F;
+            float sneak = entityLivingbase.isSneaking() ? 0.1F : 0.0F;
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, 0.0F + sneak, 0.15F);
             float f = 0.3333334F;
@@ -43,7 +46,8 @@ public class LayerMoarSign implements LayerRenderer {
 
             GlStateManager.pushMatrix();
             int size = 5;
-            float f1 = 0.016666668F * f + (size / 1000F);;
+            float f1 = 0.016666668F * f + (size / 1000F);
+            ;
             //GlStateManager.translate(size > 0 ? 0.01F : 0.0F, 0.5F * f - ((float) 0.02 * size) - (size < 2 ? 0 : size < 7 ? 0.01F : size < 11 ? 0.02F : size < 16 ? 0.03F : size < 20 ? 0.035F : 0.037F), 0.07F * f);
             GlStateManager.translate(0.0F, 0.043F + sneak, 0.1709F);
             GlStateManager.scale(-f1, f1, f1);
@@ -58,8 +62,8 @@ public class LayerMoarSign implements LayerRenderer {
 
             GlStateManager.disableLighting();
 
-            String s = "§eMoar";
-            String s1 = "§6Signs";
+            String s = ((char) 167) + "eMoar";
+            String s1 = ((char) 167) + "6Signs";
             fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, 2, 0, true);
             fontRenderer.drawString(s1, -fontRenderer.getStringWidth(s1) / 2, 12, 0, true);
 

@@ -27,9 +27,7 @@ public class ButtonTextShadow extends GuiButtonSpecial {
 
     @Override
     public String getButtonInfo(GuiBase gui) {
-        return Localization.GUI.BUTTONS.TEXT_SHADOW.translateTitles(hasShadow ? "1" : "0")
-                + newLine +
-                Localization.GUI.BUTTONS.TEXT_SHADOW.translateDescriptions(hasShadow ? "1" : "0");
+        return Localization.GUI.BUTTONS.TEXT_SHADOW.translateTitles(hasShadow ? "1" : "0") + newLine + Localization.GUI.BUTTONS.TEXT_SHADOW.translateDescriptions(hasShadow ? "1" : "0");
     }
 
     @Override

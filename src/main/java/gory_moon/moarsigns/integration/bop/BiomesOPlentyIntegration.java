@@ -3,7 +3,7 @@ package gory_moon.moarsigns.integration.bop;
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.api.SignSpecialProperty;
-import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
@@ -47,7 +47,7 @@ public class BiomesOPlentyIntegration implements ISignRegistration {
     }
 
     private void registerWood(String name, SignSpecialProperty property, String materialName, ItemStack material) throws IntegrationException {
-        SignRegistry.register(name, property, materialName, PATH, false, material, ModInfo.ID, BOP_TAG);
+        SignRegistry.register(name, property, materialName, PATH, false, material, Reference.MODID, BOP_TAG);
     }
 
     @Override

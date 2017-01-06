@@ -1,6 +1,6 @@
 package gory_moon.moarsigns.client.renderers;
 
-import gory_moon.moarsigns.blocks.Blocks;
+import gory_moon.moarsigns.blocks.ModBlocks;
 import gory_moon.moarsigns.client.models.ModelMoarSign;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Utils;
@@ -33,7 +33,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer<TileEntityMoarSi
         float f = 0.6666667F;
         float f1;
 
-        if (!te.showInGui && (block == Blocks.signStandingWood || block == Blocks.signStandingMetal)) {
+        if (!te.showInGui && (block == ModBlocks.SIGN_STANDING_WOOD || block == ModBlocks.SIGN_STANDING_METAL)) {
             GlStateManager.translate((float) x + 0.5F, (float) y + 0.75F * f, (float) z + 0.5F);
             float f2 = (float) (te.getBlockMetadata() * 360) / 16.0F;
             GlStateManager.rotate(-f2, 0.0F, 1.0F, 0.0F);
@@ -41,7 +41,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer<TileEntityMoarSi
         } else {
             int i = te.getBlockMetadata();
 
-            int side = !te.showInGui ? i & 7: 2;
+            int side = !te.showInGui ? i & 7 : 2;
 
             f1 = 0.0F;
 
@@ -55,16 +55,22 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer<TileEntityMoarSi
                     int rotation = (i & 6) >> 1;
                     f1 = 0F;
 
-                    if (rotation == 1) f1 = 90F;
-                    else if (rotation == 2) f1 = 180F;
-                    else if (rotation == 3) f1 = -90F;
+                    if (rotation == 1)
+                        f1 = 90F;
+                    else if (rotation == 2)
+                        f1 = 180F;
+                    else if (rotation == 3)
+                        f1 = -90F;
                 } else {
                     int rotation = (i & 6) >> 1;
                     f1 = 180F;
 
-                    if (rotation == 1) f1 = -90F;
-                    else if (rotation == 2) f1 = 0F;
-                    else if (rotation == 3) f1 = 90F;
+                    if (rotation == 1)
+                        f1 = -90F;
+                    else if (rotation == 2)
+                        f1 = 0F;
+                    else if (rotation == 3)
+                        f1 = 90F;
                 }
             } else {
                 if (side == 2) {
@@ -83,7 +89,8 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer<TileEntityMoarSi
 
             GlStateManager.translate((float) x + 0.5F, (float) y + 0.75F * f, (float) z + 0.5F);
             GlStateManager.rotate(-f1, 0.0F, 1.0F, 0.0F);
-            if (flatSign && !groundSign) GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
+            if (flatSign && !groundSign)
+                GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
             if (flatSign && groundSign) {
                 GlStateManager.rotate(270.0F, 1.0F, 0.0F, 0.0F);
                 GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
@@ -92,19 +99,18 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer<TileEntityMoarSi
             this.modelMoarSign.stick.showModel = false;
         }
 
-        if (destroyStage >= 0)
-        {
+        if (destroyStage >= 0) {
             bindTexture(DESTROY_STAGES[destroyStage]);
             GlStateManager.matrixMode(5890);
             GlStateManager.pushMatrix();
             GlStateManager.scale(4.0F, 2.0F, 1.0F);
             GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
             GlStateManager.matrixMode(5888);
-        }
-        else
-        {
-            if (texture != null) bindTexture(texture);
-            else bindTexture(tempTexture);
+        } else {
+            if (texture != null)
+                bindTexture(texture);
+            else
+                bindTexture(tempTexture);
         }
 
         GlStateManager.enableRescaleNormal();
@@ -122,7 +128,8 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer<TileEntityMoarSi
         if (destroyStage < 0) {
             for (int row = 0; row < rows.length; row++) {
                 if (te.signText[row] != null) {
-                    if (!rows[row]) continue;
+                    if (!rows[row])
+                        continue;
 
                     float size = sizes[row];
                     GlStateManager.pushMatrix();
@@ -135,7 +142,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer<TileEntityMoarSi
 
                     ITextComponent ichatcomponent = te.signText[row];
                     List<ITextComponent> list = GuiUtilRenderComponents.splitText(ichatcomponent, 90, fontRenderer, false, true);
-                    String s = list != null && list.size() > 0 ? ((ITextComponent)list.get(0)).getFormattedText() : "";
+                    String s = list != null && list.size() > 0 ? ((ITextComponent) list.get(0)).getFormattedText() : "";
 
                     int maxLength = Utils.getMaxLength((int) size) - Utils.toPixelWidth(fontRenderer, Utils.getStyleOffset(s, te.shadowRows[row]));
                     s = fontRenderer.trimStringToWidth(s, Math.min(maxLength, fontRenderer.getStringWidth(s)));
@@ -156,8 +163,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer<TileEntityMoarSi
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.popMatrix();
 
-        if (destroyStage >= 0)
-        {
+        if (destroyStage >= 0) {
             GlStateManager.matrixMode(5890);
             GlStateManager.popMatrix();
             GlStateManager.matrixMode(5888);

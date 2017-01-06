@@ -10,12 +10,11 @@ import net.minecraft.world.World;
 
 public class BlockMoarSignStanding extends BlockMoarSign {
 
-    public BlockMoarSignStanding(Material material, SoundType stepSound) {
-        super(material, stepSound);
+    public BlockMoarSignStanding(Material material, SoundType stepSound, float hardness, float resistance, String registryname, String harvestLevel, int level) {
+        super(material, stepSound, hardness, resistance, registryname, harvestLevel, level);
     }
 
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(ROTATION, meta);
     }
 
@@ -24,8 +23,7 @@ public class BlockMoarSignStanding extends BlockMoarSign {
         return new BlockStateContainer(this, ROTATION);
     }
 
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(ROTATION);
     }
 

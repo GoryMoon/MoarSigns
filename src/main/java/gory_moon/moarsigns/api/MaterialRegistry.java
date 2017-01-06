@@ -61,7 +61,8 @@ public class MaterialRegistry {
 
     public static MaterialInfo get(String materialName, String materialPath) {
         for (MaterialInfo info : get(materialName)) {
-            if (info.path.equals(materialPath)) return info;
+            if (info.path.equals(materialPath))
+                return info;
         }
         return null;
     }

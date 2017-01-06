@@ -1,5 +1,5 @@
 package gory_moon.moarsigns.integration.tweaker;
-/*
+
 import gory_moon.moarsigns.api.MaterialInfo;
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe;
 import gory_moon.moarsigns.api.ShapedMoarSignRecipe.MatchType;
@@ -13,7 +13,7 @@ import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.minecraft.MineTweakerMC;
 import minetweaker.api.oredict.IOreDictEntry;
-import minetweaker.mc1710.item.MCItemStack;
+import minetweaker.mc1102.item.MCItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -54,7 +54,7 @@ public class Signs {
         IItemStack[] base = new IItemStack[0];
         if (ingredient instanceof MatchTypeEntry || ingredient instanceof MaterialEntry) {
             if (signs.isEmpty()) {
-                ModItems.sign.getSubItemStacks(Signs.signs);
+                ModItems.SIGN.getSubItemStacks(Signs.signs);
             }
             ArrayList<IItemStack> signs = new ArrayList<IItemStack>();
             if (ingredient instanceof MatchTypeEntry) {
@@ -92,7 +92,8 @@ public class Signs {
     }
 
     public static ItemStack[] toStacks(IItemStack[] iStack) {
-        if (iStack == null) return null;
+        if (iStack == null)
+            return null;
         else {
             ItemStack[] output = new ItemStack[iStack.length];
             for (int i = 0; i < iStack.length; i++) {
@@ -104,7 +105,8 @@ public class Signs {
     }
 
     public static Object toObject(IIngredient iStack) {
-        if (iStack == null) return null;
+        if (iStack == null)
+            return null;
         else {
             if (iStack instanceof IOreDictEntry) {
                 return toString((IOreDictEntry) iStack);
@@ -114,18 +116,21 @@ public class Signs {
                 return (MatchType) iStack.getInternal();
             } else if (iStack instanceof MaterialEntry) {
                 return (MaterialInfo) iStack.getInternal();
-            } else return null;
+            } else
+                return null;
         }
     }
 
     public static Object[] toObjects(IIngredient[] ingredient) {
-        if (ingredient == null) return null;
+        if (ingredient == null)
+            return null;
         else {
             Object[] output = new Object[ingredient.length];
             for (int i = 0; i < ingredient.length; i++) {
                 if (ingredient[i] != null) {
                     output[i] = toObject(ingredient[i]);
-                } else output[i] = "";
+                } else
+                    output[i] = "";
             }
 
             return output;
@@ -133,7 +138,8 @@ public class Signs {
     }
 
     public static Object[] toShapedObjects(IIngredient[][] ingredients) {
-        if (ingredients == null) return null;
+        if (ingredients == null)
+            return null;
         else {
             ArrayList prep = new ArrayList();
             prep.add("abc");
@@ -172,9 +178,13 @@ public class Signs {
 
         @Override
         public void apply() {
-            if (isShapeless) iRecipe = new ShapelessMoarSignRecipe(output, true, recipe);
-            else iRecipe = new ShapedMoarSignRecipe(output, recipe);
+            if (isShapeless)
+                iRecipe = new ShapelessMoarSignRecipe(output, true, recipe);
+            else
+                iRecipe = new ShapedMoarSignRecipe(output, recipe);
             CraftingManager.getInstance().getRecipeList().add(iRecipe);
+
+            MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(iRecipe);
         }
 
         @Override
@@ -185,6 +195,7 @@ public class Signs {
         @Override
         public void undo() {
             CraftingManager.getInstance().getRecipeList().remove(iRecipe);
+            MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(iRecipe);
         }
 
         @Override
@@ -220,7 +231,7 @@ public class Signs {
         @Override
         public void apply() {
             List allRecipes = CraftingManager.getInstance().getRecipeList();
-            iRecipes = new ArrayList<IRecipe>();
+            iRecipes = new ArrayList<>();
             for (Object obj : allRecipes) {
                 IRecipe recipe = (IRecipe) obj;
                 for (ItemStack output : outputs) {
@@ -229,8 +240,10 @@ public class Signs {
                     }
                 }
             }
-            for (IRecipe recipe : iRecipes)
+            for (IRecipe recipe : iRecipes) {
                 CraftingManager.getInstance().getRecipeList().remove(recipe);
+                MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
+            }
 
         }
 
@@ -241,7 +254,10 @@ public class Signs {
 
         @Override
         public void undo() {
-            CraftingManager.getInstance().getRecipeList().addAll(iRecipes);
+            for (IRecipe recipe : iRecipes) {
+                CraftingManager.getInstance().getRecipeList().add(recipe);
+                MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
+            }
         }
 
         @Override
@@ -266,4 +282,3 @@ public class Signs {
         }
     }
 }
-*/

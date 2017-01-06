@@ -7,6 +7,10 @@ import javax.annotation.Nonnull;
 
 public class ShapedMoarSignsRecipeHandler extends MoarSignsRecipeHandlerBase<ShapedMoarSignRecipe> {
 
+    public ShapedMoarSignsRecipeHandler() {
+        super(null);
+    }
+
     @Nonnull
     @Override
     public Class<ShapedMoarSignRecipe> getRecipeClass() {

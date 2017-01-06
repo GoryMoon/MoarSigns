@@ -18,11 +18,12 @@ public class ExchangeRecipeMaker {
 
     public static List<ExchangeRecipe> getExchangeRecipes() {
         List<ExchangeRecipe> exchangeRecipes = new ArrayList<ExchangeRecipe>();
-        for (ItemStack stack: moarSigns) {
+        for (ItemStack stack : moarSigns) {
             String texture = ItemMoarSign.getTextureFromNBTFull(stack.getTagCompound());
             SignInfo signInfo = SignRegistry.get(texture);
 
-            if (signInfo == null || signInfo.material == null || signInfo.material.materialName == null) continue;
+            if (signInfo == null || signInfo.material == null || signInfo.material.materialName == null)
+                continue;
             HashSet<MaterialInfo> materials = MaterialRegistry.get(signInfo.material.materialName);
             if (materials == null || materials.size() <= 1) {
                 continue;

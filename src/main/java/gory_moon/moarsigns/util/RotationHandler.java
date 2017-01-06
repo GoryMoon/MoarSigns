@@ -2,7 +2,7 @@ package gory_moon.moarsigns.util;
 
 import gory_moon.moarsigns.blocks.BlockMoarSign;
 import gory_moon.moarsigns.blocks.BlockMoarSignStanding;
-import gory_moon.moarsigns.blocks.Blocks;
+import gory_moon.moarsigns.blocks.ModBlocks;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -12,7 +12,8 @@ import net.minecraft.world.World;
 public class RotationHandler {
 
     public static void rotate(TileEntityMoarSign tileEntity, boolean reverse) {
-        if (tileEntity.getWorld().isRemote) return;
+        if (tileEntity.getWorld().isRemote)
+            return;
         World world = tileEntity.getWorld();
         IBlockState state = world.getBlockState(tileEntity.getPos());
         int meta = state.getBlock().getMetaFromState(state);
@@ -34,7 +35,8 @@ public class RotationHandler {
                     int rotation = (meta & 6) >> 1;
 
                     if (side == 1) {
-                        if (rotation == 3) side = 2;
+                        if (rotation == 3)
+                            side = 2;
                         else {
                             side = (++rotation << 1);
                             side += 9;
@@ -49,15 +51,19 @@ public class RotationHandler {
                     }
                 } else {
                     side = side & 7;
-                    if (side == 5) side = 8;
-                    else if (side == 2) side = 4;
-                    else if (side == 4) side = 3;
-                    else if (side == 3) side = 5;
+                    if (side == 5)
+                        side = 8;
+                    else if (side == 2)
+                        side = 4;
+                    else if (side == 4)
+                        side = 3;
+                    else if (side == 3)
+                        side = 5;
                 }
                 flatSign = ((side & 8) >> 3) == 1;
                 int enumSide = flatSign ? side & 1 : side & 7;
 
-                if (((BlockMoarSign)Blocks.signStandingMetal).canPlaceBlockAt(world, tileEntity.getPos().offset(EnumFacing.getFront(enumSide).getOpposite()))) {
+                if (((BlockMoarSign) ModBlocks.SIGN_STANDING_METAL).canPlaceBlockAt(world, tileEntity.getPos().offset(EnumFacing.getFront(enumSide).getOpposite()))) {
                     testing = false;
                 }
             }
@@ -81,13 +87,15 @@ public class RotationHandler {
     }
 
     public static void rotate(TileEntityMoarSign tileEntity, int rotation) {
-        if (tileEntity.getWorld().isRemote) return;
+        if (tileEntity.getWorld().isRemote)
+            return;
         for (int i = 0; i < rotation; i++)
             rotate(tileEntity, false);
     }
 
     public static void setRotation(TileEntityMoarSign tileEntity, int rotation) {
-        if (rotation < 0 || rotation > 15 || tileEntity.getWorld().isRemote) return;
+        if (rotation < 0 || rotation > 15 || tileEntity.getWorld().isRemote)
+            return;
         World world = tileEntity.getWorld();
         IBlockState state = world.getBlockState(tileEntity.getPos());
         world.setBlockState(tileEntity.getPos(), state.getBlock().getStateFromMeta(rotation), 3);

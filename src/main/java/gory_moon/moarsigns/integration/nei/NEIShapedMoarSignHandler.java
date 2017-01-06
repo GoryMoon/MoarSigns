@@ -108,7 +108,8 @@ public class NEIShapedMoarSignHandler extends ShapedRecipeHandler {
         }
 
         Object[] items = recipe.getInput();
-        if (items == null) return null;
+        if (items == null)
+            return null;
         for (Object item : items)
             if (item instanceof List && ((List<?>) item).isEmpty())
                 return null;

@@ -8,13 +8,14 @@ import gory_moon.moarsigns.util.IMoarSignsRecipe;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.IStackHelper;
+import mezz.jei.api.recipe.wrapper.ICraftingRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MoarSignsRecipeWrapper extends BlankRecipeWrapper {
+public abstract class MoarSignsRecipeWrapper extends BlankRecipeWrapper implements ICraftingRecipeWrapper {
 
     protected final IMoarSignsRecipe recipe;
 
@@ -34,7 +35,7 @@ public class MoarSignsRecipeWrapper extends BlankRecipeWrapper {
     public void getIngredients(IIngredients ingredients) {
         IStackHelper stackHelper = MoarSignsPlugin.jeiHelpers.getStackHelper();
         ArrayList<Object> inputs = new ArrayList<Object>();
-        for (Object o: recipe.getInput()) {
+        for (Object o : recipe.getInput()) {
             if (o instanceof MatchType || o instanceof MaterialInfo) {
                 inputs.add(MoarSignsJeiRecipeHelper.getSigns(o));
             } else {
@@ -52,7 +53,7 @@ public class MoarSignsRecipeWrapper extends BlankRecipeWrapper {
     @Override
     public List getInputs() {
         ArrayList<Object> inputs = new ArrayList<Object>();
-        for (Object o: recipe.getInput()) {
+        for (Object o : recipe.getInput()) {
             if (o instanceof MatchType || o instanceof MaterialInfo) {
                 inputs.add(MoarSignsJeiRecipeHelper.getSigns(o));
             } else {

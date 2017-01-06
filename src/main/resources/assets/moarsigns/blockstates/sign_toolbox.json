@@ -1,0 +1,40 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "moarsigns:item/generated"
+  },
+  "variants": {
+    "variant": {
+      "edit": {
+        "textures": {
+          "layer0": "moarsigns:items/toolbox/edit_mode"
+        }
+      },
+      "copy": {
+        "textures": {
+          "layer0": "moarsigns:items/toolbox/copy_mode"
+        }
+      },
+      "exchange": {
+        "textures": {
+          "layer0": "moarsigns:items/toolbox/exchange_mode"
+        }
+      },
+      "move": {
+        "textures": {
+          "layer0": "moarsigns:items/toolbox/move_mode"
+        }
+      },
+      "preview": {
+        "textures": {
+          "layer0": "moarsigns:items/toolbox/preview_mode"
+        }
+      },
+      "rotate": {
+        "textures": {
+          "layer0": "moarsigns:items/toolbox/rotate_mode"
+        }
+      }
+    }
+  }
+}

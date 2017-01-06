@@ -56,7 +56,8 @@ public class InventoryExchange implements IInventory {
         String texture = ((ItemMoarSign) item).getTextureFromNBTFull(signStack.getTagCompound());
         SignInfo signInfo = SignRegistry.get(texture);
 
-        if (signInfo == null) return;
+        if (signInfo == null)
+            return;
 
         HashSet<MaterialInfo> materials = MaterialRegistry.get(signInfo.material.materialName);
         if (materials == null || materials.size() < 1) {
@@ -140,7 +141,7 @@ public class InventoryExchange implements IInventory {
 
     @Override
     public ITextComponent getDisplayName() {
-        return (ITextComponent)(this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName(), new Object[0]));
+        return (ITextComponent) (this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName(), new Object[0]));
     }
 
     @Override
@@ -189,8 +190,7 @@ public class InventoryExchange implements IInventory {
 
     @Override
     public void clear() {
-        for (int i = 0; i < inventory.length; ++i)
-        {
+        for (int i = 0; i < inventory.length; ++i) {
             inventory[i] = null;
         }
     }

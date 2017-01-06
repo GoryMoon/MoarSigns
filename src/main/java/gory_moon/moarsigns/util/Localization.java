@@ -34,8 +34,7 @@ public final class Localization {
     public static class INTEGRATION {
 
         public enum WAILA {
-            SHOW_ORIGIN,
-            SHOW_MATERIAL;
+            SHOW_ORIGIN, SHOW_MATERIAL;
 
             public String translate(String... vars) {
                 return Localization.translateString("integration.moarsigns:waila." + toString().toLowerCase(), vars);
@@ -46,9 +45,7 @@ public final class Localization {
     public static class ITEM {
 
         public enum SIGN {
-            MATERIAL,
-            MATERIAL_ORIGIN,
-            ERROR;
+            MATERIAL, MATERIAL_ORIGIN, ERROR;
 
             public String translate(String... vars) {
                 return Localization.translateString("item.moarsigns:sign.description." + toString().toLowerCase(), vars);
@@ -57,15 +54,7 @@ public final class Localization {
 
         public enum SIGNTOOLBOX {
 
-            CHANGE,
-            EDIT,
-            ROTATE,
-            MOVE,
-            COPY,
-            EXCHANGE,
-            PREVIEW,
-            CURRENT_SIGN,
-            CURRENT_TEXT;
+            CHANGE, EDIT, ROTATE, MOVE, COPY, EXCHANGE, PREVIEW, CURRENT_SIGN, CURRENT_TEXT;
 
             public String translate(String... vars) {
                 String s = (ordinal() < 7 ? "description." : "") + toString().toLowerCase();
@@ -79,20 +68,7 @@ public final class Localization {
 
         public enum BUTTONS {
 
-            CUT,
-            COPY,
-            PASTE,
-            CUTSIGN,
-            COPYSIGN,
-            PASTESIGN,
-            RESET,
-            COLORSELECTOR,
-            TEXTSTYLE,
-            LOCK,
-            TEXT_SIZE,
-            TEXT_POSITION,
-            TEXT_SHOWHIDE,
-            TEXT_SHADOW;
+            CUT, COPY, PASTE, CUTSIGN, COPYSIGN, PASTESIGN, RESET, COLORSELECTOR, TEXTSTYLE, LOCK, TEXT_SIZE, TEXT_POSITION, TEXT_SHOWHIDE, TEXT_SHADOW;
 
             private String key;
 
@@ -110,22 +86,7 @@ public final class Localization {
         }
 
         public enum COLORS {
-            BLACK,
-            BLUE,
-            GREEN,
-            CYAN,
-            RED,
-            PURPLE,
-            ORANGE,
-            LIGHTGRAY,
-            GRAY,
-            LIGHTBLUE,
-            LIME,
-            TURQUISE,
-            PINK,
-            MAGNETA,
-            YELLOW,
-            WHITE;
+            BLACK, BLUE, GREEN, CYAN, RED, PURPLE, ORANGE, LIGHTGRAY, GRAY, LIGHTBLUE, LIME, TURQUISE, PINK, MAGNETA, YELLOW, WHITE;
 
             public String translate() {
                 return Localization.translateString("gui.moarsigns:color." + toString().toLowerCase(), "");
@@ -133,13 +94,7 @@ public final class Localization {
         }
 
         public enum TEXTSTYLES {
-            EXAMPLE_TEXT,
-            RANDOM,
-            BOLD,
-            STRIKETHROUGH,
-            UNDERLINE,
-            ITALIC,
-            RESET;
+            EXAMPLE_TEXT, RANDOM, BOLD, STRIKETHROUGH, UNDERLINE, ITALIC, RESET;
 
 
             public String translate(String var) {
@@ -148,10 +103,7 @@ public final class Localization {
         }
 
         public enum PREVIEW {
-            CLICK_SIGN,
-            DRAG,
-            EXAMPLE_TEXT_1,
-            EXAMPLE_TEXT_2;
+            CLICK_SIGN, DRAG, EXAMPLE_TEXT_1, EXAMPLE_TEXT_2;
 
             public String translate() {
                 return Localization.translateString("gui.moarsigns:preview." + toString().toLowerCase(), "\n");

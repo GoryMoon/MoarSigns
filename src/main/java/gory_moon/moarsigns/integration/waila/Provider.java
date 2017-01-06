@@ -5,7 +5,7 @@ import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.blocks.BlockMoarSign;
 import gory_moon.moarsigns.items.ItemMoarSign;
 import gory_moon.moarsigns.items.ModItems;
-import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
@@ -30,8 +30,8 @@ public class Provider implements IWailaDataProvider {
 
         registrar.registerStackProvider(provider, BlockMoarSign.class);
         registrar.registerBodyProvider(provider, BlockMoarSign.class);
-        registrar.addConfig(ModInfo.NAME, "showOrigin", Localization.INTEGRATION.WAILA.SHOW_ORIGIN.translate());
-        registrar.addConfig(ModInfo.NAME, "showMaterial", Localization.INTEGRATION.WAILA.SHOW_MATERIAL.translate(), false);
+        registrar.addConfig(Reference.NAME, "showOrigin", Localization.INTEGRATION.WAILA.SHOW_ORIGIN.translate());
+        registrar.addConfig(Reference.NAME, "showMaterial", Localization.INTEGRATION.WAILA.SHOW_MATERIAL.translate(), false);
     }
 
     @Override

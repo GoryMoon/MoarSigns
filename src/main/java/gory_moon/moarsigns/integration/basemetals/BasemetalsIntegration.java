@@ -2,7 +2,7 @@ package gory_moon.moarsigns.integration.basemetals;
 
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
-import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.ItemStack;
@@ -48,9 +48,9 @@ public class BasemetalsIntegration implements ISignRegistration {
             }
         }
 
-        for (Map.Entry<String, BaseItemHelper> entry: items.entrySet()) {
+        for (Map.Entry<String, BaseItemHelper> entry : items.entrySet()) {
             String metal = entry.getKey().substring(entry.getKey().indexOf(".") + 1);
-            SignRegistry.register(metal + "_sign", null, metal, "basemetals/", true, entry.getValue().item, entry.getValue().itemBlock, ModInfo.ID, BASEMETALS_TAG).setMetal();
+            SignRegistry.register(metal + "_sign", null, metal, "basemetals/", true, entry.getValue().item, entry.getValue().itemBlock, Reference.MODID, BASEMETALS_TAG).setMetal();
         }
     }
 

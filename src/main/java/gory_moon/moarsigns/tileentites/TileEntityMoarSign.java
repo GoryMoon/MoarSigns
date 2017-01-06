@@ -76,7 +76,8 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
                 worldObj.addBlockEvent(pos, block, 0, 0);
             }
             SignInfo sign = SignRegistry.get(texture_name);
-            if (sign != null && sign.property != null) sign.property.onUpdate();
+            if (sign != null && sign.property != null)
+                sign.property.onUpdate();
         }
     }
 
@@ -96,11 +97,13 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
 
         int[] visible = new int[5];
         visible[0] = 2;
-        for (int i = 0; i < 4; i++) visible[i + 1] = visibleRows[i] ? 1 : 0;
+        for (int i = 0; i < 4; i++)
+            visible[i + 1] = visibleRows[i] ? 1 : 0;
 
         int[] shadow = new int[5];
         shadow[0] = 3;
-        for (int i = 0; i < 4; i++) shadow[i + 1] = shadowRows[i] ? 1 : 0;
+        for (int i = 0; i < 4; i++)
+            shadow[i + 1] = shadowRows[i] ? 1 : 0;
 
         NBTTagIntArray locations = new NBTTagIntArray(loc);
         NBTTagIntArray sizes = new NBTTagIntArray(size);
@@ -125,75 +128,73 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
 
-        ICommandSender icommandsender = new ICommandSender()
-        {
+        ICommandSender icommandsender = new ICommandSender() {
             /**
              * Get the name of this object. For players this returns their username
              */
-            public String getName()
-            {
+            public String getName() {
                 return "Sign";
             }
+
             /**
              * Get the formatted ChatComponent that will be used for the sender's username in chat
              */
-            public ITextComponent getDisplayName()
-            {
+            public ITextComponent getDisplayName() {
                 return new TextComponentString(this.getName());
             }
+
             /**
              * Send a chat message to the CommandSender
              */
-            public void addChatMessage(ITextComponent component)
-            {
+            public void addChatMessage(ITextComponent component) {
             }
+
             /**
              * Returns {@code true} if the CommandSender is allowed to execute the command, {@code false} if not
              */
-            public boolean canCommandSenderUseCommand(int permLevel, String commandName)
-            {
+            public boolean canCommandSenderUseCommand(int permLevel, String commandName) {
                 return permLevel <= 2; //Forge: Fixes  MC-75630 - Exploit with signs and command blocks
             }
+
             /**
              * Get the position in the world. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return the coordinates 0, 0, 0
              */
-            public BlockPos getPosition()
-            {
+            public BlockPos getPosition() {
                 return pos;
             }
+
             /**
              * Get the position vector. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return 0.0D, 0.0D, 0.0D
              */
-            public Vec3d getPositionVector()
-            {
-                return new Vec3d((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D);
+            public Vec3d getPositionVector() {
+                return new Vec3d((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D);
             }
+
             /**
              * Get the world, if available. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return the overworld
              */
-            public World getEntityWorld()
-            {
+            public World getEntityWorld() {
                 return worldObj;
             }
+
             /**
              * Returns the entity associated with the command sender. MAY BE NULL!
              */
-            public Entity getCommandSenderEntity()
-            {
+            public Entity getCommandSenderEntity() {
                 return null;
             }
+
             /**
              * Returns true if the command sender should be sent feedback about executed commands
              */
-            public boolean sendCommandFeedback()
-            {
+            public boolean sendCommandFeedback() {
                 return false;
             }
-            public void setCommandStat(CommandResultStats.Type type, int amount)
-            {
+
+            public void setCommandStat(CommandResultStats.Type type, int amount) {
             }
 
             @Override
@@ -218,7 +219,8 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             for (int i = 0; i < 4; i++) {
                 int temp = Math.abs(textOffset) + rowLocations[i] - (textOffset != 0 ? 2 : 0);
 
-                if (temp < 0) temp = 0;
+                if (temp < 0)
+                    temp = 0;
 
                 rowLocations[i] = temp;
             }
@@ -239,11 +241,13 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
                 } else if (array[0] == 2) {
                     int[] hidden = new int[4];
                     System.arraycopy(array, 1, hidden, 0, 4);
-                    for (int j = 0; j < 4; j++) visibleRows[j] = hidden[j] == 1;
+                    for (int j = 0; j < 4; j++)
+                        visibleRows[j] = hidden[j] == 1;
                 } else if (array[0] == 3) {
                     int[] shadows = new int[4];
                     System.arraycopy(array, 1, shadows, 0, 4);
-                    for (int j = 0; j < 4; j++) shadowRows[j] = shadows[j] == 1;
+                    for (int j = 0; j < 4; j++)
+                        shadowRows[j] = shadows[j] == 1;
                 }
 
             }
@@ -252,11 +256,11 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
         for (int i = 0; i < 4; ++i) {
             String s = compound.getString("Text" + (i + 1));
 
-            try  {
+            try {
                 ITextComponent ichatcomponent = ITextComponent.Serializer.jsonToComponent(s);
 
                 try {
-                    this.signText[i] = TextComponentUtils.processComponent(icommandsender, ichatcomponent, (Entity)null);
+                    this.signText[i] = TextComponentUtils.processComponent(icommandsender, ichatcomponent, (Entity) null);
                 } catch (CommandException var7) {
                     this.signText[i] = ichatcomponent;
                 }
@@ -265,9 +269,12 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             }
         }
 
-        if (compound.hasKey(NBT_METAL_TAG))     isMetal = compound.getBoolean(NBT_METAL_TAG);
-        if (compound.hasKey(NBT_TEXTURE_TAG))   texture_name = compound.getString(NBT_TEXTURE_TAG);
-        if (texture_name == null || texture_name.isEmpty()) texture_name = "oak_sign";
+        if (compound.hasKey(NBT_METAL_TAG))
+            isMetal = compound.getBoolean(NBT_METAL_TAG);
+        if (compound.hasKey(NBT_TEXTURE_TAG))
+            texture_name = compound.getString(NBT_TEXTURE_TAG);
+        if (texture_name == null || texture_name.isEmpty())
+            texture_name = "oak_sign";
         setResourceLocation(texture_name);
 
         stats.readStatsFromNBT(compound);
@@ -346,38 +353,43 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             public String getName() {
                 return playerIn.getName();
             }
+
             /**
              * Get the formatted ChatComponent that will be used for the sender's username in chat
              */
             public ITextComponent getDisplayName() {
                 return playerIn.getDisplayName();
             }
+
             /**
              * Send a chat message to the CommandSender
              */
             public void addChatMessage(ITextComponent component) {
             }
+
             /**
              * Returns {@code true} if the CommandSender is allowed to execute the command, {@code false} if not
              */
             public boolean canCommandSenderUseCommand(int permLevel, String commandName) {
                 return permLevel <= 2;
             }
+
             /**
              * Get the position in the world. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return the coordinates 0, 0, 0
              */
-            public BlockPos getPosition()
-            {
+            public BlockPos getPosition() {
                 return pos;
             }
+
             /**
              * Get the position vector. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return 0.0D, 0.0D, 0.0D
              */
             public Vec3d getPositionVector() {
-                return new Vec3d((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D);
+                return new Vec3d((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D);
             }
+
             /**
              * Get the world, if available. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return the overworld
@@ -385,23 +397,27 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             public World getEntityWorld() {
                 return playerIn.getEntityWorld();
             }
+
             /**
              * Returns the entity associated with the command sender. MAY BE NULL!
              */
             public Entity getCommandSenderEntity() {
                 return playerIn;
             }
+
             /**
              * Returns true if the command sender should be sent feedback about executed commands
              */
             public boolean sendCommandFeedback() {
                 return false;
             }
+
             public void setCommandStat(CommandResultStats.Type type, int amount) {
                 if (worldObj != null && !worldObj.isRemote) {
                     stats.setCommandStatForSender(worldObj.getMinecraftServer(), this, type, amount);
                 }
             }
+
             /**
              * Get the Minecraft server instance
              */

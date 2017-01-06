@@ -1,5 +1,5 @@
 package gory_moon.moarsigns.integration.tweaker;
-/*
+
 import gory_moon.moarsigns.api.MaterialInfo;
 import minetweaker.IBracketHandler;
 import minetweaker.annotations.BracketHandler;
@@ -59,33 +59,14 @@ public class MaterialBracket implements IBracketHandler {
         @Override
         public IPartialExpression instance(ZenPosition position) {
             if (modID == null) {
-                IJavaMethod method = JavaMethod.get(
-                        GlobalRegistry.getTypeRegistry(),
-                        MaterialBracket.class,
-                        "getMaterial",
-                        String.class);
+                IJavaMethod method = JavaMethod.get(GlobalRegistry.getTypeRegistry(), MaterialBracket.class, "getMaterial", String.class);
 
-                return new ExpressionCallStatic(
-                        position,
-                        environment,
-                        method,
-                        new ExpressionString(position, name));
+                return new ExpressionCallStatic(position, environment, method, new ExpressionString(position, name));
             } else {
-                IJavaMethod method = JavaMethod.get(
-                        GlobalRegistry.getTypeRegistry(),
-                        MaterialBracket.class,
-                        "getMaterial",
-                        String.class,
-                        String.class);
+                IJavaMethod method = JavaMethod.get(GlobalRegistry.getTypeRegistry(), MaterialBracket.class, "getMaterial", String.class, String.class);
 
-                return new ExpressionCallStatic(
-                        position,
-                        environment,
-                        method,
-                        new ExpressionString(position, name),
-                        new ExpressionString(position, modID));
+                return new ExpressionCallStatic(position, environment, method, new ExpressionString(position, name), new ExpressionString(position, modID));
             }
         }
     }
 }
-*/

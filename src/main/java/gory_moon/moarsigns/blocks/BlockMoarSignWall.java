@@ -34,13 +34,12 @@ public class BlockMoarSignWall extends BlockMoarSign implements IPassable {
     protected static final AxisAlignedBB SIGN_ROOF2_AABB = new AxisAlignedBB(0.0D, 0.875D, 0.27125D, 1.0D, 1.0D, 0.77125D);
     protected static final AxisAlignedBB SIGN_ROOF3_AABB = new AxisAlignedBB(0.23125D, 0.875D, 0.0D, 0.23125D, 1.0D, 1.0D);
 
-    public BlockMoarSignWall(Material material, SoundType stepSound) {
-        super(material, stepSound);
+    public BlockMoarSignWall(Material material, SoundType stepSound, float hardness, float resistance, String registryname, String harvestLevel, int level) {
+        super(material, stepSound, hardness, resistance, registryname, harvestLevel, level);
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
+    public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(ROTATION, meta);
     }
 
@@ -53,13 +52,12 @@ public class BlockMoarSignWall extends BlockMoarSign implements IPassable {
     public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
         int meta = getMetaFromState(state);
         boolean flatSign = ((meta & 8) >> 3) == 1;
-        int facing = flatSign ? (meta & 1): (meta & 7);
+        int facing = flatSign ? (meta & 1) : (meta & 7);
         return state.withProperty(FACING, EnumFacing.getFront(facing));
     }
 
     @Override
-    public int getMetaFromState(IBlockState state)
-    {
+    public int getMetaFromState(IBlockState state) {
         return state.getValue(ROTATION);
     }
 

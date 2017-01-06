@@ -21,9 +21,7 @@ public class ButtonTextLocation extends GuiButtonSpecial {
 
     @Override
     public String getButtonInfo(GuiBase gui) {
-        return Localization.GUI.BUTTONS.TEXT_POSITION.translateTitles(moveUp ? "0" : "1") + newLine +
-                Localization.GUI.BUTTONS.TEXT_POSITION.translateDescriptions(newLine, "\n" + Colors.LIGHTBLUE,
-                        Colors.LIGHTGRAY.toString(), "\n" + Colors.ORANGE.toString());
+        return Localization.GUI.BUTTONS.TEXT_POSITION.translateTitles(moveUp ? "0" : "1") + newLine + Localization.GUI.BUTTONS.TEXT_POSITION.translateDescriptions(newLine, "\n" + Colors.LIGHTBLUE, Colors.LIGHTGRAY.toString(), "\n" + Colors.ORANGE.toString());
     }
 
     @Override

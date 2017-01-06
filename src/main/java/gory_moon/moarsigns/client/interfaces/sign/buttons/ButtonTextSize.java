@@ -22,13 +22,7 @@ public class ButtonTextSize extends GuiButtonSpecial {
     @Override
     public String getButtonInfo(GuiBase gui) {
         String change = Colors.LIGHTGRAY + (increase ? "+" : "-");
-        return Localization.GUI.BUTTONS.TEXT_SIZE.translateTitles(
-                increase ? Colors.LIME.toString() : Colors.RED.toString(), increase ? "0" : "1")
-                + newLine +
-                Localization.GUI.BUTTONS.TEXT_SIZE.translateDescriptions(
-                        newLine, "\n" + Colors.WHITE,
-                        Colors.CYAN + String.valueOf(((GuiMoarSign) gui).rowSizes[id]) + "\n" +
-                                Colors.LIGHTBLUE, change + "1\n" + Colors.ORANGE, change + "10");
+        return Localization.GUI.BUTTONS.TEXT_SIZE.translateTitles(increase ? Colors.LIME.toString() : Colors.RED.toString(), increase ? "0" : "1") + newLine + Localization.GUI.BUTTONS.TEXT_SIZE.translateDescriptions(newLine, "\n" + Colors.WHITE, Colors.CYAN + String.valueOf(((GuiMoarSign) gui).rowSizes[id]) + "\n" + Colors.LIGHTBLUE, change + "1\n" + Colors.ORANGE, change + "10");
     }
 
     @Override

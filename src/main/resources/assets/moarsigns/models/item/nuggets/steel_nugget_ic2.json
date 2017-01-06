@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "moarsigns:items/nuggets/steel_nugget_ic2"
-  }
-}

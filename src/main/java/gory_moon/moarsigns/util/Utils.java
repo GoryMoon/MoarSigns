@@ -74,7 +74,8 @@ public class Utils {
         if (location == null) {
             SignInfo info = SignRegistry.get(s);
 
-            if (info == null) return null;
+            if (info == null)
+                return null;
 
             location = new ResourceLocation(info.modId.toLowerCase(), "textures/signs/" + (isMetal ? "metal/" : "wood/") + s + ".png");
             textures.put(s, location);

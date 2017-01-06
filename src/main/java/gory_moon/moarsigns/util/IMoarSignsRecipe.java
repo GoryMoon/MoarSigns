@@ -7,6 +7,7 @@ public interface IMoarSignsRecipe extends IRecipe {
     Object[] getInput();
 
     IMoarSignsRecipe setNEINBTDifferent(boolean nbtDiff);
+
     boolean isNeiNBTDifferent();
 
 }

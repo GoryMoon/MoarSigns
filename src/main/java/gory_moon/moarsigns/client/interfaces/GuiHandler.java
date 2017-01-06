@@ -112,6 +112,7 @@ public class GuiHandler implements IGuiHandler {
             public void closeInventory(EntityPlayer player) {
 
             }
+
             @Override
             public boolean isItemValidForSlot(int i, ItemStack itemstack) {
                 return true;
@@ -158,7 +159,7 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
-        BlockPos pos  = new BlockPos(x, y, z);
+        BlockPos pos = new BlockPos(x, y, z);
         TileEntity te = world.getTileEntity(pos);
 
         switch (ID) {

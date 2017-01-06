@@ -49,10 +49,14 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
     public static final PropertyInteger ROTATION = PropertyInteger.create("rotation", 0, 15);
     protected static final AxisAlignedBB SIGN_AABB = new AxisAlignedBB(0.25D, 0.0D, 0.25D, 0.75D, 1.0D, 0.75D);
 
-    public BlockMoarSign(Material material, SoundType stepSound) {
+    public BlockMoarSign(Material material, SoundType stepSound, float hardness, float resistance, String registryname, String harvestLevel, int level) {
         super(material);
+        setRegistryName(registryname);
         setUnlocalizedName("moarsign.sign");
         setSoundType(stepSound);
+        setHardness(hardness);
+        setResistance(resistance);
+        setHarvestLevel(harvestLevel, level);
     }
 
     @Override
@@ -67,20 +71,17 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
-    {
+    public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
         return true;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
@@ -153,16 +154,13 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
     public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager effectRenderer) {
         IBlockState state = world.getBlockState(pos);
         int i = 4;
-        for (int j = 0; j < i; ++j)
-        {
-            for (int k = 0; k < i; ++k)
-            {
-                for (int l = 0; l < i; ++l)
-                {
-                    double d0 = (double)pos.getX() + ((double)j + 0.5D) / (double)i;
-                    double d1 = (double)pos.getY() + ((double)k + 0.5D) / (double)i;
-                    double d2 = (double)pos.getZ() + ((double)l + 0.5D) / (double)i;
-                    effectRenderer.addEffect((new EntityDiggingFXMoarSigns(world, d0, d1, d2, d0 - (double)pos.getX() - 0.5D, d1 - (double)pos.getY() - 0.5D, d2 - (double)pos.getZ() - 0.5D, pos, state)).setBlockPos(pos));
+        for (int j = 0; j < i; ++j) {
+            for (int k = 0; k < i; ++k) {
+                for (int l = 0; l < i; ++l) {
+                    double d0 = (double) pos.getX() + ((double) j + 0.5D) / (double) i;
+                    double d1 = (double) pos.getY() + ((double) k + 0.5D) / (double) i;
+                    double d2 = (double) pos.getZ() + ((double) l + 0.5D) / (double) i;
+                    effectRenderer.addEffect((new EntityDiggingFXMoarSigns(world, d0, d1, d2, d0 - (double) pos.getX() - 0.5D, d1 - (double) pos.getY() - 0.5D, d2 - (double) pos.getZ() - 0.5D, pos, state)).setBlockPos(pos));
                 }
             }
         }
@@ -181,38 +179,32 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
         int k = pos.getZ();
         float f = 0.1F;
         AxisAlignedBB axisalignedbb = iblockstate.getBoundingBox(world, pos);
-        double d0 = (double)i + world.rand.nextDouble() * (axisalignedbb.maxX - axisalignedbb.minX - (double)(f * 2.0F)) + (double)f + axisalignedbb.minX;
-        double d1 = (double)j + world.rand.nextDouble() * (axisalignedbb.maxY - axisalignedbb.minY - (double)(f * 2.0F)) + (double)f + axisalignedbb.minY;
-        double d2 = (double)k + world.rand.nextDouble() * (axisalignedbb.maxZ - axisalignedbb.minZ - (double)(f * 2.0F)) + (double)f + axisalignedbb.minZ;
+        double d0 = (double) i + world.rand.nextDouble() * (axisalignedbb.maxX - axisalignedbb.minX - (double) (f * 2.0F)) + (double) f + axisalignedbb.minX;
+        double d1 = (double) j + world.rand.nextDouble() * (axisalignedbb.maxY - axisalignedbb.minY - (double) (f * 2.0F)) + (double) f + axisalignedbb.minY;
+        double d2 = (double) k + world.rand.nextDouble() * (axisalignedbb.maxZ - axisalignedbb.minZ - (double) (f * 2.0F)) + (double) f + axisalignedbb.minZ;
 
-        if (side == EnumFacing.DOWN)
-        {
-            d1 = (double)j + axisalignedbb.minY - (double)f;
+        if (side == EnumFacing.DOWN) {
+            d1 = (double) j + axisalignedbb.minY - (double) f;
         }
 
-        if (side == EnumFacing.UP)
-        {
-            d1 = (double)j + axisalignedbb.maxY + (double)f;
+        if (side == EnumFacing.UP) {
+            d1 = (double) j + axisalignedbb.maxY + (double) f;
         }
 
-        if (side == EnumFacing.NORTH)
-        {
-            d2 = (double)k + axisalignedbb.minZ - (double)f;
+        if (side == EnumFacing.NORTH) {
+            d2 = (double) k + axisalignedbb.minZ - (double) f;
         }
 
-        if (side == EnumFacing.SOUTH)
-        {
-            d2 = (double)k + axisalignedbb.maxZ + (double)f;
+        if (side == EnumFacing.SOUTH) {
+            d2 = (double) k + axisalignedbb.maxZ + (double) f;
         }
 
-        if (side == EnumFacing.WEST)
-        {
-            d0 = (double)i + axisalignedbb.minX - (double)f;
+        if (side == EnumFacing.WEST) {
+            d0 = (double) i + axisalignedbb.minX - (double) f;
         }
 
-        if (side == EnumFacing.EAST)
-        {
-            d0 = (double)i + axisalignedbb.maxX + (double)f;
+        if (side == EnumFacing.EAST) {
+            d0 = (double) i + axisalignedbb.maxX + (double) f;
         }
 
         effectRenderer.addEffect((new EntityDiggingFXMoarSigns(world, d0, d1, d2, 0.0D, 0.0D, 0.0D, pos, iblockstate)).setBlockPos(pos).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
@@ -240,7 +232,8 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
         TileEntity entity = world.getTileEntity(pos);
         if (entity instanceof TileEntityMoarSign) {
             TileEntityMoarSign tileEntity = (TileEntityMoarSign) entity;
-            if (tileEntity.removeNoDrop || tileEntity.texture_name == null) return ret;
+            if (tileEntity.removeNoDrop || tileEntity.texture_name == null)
+                return ret;
 
             ret.add(ModItems.SIGN.createMoarItemStack(tileEntity.texture_name, tileEntity.isMetal));
         }

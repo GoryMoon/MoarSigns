@@ -72,17 +72,11 @@ public class GuiSignTextField extends GuiTextField {
             } else {
                 boolean flag = p_146175_1_ < 0;
 
-                char[][] position = {{'{'}, {(char) 8747}, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
-                        'd', 'e', 'f', 'k', 'l', 'm', 'n', 'o', 'r'}, {'}'}};
+                char[][] position = {{'{'}, {(char) 8747}, {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'k', 'l', 'm', 'n', 'o', 'r'}, {'}'}};
 
                 int offset = getCharIndex(position, this.text.charAt(this.cursorPosition + (flag && cursorPosition != 0 ? p_146175_1_ : ((!flag && this.cursorPosition == this.text.length()) ? -1 : 0))));
 
-                if (offset > -1 &&
-                        (flag && (0 <= cursorPosition - offset - 1) && this.text.length() > this.cursorPosition + (2 - (offset)) &&
-                                isSpecial(this.text.substring(this.cursorPosition - offset - 1, cursorPosition + (3 - offset)))) ||
-                        (!flag && 0 <= cursorPosition - offset) && this.text.length() > this.cursorPosition + (3 - offset + 1) &&
-                                isSpecial(this.text.substring(this.cursorPosition - offset, cursorPosition + (3 - offset + 1)))
-                        ) {
+                if (offset > -1 && (flag && (0 <= cursorPosition - offset - 1) && this.text.length() > this.cursorPosition + (2 - (offset)) && isSpecial(this.text.substring(this.cursorPosition - offset - 1, cursorPosition + (3 - offset)))) || (!flag && 0 <= cursorPosition - offset) && this.text.length() > this.cursorPosition + (3 - offset + 1) && isSpecial(this.text.substring(this.cursorPosition - offset, cursorPosition + (3 - offset + 1)))) {
 
                     this.selectionEnd = flag ? (cursorPosition + (3 - offset)) : (cursorPosition + (3 - offset + 1));
                     this.cursorPosition = flag ? (cursorPosition - offset - 1) : (cursorPosition - offset);
@@ -127,7 +121,8 @@ public class GuiSignTextField extends GuiTextField {
         Matcher m = Pattern.compile("(\\{" + (char) 8747 + "[0-9a-z]\\})").matcher(s);
         int i = 0;
 
-        while (m.find()) i += fontRendererInstance.getStringWidth(m.group(1));
+        while (m.find())
+            i += fontRendererInstance.getStringWidth(m.group(1));
         return i;
     }
 

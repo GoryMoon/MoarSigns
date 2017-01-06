@@ -21,38 +21,41 @@ public abstract class SignSpecialProperty {
 
     /**
      * Triggered whenever an entity collides with this block (enters into the block).
-     * @param pos           The position of the sign
-     * @param world         The world the sign is in
-     * @param blockState    The blockstate of the block
-     * @param entity        The entity colliding with the sign
+     *
+     * @param pos        The position of the sign
+     * @param world      The world the sign is in
+     * @param blockState The blockstate of the block
+     * @param entity     The entity colliding with the sign
      */
     public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState blockState, Entity entity) {
     }
 
     /**
      * A randomly called display update to be able to add particles or other items for display
-     * @param blockState    The blockstate of the block
-     * @param world         The world the sign is in
-     * @param pos           The position of the sign
-     * @param random        An instance of Random
+     *
+     * @param blockState The blockstate of the block
+     * @param world      The world the sign is in
+     * @param pos        The position of the sign
+     * @param random     An instance of Random
      */
     public void randomDisplayTick(IBlockState blockState, World world, BlockPos pos, Random random) {
     }
 
     /**
      * Called when a player is right clicking the sign
-     * @param world         The world the sign is in
-     * @param pos           The position of the sign
-     * @param blockState    The blockstate of the block
-     * @param player        The player that right clicked the sign
-     * @param hand          The hand that is clicking the sign
-     * @param heldItem      The currently held item
-     * @param side          The side that was right clicked
-     * @param hitX          The x location on the side
-     * @param hitY          The y location on the side
-     * @param hitZ          The z location on the side
-     * @return              False if nothing happened otherwise True
-     * */
+     *
+     * @param world      The world the sign is in
+     * @param pos        The position of the sign
+     * @param blockState The blockstate of the block
+     * @param player     The player that right clicked the sign
+     * @param hand       The hand that is clicking the sign
+     * @param heldItem   The currently held item
+     * @param side       The side that was right clicked
+     * @param hitX       The x location on the side
+     * @param hitY       The y location on the side
+     * @param hitZ       The z location on the side
+     * @return False if nothing happened otherwise True
+     */
     public boolean onRightClick(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         return false;
     }

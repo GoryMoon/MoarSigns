@@ -2,7 +2,7 @@ package gory_moon.moarsigns.integration.factorization;
 
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
-import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
@@ -43,12 +43,13 @@ public class FactorizationIntegration implements ISignRegistration {
                 itemBlock = stacks.getItem();
             }
 
-            if (silverItem != null && leadItem != null && darkIronItem != null && itemBlock != null) break;
+            if (silverItem != null && leadItem != null && darkIronItem != null && itemBlock != null)
+                break;
         }
 
-        SignRegistry.register("silver_sign",    null, "silver",     "factorization/", false, new ItemStack(silverItem),     new ItemStack(itemBlock, 1, 1), ModInfo.ID, FACTORIZATION_TAG).setMetal();
-        SignRegistry.register("lead_sign",      null, "lead",       "factorization/", false, new ItemStack(leadItem),       new ItemStack(itemBlock, 1, 2), ModInfo.ID, FACTORIZATION_TAG).setMetal();
-        SignRegistry.register("darkiron_sign",  null, "darkiron",   "factorization/", false, new ItemStack(darkIronItem),   new ItemStack(itemBlock, 1, 3), ModInfo.ID, FACTORIZATION_TAG).setMetal();
+        SignRegistry.register("silver_sign",    null, "silver",     "factorization/", false, new ItemStack(silverItem),     new ItemStack(itemBlock, 1, 1), Reference.MODID, FACTORIZATION_TAG).setMetal();
+        SignRegistry.register("lead_sign",      null, "lead",       "factorization/", false, new ItemStack(leadItem),       new ItemStack(itemBlock, 1, 2), Reference.MODID, FACTORIZATION_TAG).setMetal();
+        SignRegistry.register("darkiron_sign",  null, "darkiron",   "factorization/", false, new ItemStack(darkIronItem),   new ItemStack(itemBlock, 1, 3), Reference.MODID, FACTORIZATION_TAG).setMetal();
 
     }
 

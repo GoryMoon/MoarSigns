@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "moarsigns:items/wood/for/poplar_sign"
+  }
+}

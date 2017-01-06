@@ -2,7 +2,7 @@ package gory_moon.moarsigns.client.interfaces;
 
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
-import gory_moon.moarsigns.blocks.Blocks;
+import gory_moon.moarsigns.blocks.ModBlocks;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerPreview;
 import gory_moon.moarsigns.items.ItemMoarSign;
 import gory_moon.moarsigns.items.ModItems;
@@ -178,7 +178,7 @@ public class GuiPreview extends GuiContainer {
 
             sign.setWorldObj(FMLClientHandler.instance().getWorldClient());
             sign.isMetal = info.isMetal;
-            sign.setBlockType(info.isMetal ? Blocks.signStandingMetal : Blocks.signStandingWood);
+            sign.setBlockType(info.isMetal ? ModBlocks.SIGN_STANDING_METAL : ModBlocks.SIGN_STANDING_WOOD);
             ITextComponent[] components = new ITextComponent[]{null, new TextComponentString(Localization.GUI.PREVIEW.EXAMPLE_TEXT_1.translate()), new TextComponentString(Localization.GUI.PREVIEW.EXAMPLE_TEXT_2.translate()), null};
             System.arraycopy(components, 0, sign.signText, 0, sign.signText.length);
             sign.setResourceLocation(texture);

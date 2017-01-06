@@ -1,6 +1,6 @@
 package gory_moon.moarsigns.network;
 
-import gory_moon.moarsigns.lib.ModInfo;
+import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.network.message.MessageSignInfo;
 import gory_moon.moarsigns.network.message.MessageSignOpenGui;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketHandler {
 
-    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.CHANNEL);
+    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.CHANNEL);
 
     public static void init() {
         INSTANCE.registerMessage(MessageSignOpenGui.Handler.class, MessageSignOpenGui.class, 0, Side.CLIENT);

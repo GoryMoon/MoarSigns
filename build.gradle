@@ -78,8 +78,12 @@ repositories {
         url 'http://chickenbones.net/maven'
     }
 
-    maven {
+    /*maven {
         url 'http://mobiusstrip.eu/maven'
+    }*/
+
+    maven {
+        url "http://tehnut.info/maven"
     }
 
     maven {
@@ -88,6 +92,10 @@ repositories {
 
     maven {
         url "http://maven.tterrag.com/"
+    }
+
+    maven {
+        url "http://blamejared.com/maven/"
     }
 
     ivy {
@@ -105,7 +113,8 @@ dependencies {
     deobfProvided "codechicken:CodeChickenCore:${config.mc_version}-${config.ccc_version}:universal"
     deobfProvided "codechicken:NotEnoughItems:${config.mc_version}-${config.nei_version}:universal"
 
-    deobfCompile "mcp.mobius.waila:Waila:" + config.waila_version /*+ "_" + config.mc_version*/
+    deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla_version}"
+    //deobfCompile "mcp.mobius.waila:Waila:${config.waila_version}" /*+ "_" + config.mc_version*/
     deobfCompile "mcjty.theoneprobe:TheOneProbe:1.10-${config.top_version}"
 
     //compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar', group: ''

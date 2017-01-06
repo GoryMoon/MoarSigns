@@ -93,18 +93,20 @@ public class GuiDebug extends GuiContainer {
 
         if (!Un.equals("")) {
             String un = Un;
-            if (!blockInWorld && Un.length() >= 23) un = Un.substring(0, 20) + "...";
-            else if (blockInWorld && Un.length() >= 15) un = Un.substring(0, 13) + "...";
+            if (!blockInWorld && Un.length() >= 23)
+                un = Un.substring(0, 20) + "...";
+            else if (blockInWorld && Un.length() >= 15)
+                un = Un.substring(0, 13) + "...";
 
             fontRendererObj.drawString("UN: " + un, x, y1, 0x404040);
             fontRendererObj.drawString("Meta: " + meta, x, y2, 0x404040);
 
             ArrayList<String> strings = Lists.newArrayList();
-            for (int i: OreDictionary.getOreIDs(blockInWorld ? new ItemStack(block): inventory.getStackInSlot(0))) {
+            for (int i : OreDictionary.getOreIDs(blockInWorld ? new ItemStack(block) : inventory.getStackInSlot(0))) {
                 strings.add(OreDictionary.getOreName(i));
             }
 
-            infoArea.drawString(this, par1, par2, Colors.YELLOW + "Unlocalized Name: " + Un + "\n" + Colors.LIGHTBLUE + "Meta: " + meta + "\n" + Colors.LIME + "OreDict: " + Arrays.toString(strings.toArray(new String[strings.size()])) + "\n" + Colors.CYAN + Arrays.toString(signText) );
+            infoArea.drawString(this, par1, par2, Colors.YELLOW + "Unlocalized Name: " + Un + "\n" + Colors.LIGHTBLUE + "Meta: " + meta + "\n" + Colors.LIME + "OreDict: " + Arrays.toString(strings.toArray(new String[strings.size()])) + "\n" + Colors.CYAN + Arrays.toString(signText));
 
         }
 

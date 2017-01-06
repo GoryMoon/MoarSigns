@@ -123,6 +123,10 @@ item.moarsigns.copper_nugget_forestry.name=Copper Nugget
 item.moarsigns.silver_nugget_factorization.name=Silver Nugget
 item.moarsigns.lead_nugget_factorization.name=Lead Nugget
 item.moarsigns.darkiron_nugget_factorization.name=Dark Iron Nugget
+item.moarsigns.psimetal_nugget_psi.name=Psimetal Nugget
+item.moarsigns.psigem_nugget_psi.name=Psigem Nugget
+item.moarsigns.ebonypsimetal_nugget_psi.name=Ebony Psimetal Nugget
+item.moarsigns.ivorypsimetal_nugget_psi.name=Ivory Psimetal Nugget
 
 item.moarsigns.aluminium_nugget_techreborn.name=Aluminium Nugget
 item.moarsigns.brass_nugget_techreborn.name=Brass Nugget
@@ -209,10 +213,12 @@ item.moarsigns.sign.for.padauk_sign.name=Padauk Sign
 item.moarsigns.sign.for.cocobolo_sign.name=Cocobolo Sign
 item.moarsigns.sign.for.zebrawood_sign.name=Zebrawood Sign
 
-
 item.moarsigns.sign.for.bronze_sign.name=Bronze Sign
 item.moarsigns.sign.for.tin_sign.name=Tin Sign
 item.moarsigns.sign.for.copper_sign.name=Copper Sign
+
+#Roots
+item.moarsigns.sign.roots.wildwood_sign.name=Wildwood Sign
 
 #Natura
 item.moarsigns.sign.natura.bloodwood_sign.name=Bloodwood Sign
@@ -222,11 +228,11 @@ item.moarsigns.sign.natura.fusewood_sign.name=Fusewood Sign
 item.moarsigns.sign.natura.ghostwood_sign.name=Ghostwood Sign
 item.moarsigns.sign.natura.hopseed_sign.name=Hopseed Sign
 item.moarsigns.sign.natura.maple_sign.name=Maple Sign
-item.moarsigns.sign.natura.purpleheart_sign.name=Amaranth Sign
+item.moarsigns.sign.natura.amaranth_sign.name=Amaranth Sign
 item.moarsigns.sign.natura.redwood_sign.name=Redwood Sign
 item.moarsigns.sign.natura.sakura_sign.name=Sakura Sign
 item.moarsigns.sign.natura.silverbell_sign.name=Silverbell Sign
-item.moarsigns.sign.natura.tiger_sign.name=Tigerwood Sign
+item.moarsigns.sign.natura.tigerwood_sign.name=Tigerwood Sign
 item.moarsigns.sign.natura.willow_sign.name=Willow Sign
 
 #IndustrailCraft 2
@@ -255,6 +261,7 @@ item.moarsigns.sign.railcraft.copper_sign.name=Copper Sign
 item.moarsigns.sign.railcraft.tin_sign.name=Tin Sign
 item.moarsigns.sign.railcraft.lead_sign.name=Lead Sign
 item.moarsigns.sign.railcraft.steel_sign.name=Steel Sign
+item.moarsigns.sign.railcraft.silver_sign.name=Silver Sign
 
 #ThermalFoundation
 item.moarsigns.sign.tf.copper_sign.name=Copper Sign
@@ -310,6 +317,12 @@ item.moarsigns.sign.techreborn.titanium_sign.name=Titanium Sign
 item.moarsigns.sign.techreborn.tungsten_sign.name=Tungsten Sign
 item.moarsigns.sign.techreborn.tungstensteel_sign.name=Tungstensteel Sign
 item.moarsigns.sign.techreborn.zinc_sign.name=Zinc Sign
+
+#Psi
+item.moarsigns.sign.psi.psimetal_sign.name=Psimetal Sign
+item.moarsigns.sign.psi.psigem_sign.name=Psigem Sign
+item.moarsigns.sign.psi.ebonypsimetal_sign.name=Ebony Psimetal Sign
+item.moarsigns.sign.psi.ivorypsimetal_sign.name=Ivory Psimetal Sign
 
 #Factorization
 item.moarsigns.sign.factorization.silver_sign.name=Silver Sign

@@ -138,8 +138,8 @@ public class ShapedMoarSignRecipe implements IMoarSignsRecipe {
             items = r.recipeItems;
         } else if (recipe instanceof ShapedOreRecipe) {
             ShapedOreRecipe r = (ShapedOreRecipe) recipe;
-            width = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, (ShapedOreRecipe)recipe, "width");
-            height = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, (ShapedOreRecipe)recipe, "height");
+            width = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, (ShapedOreRecipe) recipe, "width");
+            height = ObfuscationReflectionHelper.getPrivateValue(ShapedOreRecipe.class, (ShapedOreRecipe) recipe, "height");
             input = new Object[r.getRecipeSize()];
             items = r.getInput();
         }
@@ -149,7 +149,8 @@ public class ShapedMoarSignRecipe implements IMoarSignsRecipe {
                 Object ingred = items[i];
                 input[i] = ingred;
 
-                if (ingred == null || !(ingred instanceof ItemStack)) continue;
+                if (ingred == null || !(ingred instanceof ItemStack))
+                    continue;
 
                 for (java.util.Map.Entry<ItemStack, Object> replace : replacements.entrySet()) {
                     if (OreDictionary.itemMatches(replace.getKey(), (ItemStack) ingred, true)) {
@@ -246,7 +247,8 @@ public class ShapedMoarSignRecipe implements IMoarSignsRecipe {
                                 return false;
                             }
                         }
-                    } else return false;
+                    } else
+                        return false;
                 } else if (target instanceof ItemStack) {
                     if (slot != null && slot.getItem() instanceof ItemMoarSign && ((ItemStack) target).getItem() instanceof ItemMoarSign && (!ItemStack.areItemStackTagsEqual(slot, (ItemStack) target))) {
                         return false;
@@ -298,9 +300,7 @@ public class ShapedMoarSignRecipe implements IMoarSignsRecipe {
     }
 
     public enum MatchType {
-        ALL,
-        METAL,
-        WOOD;
+        ALL, METAL, WOOD;
 
         public static MatchType getEnum(String value) {
             if (value.equals("ALL")) {

@@ -1,6 +1,6 @@
 package gory_moon.moarsigns.integration.tweaker;
 
-/*
+
 import gory_moon.moarsigns.api.MaterialInfo;
 import minetweaker.api.item.*;
 import minetweaker.api.liquid.ILiquidStack;
@@ -74,6 +74,11 @@ public class MaterialEntry implements IIngredient {
     }
 
     @Override
+    public boolean matchesExact(IItemStack iItemStack) {
+        return false;
+    }
+
+    @Override
     public boolean matches(ILiquidStack iLiquidStack) {
         return false;
     }
@@ -102,4 +107,3 @@ public class MaterialEntry implements IIngredient {
         return modID;
     }
 }
-*/

@@ -12,8 +12,7 @@ public class GuiTextStyleButton extends GuiRectangle {
 
     private int id;
     private String style = "klmnor";
-    private Localization.GUI.TEXTSTYLES[] names = {Localization.GUI.TEXTSTYLES.RANDOM, Localization.GUI.TEXTSTYLES.BOLD, Localization.GUI.TEXTSTYLES.STRIKETHROUGH,
-            Localization.GUI.TEXTSTYLES.UNDERLINE, Localization.GUI.TEXTSTYLES.ITALIC, Localization.GUI.TEXTSTYLES.RESET};
+    private Localization.GUI.TEXTSTYLES[] names = {Localization.GUI.TEXTSTYLES.RANDOM, Localization.GUI.TEXTSTYLES.BOLD, Localization.GUI.TEXTSTYLES.STRIKETHROUGH, Localization.GUI.TEXTSTYLES.UNDERLINE, Localization.GUI.TEXTSTYLES.ITALIC, Localization.GUI.TEXTSTYLES.RESET};
 
     public GuiTextStyleButton(int x, int y, int w, int h, int id) {
         super(x, y, w, h);
@@ -42,7 +41,7 @@ public class GuiTextStyleButton extends GuiRectangle {
     }
 
     public String getName() {
-        return names[id].translate(id == names.length - 1 ? "\n" + Colors.LIGHTGRAY: "");
+        return names[id].translate(id == names.length - 1 ? "\n" + Colors.LIGHTGRAY : "");
     }
 
     public String getDrawnString(GuiBase gui) {

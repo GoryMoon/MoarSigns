@@ -18,7 +18,8 @@ public class ContainerPreview extends Container {
     private static InventoryBasic inventory;
 
     public ContainerPreview() {
-        if (inventory == null) inventory = new InventoryBasic("Preview Inventory", true, 35);
+        if (inventory == null)
+            inventory = new InventoryBasic("Preview Inventory", true, 35);
 
         for (int y = 0; y < 7; y++) {
             for (int x = 0; x < 5; x++) {

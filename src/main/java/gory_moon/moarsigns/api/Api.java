@@ -48,10 +48,37 @@ public class Api {
     }
 
     /**
+     * Helper method for {@link SignRegistry#registerAlternativeMaterial(SignInfo, String, String, boolean, ItemStack)}
+     *
+     * @see SignRegistry#registerAlternativeMaterial(SignInfo, String, String, boolean, ItemStack)
+     */
+    public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack materialItemStack) throws IntegrationException {
+        return SignRegistry.registerAlternativeMaterial(sInfo, materialName, path, gotNugget, materialItemStack);
+    }
+
+    /**
+     * Helper method for {@link SignRegistry#registerAlternativeMaterial(SignInfo, String, String, boolean, ItemStack, ItemStack)}
+     *
+     * @see SignRegistry#registerAlternativeMaterial(SignInfo, String, String, boolean, ItemStack, ItemStack)
+     */
+    public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock) throws IntegrationException {
+        return SignRegistry.registerAlternativeMaterial(sInfo, materialName, path, gotNugget, materialItemStack, materialBlock);
+    }
+
+    /**
+     * Helper method for {@link SignRegistry#registerAlternativeMaterial(SignInfo, MaterialInfo)}
+     *
+     * @see SignRegistry#registerAlternativeMaterial(SignInfo, MaterialInfo)
+     */
+    public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, MaterialInfo mInfo) throws IntegrationException {
+        return SignRegistry.registerAlternativeMaterial(sInfo, mInfo);
+    }
+
+    /**
      * Rotates the sign by one step
      *
      * @param tileEntity The tile entity of the sign that should setRotation
-     * @param reverse If the rotation would be in reverse
+     * @param reverse    If the rotation would be in reverse
      */
     public static void rotateSign(TileEntity tileEntity, boolean reverse) {
         if (tileEntity instanceof TileEntityMoarSign) {

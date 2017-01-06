@@ -25,8 +25,7 @@ public class ButtonShowHide extends GuiButtonSpecial {
 
     @Override
     public String getButtonInfo(GuiBase gui) {
-        return Localization.GUI.BUTTONS.TEXT_SHOWHIDE.translateTitles(isHidden ? "0" : "1") + newLine +
-                Localization.GUI.BUTTONS.TEXT_SHOWHIDE.translateDescriptions(isHidden ? "0" : "1", newLine);
+        return Localization.GUI.BUTTONS.TEXT_SHOWHIDE.translateTitles(isHidden ? "0" : "1") + newLine + Localization.GUI.BUTTONS.TEXT_SHOWHIDE.translateDescriptions(isHidden ? "0" : "1", newLine);
     }
 
     @Override

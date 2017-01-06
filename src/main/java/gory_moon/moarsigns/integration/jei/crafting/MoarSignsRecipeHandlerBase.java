@@ -2,6 +2,7 @@ package gory_moon.moarsigns.integration.jei.crafting;
 
 import gory_moon.moarsigns.api.MaterialInfo;
 import gory_moon.moarsigns.util.IMoarSignsRecipe;
+import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
@@ -10,6 +11,12 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public abstract class MoarSignsRecipeHandlerBase<T extends IMoarSignsRecipe> implements IRecipeHandler<T> {
+
+    protected final IGuiHelper guiHelper;
+
+    public MoarSignsRecipeHandlerBase(IGuiHelper guiHelper) {
+        this.guiHelper = guiHelper;
+    }
 
     @Nonnull
     @Override
@@ -26,7 +33,7 @@ public abstract class MoarSignsRecipeHandlerBase<T extends IMoarSignsRecipe> imp
     @Nonnull
     @Override
     public IRecipeWrapper getRecipeWrapper(@Nonnull T recipe) {
-        return new MoarSignsRecipeWrapper(recipe);
+        return new ShapelessMoarSignsRecipeWrapper(recipe, guiHelper);
     }
 
     @Override

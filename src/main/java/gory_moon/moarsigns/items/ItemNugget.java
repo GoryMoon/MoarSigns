@@ -1,10 +1,12 @@
 package gory_moon.moarsigns.items;
 
+import gory_moon.moarsigns.lib.Constants;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
+import java.util.Map;
 
 public class ItemNugget extends Item {
 
@@ -12,6 +14,7 @@ public class ItemNugget extends Item {
 
     public ItemNugget() {
         hasSubtypes = true;
+        setRegistryName(Constants.NUGGET_ITEM_KEY);
         setUnlocalizedName("moarsigns");
         setCreativeTab(CreativeTabs.MATERIALS);
     }
@@ -24,9 +27,9 @@ public class ItemNugget extends Item {
     @SuppressWarnings("unchecked")
     @Override
     public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
-        for (int i = 0; i < NuggetRegistry.size(); i++) {
-            if (NuggetRegistry.getNeeded(i)) {
-                list.add(new ItemStack(this, 1, i));
+        for (Map.Entry<String, NuggetRegistry.NuggetInfo> entry : NuggetRegistry.getNuggets().entrySet()) {
+            if (entry.getValue().needed) {
+                list.add(new ItemStack(this, 1, entry.getValue().id));
             }
         }
     }

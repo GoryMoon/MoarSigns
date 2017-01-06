@@ -152,27 +152,28 @@ public class GuiMoarSign extends GuiBase {
             }
 
             guiTextFields[i] = new GuiSignTextField(i, fontRendererObj, guiLeft + TEXT_EDIT_AREA + 17, row, 90, 16);
-            guiTextFields[i].setText(text[i] != null ? text[i]: "");
+            guiTextFields[i].setText(text[i] != null ? text[i] : "");
             k++;
         }
 
-        if (selectedTextField != -1) guiTextFields[selectedTextField].setFocused(true);
+        if (selectedTextField != -1)
+            guiTextFields[selectedTextField].setFocused(true);
 
         textStyleRect = new GuiRectangle(guiLeft + 150, guiTop + 30, 60, 116);
         textColorsRect = new GuiRectangle(guiLeft + 150, guiTop + 30, 65, 65);
 
         int buttonBase = 18;
 
-        buttons.add(                    new ButtonCut(guiLeft + buttonBase, guiTop + 10));
-        buttons.add(                    new ButtonCopy(guiLeft + buttonBase + 21, guiTop + 10));
-        buttons.add(                    new ButtonPaste(guiLeft + buttonBase + 42, guiTop + 10));
-        buttons.add(buttonCutSign =     new ButtonCutSign(guiLeft + buttonBase + 63, guiTop + 10));
-        buttons.add(buttonCopySign =    new ButtonCopySign(guiLeft + buttonBase + 84, guiTop + 10));
-        buttons.add(                    new ButtonPasteSign(guiLeft + buttonBase + 105, guiTop + 10));
-        buttons.add(buttonErase =       new ButtonReset(guiLeft + buttonBase + 126, guiTop + 10));
+        buttons.add(new ButtonCut(guiLeft + buttonBase, guiTop + 10));
+        buttons.add(new ButtonCopy(guiLeft + buttonBase + 21, guiTop + 10));
+        buttons.add(new ButtonPaste(guiLeft + buttonBase + 42, guiTop + 10));
+        buttons.add(buttonCutSign = new ButtonCutSign(guiLeft + buttonBase + 63, guiTop + 10));
+        buttons.add(buttonCopySign = new ButtonCopySign(guiLeft + buttonBase + 84, guiTop + 10));
+        buttons.add(new ButtonPasteSign(guiLeft + buttonBase + 105, guiTop + 10));
+        buttons.add(buttonErase = new ButtonReset(guiLeft + buttonBase + 126, guiTop + 10));
         buttons.add(buttonColorPicker = new ButtonColorPicker(guiLeft + buttonBase + 147, guiTop + 10));
-        buttons.add(buttonTextStyle =   new ButtonTextStyle(guiLeft + buttonBase + 168, guiTop + 10));
-        buttons.add(buttonLock =        new ButtonLock(guiLeft + 181 + TEXT_EDIT_AREA, guiTop + 136, 224));
+        buttons.add(buttonTextStyle = new ButtonTextStyle(guiLeft + buttonBase + 168, guiTop + 10));
+        buttons.add(buttonLock = new ButtonLock(guiLeft + 181 + TEXT_EDIT_AREA, guiTop + 136, 224));
 
         colorsDialogPos = (buttonColorPicker.getX() + buttonColorPicker.getW() / 2) - guiLeft - 32;
 
@@ -183,7 +184,8 @@ public class GuiMoarSign extends GuiBase {
             if (k > 2) {
                 k = 0;
                 j++;
-            } else k++;
+            } else
+                k++;
         }
 
         for (int i = 0; i < styleButtons.length; i++) {
@@ -196,7 +198,7 @@ public class GuiMoarSign extends GuiBase {
 
         textStyleDialogPos = (buttonTextStyle.getX() + buttonTextStyle.getW() / 2) - guiLeft - ((textStyleMaxWidth + 10) / 2);
 
-        for (GuiTextStyleButton b: styleButtons) {
+        for (GuiTextStyleButton b : styleButtons) {
             b.setWidth(textStyleMaxWidth);
             b.setX(textStyleDialogPos + guiLeft + 5);
         }
@@ -233,7 +235,8 @@ public class GuiMoarSign extends GuiBase {
 
     @Override
     public void updateScreen() {
-        for (GuiTextField guiTextField : guiTextFields) guiTextField.updateCursorCounter();
+        for (GuiTextField guiTextField : guiTextFields)
+            guiTextField.updateCursorCounter();
     }
 
     @Override
@@ -242,7 +245,8 @@ public class GuiMoarSign extends GuiBase {
         if (selectedTextField != -1) {
             int index = 0;
             for (GuiTextField textField : guiTextFields) {
-                if (textField.isFocused()) textField.textboxKeyTyped(typedChar, key);
+                if (textField.isFocused())
+                    textField.textboxKeyTyped(typedChar, key);
                 entitySign.signText[index++] = new TextComponentString(textField.getText());
             }
         }
@@ -295,7 +299,8 @@ public class GuiMoarSign extends GuiBase {
         drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 181, guiTop + 144, Colors.BLACK.getARGB());
         drawHorizontalLine(guiLeft + TEXT_EDIT_AREA + 175, guiLeft + TEXT_EDIT_AREA + 189, guiTop + 162, Colors.BLACK.getARGB());
 
-        for (GuiTextField textField : guiTextFields) textField.drawTextBox();
+        for (GuiTextField textField : guiTextFields)
+            textField.drawTextBox();
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
@@ -339,7 +344,8 @@ public class GuiMoarSign extends GuiBase {
                 if (k1 > 2) {
                     k1 = 0;
                     j++;
-                } else k1++;
+                } else
+                    k1++;
             }
             GlStateManager.enableLighting();
 
@@ -385,7 +391,9 @@ public class GuiMoarSign extends GuiBase {
             }
         }
 
-        if (initied) for (GuiButton button : buttons) button.hoverText(this, x, y);
+        if (initied)
+            for (GuiButton button : buttons)
+                button.hoverText(this, x, y);
     }
 
     @Override
@@ -432,7 +440,8 @@ public class GuiMoarSign extends GuiBase {
                 if (!button.isDisabled && button.onClick(this, x, y)) {
                     noTextFieldClick = true;
                     update();
-                    if (selectedTextField != -1) guiTextFields[selectedTextField].setFocused(true);
+                    if (selectedTextField != -1)
+                        guiTextFields[selectedTextField].setFocused(true);
                 }
             }
 
@@ -498,7 +507,8 @@ public class GuiMoarSign extends GuiBase {
         entitySign.shadowRows = Arrays.copyOf(shadowRows, shadowRows.length);
         entitySign.lockedChanges = buttonLock.getState();
 
-        if (oldSelectedIndex != selectedTextField) oldSelectedIndex = selectedTextField;
+        if (oldSelectedIndex != selectedTextField)
+            oldSelectedIndex = selectedTextField;
 
     }
 

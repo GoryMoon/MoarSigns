@@ -1,7 +1,6 @@
 package gory_moon.moarsigns.integration.jei;
 
 import gory_moon.moarsigns.MoarSigns;
-import gory_moon.moarsigns.blocks.Blocks;
 import gory_moon.moarsigns.integration.jei.crafting.ShapedMoarSignsRecipeHandler;
 import gory_moon.moarsigns.integration.jei.crafting.ShapelessMoarSignsRecipeHandler;
 import gory_moon.moarsigns.integration.jei.exchange.ExchangeRecipeHandler;
@@ -10,6 +9,7 @@ import gory_moon.moarsigns.integration.jei.exchange.MoarSignsExchangeCategory;
 import gory_moon.moarsigns.items.ItemMoarSign;
 import gory_moon.moarsigns.items.ModItems;
 import mezz.jei.api.*;
+import mezz.jei.api.ingredients.IIngredientBlacklist;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -28,15 +28,9 @@ public class MoarSignsPlugin extends BlankModPlugin {
         jeiHelpers = registry.getJeiHelpers();
         IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 
-        registry.addRecipeCategories(
-                new MoarSignsExchangeCategory(guiHelper)
-        );
+        registry.addRecipeCategories(new MoarSignsExchangeCategory(guiHelper));
 
-        registry.addRecipeHandlers(
-                new ShapedMoarSignsRecipeHandler(),
-                new ShapelessMoarSignsRecipeHandler(),
-                new ExchangeRecipeHandler()
-        );
+        registry.addRecipeHandlers(new ShapedMoarSignsRecipeHandler(), new ShapelessMoarSignsRecipeHandler(guiHelper), new ExchangeRecipeHandler());
 
         for (ItemStack stack : registry.getIngredientRegistry().getIngredients(ItemStack.class)) {
             if (stack != null && stack.getItem() instanceof ItemMoarSign) {
@@ -44,15 +38,13 @@ public class MoarSignsPlugin extends BlankModPlugin {
             }
         }
 
-        IItemBlacklist blacklist = jeiHelpers.getItemBlacklist();
-        blacklist.addItemToBlacklist(new ItemStack(ModItems.DEBUG));
-        blacklist.addItemToBlacklist(new ItemStack(Blocks.signStandingMetal));
-        blacklist.addItemToBlacklist(new ItemStack(Blocks.signStandingWood));
-        blacklist.addItemToBlacklist(new ItemStack(Blocks.signWallMetal));
-        blacklist.addItemToBlacklist(new ItemStack(Blocks.signWallWood));
+        IIngredientBlacklist blacklist = jeiHelpers.getIngredientBlacklist();
+        IItemBlacklist blacklist2 = jeiHelpers.getItemBlacklist();
+        blacklist.addIngredientToBlacklist(new ItemStack(ModItems.DEBUG));
+        blacklist2.addItemToBlacklist(new ItemStack(ModItems.DEBUG));
 
         registry.addRecipes(ExchangeRecipeMaker.getExchangeRecipes());
-        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.SIGN_TOOLBOX, 1, 4), new String[]{EXCHANGE});
+        registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.SIGN_TOOLBOX, 1, 4), EXCHANGE);
 
         MoarSigns.logger.info("Loaded JEI Integration");
     }

@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "moarsigns:items/nuggets/silver_nugget_techreborn"
-  }
-}

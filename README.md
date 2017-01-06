@@ -4,6 +4,23 @@ MoarSigns
 
 This is a mod that adds a lot of signs to the game
 
+Information For Developers
+---
+
+##### To use this fork in your workspace, add the following to your `build.gradle`:
+
+```groovy
+repositories {  
+    maven {url "http://gorymoon.se/maven"}
+}
+
+dependencies {
+    deobfCompile "se.gory_moon:MoarSigns:<MOARSIGNS_VERSION>"
+}
+```
+
+> `MOARSIGNS_VERSION` can be found by browsing through the maven.
+
 Installation
 ---
 

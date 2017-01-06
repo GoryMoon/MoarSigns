@@ -49,8 +49,7 @@ public class MessageSignInfo implements IMessage {
     }
 
     public MessageSignInfo(TileEntityMoarSign tileEntity) {
-        this(tileEntity.getPos(), tileEntity.texture_name, tileEntity.isMetal,
-                tileEntity.rowLocations, tileEntity.rowSizes, tileEntity.visibleRows, tileEntity.shadowRows, tileEntity.lockedChanges, tileEntity.signText);
+        this(tileEntity.getPos(), tileEntity.texture_name, tileEntity.isMetal, tileEntity.rowLocations, tileEntity.rowSizes, tileEntity.visibleRows, tileEntity.shadowRows, tileEntity.lockedChanges, tileEntity.signText);
     }
 
     @Override
@@ -64,10 +63,14 @@ public class MessageSignInfo implements IMessage {
             this.texture = new String(packetBuf.readBytes(textureLength).array(), Charset.forName("utf-8"));
             this.isMetal = packetBuf.readBoolean();
 
-            for (int i = 0; i < 4; i++) rowLocations[i] = packetBuf.readInt();
-            for (int i = 0; i < 4; i++) rowSizes[i] = packetBuf.readInt();
-            for (int i = 0; i < 4; i++) visibleRows[i] = packetBuf.readBoolean();
-            for (int i = 0; i < 4; i++) shadowRows[i] = packetBuf.readBoolean();
+            for (int i = 0; i < 4; i++)
+                rowLocations[i] = packetBuf.readInt();
+            for (int i = 0; i < 4; i++)
+                rowSizes[i] = packetBuf.readInt();
+            for (int i = 0; i < 4; i++)
+                visibleRows[i] = packetBuf.readBoolean();
+            for (int i = 0; i < 4; i++)
+                shadowRows[i] = packetBuf.readBoolean();
             lockedChanges = packetBuf.readBoolean();
 
             for (int i = 0; i < 4; i++) {
@@ -91,10 +94,14 @@ public class MessageSignInfo implements IMessage {
             packetBuf.writeBytes(texture.getBytes(Charset.forName("utf-8")));
             packetBuf.writeBoolean(isMetal);
 
-            for (int i = 0; i < 4; i++) packetBuf.writeInt(rowLocations[i]);
-            for (int i = 0; i < 4; i++) packetBuf.writeInt(rowSizes[i]);
-            for (int i = 0; i < 4; i++) packetBuf.writeBoolean(visibleRows[i]);
-            for (int i = 0; i < 4; i++) packetBuf.writeBoolean(shadowRows[i]);
+            for (int i = 0; i < 4; i++)
+                packetBuf.writeInt(rowLocations[i]);
+            for (int i = 0; i < 4; i++)
+                packetBuf.writeInt(rowSizes[i]);
+            for (int i = 0; i < 4; i++)
+                packetBuf.writeBoolean(visibleRows[i]);
+            for (int i = 0; i < 4; i++)
+                packetBuf.writeBoolean(shadowRows[i]);
             packetBuf.writeBoolean(lockedChanges);
 
             for (int i = 0; i < 4; i++) {

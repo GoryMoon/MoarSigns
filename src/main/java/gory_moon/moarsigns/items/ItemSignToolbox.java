@@ -5,6 +5,7 @@ import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.MoarSignsCreativeTab;
 import gory_moon.moarsigns.blocks.BlockMoarSign;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
+import gory_moon.moarsigns.lib.Constants;
 import gory_moon.moarsigns.lib.ToolBoxModes;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.network.message.MessageSignOpenGui;
@@ -43,6 +44,7 @@ public class ItemSignToolbox extends Item implements IToolHammer {
     public static final String NBT_UNLOCALIZED_NAME = "SignUnlocalizedName";
 
     public ItemSignToolbox() {
+        setRegistryName(Constants.SIGN_TOOLBOX_ITEM_KEY);
         setUnlocalizedName("moarsigns.signtoolbox");
         setCreativeTab(MoarSignsCreativeTab.tabMS);
         setHasSubtypes(true);
@@ -58,7 +60,7 @@ public class ItemSignToolbox extends Item implements IToolHammer {
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote) {
             RayTraceResult movingObjectPosition = rayTrace(world, player, false);
-            RayTraceResult.Type hit = movingObjectPosition != null ? movingObjectPosition.typeOfHit: RayTraceResult.Type.MISS;
+            RayTraceResult.Type hit = movingObjectPosition != null ? movingObjectPosition.typeOfHit : RayTraceResult.Type.MISS;
 
             if (hit == RayTraceResult.Type.MISS) {
                 int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
@@ -184,7 +186,7 @@ public class ItemSignToolbox extends Item implements IToolHammer {
         }
 
         stack.setTagCompound(signInfo);
-        return val == EnumActionResult.SUCCESS ? EnumActionResult.PASS: EnumActionResult.SUCCESS;
+        return val == EnumActionResult.SUCCESS ? EnumActionResult.PASS : EnumActionResult.SUCCESS;
     }
 
     private void doExchange(World world, BlockPos pos, EntityPlayer player) {
@@ -204,7 +206,8 @@ public class ItemSignToolbox extends Item implements IToolHammer {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        if (stack.getItemDamage() > 5 && !isMoving(stack.getItemDamage())) stack.setItemDamage(0);
+        if (stack.getItemDamage() > 5 && !isMoving(stack.getItemDamage()))
+            stack.setItemDamage(0);
         int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
         return super.getUnlocalizedName(stack) + "." + ToolBoxModes.values()[mode].toString();
     }
@@ -246,7 +249,8 @@ public class ItemSignToolbox extends Item implements IToolHammer {
         }
 
         String[] strList = str.split("\n");
-        for (int i = 0; i < strList.length; i++) strList[i] = strList[i].trim();
+        for (int i = 0; i < strList.length; i++)
+            strList[i] = strList[i].trim();
         Collections.addAll(list, strList);
     }
 
@@ -283,6 +287,6 @@ public class ItemSignToolbox extends Item implements IToolHammer {
 
     @Override
     public void toolUsed(ItemStack item, EntityLivingBase user, int x, int y, int z) {
-        
+
     }
 }
