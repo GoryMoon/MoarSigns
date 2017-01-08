@@ -7,7 +7,9 @@ import gory_moon.moarsigns.blocks.ModBlocks;
 import gory_moon.moarsigns.integration.IntegrationHandler;
 import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.items.NuggetRegistry;
+import gory_moon.moarsigns.items.VariantItem;
 import gory_moon.moarsigns.lib.Reference;
+import gory_moon.moarsigns.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -69,17 +71,10 @@ public class ModModelManager {
         //Overrides the ItemMeshDefenition wit a custom one
         registerItemModel(ModItems.SIGN, new MoarSignsItemMeshDefenition());
 
-        for (Map.Entry<String, NuggetRegistry.NuggetInfo> entry : NuggetRegistry.getNuggets().entrySet())
+        for (Map.Entry<String, NuggetRegistry.NuggetInfo> entry : Utils.entriesSortedByValues(NuggetRegistry.getNuggets()))
             registerItemModelForMeta(ModItems.NUGGET, entry.getValue().id, getModel("nuggets/" + entry.getValue().modId + entry.getValue().unlocName));
 
-        //TODO make better system for registering these
-        registerItemModelForMeta(ModItems.SIGN_TOOLBOX, 0, "variant=edit");
-        registerItemModelForMeta(ModItems.SIGN_TOOLBOX, 1, "variant=rotate");
-        registerItemModelForMeta(ModItems.SIGN_TOOLBOX, 2, "variant=move");
-        registerItemModelForMeta(ModItems.SIGN_TOOLBOX, 7, "variant=move");
-        registerItemModelForMeta(ModItems.SIGN_TOOLBOX, 3, "variant=copy");
-        registerItemModelForMeta(ModItems.SIGN_TOOLBOX, 4, "variant=exchange");
-        registerItemModelForMeta(ModItems.SIGN_TOOLBOX, 5, "variant=preview");
+        registerVariantItems(ModItems.SIGN_TOOLBOX, "mode");
 
         // Then register items with default model names
         ModItems.RegistrationHandler.ITEMS.stream().filter(item -> !itemsRegistered.contains(item)).forEach(this::registerItemModel);
@@ -144,6 +139,10 @@ public class ModModelManager {
      */
     private <T extends Comparable<T>> void registerVariantBlockItemModels(IBlockState baseState, IProperty<T> property, ToIntFunction<T> getMeta) {
         property.getAllowedValues().forEach(value -> registerBlockItemModelForMeta(baseState.withProperty(property, value), getMeta.applyAsInt(value)));
+    }
+
+    private <T extends VariantItem> void registerVariantItems(T variant, String variantName) {
+        variant.getMetas().forEach(value -> registerItemModelForMeta(variant, value, variantName + "=" + variant.getVariant(value)));
     }
 
     /**

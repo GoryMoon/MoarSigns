@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.items;
 
 import cofh.api.item.IToolHammer;
+import com.google.common.collect.Lists;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.MoarSignsCreativeTab;
 import gory_moon.moarsigns.blocks.BlockMoarSign;
@@ -17,7 +18,6 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -32,13 +32,15 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Collections;
 import java.util.List;
 
 import static gory_moon.moarsigns.lib.ToolBoxModes.*;
 
-public class ItemSignToolbox extends Item implements IToolHammer {
+public class ItemSignToolbox extends VariantItem implements IToolHammer {
 
     public static final String SIGN_MOVING_TAG = "SignMoving";
     public static final String NBT_UNLOCALIZED_NAME = "SignUnlocalizedName";
@@ -214,6 +216,7 @@ public class ItemSignToolbox extends Item implements IToolHammer {
 
     @SuppressWarnings("unchecked")
     @Override
+    @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean extraInfo) {
         GameSettings gameSettings = FMLClientHandler.instance().getClient().gameSettings;
         String str = Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.CHANGE.translate(Colors.LIGHTGRAY + "[" + GameSettings.getKeyDisplayString(gameSettings.keyBindSneak.getKeyCode()) + "]" + Colors.GRAY.toString());
@@ -288,5 +291,19 @@ public class ItemSignToolbox extends Item implements IToolHammer {
     @Override
     public void toolUsed(ItemStack item, EntityLivingBase user, int x, int y, int z) {
 
+    }
+
+    private List<Integer> metas = Lists.newArrayList(0, 1, 2, 3, 4, 5, 7);
+
+    @Override
+    public List<Integer> getMetas() {
+        return metas;
+    }
+
+    @Override
+    public String getVariant(int meta) {
+        if (meta >= 0 && meta <= 7 && meta != 6)
+            return ToolBoxModes.values()[meta == 7 ? 1: meta].toString().toLowerCase().replaceAll("_mode", "");
+        return "";
     }
 }

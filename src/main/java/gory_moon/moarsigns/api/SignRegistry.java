@@ -53,7 +53,7 @@ public class SignRegistry {
      */
     public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId) throws IntegrationException {
         if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
-            throw new IntegrationException();
+            throw new IntegrationException("Material " + materialName + " is null for sign " + itemName);
 
         MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack, materialBlock);
         return register(itemName, property, info, modId, ALWAYS_ACTIVE_TAG);
@@ -90,7 +90,7 @@ public class SignRegistry {
      */
     public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId, String activateTag) throws IntegrationException {
         if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
-            throw new IntegrationException();
+            throw new IntegrationException("Material " + materialName + " is null for sign " + itemName);
 
         MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack, materialBlock);
         return register(itemName, property, info, modId, activateTag);
@@ -120,7 +120,7 @@ public class SignRegistry {
      */
     public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId) throws IntegrationException {
         if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
-            throw new IntegrationException();
+            throw new IntegrationException("Material " + materialName + " is null for sign " + itemName);
 
         MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack);
         return register(itemName, property, info, modId, ALWAYS_ACTIVE_TAG);
@@ -154,7 +154,7 @@ public class SignRegistry {
      */
     public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId, String activateTag) throws IntegrationException {
         if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
-            throw new IntegrationException();
+            throw new IntegrationException("Material " + materialName + " is null for sign " + itemName);
 
         MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack);
         return register(itemName, property, info, modId, activateTag);
@@ -189,7 +189,7 @@ public class SignRegistry {
      */
     public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack materialItemStack) throws IntegrationException {
         if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
-            throw new IntegrationException();
+            throw new IntegrationException("Material " + materialName + " is null for sign " + sInfo.itemName);
 
         MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack);
         return registerAlternativeMaterial(sInfo, info);
@@ -209,7 +209,7 @@ public class SignRegistry {
      */
     public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock) throws IntegrationException {
         if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
-            throw new IntegrationException();
+            throw new IntegrationException("Material " + materialName + " is null for sign " + sInfo.itemName);
 
         MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack, materialBlock);
         return registerAlternativeMaterial(sInfo, info);
@@ -225,7 +225,7 @@ public class SignRegistry {
      */
     public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, MaterialInfo mInfo) throws IntegrationException {
         if ((sInfo == null || mInfo == null) && IntegrationHandler.donePreSetup())
-            throw new IntegrationException();
+            throw new IntegrationException("Material " + mInfo.materialName + " is null for sign " + sInfo.itemName);
 
         if (alternativeRecipeMaterial.containsKey(sInfo)) {
             alternativeRecipeMaterial.get(sInfo).add(mInfo);
@@ -415,11 +415,13 @@ public class SignRegistry {
      * Sorts the activated signs in order of wood and metal, then in order of mod owner
      */
     public static void sortRegistry() {
-        Collections.sort(activatedSignRegistry, new Comparator<SignInfo>() {
-            @Override
-            public int compare(SignInfo o1, SignInfo o2) {
-                return (o1.isMetal && !o2.isMetal) ? 1 : (!o1.isMetal && o2.isMetal) ? -1 : (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ? 0 : (o1.material.path.equals(o2.material.path) ? (o1.itemName.compareToIgnoreCase(o2.itemName)) : (o1.material.path.compareTo(o2.material.path))));
-            }
-        });
+        activatedSignRegistry.sort(
+                (o1, o2) -> (o1.isMetal && !o2.isMetal) ?
+                        1 :
+                        (!o1.isMetal && o2.isMetal) ?
+                            -1 :
+                            (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ?
+                                0 : (o1.material.path.equals(o2.material.path) ?
+                                (o1.itemName.compareToIgnoreCase(o2.itemName)) : (o1.material.path.compareTo(o2.material.path)))));
     }
 }

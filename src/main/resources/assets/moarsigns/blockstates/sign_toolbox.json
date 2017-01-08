@@ -4,7 +4,7 @@
     "model": "moarsigns:item/generated"
   },
   "variants": {
-    "variant": {
+    "mode": {
       "edit": {
         "textures": {
           "layer0": "moarsigns:items/toolbox/edit_mode"

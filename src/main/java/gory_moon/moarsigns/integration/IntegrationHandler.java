@@ -5,12 +5,18 @@ import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.IntegrationRegistry;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.integration.basemetals.BasemetalsIntegration;
+import gory_moon.moarsigns.integration.bigrectors.BigReactorsIntegration;
 import gory_moon.moarsigns.integration.bop.BiomesOPlentyIntegration;
+import gory_moon.moarsigns.integration.draconicevolution.DraconicEvolutionIntegration;
+import gory_moon.moarsigns.integration.enderio.EnderIOIntegration;
 import gory_moon.moarsigns.integration.forestry.ForestryIntegration;
 import gory_moon.moarsigns.integration.ic2.IndustrialCraft2Integration;
+import gory_moon.moarsigns.integration.id.IntegratedDynamicsIntegration;
+import gory_moon.moarsigns.integration.ie.ImmersiveEngineeringIntegration;
 import gory_moon.moarsigns.integration.natura.NaturaIntegration;
 import gory_moon.moarsigns.integration.psi.PsiIntegration;
 import gory_moon.moarsigns.integration.railcraft.RailcraftIntegration;
+import gory_moon.moarsigns.integration.randomthings.RandomThingsIntegration;
 import gory_moon.moarsigns.integration.roots.RootsIntegration;
 import gory_moon.moarsigns.integration.tconstruct.TinkersConstructIntegration;
 import gory_moon.moarsigns.integration.techreborn.TechRebornIntegration;
@@ -45,68 +51,12 @@ public class IntegrationHandler {
         registerIntegration(RailcraftIntegration.class);
         registerIntegration(PsiIntegration.class);
         registerIntegration(RootsIntegration.class);
-
-        //TODO immersive engineering
-        //TODO integrateddynamics
-        //TODO extreme reactors
-        //TODO draconic evolution
-
-        //TODO randomthings
-
-        /*
-
-        [
-              {
-                "immersiveengineering": "tile.immersiveengineering.storage.nickel"
-              },
-              {
-                "immersiveengineering": "item.immersiveengineering.metal.ingotNickel"
-              },
-              {
-                "immersiveengineering": "item.immersiveengineering.metal.ingotLead"
-              },
-              {
-                "immersiveengineering": "tile.immersiveengineering.storage.copper"
-              },
-              {
-                "immersiveengineering": "tile.immersiveengineering.storage.steel"
-              },
-              {
-                "immersiveengineering": "item.immersiveengineering.metal.ingotCopper"
-              },
-              {
-                "immersiveengineering": "item.immersiveengineering.metal.ingotSilver"
-              },
-              {
-                "immersiveengineering": "item.immersiveengineering.metal.ingotElectrum"
-              },
-              {
-                "immersiveengineering": "tile.immersiveengineering.storage.aluminum"
-              },
-              {
-                "immersiveengineering": "tile.immersiveengineering.storage.electrum"
-              },
-              {
-                "immersiveengineering": "tile.immersiveengineering.storage.silver"
-              },
-              {
-                "immersiveengineering": "item.immersiveengineering.metal.ingotSteel"
-              },
-              {
-                "immersiveengineering": "item.immersiveengineering.metal.ingotAluminum"
-              },
-              {
-                "immersiveengineering": "tile.immersiveengineering.storage.lead"
-              },
-              {
-                "bigreactors": "item.bigreactors:ingotMetals.steel"
-              },
-              {
-                "bigreactors": "tile.bigreactors:blockMetals.steel"
-              }
-            ]
-
-         */
+        registerIntegration(BigReactorsIntegration.class);
+        registerIntegration(ImmersiveEngineeringIntegration.class);
+        registerIntegration(IntegratedDynamicsIntegration.class);
+        registerIntegration(DraconicEvolutionIntegration.class);
+        registerIntegration(EnderIOIntegration.class);
+        registerIntegration(RandomThingsIntegration.class);
 
         /* Not updated mods */
         //registerIntegration(FactorizationIntegration.class);
@@ -115,37 +65,54 @@ public class IntegrationHandler {
         registerPlankOreName("plankWood");
         registerPlankOreName("plankTreatedWood");
 
-        registerMetalGemOreName("ingotAdamantine", "blockAdamantine");
-        registerMetalGemOreName("ingotAluminum", "blockAluminum");
-        registerMetalGemOreName("ingotAluminumBrass", "blockAluminumBrass");
-        registerMetalGemOreName("ingotAlumite", "blockAlumite");
-        registerMetalGemOreName("ingotArdite", "blockArdite");
-        registerMetalGemOreName("ingotAquarium", "blockAquarium");
-        registerMetalGemOreName("ingotBrass", "blockBrass");
-        registerMetalGemOreName("ingotBronze", "blockBronze");
-        registerMetalGemOreName("ingotCobalt", "blockCobalt");
-        registerMetalGemOreName("ingotColdiron", "blockColdiron");
-        registerMetalGemOreName("ingotCopper", "blockCopper");
-        registerMetalGemOreName("ingotCupronickel", "blockCupronickel");
-        registerMetalGemOreName("ingotElectrum", "blockElectrum");
-        registerMetalGemOreName("ingotEnderium", "blockEnderium");
-        registerMetalGemOreName("ingotFzDarkIron", "blockFzDarkIron");
-        registerMetalGemOreName("ingotInvar", "blockInvar");
-        registerMetalGemOreName("ingotLead", "blockLead");
-        registerMetalGemOreName("ingotLumium", "blockLumium");
-        registerMetalGemOreName("ingotManyullyn", "blockManyullyn");
-        registerMetalGemOreName("ingotMithril", "blockMithril");
-        registerMetalGemOreName("ingotNickel", "blockNickel");
-        registerMetalGemOreName("ingotPlatinum", "blockPlatinum");
-        registerMetalGemOreName("ingotSignalum", "blockSignalum");
-        registerMetalGemOreName("ingotSilver", "blockSilver");
-        registerMetalGemOreName("ingotStarsteel", "blockStarsteel");
-        registerMetalGemOreName("ingotSteel", "blockSteel");
-        registerMetalGemOreName("ingotTin", "blockTin");
-        registerMetalGemOreName("ingotZinc", "blockZinc");
-        registerMetalGemOreName("ingotPsi", "blockPsiMetal");
-        registerMetalGemOreName("gemPsi", "blockPsiGem");
-
+        registerMetalGemOreName("ingotAdamantine",          "blockAdamantine");
+        registerMetalGemOreName("ingotAluminum",            "blockAluminum");
+        registerMetalGemOreName("ingotAluminumBrass",       "blockAluminumBrass");
+        registerMetalGemOreName("ingotAlumite",             "blockAlumite");
+        registerMetalGemOreName("ingotArdite",              "blockArdite");
+        registerMetalGemOreName("ingotAquarium",            "blockAquarium");
+        registerMetalGemOreName("ingotBrass",               "blockBrass");
+        registerMetalGemOreName("ingotBronze",              "blockBronze");
+        registerMetalGemOreName("ingotCobalt",              "blockCobalt");
+        registerMetalGemOreName("ingotColdiron",            "blockColdiron");
+        registerMetalGemOreName("ingotCopper",              "blockCopper");
+        registerMetalGemOreName("ingotCupronickel",         "blockCupronickel");
+        registerMetalGemOreName("ingotElectrum",            "blockElectrum");
+        registerMetalGemOreName("ingotEnderium",            "blockEnderium");
+        registerMetalGemOreName("ingotFzDarkIron",          "blockFzDarkIron");
+        registerMetalGemOreName("ingotInvar",               "blockInvar");
+        registerMetalGemOreName("ingotLead",                "blockLead");
+        registerMetalGemOreName("ingotLumium",              "blockLumium");
+        registerMetalGemOreName("ingotManyullyn",           "blockManyullyn");
+        registerMetalGemOreName("ingotMithril",             "blockMithril");
+        registerMetalGemOreName("ingotNickel",              "blockNickel");
+        registerMetalGemOreName("ingotPlatinum",            "blockPlatinum");
+        registerMetalGemOreName("ingotSignalum",            "blockSignalum");
+        registerMetalGemOreName("ingotSilver",              "blockSilver");
+        registerMetalGemOreName("ingotStarsteel",           "blockStarsteel");
+        registerMetalGemOreName("ingotSteel",               "blockSteel");
+        registerMetalGemOreName("ingotTin",                 "blockTin");
+        registerMetalGemOreName("ingotZinc",                "blockZinc");
+        registerMetalGemOreName("ingotPsi",                 "blockPsiMetal");
+        registerMetalGemOreName("gemPsi",                   "blockPsiGem");
+        registerMetalGemOreName("ingotYellorium",           "blockYellorium");
+        registerMetalGemOreName("ingotUranium",             "blockUranium");
+        registerMetalGemOreName("ingotCyanite",             "blockCyanite");
+        registerMetalGemOreName("ingotGraphite",            "blockGraphite");
+        registerMetalGemOreName("ingotBlutonium",           "blockBlutonium");
+        registerMetalGemOreName("ingotPlutonium",           "blockPlutonium");
+        registerMetalGemOreName("ingotLudicrite",           "blockLudicrite");
+        registerMetalGemOreName("ingotConstantan",          "blockConstantan");
+        registerMetalGemOreName("ingotDraconium",           "blockDraconium");
+        registerMetalGemOreName("ingotDraconiumAwakened",   "blockDraconiumAwakened");
+        registerMetalGemOreName("ingotElectricalSteel",     "blockElectricalSteel");
+        registerMetalGemOreName("ingotEnergeticAlloy",      "blockEnergeticAlloy");
+        registerMetalGemOreName("ingotVibrantAlloy",        "blockVibrantAlloy");
+        registerMetalGemOreName("ingotRedstoneAlloy",       "blockRedstoneAlloy");
+        registerMetalGemOreName("ingotConductiveIron",      "blockConductiveIron");
+        registerMetalGemOreName("ingotPulsatingIron",       "blockPulsatingIron");
+        registerMetalGemOreName("ingotDarkSteel",           "blockDarkSteel");
+        registerMetalGemOreName("ingotSoularium",           "blockSoularium");
     }
 
     private static void registerSigns(ArrayList<ItemStack> planks, ArrayList<ItemStack> ingots, boolean log) {
@@ -159,13 +126,13 @@ public class IntegrationHandler {
                 reg.registerWoodenSigns(planks);
                 reg.registerMetalSigns(ingots);
             } catch (IntegrationException e) {
-                if (reg.getActivateTag() != null && reg.getIntegrationName() != null && Loader.isModLoaded(reg.getActivateTag())) {
+                if (Loader.isModLoaded(reg.getActivateTag())) {
                     if (log)
-                        MoarSigns.logger.error("Failed " + reg.getIntegrationName() + " SignIntegration");
+                        MoarSigns.logger.error("Failed " + reg.getIntegrationName() + " SignIntegration" + e.getMessage());
                 }
                 continue;
             }
-            if (reg.getActivateTag() != null && reg.getIntegrationName() != null && Loader.isModLoaded(reg.getActivateTag())) {
+            if (Loader.isModLoaded(reg.getActivateTag())) {
                 SignRegistry.activateTag(reg.getActivateTag());
                 if (log)
                     MoarSigns.logger.info("Loaded " + reg.getIntegrationName() + " SignIntegration");
@@ -206,21 +173,27 @@ public class IntegrationHandler {
         ArrayList<ItemStack> ingots = getOres(names);
 
         registerSigns(planks, ingots, true);
-
-        /*IntegrationHandler.genModelFile("metal", "psi", "psimetal_sign");
-        IntegrationHandler.genModelFile("metal", "psi", "psigem_sign");
-        IntegrationHandler.genModelFile("metal", "psi", "ebonypsimetal_sign");
-        IntegrationHandler.genModelFile("metal", "psi", "ivorypsimetal_sign");
-
-        IntegrationHandler.genNuggetFile("psi", "psimetal_nugget_psi");
-        IntegrationHandler.genNuggetFile("psi", "psigem_nugget_psi");
-        IntegrationHandler.genNuggetFile("psi", "ebonyPsimetal_nugget_psi");
-        IntegrationHandler.genNuggetFile("psi", "ivoryPsimetal_nugget_psi");*/
     }
 
     public static boolean donePreSetup() {
         return !preSetup;
     }
+
+    /*IntegrationHandler.genModelFile("metal", "enderio", "electricalsteel_sign");
+        IntegrationHandler.genModelFile("metal", "enderio", "energeticalloy_sign");
+        IntegrationHandler.genModelFile("metal", "enderio", "vibrantalloy_sign");
+        IntegrationHandler.genModelFile("metal", "enderio", "redstonealloy_sign");
+        IntegrationHandler.genModelFile("metal", "enderio", "conductiveiron_sign");
+        IntegrationHandler.genModelFile("metal", "enderio", "pulsatingiron_sign");
+        IntegrationHandler.genModelFile("metal", "enderio", "darksteel_sign");
+        IntegrationHandler.genModelFile("metal", "enderio", "soularium_sign");
+
+        IntegrationHandler.genNuggetFile("enderio", "electricalsteel_nugget_enderio");
+        IntegrationHandler.genNuggetFile("enderio", "energeticalloy_nugget_enderio");
+        IntegrationHandler.genNuggetFile("enderio", "redstonealloy_nugget_enderio");
+        IntegrationHandler.genNuggetFile("enderio", "conductiveiron_nugget_enderio");
+        IntegrationHandler.genNuggetFile("enderio", "darksteel_nugget_enderio");
+        IntegrationHandler.genNuggetFile("enderio", "soularium_nugget_enderio");*/
 
     public static void genModelFile(String type, String mod, String signName) {
         String base = "../src/main/resources/assets/moarsigns/models/item/";

@@ -123,11 +123,6 @@ item.moarsigns.copper_nugget_forestry.name=Copper Nugget
 item.moarsigns.silver_nugget_factorization.name=Silver Nugget
 item.moarsigns.lead_nugget_factorization.name=Lead Nugget
 item.moarsigns.darkiron_nugget_factorization.name=Dark Iron Nugget
-item.moarsigns.psimetal_nugget_psi.name=Psimetal Nugget
-item.moarsigns.psigem_nugget_psi.name=Psigem Nugget
-item.moarsigns.ebonypsimetal_nugget_psi.name=Ebony Psimetal Nugget
-item.moarsigns.ivorypsimetal_nugget_psi.name=Ivory Psimetal Nugget
-
 item.moarsigns.aluminium_nugget_techreborn.name=Aluminium Nugget
 item.moarsigns.brass_nugget_techreborn.name=Brass Nugget
 item.moarsigns.chrome_nugget_techreborn.name=Chrome Nugget
@@ -146,6 +141,23 @@ item.moarsigns.tungsten_nugget_techreborn.name=Tungsten Nugget
 item.moarsigns.tungstensteel_nugget_techreborn.name=Tungstensteel Nugget
 item.moarsigns.zinc_nugget_techreborn.name=Zinc Nugget
 item.moarsigns.refinediron_nugget_techreborn.name=Refined Iron Nugget
+item.moarsigns.psimetal_nugget_psi.name=Psimetal Nugget
+item.moarsigns.psigem_nugget_psi.name=Psigem Nugget
+item.moarsigns.ebonypsimetal_nugget_psi.name=Ebony Psimetal Nugget
+item.moarsigns.ivorypsimetal_nugget_psi.name=Ivory Psimetal Nugget
+item.moarsigns.yellorium_nugget_bigreactors.name=Yellorium Nugget
+item.moarsigns.cyanite_nugget_bigreactors.name=Cyanite Nugget
+item.moarsigns.graphite_nugget_bigreactors.name=Graphite Nugget
+item.moarsigns.blutonium_nugget_bigreactors.name=Blutonium Nugget
+item.moarsigns.ludicrite_nugget_bigreactors.name=Ludicrite Nugget
+item.moarsigns.steel_nugget_bigreactors.name=Steel Nugget
+
+item.moarsigns.electricalsteel_nugget_enderio.name=Electrical Steel Nugget
+item.moarsigns.energeticalloy_nugget_enderio.name=Energetic Alloy Nugget
+item.moarsigns.redstonealloy_nugget_enderio.name=Redstone Alloy Nugget
+item.moarsigns.conductiveiron_nugget_enderio.name=Conductive Iron Nugget
+item.moarsigns.darksteel_nugget_enderio.name=Dark Steel Nugget
+item.moarsigns.soularium_nugget_enderio.name=Soularium Nugget
 
 # Vanilla Signs
 item.moarsigns.sign.oak_sign.name=Oak Sign
@@ -219,6 +231,12 @@ item.moarsigns.sign.for.copper_sign.name=Copper Sign
 
 #Roots
 item.moarsigns.sign.roots.wildwood_sign.name=Wildwood Sign
+
+#Integrated Dynamics
+item.moarsigns.sign.id.menril_sign.name=Menril Sign
+
+#Random Things
+item.moarsigns.sign.randomthings.spectre_sign.name=Spectre Sign
 
 #Natura
 item.moarsigns.sign.natura.bloodwood_sign.name=Bloodwood Sign
@@ -323,6 +341,40 @@ item.moarsigns.sign.psi.psimetal_sign.name=Psimetal Sign
 item.moarsigns.sign.psi.psigem_sign.name=Psigem Sign
 item.moarsigns.sign.psi.ebonypsimetal_sign.name=Ebony Psimetal Sign
 item.moarsigns.sign.psi.ivorypsimetal_sign.name=Ivory Psimetal Sign
+
+#BigReactors
+item.moarsigns.sign.bigreactors.yellorium_sign.name=Yellorium Sign
+item.moarsigns.sign.bigreactors.cyanite_sign.name=Cyanite Sign
+item.moarsigns.sign.bigreactors.graphite_sign.name=Graphite Sign
+item.moarsigns.sign.bigreactors.blutonium_sign.name=Blutonium Sign
+item.moarsigns.sign.bigreactors.ludicrite_sign.name=Ludicrite Sign
+item.moarsigns.sign.bigreactors.steel_sign.name=Steel Sign
+
+#Immersive Engineering
+item.moarsigns.sign.ie.copper_sign.name=Copper Sign
+item.moarsigns.sign.ie.aluminium_sign.name=Aluminium Sign
+item.moarsigns.sign.ie.lead_sign.name=Lead Sign
+item.moarsigns.sign.ie.silver_sign.name=Silver Sign
+item.moarsigns.sign.ie.nickel_sign.name=Nickel Sign
+item.moarsigns.sign.ie.uranium_sign.name=Uranium Sign
+item.moarsigns.sign.ie.constantan_sign.name=Constantan Sign
+item.moarsigns.sign.ie.electrum_sign.name=Electrum Sign
+item.moarsigns.sign.ie.steel_sign.name=Steel Sign
+item.moarsigns.sign.ie.treatedwood_sign.name=Treated Wood Sign
+
+#Draconic Evolution
+item.moarsigns.sign.draconicevolution.draconium_sign.name=Draconium Sign
+item.moarsigns.sign.draconicevolution.draconic_sign.name=Awakened Draconium Sign
+
+#Ender IO
+item.moarsigns.sign.enderio.electricalsteel_sign.name=Electrical Steel Sign
+item.moarsigns.sign.enderio.energeticalloy_sign.name=Energetic Alloy Sign
+item.moarsigns.sign.enderio.vibrantalloy_sign.name=Vibrant Alloy Sign
+item.moarsigns.sign.enderio.redstonealloy_sign.name=Redstone Alloy Sign
+item.moarsigns.sign.enderio.conductiveiron_sign.name=Conductive Iron Sign
+item.moarsigns.sign.enderio.pulsatingiron_sign.name=Pulsating Iron Sign
+item.moarsigns.sign.enderio.darksteel_sign.name=Dark Steel Sign
+item.moarsigns.sign.enderio.soularium_sign.name=Soularium Sign
 
 #Factorization
 item.moarsigns.sign.factorization.silver_sign.name=Silver Sign

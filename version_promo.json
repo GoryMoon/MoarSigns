@@ -3,7 +3,7 @@
   "promos": {
     "1.9-recommended": "3.0.0",
     "1.9.4-recommended": "3.3.1.3",
-    "1.10.2-recommended": "4.1.0.5"
+    "1.10.2-recommended": "4.2.0.6"
   },
   "1.9.4": {
     "3.3.1.3": "Fixed crash bug when trying to change textfield with no selected",
@@ -14,6 +14,7 @@
     "3.1.0": "Updated to Minecraft 1.9.4\nAdded quartz, lapis, platinum and cupronickel signs"
   },
   "1.10.2": {
+    "4.2.0.6": "Added: Natura integration, signs\nAdded: Railcraft integration, signs\nAdded: Psi integration, signs\nAdded: Roots integration, signs\nAdded: CraftTweaker 3 (MineTweaker 3) integration, custom recipes\nAdded: Extreme Reactors (Big Reactors) integration, signs\nAdded: Immersive Engineering integration, signs\nAdded: Integrated Dynamics integration, sign\nAdded: Draconic Evolution integration, signs\nAdded: Ender IO integration, signs\nAdded. Random Things integration, sign\nFixed: JEI Integration not showing recipes\nChanged: Remade block, item and model registrations\nChanged: Rearranged item models and textures, breaks resourcepacks",
     "4.1.0.5": "Added PassthroughSigns integration\nUpdated JEI version and integration to look more like normal crafting\nFixed rotation of signs with the SignToolbox",
     "4.0.1.4": "Fixed crash bug when trying to change textfield with no selected",
     "4.0.0.2": "Updated to Minecraft 1.10.2\nFixed JEI integration"

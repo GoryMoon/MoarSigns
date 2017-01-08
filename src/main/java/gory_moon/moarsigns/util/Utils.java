@@ -9,9 +9,13 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 public class Utils {
@@ -42,8 +46,18 @@ public class Utils {
         return (isUnderlined(s) ? 1 : 0) + (b ? 1 : 0);
     }
 
+    @SideOnly(Side.CLIENT)
     public static int toPixelWidth(FontRenderer fr, int i) {
         return fr.getCharWidth('i') * i;
+    }
+
+    public static <K,V extends Comparable<? super V>> SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
+        SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<>((e1, e2) -> {
+            int res = e1.getValue().compareTo(e2.getValue());
+            return res != 0 ? res : 1;
+        });
+        sortedEntries.addAll(map.entrySet());
+        return sortedEntries;
     }
 
     public static boolean isUnderlined(String s) {

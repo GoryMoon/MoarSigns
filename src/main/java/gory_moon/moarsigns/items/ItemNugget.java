@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.items;
 
 import gory_moon.moarsigns.lib.Constants;
+import gory_moon.moarsigns.util.Utils;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,7 +28,7 @@ public class ItemNugget extends Item {
     @SuppressWarnings("unchecked")
     @Override
     public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
-        for (Map.Entry<String, NuggetRegistry.NuggetInfo> entry : NuggetRegistry.getNuggets().entrySet()) {
+        for (Map.Entry<String, NuggetRegistry.NuggetInfo> entry : Utils.entriesSortedByValues(NuggetRegistry.getNuggets())) {
             if (entry.getValue().needed) {
                 list.add(new ItemStack(this, 1, entry.getValue().id));
             }

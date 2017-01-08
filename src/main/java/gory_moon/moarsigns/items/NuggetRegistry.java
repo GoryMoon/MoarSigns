@@ -2,9 +2,8 @@ package gory_moon.moarsigns.items;
 
 import com.google.common.collect.Maps;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import java.util.HashMap;
-import java.util.Map;
 
 public class NuggetRegistry {
 
@@ -52,6 +51,18 @@ public class NuggetRegistry {
         registerNugget("psigem_nugget_psi",                 "nuggetPsiGem",         "psi/",             "item.psi:psigem"                       );
         registerNugget("ebonypsimetal_nugget_psi",          "nuggetEbonyPsiMetal",  "psi/",             "item.psi:ebonyPsimetal"                );
         registerNugget("ivorypsimetal_nugget_psi",          "nuggetIvoryPsiMetal",  "psi/",             "item.psi:ivoryPsimetal"                );
+        registerNugget("yellorium_nugget_bigreactors",      "nuggetYellorium",      "bigreactors/",     "item.bigreactors:ingotMetals.yellorium");
+        registerNugget("cyanite_nugget_bigreactors",        "nuggetCyanite",        "bigreactors/",     "item.bigreactors:ingotMetals.cyanite"  );
+        registerNugget("graphite_nugget_bigreactors",       "nuggetGraphite",       "bigreactors/",     "item.bigreactors:ingotMetals.graphite" );
+        registerNugget("blutonium_nugget_bigreactors",      "nuggetBlutonium",      "bigreactors/",     "item.bigreactors:ingotMetals.blutonium");
+        registerNugget("ludicrite_nugget_bigreactors",      "nuggetLudicrite",      "bigreactors/",     "item.bigreactors:ingotMetals.ludicrite");
+        registerNugget("steel_nugget_bigreactors",          "nuggetSteel",          "bigreactors/",     "item.bigreactors:ingotMetals.steel"    );
+        registerNugget("electricalsteel_nugget_enderio",    "nuggetElectricalSteel","enderio/",         "enderio.electricalSteel"               );
+        registerNugget("energeticalloy_nugget_enderio",     "nuggetEnergeticAlloy", "enderio/",         "enderio.energeticAlloy"                );
+        registerNugget("redstonealloy_nugget_enderio",      "nuggetRedstoneAlloy",  "enderio/",         "enderio.redstoneAlloy"                 );
+        registerNugget("conductiveiron_nugget_enderio",     "nuggetConductiveIron", "enderio/",         "enderio.conductiveIron"                );
+        registerNugget("darksteel_nugget_enderio",          "nuggetDarkSteel",      "enderio/",         "enderio.darkSteel"                     );
+        registerNugget("soularium_nugget_enderio",          "nuggetSoularium",      "enderio/",         "enderio.soularium"                     );
     }
 
     public static void registerNugget(String unlocName, String oreName, String modId, String ingotName, boolean needed) {
@@ -75,16 +86,7 @@ public class NuggetRegistry {
         return nuggets.get(ingotName);
     }
 
-    public static ArrayList<String> getNames() {
-        ArrayList<String> names = new ArrayList<String>();
-
-        for (Map.Entry<String, NuggetInfo> nugget : nuggets.entrySet())
-            names.add("nuggets/" + nugget.getValue().modId + nugget.getValue().unlocName);
-
-        return names;
-    }
-
-    public static class NuggetInfo {
+    public static class NuggetInfo implements Comparable<NuggetInfo> {
 
         public String modId;
         public String unlocName;
@@ -100,6 +102,12 @@ public class NuggetRegistry {
             this.modId = modId;
             this.ingotName = ingotName;
             this.needed = needed;
+        }
+
+
+        @Override
+        public int compareTo(@Nonnull NuggetInfo o) {
+            return id < o.id ? -1: id > o.id ? 1: 0;
         }
     }
 

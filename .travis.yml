@@ -1,5 +1,5 @@
 language: java
-jdk: openjdk7
+jdk: oraclejdk8
 before_install:
   - chmod +x gradlew
 sudo: false
@@ -20,6 +20,6 @@ cache:
     - ./libs
     - $HOME/.gradle/caches
     - $HOME/.gradle/wrapper
-
+before_install: ./download-libs.sh
 install: ./gradlew setupCIWorkspace -S
 script: ./gradlew build -S

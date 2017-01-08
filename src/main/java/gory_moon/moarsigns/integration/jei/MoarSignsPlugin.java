@@ -9,7 +9,6 @@ import gory_moon.moarsigns.integration.jei.exchange.MoarSignsExchangeCategory;
 import gory_moon.moarsigns.items.ItemMoarSign;
 import gory_moon.moarsigns.items.ModItems;
 import mezz.jei.api.*;
-import mezz.jei.api.ingredients.IIngredientBlacklist;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -38,10 +37,10 @@ public class MoarSignsPlugin extends BlankModPlugin {
             }
         }
 
-        IIngredientBlacklist blacklist = jeiHelpers.getIngredientBlacklist();
-        IItemBlacklist blacklist2 = jeiHelpers.getItemBlacklist();
-        blacklist.addIngredientToBlacklist(new ItemStack(ModItems.DEBUG));
-        blacklist2.addItemToBlacklist(new ItemStack(ModItems.DEBUG));
+        //IIngredientBlacklist blacklist = jeiHelpers.getIngredientBlacklist();
+        //blacklist.addIngredientToBlacklist(new ItemStack(ModItems.DEBUG));
+        IItemBlacklist blacklist = jeiHelpers.getItemBlacklist();
+        blacklist.addItemToBlacklist(new ItemStack(ModItems.DEBUG));
 
         registry.addRecipes(ExchangeRecipeMaker.getExchangeRecipes());
         registry.addRecipeCategoryCraftingItem(new ItemStack(ModItems.SIGN_TOOLBOX, 1, 4), EXCHANGE);

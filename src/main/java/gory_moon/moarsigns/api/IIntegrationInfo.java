@@ -8,7 +8,7 @@ public interface IIntegrationInfo {
     /**
      * Gets the tag for activation of signs<br/>
      * When adding signs for other mods it must be
-     * the MODID of the Mod that it adding to<br/><br/>
+     * the MODID of the Mod that it's adding to<br/><br/>
      * <p>
      * When adding to own mod, {@link SignRegistry#ALWAYS_ACTIVE_TAG} is only needed
      *

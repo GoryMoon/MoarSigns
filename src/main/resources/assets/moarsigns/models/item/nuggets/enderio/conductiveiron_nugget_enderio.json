@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "moarsigns:items/nuggets/enderio/conductiveiron_nugget_enderio"
+  }
+}

@@ -8,9 +8,9 @@ import java.util.HashSet;
 
 public class IntegrationRegistry {
 
-    private static ArrayList<ISignRegistration> signReg = new ArrayList<ISignRegistration>();
-    private static HashSet<String> woodNames = new HashSet<String>();
-    private static HashSet<String> metalNames = new HashSet<String>();
+    private static ArrayList<ISignRegistration> signReg = new ArrayList<>();
+    private static HashSet<String> woodNames = new HashSet<>();
+    private static HashSet<String> metalNames = new HashSet<>();
 
     /**
      * Registers a class that implements {@link ISignRegistration}
@@ -21,9 +21,7 @@ public class IntegrationRegistry {
     public static <T extends ISignRegistration> void registerIntegration(Class<T> clazz) {
         try {
             registerIntegration(clazz.newInstance());
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
@@ -71,7 +69,7 @@ public class IntegrationRegistry {
      * @return List of ore dictionary names
      */
     public static ArrayList<String> getMetalNames() {
-        return new ArrayList<String>(metalNames);
+        return new ArrayList<>(metalNames);
     }
 
     /**
@@ -80,12 +78,12 @@ public class IntegrationRegistry {
      * @return List of ore dictionary names
      */
     public static ArrayList<String> getWoodNames() {
-        return new ArrayList<String>(woodNames);
+        return new ArrayList<>(woodNames);
     }
 
     public static ISignRegistration getWithTag(String tag) {
         for (ISignRegistration registration : signReg)
-            if (registration.getActivateTag() != null && registration.getActivateTag().equals(tag))
+            if (registration.getActivateTag().equals(tag))
                 return registration;
 
         return null;
