@@ -1,25 +1,32 @@
+sudo: required
+dist: trusty
+
 language: java
 jdk: oraclejdk8
-before_install:
-  - chmod +x gradlew
-sudo: false
+
 notifications:
   email: false
+
 env:
   global:
     - TERM=dumb
     - GRADLE_OPTS=-Xmx1G
+
 before_cache:
-  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -f $HOME/.gradle/caches/minecraft/ForgeVersion.json
-  - rm -f $HOME/.gradle/caches/minecraft/ForgeVersion.json.etag
-  - rm -rf $HOME/.gradle/caches/minecraft/deobfedDeps
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -f  $HOME/.gradle/caches/minecraft/deobfedDeps/providedDummy.jar
+  - rm -f  $HOME/.gradle/caches/minecraft/deobfedDeps/compileDummy.jar
 
 cache:
   directories:
-    - ./libs
     - $HOME/.gradle/caches
     - $HOME/.gradle/wrapper
-before_install: ./download-libs.sh
-install: ./gradlew setupCIWorkspace -S
-script: ./gradlew build -S
+
+before_install:
+  - chmod +x gradlew
+  - ./download-libs.sh
+install:
+  - ./gradlew setupCIWorkspace -S
+script:
+  - ./gradlew build
