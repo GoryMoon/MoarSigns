@@ -45,24 +45,11 @@
 		},
 		{
 			"mcVersion": "Minecraft 1.10.2",
-			"modVersion": "4.2.0.6",
+			"modVersion": "4.2.1.7",
 			"changeLog": [
-				"Added: Natura integration, signs",
-				"Added: Railcraft integration, signs",
-				"Added: Psi integration, signs",
-				"Added: Roots integration, signs",
-				"Added: CraftTweaker 3 (MineTweaker 3) integration, custom recipes",
-				"Added: Extreme Reactors (Big Reactors) integration, signs",
-				"Added: Immersive Engineering integration, signs",
-				"Added: Integrated Dynamics integration, sign",
-				"Added: Draconic Evolution integration, signs",
-				"Added: Ender IO integration, signs",
-				"Added. Random Things integration, sign",
-				"Fixed: JEI Integration not showing recipes",
-				"Changed: Remade block, item and model registrations",
-				"Changed: Rearranged item models and textures, breaks resourcepacks"
+				"Fixed crash with \"The One Probe\""
 			],
-			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2365914/download",
+			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2367103/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}
