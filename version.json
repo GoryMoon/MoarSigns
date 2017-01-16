@@ -45,11 +45,11 @@
 		},
 		{
 			"mcVersion": "Minecraft 1.10.2",
-			"modVersion": "4.2.1.7",
+			"modVersion": "4.2.2.8",
 			"changeLog": [
-				"Fixed crash with \"The One Probe\""
+				"Fixed rare crash with \"p455w0rd's Things\""
 			],
-			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2367103/download",
+			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2368914/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}
