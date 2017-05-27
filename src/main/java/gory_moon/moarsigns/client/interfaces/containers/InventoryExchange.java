@@ -160,12 +160,12 @@ public class InventoryExchange implements IInventory {
 
     @Override
     public void openInventory(EntityPlayer player) {
-
+        // Ignoring opening the inventory
     }
 
     @Override
     public void closeInventory(EntityPlayer player) {
-
+        // Ignoring closing the inventory
     }
 
     @Override

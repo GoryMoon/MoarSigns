@@ -18,6 +18,7 @@ public class BasemetalsIntegration implements ISignRegistration {
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
+        // No wood to register
     }
 
     @Override
@@ -46,6 +47,28 @@ public class BasemetalsIntegration implements ISignRegistration {
                     }
                 }
             }
+        }
+
+        if (items.isEmpty()) {
+            BaseItemHelper dummy = new BaseItemHelper();
+            items.put("brass", dummy);
+            items.put("platinum", dummy);
+            items.put("bronze", dummy);
+            items.put("lead", dummy);
+            items.put("steel", dummy);
+            items.put("silver", dummy);
+            items.put("zinc", dummy);
+            items.put("adamantine", dummy);
+            items.put("cupronickel", dummy);
+            items.put("invar", dummy);
+            items.put("nickel", dummy);
+            items.put("electrum", dummy);
+            items.put("tin", dummy);
+            items.put("copper", dummy);
+            items.put("aquarium", dummy);
+            items.put("starsteel", dummy);
+            items.put("coldiron", dummy);
+            items.put("mithril", dummy);
         }
 
         for (Map.Entry<String, BaseItemHelper> entry : items.entrySet()) {

@@ -15,12 +15,9 @@ import java.util.List;
 public class ContainerPreview extends Container {
     public List itemList = new ArrayList();
 
-    private static InventoryBasic inventory;
+    private static final InventoryBasic inventory = new InventoryBasic("Preview Inventory", true, 35);
 
     public ContainerPreview() {
-        if (inventory == null)
-            inventory = new InventoryBasic("Preview Inventory", true, 35);
-
         for (int y = 0; y < 7; y++) {
             for (int x = 0; x < 5; x++) {
                 addSlotToContainer(new SlotPreview(inventory, x + y * 5, 8 + 18 * x, 8 + y * 18));
@@ -73,13 +70,8 @@ public class ContainerPreview extends Container {
         return null;
     }
 
-
     public ItemStack transferStackInSlot(EntityPlayer player, int slotId) {
         return null;
-    }
-
-    public boolean func_94530_a(ItemStack stack, Slot slot) {
-        return false;
     }
 
     public boolean canDragIntoSlot(Slot slot) {

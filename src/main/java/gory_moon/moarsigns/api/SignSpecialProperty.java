@@ -17,6 +17,7 @@ public abstract class SignSpecialProperty {
      * Updates when the tileEntity is updated
      */
     public void onUpdate() {
+        // Add update code
     }
 
     /**
@@ -28,6 +29,7 @@ public abstract class SignSpecialProperty {
      * @param entity     The entity colliding with the sign
      */
     public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState blockState, Entity entity) {
+        // Add collision code
     }
 
     /**
@@ -39,6 +41,7 @@ public abstract class SignSpecialProperty {
      * @param random     An instance of Random
      */
     public void randomDisplayTick(IBlockState blockState, World world, BlockPos pos, Random random) {
+        // Add display code
     }
 
     /**
@@ -57,6 +60,7 @@ public abstract class SignSpecialProperty {
      * @return False if nothing happened otherwise True
      */
     public boolean onRightClick(World world, BlockPos pos, IBlockState blockState, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+        // Add code to handle right click
         return false;
     }
 

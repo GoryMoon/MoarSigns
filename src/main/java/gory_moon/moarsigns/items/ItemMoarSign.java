@@ -109,7 +109,6 @@ public class ItemMoarSign extends Item {
             } else if (world.isRemote) {
                 return EnumActionResult.PASS;
             } else {
-
                 SignInfo info = getInfo(stack.getTagCompound());
                 if (info == null)
                     return EnumActionResult.PASS;

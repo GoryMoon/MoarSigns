@@ -5,10 +5,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public abstract class ServerMessageHandler<REQ extends IMessage> implements IMessageHandler<REQ, IMessage> {
+public abstract class ServerMessageHandler<R extends IMessage> implements IMessageHandler<R, IMessage> {
 
     @Override
-    public IMessage onMessage(final REQ message, final MessageContext ctx) {
+    public IMessage onMessage(final R message, final MessageContext ctx) {
         FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(new Runnable() {
             @Override
             public void run() {
@@ -18,6 +18,6 @@ public abstract class ServerMessageHandler<REQ extends IMessage> implements IMes
         return null;
     }
 
-    protected abstract void handle(REQ message, MessageContext ctx);
+    protected abstract void handle(R message, MessageContext ctx);
 
 }

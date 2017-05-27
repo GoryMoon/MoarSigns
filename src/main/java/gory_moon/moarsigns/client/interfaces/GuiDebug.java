@@ -25,17 +25,13 @@ public class GuiDebug extends GuiContainer {
     private static final ResourceLocation texture_item = new ResourceLocation("moarsigns", "textures/gui/debug_item.png");
     private static final ResourceLocation texture_world = new ResourceLocation("moarsigns", "textures/gui/debug_block.png");
     private boolean blockInWorld;
-    private World world;
-    private BlockPos pos;
     private Block block;
     private IInventory inventory;
     private Rectangle infoArea;
     private String[] signText = new String[4];
 
-    public GuiDebug(InventoryPlayer inventory, int ID, World world, BlockPos pos, IInventory tempInv, TileEntityMoarSign te) {
+    public GuiDebug(InventoryPlayer inventory, int ID, World world, BlockPos pos, IInventory tempInv) {
         super(new ContainerDebug(inventory, ID, tempInv));
-        this.world = world;
-        this.pos = pos;
         this.inventory = tempInv;
         blockInWorld = ID == 0;
 
@@ -71,7 +67,8 @@ public class GuiDebug extends GuiContainer {
         int meta = 0;
         String Un = "";
         int x = 0;
-        int y1 = 0, y2 = 0;
+        int y1 = 0;
+        int y2 = 0;
 
         if (blockInWorld) {
             if (block != null) {
@@ -91,7 +88,7 @@ public class GuiDebug extends GuiContainer {
             }
         }
 
-        if (!Un.equals("")) {
+        if (!"".equals(Un)) {
             String un = Un;
             if (!blockInWorld && Un.length() >= 23)
                 un = Un.substring(0, 20) + "...";
@@ -139,10 +136,10 @@ public class GuiDebug extends GuiContainer {
         }
 
         public boolean inRect(GuiDebug gui, int mouseX, int mouseY) {
-            mouseX -= gui.getLeft();
-            mouseY -= gui.getTop();
+            int mx = mouseX - gui.getLeft();
+            int my = mouseY - gui.getTop();
 
-            return x <= mouseX && mouseX <= x + w && y <= mouseY && mouseY <= y + h;
+            return x <= mx && mx <= x + w && y <= my && my <= y + h;
         }
 
         public void setX(int x) {

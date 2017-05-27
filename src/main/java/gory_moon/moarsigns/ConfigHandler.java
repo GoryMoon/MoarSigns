@@ -15,6 +15,8 @@ import static net.minecraftforge.common.config.Configuration.CATEGORY_GENERAL;
 
 public class ConfigHandler {
 
+    public Configuration config = null;
+
     /* SINGLETON */
     private static ConfigHandler _instance = null;
 
@@ -27,8 +29,6 @@ public class ConfigHandler {
         return _instance == null ? new ConfigHandler() : _instance;
     }
     /* === */
-
-    public Configuration config = null;
 
     public void loadDefaultConfig(FMLPreInitializationEvent event) {
         config = new Configuration(event.getSuggestedConfigurationFile());

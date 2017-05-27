@@ -420,7 +420,7 @@ public class SignRegistry {
                         1 :
                         (!o1.isMetal && o2.isMetal) ?
                             -1 :
-                            (o1.material.path.equals("") && o1.material.path.equals(o2.material.path) ?
+                            ("".equals(o1.material.path) && o1.material.path.equals(o2.material.path) ?
                                 0 : (o1.material.path.equals(o2.material.path) ?
                                 (o1.itemName.compareToIgnoreCase(o2.itemName)) : (o1.material.path.compareTo(o2.material.path)))));
     }

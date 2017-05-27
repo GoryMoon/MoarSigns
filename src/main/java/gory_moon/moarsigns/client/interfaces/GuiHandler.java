@@ -4,11 +4,9 @@ import gory_moon.moarsigns.client.interfaces.containers.ContainerDebug;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerExchange;
 import gory_moon.moarsigns.client.interfaces.containers.ContainerPreview;
 import gory_moon.moarsigns.client.interfaces.containers.InventoryExchange;
-import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -95,7 +93,7 @@ public class GuiHandler implements IGuiHandler {
 
             @Override
             public void markDirty() {
-
+                // Dummy method
             }
 
             @Override
@@ -125,7 +123,7 @@ public class GuiHandler implements IGuiHandler {
 
             @Override
             public void setField(int id, int value) {
-
+                // Dummy method
             }
 
             @Override
@@ -135,7 +133,7 @@ public class GuiHandler implements IGuiHandler {
 
             @Override
             public void clear() {
-
+                // Dummy method
             }
         };
     }
@@ -160,12 +158,11 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
         BlockPos pos = new BlockPos(x, y, z);
-        TileEntity te = world.getTileEntity(pos);
 
         switch (ID) {
             case DEBUG_TILE:
             case DEBUG_ITEM:
-                return new GuiDebug(player.inventory, ID, world, pos, tempInv, (TileEntityMoarSign) te);
+                return new GuiDebug(player.inventory, ID, world, pos, tempInv);
             case EXCHANGE:
                 return new GuiExchange(player.inventory, new InventoryExchange());
             case PREVIEW:

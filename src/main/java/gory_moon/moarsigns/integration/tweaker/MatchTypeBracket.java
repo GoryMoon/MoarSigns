@@ -29,15 +29,13 @@ public class MatchTypeBracket implements IBracketHandler {
 
     @Override
     public IZenSymbol resolve(IEnvironmentGlobal environment, List<Token> tokens) {
-        if (tokens.size() > 2) {
-            if (tokens.get(0).getValue().equals("matchType") && tokens.get(1).getValue().equals(":")) {
-                Token token = tokens.get(2);
-                if (token.getValue().equals("ALL") || token.getValue().equals("METAL") || token.getValue().equals("WOOD")) {
-                    if (tokens.size() > 4 && tokens.get(3).getValue().equals(":")) {
-                        return new MatchTypeReferenceSymbol(environment, token.getValue(), tokens.get(4).getValue());
-                    }
-                    return new MatchTypeReferenceSymbol(environment, token.getValue());
+        if (tokens.size() > 2 && tokens.get(0).getValue().equals("matchType") && tokens.get(1).getValue().equals(":")) {
+            Token token = tokens.get(2);
+            if (token.getValue().equals("ALL") || token.getValue().equals("METAL") || token.getValue().equals("WOOD")) {
+                if (tokens.size() > 4 && tokens.get(3).getValue().equals(":")) {
+                    return new MatchTypeReferenceSymbol(environment, token.getValue(), tokens.get(4).getValue());
                 }
+                return new MatchTypeReferenceSymbol(environment, token.getValue());
             }
         }
         return null;

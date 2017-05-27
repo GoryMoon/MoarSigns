@@ -21,7 +21,7 @@ public class FactorizationIntegration implements ISignRegistration {
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
-
+        // No wood to register
     }
 
     @Override

@@ -47,7 +47,6 @@ public class LayerMoarSign implements LayerRenderer {
             GlStateManager.pushMatrix();
             int size = 5;
             float f1 = 0.016666668F * f + (size / 1000F);
-            ;
             //GlStateManager.translate(size > 0 ? 0.01F : 0.0F, 0.5F * f - ((float) 0.02 * size) - (size < 2 ? 0 : size < 7 ? 0.01F : size < 11 ? 0.02F : size < 16 ? 0.03F : size < 20 ? 0.035F : 0.037F), 0.07F * f);
             GlStateManager.translate(0.0F, 0.043F + sneak, 0.1709F);
             GlStateManager.scale(-f1, f1, f1);

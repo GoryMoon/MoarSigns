@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.ToIntFunction;
 
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber(Side.CLIENT)
@@ -91,21 +90,21 @@ public class ModModelManager {
         }
     };
 
-    /**
+    /*
      * Register a single model for the {@link Block}'s {@link Item}.
      * <p>
      * Uses the registry name as the domain/path and the {@link IBlockState} as the variant.
      *
      * @param state The state to use as the variant
      */
-    private void registerBlockItemModel(IBlockState state) {
+    /*private void registerBlockItemModel(IBlockState state) {
         final Block block = state.getBlock();
         final Item item = Item.getItemFromBlock(block);
 
         if (item != null) {
             registerItemModel(item, new ModelResourceLocation(block.getRegistryName(), propertyStringMapper.getPropertyString(state.getProperties())));
         }
-    }
+    }*/
 
     /**
      * Register a model for a metadata value of the {@link Block}'s {@link Item}.
@@ -123,7 +122,7 @@ public class ModModelManager {
         }
     }
 
-    /**
+    /*
      * Register a model for each metadata value of the {@link Block}'s {@link Item} corresponding to the values of an {@link IProperty}.
      * <p>
      * For each value:
@@ -137,9 +136,9 @@ public class ModModelManager {
      * @param getMeta   A function to get the metadata of each value
      * @param <T>       The value type
      */
-    private <T extends Comparable<T>> void registerVariantBlockItemModels(IBlockState baseState, IProperty<T> property, ToIntFunction<T> getMeta) {
+    /*private <T extends Comparable<T>> void registerVariantBlockItemModels(IBlockState baseState, IProperty<T> property, ToIntFunction<T> getMeta) {
         property.getAllowedValues().forEach(value -> registerBlockItemModelForMeta(baseState.withProperty(property, value), getMeta.applyAsInt(value)));
-    }
+    }*/
 
     private <T extends VariantItem> void registerVariantItems(T variant, String variantName) {
         variant.getMetas().forEach(value -> registerItemModelForMeta(variant, value, variantName + "=" + variant.getVariant(value)));

@@ -2,7 +2,6 @@ package gory_moon.moarsigns.integration;
 
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.api.ISignRegistration;
-import gory_moon.moarsigns.api.IntegrationRegistry;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.integration.basemetals.BasemetalsIntegration;
 import gory_moon.moarsigns.integration.bigrectors.BigReactorsIntegration;
@@ -119,17 +118,15 @@ public class IntegrationHandler {
         if (log)
             MoarSigns.logger.info("Starting sign integrations");
 
-        ArrayList<ISignRegistration> signReg = IntegrationRegistry.getSignReg();
+        ArrayList<ISignRegistration> signReg = getSignReg();
 
         for (ISignRegistration reg : signReg) {
             try {
                 reg.registerWoodenSigns(planks);
                 reg.registerMetalSigns(ingots);
             } catch (IntegrationException e) {
-                if (Loader.isModLoaded(reg.getActivateTag())) {
-                    if (log)
-                        MoarSigns.logger.error("Failed " + reg.getIntegrationName() + " SignIntegration" + e.getMessage());
-                }
+                if (Loader.isModLoaded(reg.getActivateTag())&& log)
+                    MoarSigns.logger.error("Failed " + reg.getIntegrationName() + " SignIntegration" + e.getMessage());
                 continue;
             }
             if (Loader.isModLoaded(reg.getActivateTag())) {
@@ -154,10 +151,10 @@ public class IntegrationHandler {
 
     public void preSetupSigns() {
 
-        ArrayList<String> names = IntegrationRegistry.getWoodNames();
+        ArrayList<String> names = getWoodNames();
         ArrayList<ItemStack> planks = getOres(names);
 
-        names = IntegrationRegistry.getMetalNames();
+        names = getMetalNames();
         ArrayList<ItemStack> ingots = getOres(names);
 
         registerSigns(planks, ingots, false);
@@ -166,10 +163,10 @@ public class IntegrationHandler {
 
     public void setupSigns() {
 
-        ArrayList<String> names = IntegrationRegistry.getWoodNames();
+        ArrayList<String> names = getWoodNames();
         ArrayList<ItemStack> planks = getOres(names);
 
-        names = IntegrationRegistry.getMetalNames();
+        names = getMetalNames();
         ArrayList<ItemStack> ingots = getOres(names);
 
         registerSigns(planks, ingots, true);

@@ -4,7 +4,6 @@ import gory_moon.moarsigns.client.interfaces.sign.GuiMoarSign;
 import gory_moon.moarsigns.network.ClientMessageHandler;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -70,7 +69,6 @@ public class MessageSignOpenGui implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         protected void handle(MessageSignOpenGui message, MessageContext ctx) {
-            WorldClient world = FMLClientHandler.instance().getClient().theWorld;
             TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.pos);
 
             if (!(tileEntity instanceof TileEntityMoarSign)) {

@@ -19,7 +19,7 @@ public class ThermalFoundationIntegration implements ISignRegistration {
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
-
+        // No wood to register
     }
 
     @Override

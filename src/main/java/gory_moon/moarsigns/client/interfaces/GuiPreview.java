@@ -188,32 +188,28 @@ public class GuiPreview extends GuiContainer {
 
     @Override
     public void mouseClickMove(int x, int y, int button, long timeSinceClicked) {
-        if (isDraging) {
-            if (button == 0) {
-                int x1 = x - guiLeft;
-                int y1 = y - guiTop;
+        if (isDraging && button == 0) {
+            int x1 = x - guiLeft;
+            int y1 = y - guiTop;
 
-                yaw = yaw + x1 - scrollX;
-                roll = roll + y1 - scrollY;
-                scrollX = x1;
-                scrollY = y1;
-            }
+            yaw = yaw + x1 - scrollX;
+            roll = roll + y1 - scrollY;
+            scrollX = x1;
+            scrollY = y1;
         }
         super.mouseClickMove(x, y, button, timeSinceClicked);
     }
 
     @Override
     public void mouseClicked(int x, int y, int button) throws IOException {
-        if (button == 0) {
-            if (x >= guiLeft + 115 && y >= guiTop + 5 && x < guiLeft + 220 && y < guiTop + 135) {
-                int x1 = x - guiLeft;
-                int y1 = y - guiTop;
+        if (button == 0 && x >= guiLeft + 115 && y >= guiTop + 5 && x < guiLeft + 220 && y < guiTop + 135) {
+            int x1 = x - guiLeft;
+            int y1 = y - guiTop;
 
-                scrollX = x1;
-                scrollY = y1;
-                isSpinning = false;
-                isDraging = true;
-            }
+            scrollX = x1;
+            scrollY = y1;
+            isSpinning = false;
+            isDraging = true;
         }
         super.mouseClicked(x, y, button);
     }

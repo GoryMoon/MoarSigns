@@ -147,6 +147,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
              * Send a chat message to the CommandSender
              */
             public void addChatMessage(ITextComponent component) {
+                // Dummy method
             }
 
             /**

@@ -13,10 +13,10 @@ import net.minecraft.item.ItemStack;
 public class ContainerExchange extends Container {
 
     public final InventoryExchange inventory;
-    public InventoryPlayer playerInventory;
-    public ItemStack itemToolBox;
+    private InventoryPlayer playerInventory;
+    private ItemStack itemToolBox;
     public boolean close;
-    int toolBoxSlot;
+    private int toolBoxSlot;
 
     public ContainerExchange(InventoryPlayer inventoryPlayer, InventoryExchange exchangeInv) {
         inventory = exchangeInv;
@@ -80,18 +80,15 @@ public class ContainerExchange extends Container {
     @Override
     public ItemStack transferStackInSlot(EntityPlayer entity, int slotIdx) {
         ItemStack itemStack = null;
-        Slot slot = (Slot) this.inventorySlots.get(slotIdx);
+        Slot slot = this.inventorySlots.get(slotIdx);
 
         if (slot != null && slot.getHasStack()) {
             ItemStack itemStack1 = slot.getStack();
             itemStack = itemStack1.copy();
 
             if (slotIdx > 27) {
-                if (((Slot) this.inventorySlots.get(0)).isItemValid(itemStack1)) {
-                    if (!this.mergeItemStack(itemStack1, 0, 1, false)) {
-                        return null;
-                    }
-                }
+                if (this.inventorySlots.get(0).isItemValid(itemStack1) && !this.mergeItemStack(itemStack1, 0, 1, false))
+                    return null;
             } else {
                 if (slotIdx < 28) {
                     entity.inventory.setItemStack(itemStack1.copy());

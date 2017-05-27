@@ -115,7 +115,7 @@ public class ShapedMoarSignRecipe implements IMoarSignsRecipe {
                     ret += tmp + ", ";
                 }
                 ret += output;
-                throw new RuntimeException(ret);
+                throw new InvalidRecipeException(ret);
             }
         }
 
@@ -152,7 +152,7 @@ public class ShapedMoarSignRecipe implements IMoarSignsRecipe {
                 if (ingred == null || !(ingred instanceof ItemStack))
                     continue;
 
-                for (java.util.Map.Entry<ItemStack, Object> replace : replacements.entrySet()) {
+                for (Map.Entry<ItemStack, Object> replace : replacements.entrySet()) {
                     if (OreDictionary.itemMatches(replace.getKey(), (ItemStack) ingred, true)) {
                         if (replace.getValue() instanceof String) {
                             input[i] = OreDictionary.getOres(String.valueOf(replace.getValue()));
@@ -303,11 +303,11 @@ public class ShapedMoarSignRecipe implements IMoarSignsRecipe {
         ALL, METAL, WOOD;
 
         public static MatchType getEnum(String value) {
-            if (value.equals("ALL")) {
+            if ("ALL".equals(value)) {
                 return ALL;
-            } else if (value.equals("METAL")) {
+            } else if ("METAL".equals(value)) {
                 return METAL;
-            } else if (value.equals("WOOD")) {
+            } else if ("WOOD".equals(value)) {
                 return WOOD;
             }
             return null;

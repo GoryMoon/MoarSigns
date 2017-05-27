@@ -69,13 +69,13 @@ public class ModBlocks {
         registerTileEntityNoPrefix(TileEntityMoarSign.class, TileEntityMoarSign.class.getSimpleName().replaceFirst("TileEntity", ""), Constants.SIGN_TE_ID);
     }
 
-    private static void registerTileEntity(Class<? extends TileEntity> tileEntityClass) {
+   /* private static void registerTileEntity(Class<? extends TileEntity> tileEntityClass) {
         GameRegistry.registerTileEntity(tileEntityClass, Reference.RESOURCE_PREFIX + tileEntityClass.getSimpleName().replaceFirst("TileEntity", ""));
     }
 
     private static void registerTileEntity(Class<? extends TileEntity> tileEntityClass, String name, String legacyName) {
         GameRegistry.registerTileEntityWithAlternatives(tileEntityClass, Reference.RESOURCE_PREFIX + name, Reference.RESOURCE_PREFIX + legacyName);
-    }
+    }*/
 
     private static void registerTileEntityNoPrefix(Class<? extends TileEntity> tileEntityClass, String name, String legacyName) {
         GameRegistry.registerTileEntityWithAlternatives(tileEntityClass, Reference.RESOURCE_PREFIX + name, legacyName);

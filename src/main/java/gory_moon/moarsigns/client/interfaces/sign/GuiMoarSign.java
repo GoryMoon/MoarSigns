@@ -225,11 +225,9 @@ public class GuiMoarSign extends GuiBase {
 
     @Override
     protected void actionPerformed(net.minecraft.client.gui.GuiButton btn) {
-        if (btn.enabled) {
-            if (btn.id == 0) {
-                this.entitySign.markDirty();
-                mc.thePlayer.closeScreen();
-            }
+        if (btn.enabled && btn.id == 0) {
+            this.entitySign.markDirty();
+            mc.thePlayer.closeScreen();
         }
     }
 
@@ -312,7 +310,6 @@ public class GuiMoarSign extends GuiBase {
 
         GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
 
-        int i = entitySign.getBlockMetadata();
         entitySign.showInGui = true;
 
         GlStateManager.rotate(180, 0.0F, 1.0F, 0.0F);

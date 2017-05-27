@@ -56,7 +56,7 @@ public class ShapelessMoarSignRecipe implements IMoarSignsRecipe {
                     ret += tmp + ", ";
                 }
                 ret += output;
-                throw new RuntimeException(ret);
+                throw new InvalidRecipeException(ret);
             }
         }
     }

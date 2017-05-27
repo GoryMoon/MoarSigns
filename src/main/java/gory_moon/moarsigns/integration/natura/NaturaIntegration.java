@@ -56,7 +56,7 @@ public class NaturaIntegration implements ISignRegistration {
 
     @Override
     public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
-
+        // No metal to register
     }
 
     @Override
