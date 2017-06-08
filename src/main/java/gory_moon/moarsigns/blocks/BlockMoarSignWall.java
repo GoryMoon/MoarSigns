@@ -32,7 +32,7 @@ public class BlockMoarSignWall extends BlockMoarSign implements IPassable {
     protected static final AxisAlignedBB SIGN_ROOF0_AABB = new AxisAlignedBB(0.0D, 0.875D, 0.23125D, 1.0D, 1.0D, 0.73125D);
     protected static final AxisAlignedBB SIGN_ROOF1_AABB = new AxisAlignedBB(0.27125D, 0.875D, 0.0D, 0.77125D, 1.0D, 1.0D);
     protected static final AxisAlignedBB SIGN_ROOF2_AABB = new AxisAlignedBB(0.0D, 0.875D, 0.27125D, 1.0D, 1.0D, 0.77125D);
-    protected static final AxisAlignedBB SIGN_ROOF3_AABB = new AxisAlignedBB(0.23125D, 0.875D, 0.0D, 0.23125D, 1.0D, 1.0D);
+    protected static final AxisAlignedBB SIGN_ROOF3_AABB = new AxisAlignedBB(0.23125D, 0.875D, 0.0D, 0.73125D, 1.0D, 1.0D);
 
     public BlockMoarSignWall(Material material, SoundType stepSound, float hardness, float resistance, String registryname, String harvestLevel, int level) {
         super(material, stepSound, hardness, resistance, registryname, harvestLevel, level);

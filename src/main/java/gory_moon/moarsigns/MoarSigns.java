@@ -43,6 +43,7 @@ import org.apache.logging.log4j.Logger;
                 "after:NotEnoughItems;" +
                 "after:Waila;" +
                 "after:theoneprobe;" +
+                "after:tumat;" +
                 "after:MineTweaker3;"
         )
 public class MoarSigns {

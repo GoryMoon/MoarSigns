@@ -45,11 +45,12 @@
 		},
 		{
 			"mcVersion": "Minecraft 1.10.2",
-			"modVersion": "4.2.2.8",
+			"modVersion": "4.2.3.9",
 			"changeLog": [
-				"Fixed rare crash with \"p455w0rd's Things\""
+				"Fixed: Hitbox size in of sign in roof in a specific direction",
+				"Added: TUMAT integration"
 			],
-			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2368914/download",
+			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2430928/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}

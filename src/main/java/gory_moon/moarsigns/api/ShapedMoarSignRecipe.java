@@ -100,7 +100,7 @@ public class ShapedMoarSignRecipe implements IMoarSignsRecipe {
             if (in instanceof MatchType) {
                 itemMap.put(chr, (MatchType) in);
             } else if (in instanceof MaterialInfo) {
-                itemMap.put(chr, (MaterialInfo) in);
+                itemMap.put(chr, in);
             } else if (in instanceof ItemStack) {
                 itemMap.put(chr, ((ItemStack) in).copy());
             } else if (in instanceof Item) {
@@ -110,12 +110,12 @@ public class ShapedMoarSignRecipe implements IMoarSignsRecipe {
             } else if (in instanceof String) {
                 itemMap.put(chr, OreDictionary.getOres((String) in));
             } else {
-                String ret = "Invalid shaped ore recipe: ";
+                StringBuilder ret = new StringBuilder("Invalid shaped ore recipe: ");
                 for (Object tmp : recipe) {
-                    ret += tmp + ", ";
+                    ret.append(tmp).append(", ");
                 }
-                ret += output;
-                throw new InvalidRecipeException(ret);
+                ret.append(output);
+                throw new InvalidRecipeException(ret.toString());
             }
         }
 

@@ -169,6 +169,7 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public boolean addHitEffects(IBlockState state, World world, RayTraceResult target, ParticleManager effectRenderer) {
         BlockPos pos = target.getBlockPos();
         EnumFacing side = target.sideHit;
@@ -253,7 +254,7 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
         return !this.hasInvalidNeighbor(world, pos) && super.canPlaceBlockAt(world, pos);
     }
 
-    public SignInfo getSignInfo(World world, BlockPos pos) {
+    public static SignInfo getSignInfo(World world, BlockPos pos) {
 
         TileEntity tileEntity = world.getTileEntity(pos);
         if (tileEntity instanceof TileEntityMoarSign) {
