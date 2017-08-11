@@ -23,7 +23,7 @@ public interface IPassable {
         WALL_BLOCK,
 
         /**
-         * For entities similar to item frames, paintings etc.
+         * For entities similar to ingot frames, paintings etc.
          */
         HANGING_ENTITY
     }

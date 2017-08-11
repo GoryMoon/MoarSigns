@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
@@ -38,7 +39,7 @@ public class ShapelessMoarSignRecipe implements IMoarSignsRecipe {
         output = result.copy();
         this.neiNBTDifferent = neiNBTDifferent;
         for (Object in : recipe) {
-            if (in instanceof MatchType) { //If the item is an instanceof IBloodOrb then save the level of the orb
+            if (in instanceof MatchType) { //If the ingot is an instanceof IBloodOrb then save the level of the orb
                 input.add((MatchType) in);
             } else if (in instanceof MaterialInfo) {
                 input.add((MaterialInfo) in);
@@ -96,7 +97,7 @@ public class ShapelessMoarSignRecipe implements IMoarSignsRecipe {
     }
 
     @Override
-    public ItemStack[] getRemainingItems(InventoryCrafting inv) {
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
         return ForgeHooks.defaultRecipeGetRemainingItems(inv);
     }
 

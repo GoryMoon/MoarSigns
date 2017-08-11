@@ -3,11 +3,11 @@ package gory_moon.moarsigns.lib;
 public class Constants {
     public static final String TEXTURE_LOCATION = "moarsigns";
 
-    public static final String SIGN_STAND_WOOD_KEY = "MoarSignsStandingWood";
-    public static final String SIGN_WALL_WOOD_KEY = "MoarSignsWallWood";
-    public static final String SIGN_STAND_METAL_KEY = "MoarSignsStandingMetal";
-    public static final String SIGN_WALL_METAL_KEY = "MoarSignsWallMetal";
-    public static final String SIGN_TE_ID = "moarSignsTileEntity";
+    public static final String SIGN_STAND_WOOD_KEY = "moarsigns_standing_wood";
+    public static final String SIGN_WALL_WOOD_KEY = "moarsigns_wall_wood";
+    public static final String SIGN_STAND_METAL_KEY = "moarsigns_standing_metal";
+    public static final String SIGN_WALL_METAL_KEY = "moarsigns_wall_metal";
+    public static final String SIGN_TE_ID = "moarsigns_tileentity";
 
 
     public static final String SIGN_ITEM_KEY = "moar_sign";

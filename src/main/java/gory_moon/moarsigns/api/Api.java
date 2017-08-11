@@ -12,30 +12,12 @@ import java.util.ArrayList;
 public class Api {
 
     /**
-     * Helper method for {@link SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, String)}
-     *
-     * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, String)
-     */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId) throws IntegrationException {
-        return SignRegistry.register(itemName, property, materialName, path, gotNugget, materialItemStack, modId);
-    }
-
-    /**
-     * Helper method for {@link SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, String, String)}
-     *
-     * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, String, String)
-     */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId, String activateTag) throws IntegrationException {
-        return SignRegistry.register(itemName, property, materialName, path, gotNugget, materialItemStack, modId, activateTag);
-    }
-
-    /**
      * Helper method for {@link SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, String)}
      *
      * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, String)
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId) throws IntegrationException {
-        return SignRegistry.register(itemName, property, materialName, path, gotNugget, materialItemStack, materialBlock, modId);
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId) throws IntegrationException {
+        return SignRegistry.register(itemName, property, materialName, path, gotNugget, ItemStack.EMPTY, materialItemStack, modId);
     }
 
     /**
@@ -43,17 +25,26 @@ public class Api {
      *
      * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, String, String)
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId, String activateTag) throws IntegrationException {
-        return SignRegistry.register(itemName, property, materialName, path, gotNugget, materialItemStack, materialBlock, modId, activateTag);
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId, String activateTag) throws IntegrationException {
+        return SignRegistry.register(itemName, property, materialName, path, gotNugget, ItemStack.EMPTY, materialItemStack, modId, activateTag);
     }
 
     /**
-     * Helper method for {@link SignRegistry#registerAlternativeMaterial(SignInfo, String, String, boolean, ItemStack)}
+     * Helper method for {@link SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, ItemStack, String)}
      *
-     * @see SignRegistry#registerAlternativeMaterial(SignInfo, String, String, boolean, ItemStack)
+     * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, ItemStack, String)
      */
-    public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack materialItemStack) throws IntegrationException {
-        return SignRegistry.registerAlternativeMaterial(sInfo, materialName, path, gotNugget, materialItemStack);
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId) throws IntegrationException {
+        return SignRegistry.register(itemName, property, materialName, path, gotNugget, ItemStack.EMPTY, materialItemStack, materialBlock, modId);
+    }
+
+    /**
+     * Helper method for {@link SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, ItemStack, String, String)}
+     *
+     * @see SignRegistry#register(String, SignSpecialProperty, String, String, boolean, ItemStack, ItemStack, ItemStack, String, String)
+     */
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId, String activateTag) throws IntegrationException {
+        return SignRegistry.register(itemName, property, materialName, path, gotNugget, ItemStack.EMPTY, materialItemStack, materialBlock, modId, activateTag);
     }
 
     /**
@@ -61,8 +52,17 @@ public class Api {
      *
      * @see SignRegistry#registerAlternativeMaterial(SignInfo, String, String, boolean, ItemStack, ItemStack)
      */
-    public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock) throws IntegrationException {
-        return SignRegistry.registerAlternativeMaterial(sInfo, materialName, path, gotNugget, materialItemStack, materialBlock);
+    public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack nugget, ItemStack materialItemStack) throws IntegrationException {
+        return SignRegistry.registerAlternativeMaterial(sInfo, materialName, path, gotNugget, nugget, materialItemStack);
+    }
+
+    /**
+     * Helper method for {@link SignRegistry#registerAlternativeMaterial(SignInfo, String, String, boolean, ItemStack, ItemStack, ItemStack)}
+     *
+     * @see SignRegistry#registerAlternativeMaterial(SignInfo, String, String, boolean, ItemStack, ItemStack, ItemStack)
+     */
+    public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack nugget, ItemStack materialItemStack, ItemStack materialBlock) throws IntegrationException {
+        return SignRegistry.registerAlternativeMaterial(sInfo, materialName, path, gotNugget, nugget, materialItemStack, materialBlock);
     }
 
     /**

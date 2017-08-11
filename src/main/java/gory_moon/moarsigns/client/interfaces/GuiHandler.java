@@ -7,6 +7,7 @@ import gory_moon.moarsigns.client.interfaces.containers.InventoryExchange;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -28,11 +29,16 @@ public class GuiHandler implements IGuiHandler {
                 return null;
             }
 
-            ItemStack stack;
+            private ItemStack stack = ItemStack.EMPTY;
 
             @Override
             public int getSizeInventory() {
                 return 1;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
             }
 
             @Override
@@ -44,9 +50,9 @@ public class GuiHandler implements IGuiHandler {
             public ItemStack decrStackSize(int i, int j) {
                 ItemStack itemstack = getStackInSlot(i);
 
-                if (itemstack != null) {
-                    if (itemstack.stackSize <= j) {
-                        setInventorySlotContents(i, null);
+                if (!itemstack.isEmpty()) {
+                    if (itemstack.getCount() <= j) {
+                        setInventorySlotContents(i, ItemStack.EMPTY);
                     } else {
                         itemstack = itemstack.splitStack(j);
                         markDirty();
@@ -60,7 +66,7 @@ public class GuiHandler implements IGuiHandler {
             public ItemStack removeStackFromSlot(int i) {
                 ItemStack item = getStackInSlot(i);
 
-                setInventorySlotContents(i, null);
+                setInventorySlotContents(i, ItemStack.EMPTY);
 
                 return item;
             }
@@ -69,8 +75,8 @@ public class GuiHandler implements IGuiHandler {
             public void setInventorySlotContents(int i, ItemStack itemstack) {
                 stack = itemstack;
 
-                if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()) {
-                    itemstack.stackSize = getInventoryStackLimit();
+                if (!itemstack.isEmpty() && itemstack.getCount() > getInventoryStackLimit()) {
+                    itemstack.setCount(getInventoryStackLimit());
                 }
 
                 markDirty();
@@ -97,7 +103,7 @@ public class GuiHandler implements IGuiHandler {
             }
 
             @Override
-            public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+            public boolean isUsableByPlayer(EntityPlayer player) {
                 return true;
             }
 
@@ -141,12 +147,13 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
+        EnumHand hand = EnumHand.values()[x];
         switch (ID) {
             case DEBUG_TILE:
             case DEBUG_ITEM:
                 return new ContainerDebug(player.inventory, ID, tempInv);
             case EXCHANGE:
-                return new ContainerExchange(player.inventory, new InventoryExchange());
+                return new ContainerExchange(player.inventory, new InventoryExchange(), hand);
             case PREVIEW:
                 return new ContainerPreview();
         }
@@ -158,13 +165,13 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
         BlockPos pos = new BlockPos(x, y, z);
-
+        EnumHand hand = EnumHand.values()[x];
         switch (ID) {
             case DEBUG_TILE:
             case DEBUG_ITEM:
                 return new GuiDebug(player.inventory, ID, world, pos, tempInv);
             case EXCHANGE:
-                return new GuiExchange(player.inventory, new InventoryExchange());
+                return new GuiExchange(player.inventory, new InventoryExchange(), hand);
             case PREVIEW:
                 return new GuiPreview();
         }

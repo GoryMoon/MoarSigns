@@ -31,7 +31,7 @@ public class GuiBase extends GuiScreen {
     }
 
     public FontRenderer getFontRenderer() {
-        return fontRendererObj;
+        return fontRenderer;
     }
 
     public boolean isOnOverlay(int x, int y) {

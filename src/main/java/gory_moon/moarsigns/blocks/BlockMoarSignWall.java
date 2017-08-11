@@ -112,7 +112,7 @@ public class BlockMoarSignWall extends BlockMoarSign implements IPassable {
     }
 
     @Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn) {
+    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
         boolean flag;
         int rotation = world.getBlockState(pos).getValue(ROTATION);
         EnumFacing facing = EnumFacing.getFront(rotation & 7);

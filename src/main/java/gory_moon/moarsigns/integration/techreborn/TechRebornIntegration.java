@@ -2,12 +2,13 @@ package gory_moon.moarsigns.integration.techreborn;
 
 import gory_moon.moarsigns.api.ISignRegistration;
 import gory_moon.moarsigns.api.SignRegistry;
-import gory_moon.moarsigns.api.SignSpecialProperty;
 import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 import java.util.ArrayList;
 
@@ -16,9 +17,18 @@ public class TechRebornIntegration implements ISignRegistration {
     private static final String TECHREBORN_TAG = "techreborn";
     private static final String TECHREBORN_NAME = "TechReborn";
     private static final String PATH = "techreborn/";
-    private Item item = null;
-    private Item blockItem1 = null;
-    private Item blockItem2 = null;
+
+    @ObjectHolder("techreborn:ingot")
+    public static Item item = null;
+
+    @ObjectHolder("techreborn:nuggets")
+    public static Item nugget = null;
+
+    @ObjectHolder("techreborn:techreborn.storage")
+    public static Block blockItem1 = null;
+
+    @ObjectHolder("techreborn:techreborn.storage2")
+    public static Block blockItem2 = null;
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
@@ -27,40 +37,29 @@ public class TechRebornIntegration implements ISignRegistration {
 
     @Override
     public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
-        for (ItemStack stack : metals) {
-            if (stack.getUnlocalizedName().equals("item.techreborn.ingot.aluminum") && item == null) {
-                item = stack.getItem();
-            } else if (stack.getUnlocalizedName().equals("tile.techreborn.storage.silver") && blockItem1 == null) {
-                blockItem1 = stack.getItem();
-            } else if (stack.getUnlocalizedName().equals("tile.techreborn.storage2.tungstensteel") && blockItem2 == null)
-
-                if (item != null && blockItem1 != null && blockItem2 != null)
-                    break;
-        }
-
-        registerMetal("aluminium_sign",     null, "aluminium",      new ItemStack(item, 1, 0),  new ItemStack(blockItem1, 1, 1));
-        registerMetal("brass_sign",         null, "brass",          new ItemStack(item, 1, 1),  new ItemStack(blockItem1, 1, 5));
-        registerMetal("chrome_sign",        null, "chrome",         new ItemStack(item, 1, 3),  new ItemStack(blockItem1, 1, 3));
-        registerMetal("copper_sign",        null, "copper",         new ItemStack(item, 1, 4),  new ItemStack(blockItem2, 1, 1));
-        registerMetal("electrum_sign",      null, "electrum",       new ItemStack(item, 1, 5),  new ItemStack(blockItem1, 1, 7));
-        registerMetal("invar_sign",         null, "invar",          new ItemStack(item, 1, 6),  new ItemStack(blockItem1, 1, 12));
-        registerMetal("iridium_sign",       null, "iridium",        new ItemStack(item, 1, 7),  new ItemStack(blockItem1, 1, 13));
-        registerMetal("lead_sign",          null, "lead",           new ItemStack(item, 1, 8),  new ItemStack(blockItem1, 1, 6));
-        registerMetal("nickel_sign",        null, "nickel",         new ItemStack(item, 1, 9),  new ItemStack(blockItem1, 1, 11));
-        registerMetal("platinum_sign",      null, "platinum",       new ItemStack(item, 1, 10), new ItemStack(blockItem1, 1, 9));
-        registerMetal("silver_sign",        null, "silver",         new ItemStack(item, 1, 11), new ItemStack(blockItem1, 1, 0));
-        registerMetal("steel_sign",         null, "steel",          new ItemStack(item, 1, 12), new ItemStack(blockItem1, 1, 4));
-        registerMetal("tin_sign",           null, "tin",            new ItemStack(item, 1, 13), new ItemStack(blockItem2, 1, 9));
-        registerMetal("titanium_sign",      null, "titanium",       new ItemStack(item, 1, 14), new ItemStack(blockItem1, 1, 2));
-        registerMetal("tungsten_sign",      null, "tungsten",       new ItemStack(item, 1, 15), new ItemStack(blockItem1, 1, 10));
-        registerMetal("tungstensteel_sign", null, "tungstensteel",  new ItemStack(item, 1, 17), new ItemStack(blockItem2, 1, 0));
-        registerMetal("zinc_sign",          null, "zinc",           new ItemStack(item, 1, 18), new ItemStack(blockItem1, 1, 8));
-        registerMetal("refinediron_sign",   null, "refinediron",    new ItemStack(item, 1, 19), new ItemStack(blockItem2, 1, 10));
+        registerMetal("aluminium_sign",     "aluminium",      nugget, 0,  item, 0,  blockItem1, 1);
+        registerMetal("brass_sign",         "brass",          nugget, 1,  item, 1,  blockItem1, 5);
+        registerMetal("chrome_sign",        "chrome",         nugget, 3,  item, 3,  blockItem1, 3);
+        registerMetal("copper_sign",        "copper",         nugget, 4,  item, 4,  blockItem2, 1);
+        registerMetal("electrum_sign",      "electrum",       nugget, 5,  item, 5,  blockItem1, 7);
+        registerMetal("invar_sign",         "invar",          nugget, 6,  item, 6,  blockItem1, 12);
+        registerMetal("iridium_sign",       "iridium",        nugget, 7,  item, 7,  blockItem1, 13);
+        registerMetal("lead_sign",          "lead",           nugget, 8,  item, 8,  blockItem1, 6);
+        registerMetal("nickel_sign",        "nickel",         nugget, 9,  item, 9,  blockItem1, 11);
+        registerMetal("platinum_sign",      "platinum",       nugget, 10, item, 10, blockItem1, 9);
+        registerMetal("silver_sign",        "silver",         nugget, 11, item, 11, blockItem1, 0);
+        registerMetal("steel_sign",         "steel",          nugget, 12, item, 12, blockItem1, 4);
+        registerMetal("tin_sign",           "tin",            nugget, 13, item, 13, blockItem2, 9);
+        registerMetal("titanium_sign",      "titanium",       nugget, 14, item, 14, blockItem1, 2);
+        registerMetal("tungsten_sign",      "tungsten",       nugget, 15, item, 15, blockItem1, 10);
+        registerMetal("tungstensteel_sign", "tungstensteel",  nugget, 17, item, 17, blockItem2, 0);
+        registerMetal("zinc_sign",          "zinc",           nugget, 18, item, 18, blockItem1, 8);
+        registerMetal("refinediron_sign",   "refinediron",    nugget, 19, item, 19, blockItem2, 10);
 
     }
 
-    private void registerMetal(String name, SignSpecialProperty property, String materialName, ItemStack material, ItemStack materialBlock) throws IntegrationException {
-        SignRegistry.register(name, property, materialName, PATH, false, material, materialBlock, Reference.MODID, TECHREBORN_TAG).setMetal();
+    private void registerMetal(String name, String materialName, Item nugget, int nMeta, Item ingot, int iMeta, Block block, int bMeta) throws IntegrationException {
+        SignRegistry.register(name, null, materialName, PATH, true, new ItemStack(nugget, 1, nMeta), new ItemStack(ingot, 1, iMeta), new ItemStack(block, 1, bMeta), Reference.MODID, TECHREBORN_TAG).setMetal();
     }
 
     @Override

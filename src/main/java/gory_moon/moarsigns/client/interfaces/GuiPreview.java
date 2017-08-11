@@ -97,7 +97,7 @@ public class GuiPreview extends GuiContainer {
 
         if (x >= guiLeft + 115 && y >= guiTop + 5 && x < guiLeft + 220 && y < guiTop + 135) {
             String s = Localization.GUI.PREVIEW.DRAG.translate();
-            drawHoveringText(Arrays.asList(s.split("\n")), x, y, fontRendererObj);
+            drawHoveringText(Arrays.asList(s.split("\n")), x, y, fontRenderer);
         }
     }
 
@@ -160,7 +160,7 @@ public class GuiPreview extends GuiContainer {
     protected void drawGuiContainerForegroundLayer(int x, int y) {
         super.drawGuiContainerForegroundLayer(x, y);
         if (sign == null)
-            fontRendererObj.drawSplitString(Localization.GUI.PREVIEW.CLICK_SIGN.translate(), 120, 10, 70, Colors.LIGHTGRAY.getRGB());
+            fontRenderer.drawSplitString(Localization.GUI.PREVIEW.CLICK_SIGN.translate(), 120, 10, 70, Colors.LIGHTGRAY.getRGB());
     }
 
     private boolean needsScrollBars() {
@@ -176,7 +176,7 @@ public class GuiPreview extends GuiContainer {
             String texture = ItemMoarSign.getTextureFromNBTFull(stack.getTagCompound());
             SignInfo info = SignRegistry.get(texture);
 
-            sign.setWorldObj(FMLClientHandler.instance().getWorldClient());
+            sign.setWorld(FMLClientHandler.instance().getWorldClient());
             sign.isMetal = info.isMetal;
             sign.setBlockType(info.isMetal ? ModBlocks.SIGN_STANDING_METAL : ModBlocks.SIGN_STANDING_WOOD);
             ITextComponent[] components = new ITextComponent[]{null, new TextComponentString(Localization.GUI.PREVIEW.EXAMPLE_TEXT_1.translate()), new TextComponentString(Localization.GUI.PREVIEW.EXAMPLE_TEXT_2.translate()), null};

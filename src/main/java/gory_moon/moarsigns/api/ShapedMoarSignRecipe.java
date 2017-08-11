@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -182,7 +183,7 @@ public class ShapedMoarSignRecipe implements IMoarSignsRecipe {
     }
 
     @Override
-    public ItemStack[] getRemainingItems(InventoryCrafting inv) {
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
         return ForgeHooks.defaultRecipeGetRemainingItems(inv);
     }
 

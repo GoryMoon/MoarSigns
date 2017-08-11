@@ -25,31 +25,32 @@ public class SlotSelection extends Slot {
 
     @Override
     public boolean canTakeStack(EntityPlayer entityPlayer) {
-        return !container.close && entityPlayer.inventory.getItemStack() == null;
+        return !container.close && entityPlayer.inventory.getItemStack().isEmpty();
 
     }
 
     @Override
-    public void onPickupFromSlot(EntityPlayer player, ItemStack itemStack) {
+    public ItemStack onTake(EntityPlayer player, ItemStack itemStack) {
         ItemStack held = player.inventory.getItemStack();
 
-        if (held == null) {
+        if (held.isEmpty()) {
             inventoryExchange.decrStackSize(0, 1);
         } else {
             putStack(itemStack.copy());
 
-            player.inventory.setItemStack(null);
+            player.inventory.setItemStack(ItemStack.EMPTY);
 
-            if (inventoryExchange.inventory[0] == null) {
-                return;
+            if (inventoryExchange.inventory.get(0).isEmpty()) {
+                return ItemStack.EMPTY;
             }
 
             ItemStack stack = itemStack.copy();
-            stack.stackSize = inventoryExchange.inventory[0].stackSize;
+            stack.setCount(inventoryExchange.inventory.get(0).getCount());
             player.inventory.setItemStack(stack);
-            inventoryExchange.setInventorySlotContents(0, null);
+            inventoryExchange.setInventorySlotContents(0, ItemStack.EMPTY);
         }
 
         inventoryExchange.update();
+        return itemStack;
     }
 }

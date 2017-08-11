@@ -7,6 +7,7 @@ import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -16,19 +17,13 @@ public class IntegratedDynamicsIntegration implements ISignRegistration {
 
     private static final String ID_ID = "integrateddynamics";
     private static final String ID_NAME = "Integrated Dynamics";
-    private Item item;
+
+    @ObjectHolder("integrateddynamics:menril_planks")
+    public static Item item = null;
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
-
-        for (ItemStack stack: planks) {
-            if (stack.getUnlocalizedName().equals("tile.blocks.integrateddynamics.menrilPlanks") && item == null) {
-                item = stack.getItem();
-                break;
-            }
-        }
-
-        SignRegistry.register("menril_sign", null, "menril", "id/", false, new ItemStack(item, 1, 0), Reference.MODID, ID_ID);
+        SignRegistry.register("menril_sign", null, "menril", "id/", false, ItemStack.EMPTY, new ItemStack(item, 1, 0), Reference.MODID, ID_ID);
     }
 
     @Override

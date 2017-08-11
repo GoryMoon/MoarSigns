@@ -27,15 +27,15 @@ public class FactorizationIntegration implements ISignRegistration {
     @Override
     public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
         for (ItemStack stacks : metals) {
-            if (silverItem == null && stacks.getUnlocalizedName().equals("item.factorization:silver_ingot")) {
+            if (silverItem == null && stacks.getUnlocalizedName().equals("ingot.factorization:silver_ingot")) {
                 silverItem = stacks.getItem();
             }
 
-            if (leadItem == null && stacks.getUnlocalizedName().equals("item.factorization:lead_ingot")) {
+            if (leadItem == null && stacks.getUnlocalizedName().equals("ingot.factorization:lead_ingot")) {
                 leadItem = stacks.getItem();
             }
 
-            if (darkIronItem == null && stacks.getUnlocalizedName().equals("item.factorization:dark_iron_ingot")) {
+            if (darkIronItem == null && stacks.getUnlocalizedName().equals("ingot.factorization:dark_iron_ingot")) {
                 darkIronItem = stacks.getItem();
             }
 
@@ -47,9 +47,9 @@ public class FactorizationIntegration implements ISignRegistration {
                 break;
         }
 
-        SignRegistry.register("silver_sign",    null, "silver",     "factorization/", false, new ItemStack(silverItem),     new ItemStack(itemBlock, 1, 1), Reference.MODID, FACTORIZATION_TAG).setMetal();
-        SignRegistry.register("lead_sign",      null, "lead",       "factorization/", false, new ItemStack(leadItem),       new ItemStack(itemBlock, 1, 2), Reference.MODID, FACTORIZATION_TAG).setMetal();
-        SignRegistry.register("darkiron_sign",  null, "darkiron",   "factorization/", false, new ItemStack(darkIronItem),   new ItemStack(itemBlock, 1, 3), Reference.MODID, FACTORIZATION_TAG).setMetal();
+        SignRegistry.register("silver_sign",    null, "silver",     "factorization/", false, ItemStack.EMPTY, new ItemStack(silverItem),     new ItemStack(itemBlock, 1, 1), Reference.MODID, FACTORIZATION_TAG).setMetal();
+        SignRegistry.register("lead_sign",      null, "lead",       "factorization/", false, ItemStack.EMPTY, new ItemStack(leadItem),       new ItemStack(itemBlock, 1, 2), Reference.MODID, FACTORIZATION_TAG).setMetal();
+        SignRegistry.register("darkiron_sign",  null, "darkiron",   "factorization/", false, ItemStack.EMPTY, new ItemStack(darkIronItem),   new ItemStack(itemBlock, 1, 3), Reference.MODID, FACTORIZATION_TAG).setMetal();
 
     }
 

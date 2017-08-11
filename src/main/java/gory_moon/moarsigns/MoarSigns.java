@@ -19,31 +19,30 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, certificateFingerprint = Reference.FINGERPRINT, acceptedMinecraftVersions = "[1.10]", guiFactory = Reference.GUI_FACTORY_CLASS, updateJSON = MoarSigns.FORGE_PROMO,
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, certificateFingerprint = Reference.FINGERPRINT, acceptedMinecraftVersions = "[1.11.2]", guiFactory = Reference.GUI_FACTORY_CLASS, updateJSON = MoarSigns.FORGE_PROMO,
         dependencies =
-                "after:BiomesOPlenty;" +
+                "after:biomesoplenty;" +
                 "after:forestry;" +
                 "after:natura;" +
-                "after:IC2;" +
+                "after:ic2;" +
                 "after:tconstruct;" +
                 "after:railcraft;" +
-                "after:ThermalFoundation;" +
+                "after:thermalfoundation;" +
                 "after:factorization;" +
                 "after:basemetals;" +
                 "after:techreborn;" +
-                "after:Psi;" +
+                "after:psi;" +
                 "after:roots;" +
                 "after:bigreactors;" +
                 "after:immersiveengineering;" +
                 "after:integrateddynamics;" +
                 "after:draconicevolution;" +
-                "after:EnderIO;" +
+                "after:enderio;" +
                 "after:randomthings;" +
-                "after:JEI@[3.14.0,);" +
-                "after:NotEnoughItems;" +
-                "after:Waila;" +
+                "after:jei;" +
+                "after:waila;" +
                 "after:theoneprobe;" +
-                "after:MineTweaker3;"
+                "after:crafttweaker;"
         )
 public class MoarSigns {
 
@@ -65,8 +64,8 @@ public class MoarSigns {
         ConfigHandler.instance().loadDefaultConfig(event);
         PacketHandler.init();
 
-        FMLInterModComms.sendMessage("VersionChecker", "addVersionCheck", LINK);
-        if (FMLInterModComms.sendMessage("Waila", "register", WAILA_PROVIDER)) {
+        FMLInterModComms.sendMessage("versionchecker", "addVersionCheck", LINK);
+        if (FMLInterModComms.sendMessage("waila", "register", WAILA_PROVIDER)) {
             MoarSigns.logger.info("Loaded Waila Integration");
         }
 
@@ -87,11 +86,11 @@ public class MoarSigns {
         new IntegrationHandler().setupSigns();
         ModItems.registerRecipes();
 
-        if (Loader.isModLoaded("Quark") || Loader.isModLoaded("quark")) {
+        if (Loader.isModLoaded("quark")) {
             MoarSigns.logger.warn("Quark is loaded, MoarSigns sign editing might not work as intended");
         }
 
-        if (Loader.isModLoaded("MineTweaker3")) {
+        if (Loader.isModLoaded("crafttweaker")) {
             MineTweakerIntegration.register();
         }
     }

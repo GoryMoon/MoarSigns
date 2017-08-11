@@ -3,7 +3,8 @@
   "promos": {
     "1.9-recommended": "3.0.0",
     "1.9.4-recommended": "3.3.1.3",
-    "1.10.2-recommended": "4.2.2.8"
+    "1.10.2-recommended": "4.2.2.8",
+    "1.11.2-recommended": "5.0.0.9"
   },
   "1.9.4": {
     "3.3.1.3": "Fixed crash bug when trying to change textfield with no selected",
@@ -20,5 +21,8 @@
     "4.1.0.5": "Added PassthroughSigns integration\nUpdated JEI version and integration to look more like normal crafting\nFixed rotation of signs with the SignToolbox",
     "4.0.1.4": "Fixed crash bug when trying to change textfield with no selected",
     "4.0.0.2": "Updated to Minecraft 1.10.2\nFixed JEI integration"
+  },
+  "1.11.2": {
+    "5.0.0.9": "Updated to Minecraft 1.11.2"
   }
 }

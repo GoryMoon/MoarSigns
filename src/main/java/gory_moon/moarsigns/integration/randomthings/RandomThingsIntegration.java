@@ -7,6 +7,7 @@ import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -16,18 +17,13 @@ public class RandomThingsIntegration implements ISignRegistration {
 
     private static final String RT_ID = "randomthings";
     private static final String RT_NAME = "Random Things";
-    private Item item;
+
+    @ObjectHolder("randomthings:spectreplank")
+    public static Item item = null;
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
-        for (ItemStack stack: planks) {
-            if (stack.getUnlocalizedName().equals("tile.spectrePlank") && item == null) {
-                item = stack.getItem();
-                break;
-            }
-        }
-
-        SignRegistry.register("spectre_sign", null, "spectre", "randomthings/", false, new ItemStack(item, 1, 0), Reference.MODID, RT_ID);
+        SignRegistry.register("spectre_sign", null, "spectre", "randomthings/", false, ItemStack.EMPTY, new ItemStack(item, 1, 0), Reference.MODID, RT_ID);
     }
 
     @Override

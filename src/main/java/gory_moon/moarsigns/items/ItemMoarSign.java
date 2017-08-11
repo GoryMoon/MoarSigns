@@ -24,11 +24,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.List;
+
+import static gory_moon.moarsigns.items.ItemSignToolbox.SIGN_MOVING_TAG;
 
 public class ItemMoarSign extends Item {
 
@@ -67,8 +70,8 @@ public class ItemMoarSign extends Item {
     }
 
     @Override
-    public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
-        getSubItemStacks(list);
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
+        getSubItemStacks(subItems);
     }
 
     @SuppressWarnings("unchecked")
@@ -98,7 +101,8 @@ public class ItemMoarSign extends Item {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
         if (!world.getBlockState(pos).getMaterial().isSolid()) {
             return EnumActionResult.PASS;
         } else {
@@ -109,11 +113,21 @@ public class ItemMoarSign extends Item {
             } else if (world.isRemote) {
                 return EnumActionResult.PASS;
             } else {
+
+                if (stack.getItem() instanceof ItemSignToolbox) {
+                    NBTTagCompound toolbox = stack.getTagCompound();
+                    String texture = toolbox.getString(TileEntityMoarSign.NBT_TEXTURE_TAG);
+                    boolean isMetal = toolbox.getBoolean(TileEntityMoarSign.NBT_METAL_TAG);
+
+                    stack = ModItems.SIGN.createMoarItemStack(texture, isMetal);
+                    stack.getTagCompound().setBoolean(SIGN_MOVING_TAG, true);
+                }
+
                 SignInfo info = getInfo(stack.getTagCompound());
                 if (info == null)
                     return EnumActionResult.PASS;
                 if (facing == EnumFacing.UP && !player.isSneaking()) {
-                    int rotation = MathHelper.floor_double((double) ((player.rotationYaw + 180.0F) * 16.0F / 360.0F) + 0.5D) & 15;
+                    int rotation = MathHelper.floor((double) ((player.rotationYaw + 180.0F) * 16.0F / 360.0F) + 0.5D) & 15;
                     if (!info.isMetal)
                         world.setBlockState(pos, ModBlocks.SIGN_STANDING_WOOD.getDefaultState().withProperty(BlockMoarSign.ROTATION, rotation), 3);
                     else
@@ -122,7 +136,7 @@ public class ItemMoarSign extends Item {
                 } else {
                     int finalRotation = facing.getIndex();
                     if (facing == EnumFacing.DOWN || facing == EnumFacing.UP) {
-                        int rotation = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+                        int rotation = MathHelper.floor((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
                         finalRotation += (rotation << 1);
                         finalRotation += 8;
                     }
@@ -133,7 +147,7 @@ public class ItemMoarSign extends Item {
                 }
 
                 if (!player.capabilities.isCreativeMode)
-                    --stack.stackSize;
+                    stack.setCount(stack.getCount()-1);
                 TileEntity tileEntity = world.getTileEntity(pos);
 
                 if (tileEntity instanceof TileEntityMoarSign && !ItemBlock.setTileEntityNBT(world, player, pos, stack)) {
@@ -144,7 +158,7 @@ public class ItemMoarSign extends Item {
                     te.setPlayer(player);
                     te.setResourceLocation(texture);
 
-                    boolean moving = stack.getTagCompound().hasKey(ItemSignToolbox.SIGN_MOVING_TAG) && stack.getTagCompound().getBoolean(ItemSignToolbox.SIGN_MOVING_TAG);
+                    boolean moving = stack.getTagCompound().hasKey(SIGN_MOVING_TAG) && stack.getTagCompound().getBoolean(SIGN_MOVING_TAG);
                     PacketHandler.INSTANCE.sendTo(new MessageSignOpenGui(te, moving), (EntityPlayerMP) player);
                 }
 

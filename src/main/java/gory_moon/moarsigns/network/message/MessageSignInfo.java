@@ -157,10 +157,10 @@ public class MessageSignInfo implements IMessage {
 
         @Override
         protected void handle(MessageSignInfo message, MessageContext ctx) {
-            EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+            EntityPlayerMP player = ctx.getServerHandler().player;
             player.markPlayerActive();
 
-            WorldServer worldserver = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(player.dimension);
+            WorldServer worldserver = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(player.dimension);
             BlockPos pos = message.pos;
 
             if (worldserver.isBlockLoaded(pos)) {

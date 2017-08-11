@@ -8,10 +8,6 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
@@ -62,7 +58,7 @@ minecraft {
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not allways work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "snapshot_20160518"
+    mappings = "snapshot_20170612"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     replaceIn "Reference.java"
@@ -73,10 +69,6 @@ minecraft {
 }
 
 repositories {
-
-    maven {
-        url 'http://chickenbones.net/maven'
-    }
 
     /*maven {
         url 'http://mobiusstrip.eu/maven'
@@ -109,13 +101,9 @@ dependencies {
     deobfCompile "mezz.jei:jei_${config.mc_version}:${config.jei_version}:api"
     runtime "mezz.jei:jei_${config.mc_version}:${config.jei_version}"
 
-    deobfProvided "codechicken:CodeChickenLib:${config.mc_version}-${config.cclib_version}:universal"
-    deobfProvided "codechicken:CodeChickenCore:${config.mc_version}-${config.ccc_version}:universal"
-    deobfProvided "codechicken:NotEnoughItems:${config.mc_version}-${config.nei_version}:universal"
-
     deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla_version}"
-    //deobfCompile "mcp.mobius.waila:Waila:${config.waila_version}" /*+ "_" + config.mc_version*/
-    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.10-${config.top_version}"
+    //deobfCompile "mcp.mobius.waila:Waila:${config.waila_version}:dev" /*+ "_" + config.mc_version*/
+    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.1x-${config.top_version}"
 
     //compile name: 'MineTweaker3', version: config.minetweaker_version, ext: 'jar', group: ''
 

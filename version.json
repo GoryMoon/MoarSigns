@@ -52,6 +52,16 @@
 			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2368914/download",
 			"isDirectLink": "true",
 			"newFileName": ""
+		},
+		{
+			"mcVersion": "Minecraft 1.11.2",
+			"modVersion": "5.0.0.9",
+			"changeLog": [
+				"Updated to minecraft 1.11.2"
+			],
+			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2463337/download",
+			"isDirectLink": "true",
+			"newFileName": ""
 		}
 	]
 }

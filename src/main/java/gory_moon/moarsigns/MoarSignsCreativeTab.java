@@ -4,7 +4,6 @@ import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.items.ModItems;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class MoarSignsCreativeTab extends CreativeTabs {
@@ -16,13 +15,9 @@ public class MoarSignsCreativeTab extends CreativeTabs {
     }
 
     @Override
-    public ItemStack getIconItemStack() {
+    public ItemStack getTabIconItem() {
         SignInfo info = SignRegistry.getActivatedSignRegistry().iterator().next();
         return ModItems.SIGN.createMoarItemStack(info.material.path + info.itemName, false);
     }
 
-    @Override
-    public Item getTabIconItem() {
-        return null;
-    }
 }

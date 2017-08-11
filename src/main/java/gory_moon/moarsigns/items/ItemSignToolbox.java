@@ -1,6 +1,5 @@
 package gory_moon.moarsigns.items;
 
-import cofh.api.item.IToolHammer;
 import com.google.common.collect.Lists;
 import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.MoarSignsCreativeTab;
@@ -14,8 +13,6 @@ import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.RotationHandler;
 import net.minecraft.client.settings.GameSettings;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -40,7 +37,7 @@ import java.util.List;
 
 import static gory_moon.moarsigns.lib.ToolBoxModes.*;
 
-public class ItemSignToolbox extends VariantItem implements IToolHammer {
+public class ItemSignToolbox extends VariantItem {
 
     public static final String SIGN_MOVING_TAG = "SignMoving";
     public static final String NBT_UNLOCALIZED_NAME = "SignUnlocalizedName";
@@ -54,12 +51,8 @@ public class ItemSignToolbox extends VariantItem implements IToolHammer {
     }
 
     @Override
-    public boolean isDamageable() {
-        return true;
-    }
-
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote) {
             RayTraceResult movingObjectPosition = rayTrace(world, player, false);
             RayTraceResult.Type hit = movingObjectPosition != null ? movingObjectPosition.typeOfHit : RayTraceResult.Type.MISS;
@@ -69,17 +62,18 @@ public class ItemSignToolbox extends VariantItem implements IToolHammer {
                 if (player.isSneaking() && !isMoving(stack.getItemDamage())) {
                     return rotateModes(stack);
                 } else if (values()[mode] == EXCHANGE_MODE) {
-                    doExchange(world, BlockPos.ORIGIN, player);
+                    doExchange(world, BlockPos.ORIGIN, player, hand);
                 } else if (values()[mode] == PREVIEW_MODE) {
                     doPreview(world, BlockPos.ORIGIN, player);
                 }
             }
         }
-        return super.onItemRightClick(stack, world, player, hand);
+        return super.onItemRightClick(world, player, hand);
     }
 
     @Override
-    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+        ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote) {
             int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
             switch (values()[mode]) {
@@ -95,7 +89,7 @@ public class ItemSignToolbox extends VariantItem implements IToolHammer {
                     doCopy(world, pos, stack, player);
                     break;
                 case EXCHANGE_MODE:
-                    doExchange(world, pos, player);
+                    doExchange(world, pos, player, hand);
                     return EnumActionResult.SUCCESS;
                 case PREVIEW_MODE:
                     doPreview(world, pos, player);
@@ -166,12 +160,7 @@ public class ItemSignToolbox extends VariantItem implements IToolHammer {
                 world.setBlockToAir(pos);
             }
         } else {
-            String texture = signInfo.getString(TileEntityMoarSign.NBT_TEXTURE_TAG);
-            boolean isMetal = signInfo.getBoolean(TileEntityMoarSign.NBT_METAL_TAG);
-
-            ItemStack moarSignsStack = ModItems.SIGN.createMoarItemStack(texture, isMetal);
-            moarSignsStack.getTagCompound().setBoolean(SIGN_MOVING_TAG, true);
-            val = ModItems.SIGN.onItemUse(moarSignsStack, player, world, pos, hand, side, hitX, hitY, hitZ);
+            val = ModItems.SIGN.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
 
             if (val == EnumActionResult.SUCCESS) {
                 pos = pos.offset(side);
@@ -191,8 +180,8 @@ public class ItemSignToolbox extends VariantItem implements IToolHammer {
         return val == EnumActionResult.SUCCESS ? EnumActionResult.PASS : EnumActionResult.SUCCESS;
     }
 
-    private void doExchange(World world, BlockPos pos, EntityPlayer player) {
-        FMLNetworkHandler.openGui(player, MoarSigns.instance, GuiHandler.EXCHANGE, world, pos.getX(), pos.getY(), pos.getZ());
+    private void doExchange(World world, BlockPos pos, EntityPlayer player, EnumHand hand) {
+        FMLNetworkHandler.openGui(player, MoarSigns.instance, GuiHandler.EXCHANGE, world, hand.ordinal(), 0, 0);
     }
 
     private void doPreview(World world, BlockPos pos, EntityPlayer player) {
@@ -258,15 +247,15 @@ public class ItemSignToolbox extends VariantItem implements IToolHammer {
     }
 
     private String getFormattedData(NBTTagCompound compound) {
-        String s = "\n";
+        StringBuilder s = new StringBuilder("\n");
 
         for (int i = 0; i < 4; i++) {
             String text = compound.getString("Text" + (i + 1));
             ITextComponent component = ITextComponent.Serializer.jsonToComponent(text);
-            s += Colors.WHITE + "[" + Colors.GRAY + component.getFormattedText() + Colors.WHITE + "]\n";
+            s.append(Colors.WHITE + "[" + Colors.GRAY).append(component.getFormattedText()).append(Colors.WHITE).append("]\n");
         }
 
-        return s;
+        return s.toString();
     }
 
     private boolean isMoving(int itemDamage) {
@@ -282,27 +271,6 @@ public class ItemSignToolbox extends VariantItem implements IToolHammer {
         return stack;
     }
 
-    @Override
-    public boolean isUsable(ItemStack item, EntityLivingBase user, Entity entity) {
-        return false;
-    }
-
-    @Override
-    public void toolUsed(ItemStack item, EntityLivingBase user, BlockPos pos) {
-
-    }
-
-    @Override
-    public void toolUsed(ItemStack item, EntityLivingBase user, Entity entity) {
-
-    }
-
-    @Override
-    public boolean isUsable(ItemStack item, EntityLivingBase user, BlockPos pos) {
-        int mode = isMoving(item.getItemDamage()) ? 2 : item.getItemDamage();
-        return values()[mode] == ROTATE_MODE;
-    }
-
     private List<Integer> metas = Lists.newArrayList(0, 1, 2, 3, 4, 5, 7);
 
     @Override
@@ -313,7 +281,7 @@ public class ItemSignToolbox extends VariantItem implements IToolHammer {
     @Override
     public String getVariant(int meta) {
         if (meta >= 0 && meta <= 7 && meta != 6)
-            return values()[meta == 7 ? 1: meta].toString().toLowerCase().replaceAll("_mode", "");
+            return values()[meta == 7 ? 2: meta].toString().toLowerCase().replaceAll("_mode", "");
         return "";
     }
 }

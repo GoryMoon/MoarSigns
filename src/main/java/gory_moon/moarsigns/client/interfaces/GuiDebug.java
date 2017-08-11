@@ -78,7 +78,7 @@ public class GuiDebug extends GuiContainer {
                 y2 = 20;
             }
         } else {
-            if (inventory.getStackInSlot(0) != null) {
+            if (!inventory.getStackInSlot(0).isEmpty()) {
                 x = 33;
                 y1 = 12;
                 y2 = 20;
@@ -95,8 +95,8 @@ public class GuiDebug extends GuiContainer {
             else if (blockInWorld && Un.length() >= 15)
                 un = Un.substring(0, 13) + "...";
 
-            fontRendererObj.drawString("UN: " + un, x, y1, 0x404040);
-            fontRendererObj.drawString("Meta: " + meta, x, y2, 0x404040);
+            fontRenderer.drawString("UN: " + un, x, y1, 0x404040);
+            fontRenderer.drawString("Meta: " + meta, x, y2, 0x404040);
 
             ArrayList<String> strings = Lists.newArrayList();
             for (int i : OreDictionary.getOreIDs(blockInWorld ? new ItemStack(block) : inventory.getStackInSlot(0))) {
@@ -118,7 +118,7 @@ public class GuiDebug extends GuiContainer {
     }
 
     public void drawHoverString(List<String> lst, int x, int y) {
-        drawHoveringText(lst, x, y, fontRendererObj);
+        drawHoveringText(lst, x, y, fontRenderer);
     }
 
     public class Rectangle {

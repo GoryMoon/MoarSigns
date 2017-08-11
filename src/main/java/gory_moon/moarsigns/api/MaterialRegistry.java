@@ -15,12 +15,11 @@ public class MaterialRegistry {
      *
      * @param materialName      The name of the material that it's registered with
      * @param path              Path to the folder that contains the sign texture in the "/metal" or "/wood" folder
-     * @param gotNugget         True if the metal have a nugget, nugget should be obtainable trough 1 metal = nugget in a normal crafting table
      * @param materialItemStack An itemstack of the material
      * @return The {@link gory_moon.moarsigns.api.MaterialInfo} that is registered
      */
-    public static MaterialInfo register(String materialName, String path, boolean gotNugget, ItemStack materialItemStack) {
-        return register(new MaterialInfo(materialName, path, gotNugget, materialItemStack, null));
+    public static MaterialInfo register(String materialName, String path, ItemStack materialItemStack) {
+        return register(new MaterialInfo(materialName, path, false, ItemStack.EMPTY, materialItemStack, ItemStack.EMPTY));
     }
 
     /**
@@ -32,8 +31,21 @@ public class MaterialRegistry {
      * @param materialItemStack An itemstack of the material
      * @return The {@link gory_moon.moarsigns.api.MaterialInfo} that is registered
      */
-    public static MaterialInfo register(String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock) {
-        return register(new MaterialInfo(materialName, path, gotNugget, materialItemStack, materialBlock));
+    public static MaterialInfo register(String materialName, String path, boolean gotNugget, ItemStack nugget, ItemStack materialItemStack) {
+        return register(new MaterialInfo(materialName, path, gotNugget, nugget, materialItemStack, ItemStack.EMPTY));
+    }
+
+    /**
+     * Registers the material used for the signs
+     *
+     * @param materialName      The name of the material that it's registered with
+     * @param path              Path to the folder that contains the sign texture in the "/metal" or "/wood" folder
+     * @param gotNugget         True if the metal have a nugget, nugget should be obtainable trough 1 metal = nugget in a normal crafting table
+     * @param materialItemStack An itemstack of the material
+     * @return The {@link gory_moon.moarsigns.api.MaterialInfo} that is registered
+     */
+    public static MaterialInfo register(String materialName, String path, boolean gotNugget, ItemStack nugget, ItemStack materialItemStack, ItemStack materialBlock) {
+        return register(new MaterialInfo(materialName, path, gotNugget, nugget, materialItemStack, materialBlock));
     }
 
     /**

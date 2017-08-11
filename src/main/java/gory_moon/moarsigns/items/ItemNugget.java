@@ -5,13 +5,12 @@ import gory_moon.moarsigns.util.Utils;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 import java.util.List;
 import java.util.Map;
 
 public class ItemNugget extends Item {
-
-    //private IIcon[] icons = new IIcon[NuggetRegistry.size()];
 
     public ItemNugget() {
         hasSubtypes = true;
@@ -25,12 +24,11 @@ public class ItemNugget extends Item {
         return super.getUnlocalizedName() + "." + NuggetRegistry.getUnlocName(stack.getItemDamage());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
         for (Map.Entry<String, NuggetRegistry.NuggetInfo> entry : Utils.entriesSortedByValues(NuggetRegistry.getNuggets())) {
             if (entry.getValue().needed) {
-                list.add(new ItemStack(this, 1, entry.getValue().id));
+                subItems.add(new ItemStack(this, 1, entry.getValue().id));
             }
         }
     }

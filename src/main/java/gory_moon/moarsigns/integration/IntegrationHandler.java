@@ -16,9 +16,9 @@ import gory_moon.moarsigns.integration.natura.NaturaIntegration;
 import gory_moon.moarsigns.integration.psi.PsiIntegration;
 import gory_moon.moarsigns.integration.railcraft.RailcraftIntegration;
 import gory_moon.moarsigns.integration.randomthings.RandomThingsIntegration;
-import gory_moon.moarsigns.integration.roots.RootsIntegration;
 import gory_moon.moarsigns.integration.tconstruct.TinkersConstructIntegration;
 import gory_moon.moarsigns.integration.techreborn.TechRebornIntegration;
+import gory_moon.moarsigns.integration.thermalfoundation.ThermalFoundationIntegration;
 import gory_moon.moarsigns.integration.vanilla.MinecraftIntegration;
 import gory_moon.moarsigns.util.IntegrationException;
 import net.minecraft.item.ItemStack;
@@ -47,19 +47,19 @@ public class IntegrationHandler {
         registerIntegration(BasemetalsIntegration.class);
         registerIntegration(TechRebornIntegration.class);
         registerIntegration(NaturaIntegration.class);
-        registerIntegration(RailcraftIntegration.class);
+        //registerIntegration(RailcraftIntegration.class);
         registerIntegration(PsiIntegration.class);
-        registerIntegration(RootsIntegration.class);
         registerIntegration(BigReactorsIntegration.class);
         registerIntegration(ImmersiveEngineeringIntegration.class);
         registerIntegration(IntegratedDynamicsIntegration.class);
         registerIntegration(DraconicEvolutionIntegration.class);
-        registerIntegration(EnderIOIntegration.class);
+        //registerIntegration(EnderIOIntegration.class);
         registerIntegration(RandomThingsIntegration.class);
+        registerIntegration(ThermalFoundationIntegration.class);
 
         /* Not updated mods */
         //registerIntegration(FactorizationIntegration.class);
-        //registerIntegration(ThermalFoundationIntegration.class);
+
 
         registerPlankOreName("plankWood");
         registerPlankOreName("plankTreatedWood");
@@ -193,7 +193,7 @@ public class IntegrationHandler {
         IntegrationHandler.genNuggetFile("enderio", "soularium_nugget_enderio");*/
 
     public static void genModelFile(String type, String mod, String signName) {
-        String base = "../src/main/resources/assets/moarsigns/models/item/";
+        String base = "../src/main/resources/assets/moarsigns/models/ingot/";
         try {
             Path path1 = Paths.get(base + "mod_template_sign.json");
             String template = new String(Files.readAllBytes(path1), StandardCharsets.UTF_8);
@@ -208,7 +208,7 @@ public class IntegrationHandler {
     }
 
     public static void genNuggetFile(String mod, String nuggetName) {
-        String base = "../src/main/resources/assets/moarsigns/models/item/";
+        String base = "../src/main/resources/assets/moarsigns/models/ingot/";
         try {
             Path path1 = Paths.get(base + "mod_template_nugget.json");
             String template = new String(Files.readAllBytes(path1), StandardCharsets.UTF_8);

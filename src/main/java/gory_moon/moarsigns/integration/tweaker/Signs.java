@@ -13,7 +13,7 @@ import minetweaker.api.item.IIngredient;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.minecraft.MineTweakerMC;
 import minetweaker.api.oredict.IOreDictEntry;
-import minetweaker.mc1102.item.MCItemStack;
+import minetweaker.mc1112.item.MCItemStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -41,6 +41,7 @@ public class Signs {
 
     @ZenMethod
     public static void removeRecipes(IItemStack output) {
+
         MineTweakerAPI.apply(new Remove(toStack(output)));
     }
 
@@ -82,7 +83,7 @@ public class Signs {
     @ZenMethod
     public static IItemStack getFirstSign(IIngredient ingredient) {
         IItemStack[] signs = getSigns(ingredient);
-        if (signs != null && signs.length > 0)
+        if (signs.length > 0)
             return signs[0];
         return null;
     }
@@ -235,13 +236,13 @@ public class Signs {
             for (Object obj : allRecipes) {
                 IRecipe recipe = (IRecipe) obj;
                 for (ItemStack output : outputs) {
-                    if ((recipe instanceof ShapedMoarSignRecipe || recipe instanceof ShapelessMoarSignRecipe) && recipe.getRecipeOutput() != null && ItemStack.areItemStackTagsEqual(recipe.getRecipeOutput(), output)) {
+                    if ((recipe instanceof ShapedMoarSignRecipe || recipe instanceof ShapelessMoarSignRecipe) && ItemStack.areItemStackTagsEqual(recipe.getRecipeOutput(), output)) {
                         iRecipes.add(recipe);
                     }
                 }
             }
             for (IRecipe recipe : iRecipes) {
-                CraftingManager.getInstance().getRecipeList().remove(recipe);
+                allRecipes.remove(recipe);
                 MineTweakerAPI.getIjeiRecipeRegistry().removeRecipe(recipe);
             }
 
@@ -249,13 +250,14 @@ public class Signs {
 
         @Override
         public boolean canUndo() {
-            return CraftingManager.getInstance().getRecipeList() != null && iRecipes != null && !iRecipes.isEmpty();
+            return iRecipes != null && !iRecipes.isEmpty();
         }
 
         @Override
         public void undo() {
+            List allRecipes = CraftingManager.getInstance().getRecipeList();
             for (IRecipe recipe : iRecipes) {
-                CraftingManager.getInstance().getRecipeList().add(recipe);
+                allRecipes.add(recipe);
                 MineTweakerAPI.getIjeiRecipeRegistry().addRecipe(recipe);
             }
         }

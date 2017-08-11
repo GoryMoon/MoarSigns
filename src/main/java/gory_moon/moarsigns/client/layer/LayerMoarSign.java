@@ -41,7 +41,7 @@ public class LayerMoarSign implements LayerRenderer {
             modelMoarSign.render();
             GlStateManager.popMatrix();
 
-            FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
+            FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
 
 
             GlStateManager.pushMatrix();

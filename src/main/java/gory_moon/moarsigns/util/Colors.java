@@ -1,6 +1,7 @@
 package gory_moon.moarsigns.util;
 
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public enum Colors {
     BLACK(0), BLUE(1), GREEN(2), CYAN(3), RED(4), PURPLE(5), ORANGE(6), LIGHTGRAY(7), GRAY(8), LIGHTBLUE(9), LIME(10), TURQUISE(11), PINK(12), MAGNETA(13), YELLOW(14), WHITE(15);
@@ -50,7 +51,7 @@ public enum Colors {
             k += 85;
         }
 
-        if (FMLClientHandler.instance().getClient().gameSettings.anaglyph) {
+        if (FMLCommonHandler.instance().getSide().isClient() && FMLClientHandler.instance().getClient().gameSettings.anaglyph) {
             int j1 = (k * 30 + l * 59 + i1 * 11) / 100;
             int k1 = (k * 30 + l * 70) / 100;
             int l1 = (k * 30 + i1 * 70) / 100;

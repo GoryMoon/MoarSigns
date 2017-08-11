@@ -6,27 +6,23 @@ import gory_moon.moarsigns.api.SignSpecialProperty;
 import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
-import net.minecraft.item.Item;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 import java.util.ArrayList;
 
 public class BiomesOPlentyIntegration implements ISignRegistration {
 
-    private static final String BOP_TAG = "BiomesOPlenty";
+    private static final String BOP_TAG = "biomesoplenty";
     private static final String BOP_NAME = "Biomes O' Plenty";
     private static final String PATH = "bop/";
-    private Item bopItem = null;
+
+    @ObjectHolder("biomesoplenty:planks_0")
+    public static Block bopItem = null;
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
-        for (ItemStack plank : planks) {
-            if (plank.getUnlocalizedName().equals("tile.planks_0.sacred_oak_planks")) {
-                bopItem = plank.getItem();
-                break;
-            }
-        }
-
         registerWood("sacred_oak_sign",    null, "sacred_oak",  new ItemStack(bopItem, 1, 0));
         registerWood("cherry_sign",        null, "cherry",      new ItemStack(bopItem, 1, 1));
         registerWood("umbran_sign",        null, "umbran",      new ItemStack(bopItem, 1, 2));
@@ -43,11 +39,10 @@ public class BiomesOPlentyIntegration implements ISignRegistration {
         registerWood("mahogany_sign",      null, "mahogany",    new ItemStack(bopItem, 1, 13));
         registerWood("ebony_sign",         null, "ebony",       new ItemStack(bopItem, 1, 14));
         registerWood("eucalyptus_sign",    null, "eucalyptus",  new ItemStack(bopItem, 1, 15));
-
     }
 
     private void registerWood(String name, SignSpecialProperty property, String materialName, ItemStack material) throws IntegrationException {
-        SignRegistry.register(name, property, materialName, PATH, false, material, Reference.MODID, BOP_TAG);
+        SignRegistry.register(name, property, materialName, PATH, false, ItemStack.EMPTY, material, Reference.MODID, BOP_TAG);
     }
 
     @Override

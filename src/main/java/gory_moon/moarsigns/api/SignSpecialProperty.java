@@ -52,7 +52,7 @@ public abstract class SignSpecialProperty {
      * @param blockState The blockstate of the block
      * @param player     The player that right clicked the sign
      * @param hand       The hand that is clicking the sign
-     * @param heldItem   The currently held item
+     * @param heldItem   The currently held ingot
      * @param side       The side that was right clicked
      * @param hitX       The x location on the side
      * @param hitY       The y location on the side

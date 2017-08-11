@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
+//TODO update when 1.11 version is out, change to object holders
 public class RailcraftIntegration implements ISignRegistration {
 
     private static final String RAILCRAFT_TAG = "railcraft";
@@ -25,7 +26,7 @@ public class RailcraftIntegration implements ISignRegistration {
     @Override
     public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
         for (ItemStack stack : metals) {
-            if (stack.getUnlocalizedName().startsWith("item.railcraft.ingot.") && item == null) {
+            if (stack.getUnlocalizedName().startsWith("ingot.railcraft.ingot.") && item == null) {
                 item = stack.getItem();
             }
 
@@ -37,11 +38,11 @@ public class RailcraftIntegration implements ISignRegistration {
                 break;
         }
 
-        SignRegistry.register("steel_sign",     null, "steel",  "railcraft/", true, new ItemStack(item, 1, 0), new ItemStack(itemBlock, 1, 3), Reference.MODID, RAILCRAFT_TAG).setMetal();
-        SignRegistry.register("copper_sign",    null, "copper", "railcraft/", true, new ItemStack(item, 1, 1), new ItemStack(itemBlock, 1, 0), Reference.MODID, RAILCRAFT_TAG).setMetal();
-        SignRegistry.register("tin_sign",       null, "tin",    "railcraft/", true, new ItemStack(item, 1, 2), new ItemStack(itemBlock, 1, 1), Reference.MODID, RAILCRAFT_TAG).setMetal();
-        SignRegistry.register("lead_sign",      null, "lead",   "railcraft/", true, new ItemStack(item, 1, 3), new ItemStack(itemBlock, 1, 2), Reference.MODID, RAILCRAFT_TAG).setMetal();
-        SignRegistry.register("silver_sign",    null, "silver", "railcraft/", true, new ItemStack(item, 1, 4), new ItemStack(itemBlock, 1, 10), Reference.MODID, RAILCRAFT_TAG).setMetal();
+        SignRegistry.register("steel_sign",     null, "steel",  "railcraft/", true, ItemStack.EMPTY, new ItemStack(item, 1, 0), new ItemStack(itemBlock, 1, 3), Reference.MODID, RAILCRAFT_TAG).setMetal();
+        SignRegistry.register("copper_sign",    null, "copper", "railcraft/", true, ItemStack.EMPTY, new ItemStack(item, 1, 1), new ItemStack(itemBlock, 1, 0), Reference.MODID, RAILCRAFT_TAG).setMetal();
+        SignRegistry.register("tin_sign",       null, "tin",    "railcraft/", true, ItemStack.EMPTY, new ItemStack(item, 1, 2), new ItemStack(itemBlock, 1, 1), Reference.MODID, RAILCRAFT_TAG).setMetal();
+        SignRegistry.register("lead_sign",      null, "lead",   "railcraft/", true, ItemStack.EMPTY, new ItemStack(item, 1, 3), new ItemStack(itemBlock, 1, 2), Reference.MODID, RAILCRAFT_TAG).setMetal();
+        SignRegistry.register("silver_sign",    null, "silver", "railcraft/", true, ItemStack.EMPTY, new ItemStack(item, 1, 4), new ItemStack(itemBlock, 1, 10), Reference.MODID, RAILCRAFT_TAG).setMetal();
     }
 
     @Override

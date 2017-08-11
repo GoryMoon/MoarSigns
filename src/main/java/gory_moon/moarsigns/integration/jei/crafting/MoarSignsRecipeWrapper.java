@@ -7,15 +7,17 @@ import gory_moon.moarsigns.integration.jei.MoarSignsPlugin;
 import gory_moon.moarsigns.util.IMoarSignsRecipe;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.api.recipe.wrapper.ICraftingRecipeWrapper;
+import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class MoarSignsRecipeWrapper extends BlankRecipeWrapper implements ICraftingRecipeWrapper {
+public class MoarSignsRecipeWrapper extends BlankRecipeWrapper{
 
     protected final IMoarSignsRecipe recipe;
 
@@ -24,8 +26,8 @@ public abstract class MoarSignsRecipeWrapper extends BlankRecipeWrapper implemen
         for (Object input : this.recipe.getInput()) {
             if (input instanceof ItemStack) {
                 ItemStack itemStack = (ItemStack) input;
-                if (itemStack.stackSize != 1) {
-                    itemStack.stackSize = 1;
+                if (itemStack.getCount() != 1) {
+                    itemStack.setCount(1);
                 }
             }
         }
@@ -34,7 +36,7 @@ public abstract class MoarSignsRecipeWrapper extends BlankRecipeWrapper implemen
     @Override
     public void getIngredients(IIngredients ingredients) {
         IStackHelper stackHelper = MoarSignsPlugin.jeiHelpers.getStackHelper();
-        ArrayList<Object> inputs = new ArrayList<Object>();
+        ArrayList<Object> inputs = new ArrayList<>();
         for (Object o : recipe.getInput()) {
             if (o instanceof MatchType || o instanceof MaterialInfo) {
                 inputs.add(MoarSignsJeiRecipeHelper.getSigns(o));
@@ -48,23 +50,5 @@ public abstract class MoarSignsRecipeWrapper extends BlankRecipeWrapper implemen
         if (recipeOutput != null) {
             ingredients.setOutput(ItemStack.class, recipeOutput);
         }
-    }
-
-    @Override
-    public List getInputs() {
-        ArrayList<Object> inputs = new ArrayList<Object>();
-        for (Object o : recipe.getInput()) {
-            if (o instanceof MatchType || o instanceof MaterialInfo) {
-                inputs.add(MoarSignsJeiRecipeHelper.getSigns(o));
-            } else {
-                inputs.add(o);
-            }
-        }
-        return inputs;
-    }
-
-    @Override
-    public List<ItemStack> getOutputs() {
-        return Collections.singletonList(recipe.getRecipeOutput());
     }
 }

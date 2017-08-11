@@ -26,6 +26,7 @@ import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 @GameRegistry.ObjectHolder(Reference.MODID)
@@ -75,7 +76,7 @@ public class ModItems {
 
             String texture = ItemMoarSign.getTextureFromNBTFull(stack.getTagCompound());
             boolean isMetal = stack.getItemDamage() == 1;
-            stack.stackSize = 3;
+            stack.setCount(3);
 
             if (texture.equals("oak_sign")) {
                 generalSign = stack;
@@ -89,10 +90,10 @@ public class ModItems {
             materials.add(0, material);
             for (MaterialInfo infos : materials) {
                 ItemStack mat = infos.material;
-                if (mat != null && mat.getItem() != null && material != null) {
+                if (mat != null && material != null) {
                     if (isMetal) {
                         handleMetalSign(mat, material, stack);
-                        stack.stackSize = 9;
+                        stack.setCount(9);
                     }
                     registerSignRecipe(mat, stack);
                 }
@@ -120,63 +121,67 @@ public class ModItems {
         };
         InventoryCrafting crafting = new InventoryCrafting(dummyContainer, 2, 2);
 
-        mat.stackSize = 1;
+        mat.setCount(1);
         if (mat.getItem() instanceof ItemBlock) {
             crafting.setInventorySlotContents(0, mat);
             mat = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
         }
         ItemStack recNugget = null;
-        if (mat != null) {
-            mat.stackSize = 1;
+        mat.setCount(1);
 
-            if (!material.gotNugget) {
-                String unlocName = mat.getUnlocalizedName();
-                NuggetRegistry.NuggetInfo nuggetInfo = NuggetRegistry.getNuggetInfo(unlocName);
-                if (nuggetInfo != null) {
-                    nuggetInfo.needed = true;
-                    recNugget = new ItemStack(NUGGET, 1, nuggetInfo.id);
-                    OreDictionary.registerOre(nuggetInfo.oreName, recNugget.copy());
+        if (!material.gotNugget) {
+            String unlocName = mat.getUnlocalizedName();
+            NuggetRegistry.NuggetInfo nuggetInfo = NuggetRegistry.getNuggetInfo(unlocName);
+            if (nuggetInfo != null) {
+                nuggetInfo.needed = true;
+                recNugget = new ItemStack(NUGGET, 1, nuggetInfo.id);
+                OreDictionary.registerOre(nuggetInfo.oreName, recNugget.copy());
 
-                    recNugget.stackSize = 9;
-                    GameRegistry.addShapelessRecipe(recNugget.copy(), mat);
-                    GameRegistry.addRecipe(new ShapedOreRecipe(mat, "xxx", "xxx", "xxx", 'x', nuggetInfo.oreName));
-                }
-            } else {
+                recNugget.setCount(9);
+                GameRegistry.addShapelessRecipe(recNugget.copy(), mat);
+                GameRegistry.addRecipe(new ShapedOreRecipe(mat, "xxx", "xxx", "xxx", 'x', nuggetInfo.oreName));
+            }
+        } else {
+            if (material.materialNugget.isEmpty()) {
                 crafting.setInventorySlotContents(0, mat);
                 recNugget = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
-            }
+            } else
+                recNugget = material.materialNugget.copy();
         }
 
-        if (recNugget != null && recNugget.getItem() != null) {
+        if (recNugget != null) {
             registerNuggetSign(recNugget, stack);
         }
     }
 
     private static void registerNuggetSign(ItemStack nuggetMaterial, ItemStack stack) {
         ItemStack result = stack.copy();
-        result.stackSize = 1;
-        nuggetMaterial.stackSize = 1;
-        if (nuggetMaterial.getUnlocalizedName().equals("item.moarsigns.diamond_nugget")) {
-            GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "diamondNugget", '/', "stickWood"));
+        result.setCount(1);
+        nuggetMaterial.setCount(1);
+        if (isItem(nuggetMaterial, "ingot.moarsigns.diamond_nugget"))
             GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "nuggetDiamond", '/', "stickWood"));
-        } else if (nuggetMaterial.getUnlocalizedName().equals("item.moarsigns.iron_nugget"))
+        else if (isItem(nuggetMaterial, Items.field_191525_da.getUnlocalizedName()))
             GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "nuggetIron", '/', "stickWood"));
-        else if (nuggetMaterial.getUnlocalizedName().equals("item.moarsigns.emerald_nugget"))
+        else if (isItem(nuggetMaterial, "ingot.moarsigns.emerald_nugget"))
             GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "nuggetEmerald", '/', "stickWood"));
-        else if (nuggetMaterial.getUnlocalizedName().equals("item.moarsigns.lapis_nugget"))
+        else if (isItem(nuggetMaterial, "ingot.moarsigns.lapis_nugget"))
             GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "nuggetLapis", '/', "stickWood"));
-        else if (nuggetMaterial.getUnlocalizedName().equals("item.moarsigns.quartz_nugget"))
+        else if (isItem(nuggetMaterial, "ingot.moarsigns.quartz_nugget"))
             GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "nuggetQuartz", '/', "stickWood"));
         else
             GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', nuggetMaterial, '/', "stickWood"));
     }
 
+    private static boolean isItem(ItemStack stack, @Nonnull String name) {
+        return name.equals(stack.getUnlocalizedName());
+    }
+
     private static void registerSignRecipe(ItemStack material, ItemStack result) {
-        if (material.getUnlocalizedName().equals(Items.DIAMOND.getUnlocalizedName()))
+        if (isItem(material, Items.DIAMOND.getUnlocalizedName()))
             GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "gemDiamond", '/', "stickWood"));
-        else if (material.getUnlocalizedName().equals(Items.EMERALD.getUnlocalizedName()))
+        else if (isItem(material, Items.EMERALD.getUnlocalizedName()))
             GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "gemEmerald", '/', "stickWood"));
-        else if (material.getUnlocalizedName().equals(Items.IRON_INGOT.getUnlocalizedName()))
+        else if (isItem(material, Items.IRON_INGOT.getUnlocalizedName()))
             GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "ingotIron", '/', "stickWood"));
         else
             GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', material, '/', "stickWood"));

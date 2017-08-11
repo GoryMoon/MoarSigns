@@ -27,6 +27,7 @@ public class ContainerPreview extends Container {
         this.scrollTo(0.0F);
     }
 
+    @Override
     public boolean canInteractWith(EntityPlayer player) {
         return true;
     }
@@ -51,7 +52,7 @@ public class ContainerPreview extends Container {
                 if (i1 >= 0 && i1 < this.itemList.size()) {
                     inventory.setInventorySlotContents(l + k * 5, (ItemStack) this.itemList.get(i1));
                 } else {
-                    inventory.setInventorySlotContents(l + k * 5, (ItemStack) null);
+                    inventory.setInventorySlotContents(l + k * 5, ItemStack.EMPTY);
                 }
             }
         }
@@ -61,19 +62,21 @@ public class ContainerPreview extends Container {
         return this.itemList.size() > 35;
     }
 
+    @Override
     protected void retrySlotClick(int p_75133_1_, int p_75133_2_, boolean p_75133_3_, EntityPlayer p_75133_4_) {
     }
 
-    @Nullable
     @Override
     public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
         return null;
     }
 
+    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slotId) {
         return null;
     }
 
+    @Override
     public boolean canDragIntoSlot(Slot slot) {
         return false;
     }

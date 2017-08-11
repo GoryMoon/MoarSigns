@@ -1,11 +1,8 @@
 package gory_moon.moarsigns.blocks;
 
-import cofh.api.item.IToolHammer;
-import crazypants.enderio.api.tool.ITool;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.client.particle.EntityDiggingFXMoarSigns;
-import gory_moon.moarsigns.items.ItemSignToolbox;
 import gory_moon.moarsigns.items.ModItems;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Colors;
@@ -66,7 +63,7 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
 
     @Nullable
     @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         return NULL_AABB;
     }
 
@@ -122,18 +119,8 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (heldItem != null && heldItem.getItem() instanceof IToolHammer && !(heldItem.getItem() instanceof ItemSignToolbox) && ((IToolHammer) heldItem.getItem()).isUsable(heldItem, player, pos)) {
-            ItemSignToolbox.doRotate(world, pos, player);
-            ((IToolHammer) heldItem.getItem()).toolUsed(heldItem, player, pos);
-            return true;
-        }
-
-        if (heldItem != null && heldItem.getItem() instanceof ITool && ((ITool) heldItem.getItem()).canUse(heldItem, player, pos)) {
-            ItemSignToolbox.doRotate(world, pos, player);
-            ((ITool) heldItem.getItem()).used(heldItem, player, pos);
-            return true;
-        }
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        ItemStack heldItem = player.getHeldItem(hand);
 
         SignInfo signInfo = getSignInfo(world, pos);
         boolean returnVal = true;

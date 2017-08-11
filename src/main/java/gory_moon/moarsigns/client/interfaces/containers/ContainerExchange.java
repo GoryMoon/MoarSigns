@@ -4,11 +4,9 @@ import gory_moon.moarsigns.client.interfaces.containers.slots.SlotInput;
 import gory_moon.moarsigns.client.interfaces.containers.slots.SlotSelection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 
 public class ContainerExchange extends Container {
 
@@ -16,12 +14,12 @@ public class ContainerExchange extends Container {
     private InventoryPlayer playerInventory;
     private ItemStack itemToolBox;
     public boolean close;
-    private int toolBoxSlot;
+    public int toolBoxSlot;
 
-    public ContainerExchange(InventoryPlayer inventoryPlayer, InventoryExchange exchangeInv) {
+    public ContainerExchange(InventoryPlayer inventoryPlayer, InventoryExchange exchangeInv, EnumHand hand) {
         inventory = exchangeInv;
         playerInventory = inventoryPlayer;
-        toolBoxSlot = playerInventory.currentItem;
+        toolBoxSlot = hand == EnumHand.MAIN_HAND ? playerInventory.currentItem: playerInventory.getSizeInventory() - 1;
         exchangeInv.container = this;
 
         addSlotToContainer(new SlotInput(this, exchangeInv, 0, 22, 26));
@@ -48,38 +46,43 @@ public class ContainerExchange extends Container {
     }
 
     public void onSlotChanged() {
-        ItemStack stack = playerInventory.mainInventory[toolBoxSlot];
-        if (stack == null || !stack.isItemEqual(itemToolBox)) {
+        ItemStack stack = playerInventory.mainInventory.get(toolBoxSlot);
+        if (stack.isEmpty() || !stack.isItemEqual(itemToolBox)) {
             close = true;
         }
     }
 
     @Override
     public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
-        int clickedSlot = slotId - inventory.getSizeInventory();
+        if (clickTypeIn != ClickType.QUICK_CRAFT && slotId >= 0) {
+            int clickedSlot = slotId - inventory.getSizeInventory();
 
-        if (clickedSlot == toolBoxSlot || (dragType == 2 && slotId == toolBoxSlot)) {
-            return null;
+            if (clickedSlot == toolBoxSlot || (clickTypeIn == ClickType.SWAP && dragType == toolBoxSlot)) {
+                return ItemStack.EMPTY;
+            }
+
         }
-
         return super.slotClick(slotId, dragType, clickTypeIn, player);
     }
 
     @Override
     public void onContainerClosed(EntityPlayer player) {
         inventory.clearInventory();
-        InventoryHelper.dropInventoryItems(player.worldObj, player, inventory);
+        if (!player.inventory.addItemStackToInventory(inventory.getStackInSlot(0))) {
+            InventoryHelper.dropInventoryItems(player.world, player, inventory);
+        }
+
         super.onContainerClosed(player);
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return inventory.isUseableByPlayer(player);
+        return inventory.isUsableByPlayer(player);
     }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer entity, int slotIdx) {
-        ItemStack itemStack = null;
+        ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(slotIdx);
 
         if (slot != null && slot.getHasStack()) {
@@ -88,38 +91,42 @@ public class ContainerExchange extends Container {
 
             if (slotIdx > 27) {
                 if (this.inventorySlots.get(0).isItemValid(itemStack1) && !this.mergeItemStack(itemStack1, 0, 1, false))
-                    return null;
+                    return ItemStack.EMPTY;
             } else {
-                if (slotIdx < 28) {
+                if (slotIdx < 28 && !itemStack1.isEmpty()) {
+                    ItemStack tempStack = entity.inventory.getItemStack();
                     entity.inventory.setItemStack(itemStack1.copy());
-                    slot.onPickupFromSlot(entity, itemStack1);
+                    slot.onTake(entity, itemStack1);
                     itemStack1 = entity.inventory.getItemStack();
-                    entity.inventory.setItemStack(null);
+                    entity.inventory.setItemStack(tempStack);
                 }
 
                 if (!this.mergeItemStack(itemStack1, 28, 28 + 36, false)) {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             }
             slot.onSlotChange(itemStack1, itemStack);
 
-            if (itemStack1.stackSize == 0) {
-                slot.putStack(null);
+            if (itemStack1.getCount() == 0) {
+                slot.putStack(ItemStack.EMPTY);
             } else {
                 slot.onSlotChanged();
             }
 
-            if (itemStack1.stackSize == itemStack.stackSize) {
-                return null;
+            if (itemStack1.getCount() == itemStack.getCount()) {
+                return ItemStack.EMPTY;
             }
 
             if (slotIdx > 28 || slotIdx == 0) {
-                slot.onPickupFromSlot(entity, itemStack1);
+                slot.onTake(entity, itemStack1);
             }
 
-            if (itemStack1.stackSize == 0) {
-                slot.putStack(null);
-                return null;
+            if (itemStack1.getCount() == 0) {
+                slot.putStack(ItemStack.EMPTY);
+                return ItemStack.EMPTY;
+            } else {
+                slot.putStack(itemStack1);
+                return itemStack1;
             }
         }
         return itemStack;

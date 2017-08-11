@@ -30,7 +30,7 @@ public class ExchangeRecipeMaker {
             }
 
             ArrayList<SignInfo> signs = SignRegistry.getSignInfoFromMaterials(materials);
-            if (signs == null || signs.size() <= 1) {
+            if (signs.size() <= 1) {
                 continue;
             }
 

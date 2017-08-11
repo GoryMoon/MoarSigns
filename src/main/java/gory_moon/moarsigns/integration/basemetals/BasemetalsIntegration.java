@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO Convert to object holders?
 public class BasemetalsIntegration implements ISignRegistration {
 
     private static final String BASEMETALS_TAG = "basemetals";
@@ -73,7 +74,7 @@ public class BasemetalsIntegration implements ISignRegistration {
 
         for (Map.Entry<String, BaseItemHelper> entry : items.entrySet()) {
             String metal = entry.getKey().substring(entry.getKey().indexOf(".") + 1);
-            SignRegistry.register(metal + "_sign", null, metal, "basemetals/", true, entry.getValue().item, entry.getValue().itemBlock, Reference.MODID, BASEMETALS_TAG).setMetal();
+            SignRegistry.register(metal + "_sign", null, metal, "basemetals/", true, ItemStack.EMPTY, entry.getValue().item, entry.getValue().itemBlock, Reference.MODID, BASEMETALS_TAG).setMetal();
         }
     }
 

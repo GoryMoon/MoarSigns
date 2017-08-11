@@ -99,10 +99,10 @@ public class ModModelManager {
      */
     /*private void registerBlockItemModel(IBlockState state) {
         final Block block = state.getBlock();
-        final Item item = Item.getItemFromBlock(block);
+        final Item ingot = Item.getItemFromBlock(block);
 
-        if (item != null) {
-            registerItemModel(item, new ModelResourceLocation(block.getRegistryName(), propertyStringMapper.getPropertyString(state.getProperties())));
+        if (ingot != null) {
+            registerItemModel(ingot, new ModelResourceLocation(block.getRegistryName(), propertyStringMapper.getPropertyString(state.getProperties())));
         }
     }*/
 
@@ -112,7 +112,7 @@ public class ModModelManager {
      * Uses the registry name as the domain/path and the {@link IBlockState} as the variant.
      *
      * @param state    The state to use as the variant
-     * @param metadata The item metadata to register the model for
+     * @param metadata The ingot metadata to register the model for
      */
     private void registerBlockItemModelForMeta(IBlockState state, int metadata) {
         final Item item = Item.getItemFromBlock(state.getBlock());

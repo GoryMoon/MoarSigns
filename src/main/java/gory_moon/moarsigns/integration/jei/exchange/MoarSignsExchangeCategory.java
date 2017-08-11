@@ -1,7 +1,7 @@
 package gory_moon.moarsigns.integration.jei.exchange;
 
-import gory_moon.moarsigns.MoarSigns;
 import gory_moon.moarsigns.integration.jei.MoarSignsPlugin;
+import gory_moon.moarsigns.lib.Reference;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.ICraftingGridHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class MoarSignsExchangeCategory extends BlankRecipeCategory<ExchangeRecipe> {
 
@@ -25,14 +26,11 @@ public class MoarSignsExchangeCategory extends BlankRecipeCategory<ExchangeRecip
     private final IDrawable background;
     @Nonnull
     private final String localizedName;
-    @Nonnull
-    private final ICraftingGridHelper craftingGridHelper;
 
     public MoarSignsExchangeCategory(IGuiHelper guiHelper) {
         ResourceLocation location = new ResourceLocation("moarsigns", "textures/gui/sign_exchange_nei.png");
         background = guiHelper.createDrawable(location, 0, 0, 164, 118);
         localizedName = I18n.translateToLocal("crafting.moarsigns.sign.exchange");
-        craftingGridHelper = new ExchangeGridHelper(0, 1);
     }
 
     @Nonnull
@@ -47,6 +45,11 @@ public class MoarSignsExchangeCategory extends BlankRecipeCategory<ExchangeRecip
         return localizedName;
     }
 
+    @Override
+    public String getModName() {
+        return Reference.NAME;
+    }
+
     @Nonnull
     @Override
     public IDrawable getBackground() {
@@ -55,34 +58,7 @@ public class MoarSignsExchangeCategory extends BlankRecipeCategory<ExchangeRecip
 
     @Override
     public void drawExtras(Minecraft minecraft) {
-
-    }
-
-    @Override
-    public void drawAnimations(Minecraft minecraft) {
-
-    }
-
-    @Override
-    public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull ExchangeRecipe recipeWrapper) {
-        IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-
-        guiItemStacks.init(craftOutputSlot, true, 74, 12);
-
-        for (int y = 0; y < 4; ++y) {
-            for (int x = 0; x < 9; ++x) {
-                int index = craftInputSlot1 + x + (y * 9);
-                guiItemStacks.init(index, false, 2 + x * 18, 42 + y * 18);
-            }
-        }
-
-        if (recipeWrapper != null) {
-            ExchangeRecipe wrapper = (ExchangeRecipe) recipeWrapper;
-            craftingGridHelper.setInputStacks(guiItemStacks, wrapper.getInputs());
-            craftingGridHelper.setOutput(guiItemStacks, wrapper.getOutputs());
-        } else {
-            MoarSigns.logger.error("RecipeWrapper is not a known crafting wrapper type: {}", recipeWrapper);
-        }
+        // Unused
     }
 
     @Override
@@ -98,11 +74,14 @@ public class MoarSignsExchangeCategory extends BlankRecipeCategory<ExchangeRecip
             }
         }
 
-        if (recipeWrapper != null) {
-            craftingGridHelper.setInputStacks(guiItemStacks, ingredients.getInputs(ItemStack.class));
-            craftingGridHelper.setOutput(guiItemStacks, ingredients.getOutputs(ItemStack.class));
-        } else {
-            MoarSigns.logger.error("RecipeWrapper is not a known crafting wrapper type: {}", recipeWrapper);
+        guiItemStacks.set(0, ingredients.getInputs(ItemStack.class).get(0));
+
+        for (int i = 0; i < ingredients.getOutputs(ItemStack.class).size(); i++) {
+            Object recipeItem = ingredients.getOutputs(ItemStack.class).get(i);
+
+
+            List<ItemStack> itemStacks = MoarSignsPlugin.jeiHelpers.getStackHelper().toItemStackList(recipeItem);
+            guiItemStacks.set(1 + i, itemStacks);
         }
     }
 }

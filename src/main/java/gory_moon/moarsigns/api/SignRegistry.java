@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import gory_moon.moarsigns.integration.IntegrationHandler;
 import gory_moon.moarsigns.util.IntegrationException;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import java.util.*;
@@ -34,28 +35,28 @@ public class SignRegistry {
      * The Sign is activate by default
      * <br><br>
      * <p/>
-     * The sign item texture needs to go into the "@MODID@/textures/item/" then depending on if it's metal or not
+     * The sign ingot texture needs to go into the "@MODID@/textures/ingot/" then depending on if it's metal or not
      * it needs too go into either "/metal" or "/wood"
      * <br><br>
      * <p/>
      * The sign texture needs  to go into the "@MODID@/textures/signs/" then depending on if it's metal or not
      * it needs too go into either "/metal" or "/wood"
      *
-     * @param itemName          The name of the texture for the sign and the item texture
+     * @param itemName          The name of the texture for the sign and the ingot texture
      * @param property          The special property that the sign have
      * @param materialName      The name of the material
      * @param path              Path to the folder that contains the sign texture in the "/metal" or "/wood" folder
      * @param gotNugget         True if the metal have a nugget, nugget should be obtainable trough 1 metal = nugget in a normal crafting table
+     * @param nugget            The material of the nugget used in the crafting, can be null if not metal
      * @param materialItemStack An itemstack of the material
-     * @param modId             The modId that registers the sign, used when getting the textures.
-     * @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
+     * @param modId             The modId that registers the sign, used when getting the textures.   @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
      * @throws IntegrationException if anything goes wrong the exception is thrown
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId) throws IntegrationException {
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack nugget, ItemStack materialItemStack, ItemStack materialBlock, String modId) throws IntegrationException {
         if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
             throw new IntegrationException("Material " + materialName + " is null for sign " + itemName);
 
-        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack, materialBlock);
+        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, nugget, materialItemStack, materialBlock);
         return register(itemName, property, info, modId, ALWAYS_ACTIVE_TAG);
     }
 
@@ -69,30 +70,30 @@ public class SignRegistry {
      * Should always be registered but not activated if for example the material isn't available
      * <br><br>
      * <p/>
-     * The sign item texture needs to go into the "@MODID@/textures/item/" then depending on if it's metal or not
+     * The sign ingot texture needs to go into the "@MODID@/textures/ingot/" then depending on if it's metal or not
      * it needs too go into either "/metal" or "/wood"
      * <br><br>
      * <p/>
      * The sign texture needs  to go into the "@MODID@/textures/signs/" then depending on if it's metal or not
      * it needs too go into either "/metal" or "/wood"
      *
-     * @param itemName          The name of the texture for the sign and the item texture
+     * @param itemName          The name of the texture for the sign and the ingot texture
      * @param property          The special property that the sign have
      * @param materialName      The name of the material
      * @param path              Path to the folder that contains the sign texture in the "/metal" or "/wood" folder
      * @param gotNugget         True if the metal have a nugget, nugget should be obtainable trough 1 metal = nugget in a normal crafting table
+     * @param nugget            The material of the nugget used in the crafting, can be null if not metal
      * @param materialItemStack An itemstack of the material
      * @param materialBlock     An itemstack of the block for the material
      * @param modId             The modId that registers the sign, used when getting the textures.
-     * @param activateTag       The tag to active the sign
-     * @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
+     * @param activateTag       The tag to active the sign     @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
      * @throws IntegrationException if anything goes wrong the exception is thrown
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock, String modId, String activateTag) throws IntegrationException {
-        if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack nugget, ItemStack materialItemStack, ItemStack materialBlock, String modId, String activateTag) throws IntegrationException {
+        if ((materialItemStack == null || materialItemStack.isEmpty() || materialItemStack.getItem() == Items.AIR) && IntegrationHandler.donePreSetup())
             throw new IntegrationException("Material " + materialName + " is null for sign " + itemName);
 
-        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack, materialBlock);
+        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, nugget, materialItemStack, materialBlock);
         return register(itemName, property, info, modId, activateTag);
     }
 
@@ -101,28 +102,28 @@ public class SignRegistry {
      * The Sign is activate by default
      * <br><br>
      * <p/>
-     * The sign item texture needs to go into the "@MODID@/textures/item/" then depending on if it's metal or not
+     * The sign ingot texture needs to go into the "@MODID@/textures/ingot/" then depending on if it's metal or not
      * it needs too go into either "/metal" or "/wood"
      * <br><br>
      * <p/>
      * The sign texture needs  to go into the "@MODID@/textures/signs/" then depending on if it's metal or not
      * it needs too go into either "/metal" or "/wood"
      *
-     * @param itemName          The name of the texture for the sign and the item texture
+     * @param itemName          The name of the texture for the sign and the ingot texture
      * @param property          The special property that the sign have
      * @param materialName      The name of the material
      * @param path              Path to the folder that contains the sign texture in the "/metal" or "/wood" folder
      * @param gotNugget         True if the metal have a nugget, nugget should be obtainable trough 1 metal = nugget in a normal crafting table
+     * @param nugget            The material of the nugget used in the crafting, can be null if not metal
      * @param materialItemStack An itemstack of the material
-     * @param modId             The modId that registers the sign, used when getting the textures.
-     * @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
+     * @param modId             The modId that registers the sign, used when getting the textures.   @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
      * @throws IntegrationException if anything goes wrong the exception is thrown
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId) throws IntegrationException {
-        if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack nugget, ItemStack materialItemStack, String modId) throws IntegrationException {
+        if ((materialItemStack == null || materialItemStack.isEmpty() || materialItemStack.getItem() == Items.AIR) && IntegrationHandler.donePreSetup())
             throw new IntegrationException("Material " + materialName + " is null for sign " + itemName);
 
-        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack);
+        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, nugget, materialItemStack);
         return register(itemName, property, info, modId, ALWAYS_ACTIVE_TAG);
     }
 
@@ -134,29 +135,29 @@ public class SignRegistry {
      * Should always be registered but not activated if for example the material isn't available
      * <br><br>
      * <p/>
-     * The sign item texture needs to go into the "@MODID@/textures/item/" then depending on if it's metal or not
+     * The sign ingot texture needs to go into the "@MODID@/textures/ingot/" then depending on if it's metal or not
      * it needs too go into either "/metal" or "/wood"
      * <br><br>
      * <p/>
      * The sign texture needs  to go into the "@MODID@/textures/signs/" then depending on if it's metal or not
      * it needs too go into either "/metal" or "/wood"
      *
-     * @param itemName          The name of the texture for the sign and the item texture
+     * @param itemName          The name of the texture for the sign and the ingot texture
      * @param property          The special property that the sign have
      * @param materialName      The name of the material
      * @param path              Path to the folder that contains the sign texture in the "/metal" or "/wood" folder
      * @param gotNugget         True if the metal have a nugget, nugget should be obtainable trough 1 metal = nugget in a normal crafting table
+     * @param nugget            The material of the nugget used in the crafting, can be null if not metal
      * @param materialItemStack An itemstack of the material
      * @param modId             The modId that registers the sign, used when getting the textures.
-     * @param activateTag       The tag to active the sign
-     * @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
+     * @param activateTag       The tag to active the sign    @return returns the {@link gory_moon.moarsigns.api.SignInfo} that is registered
      * @throws IntegrationException if anything goes wrong the exception is thrown
      */
-    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, String modId, String activateTag) throws IntegrationException {
-        if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
+    public static SignInfo register(String itemName, SignSpecialProperty property, String materialName, String path, boolean gotNugget, ItemStack nugget, ItemStack materialItemStack, String modId, String activateTag) throws IntegrationException {
+        if ((materialItemStack == null || materialItemStack.isEmpty() || materialItemStack.getItem() == Items.AIR) && IntegrationHandler.donePreSetup())
             throw new IntegrationException("Material " + materialName + " is null for sign " + itemName);
 
-        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack);
+        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, nugget, materialItemStack);
         return register(itemName, property, info, modId, activateTag);
     }
 
@@ -187,11 +188,11 @@ public class SignRegistry {
      * @return The {@link gory_moon.moarsigns.api.MaterialInfo} that was registered
      * @throws IntegrationException if anything goes wrong the exception is thrown
      */
-    public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack materialItemStack) throws IntegrationException {
-        if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
+    public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack nugget, ItemStack materialItemStack) throws IntegrationException {
+        if ((materialItemStack == null || materialItemStack.isEmpty() || materialItemStack.getItem() == Items.AIR) && IntegrationHandler.donePreSetup())
             throw new IntegrationException("Material " + materialName + " is null for sign " + sInfo.itemName);
 
-        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack);
+        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, nugget, materialItemStack);
         return registerAlternativeMaterial(sInfo, info);
     }
 
@@ -207,11 +208,11 @@ public class SignRegistry {
      * @return The {@link gory_moon.moarsigns.api.MaterialInfo} that was registered
      * @throws IntegrationException if anything goes wrong the exception is thrown
      */
-    public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack materialItemStack, ItemStack materialBlock) throws IntegrationException {
-        if ((materialItemStack == null || materialItemStack.getItem() == null) && IntegrationHandler.donePreSetup())
+    public static MaterialInfo registerAlternativeMaterial(SignInfo sInfo, String materialName, String path, boolean gotNugget, ItemStack nugget, ItemStack materialItemStack, ItemStack materialBlock) throws IntegrationException {
+        if ((materialItemStack == null || materialItemStack.isEmpty() || materialItemStack.getItem() == Items.AIR) && IntegrationHandler.donePreSetup())
             throw new IntegrationException("Material " + materialName + " is null for sign " + sInfo.itemName);
 
-        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, materialItemStack, materialBlock);
+        MaterialInfo info = MaterialRegistry.register(materialName, path, gotNugget, nugget, materialItemStack, materialBlock);
         return registerAlternativeMaterial(sInfo, info);
     }
 

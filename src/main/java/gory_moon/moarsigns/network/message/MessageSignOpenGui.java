@@ -69,11 +69,11 @@ public class MessageSignOpenGui implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         protected void handle(MessageSignOpenGui message, MessageContext ctx) {
-            TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.pos);
+            TileEntity tileEntity = FMLClientHandler.instance().getClient().world.getTileEntity(message.pos);
 
             if (!(tileEntity instanceof TileEntityMoarSign)) {
                 tileEntity = new TileEntityMoarSign();
-                tileEntity.setWorldObj(FMLClientHandler.instance().getClient().theWorld);
+                tileEntity.setWorld(FMLClientHandler.instance().getClient().world);
                 tileEntity.setPos(message.pos);
             }
 

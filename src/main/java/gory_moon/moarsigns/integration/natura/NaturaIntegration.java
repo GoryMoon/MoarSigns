@@ -8,6 +8,7 @@ import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
@@ -17,22 +18,15 @@ public class NaturaIntegration implements ISignRegistration {
 
     private static final String NATURA_TAG = "natura";
     private static final String PATH = "natura/";
-    private Item naturaOver = null;
-    private Item naturaNeth = null;
+
+    @ObjectHolder("natura:overworld_planks")
+    public static Item naturaOver = null;
+
+    @ObjectHolder("natura:nether_planks")
+    public static Item naturaNeth = null;
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
-        for (ItemStack plank : planks) {
-            if (plank.getUnlocalizedName().startsWith("tile.natura.overworld_planks") && naturaOver == null) {
-                naturaOver = plank.getItem();
-            } else if (plank.getUnlocalizedName().startsWith("tile.natura.nether_planks") && naturaNeth == null) {
-                naturaNeth = plank.getItem();
-            }
-
-            if (naturaOver != null && naturaNeth != null)
-                break;
-        }
-
         registerWood("maple_sign",      null, "maple",      new ItemStack(naturaOver, 1, 0));
         registerWood("silverbell_sign", null, "silverbell", new ItemStack(naturaOver, 1, 1));
         registerWood("amaranth_sign",   null, "amaranth",   new ItemStack(naturaOver, 1, 2));
@@ -51,7 +45,7 @@ public class NaturaIntegration implements ISignRegistration {
     }
 
     private void registerWood(String name, SignSpecialProperty property, String materialName, ItemStack material) throws IntegrationException {
-        SignRegistry.register(name, property, materialName, PATH, false, material, Reference.MODID, NATURA_TAG);
+        SignRegistry.register(name, property, materialName, PATH, false, ItemStack.EMPTY, material, Reference.MODID, NATURA_TAG);
     }
 
     @Override

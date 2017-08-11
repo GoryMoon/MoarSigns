@@ -8,6 +8,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -19,8 +20,8 @@ public class GuiExchange extends GuiContainer {
 
     public EntityPlayer player;
 
-    public GuiExchange(InventoryPlayer inventory, InventoryExchange exchangeInv) {
-        super(new ContainerExchange(inventory, exchangeInv));
+    public GuiExchange(InventoryPlayer inventory, InventoryExchange exchangeInv, EnumHand hand) {
+        super(new ContainerExchange(inventory, exchangeInv, hand));
 
         player = inventory.player;
         xSize = 226;
@@ -53,6 +54,7 @@ public class GuiExchange extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
+        drawDefaultBackground();
         GL11.glColor4f(1, 1, 1, 1);
 
         Minecraft.getMinecraft().getTextureManager().bindTexture(texture);

@@ -6,8 +6,10 @@ import gory_moon.moarsigns.api.SignSpecialProperty;
 import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,8 +20,12 @@ public class BigReactorsIntegration implements ISignRegistration {
     private static final String BIGREACTORS_ID = "bigreactors";
     private static final String BIGREACTORS_NAME = "Extreame Reactors";
     private static final String PATH = "bigreactors/";
-    private Item item = null;
-    private Item itemBlock = null;
+
+    @ObjectHolder("bigreactors:ingotmetals")
+    public static Item item = null;
+
+    @ObjectHolder("bigreactors:blockmetals")
+    public static Block itemBlock = null;
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
@@ -28,19 +34,6 @@ public class BigReactorsIntegration implements ISignRegistration {
 
     @Override
     public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
-        for (ItemStack stack : metals) {
-            if (stack.getUnlocalizedName().equals("item.bigreactors:ingotMetals.yellorium") && item == null) {
-                item = stack.getItem();
-            }
-
-            if (stack.getUnlocalizedName().equals("tile.bigreactors:blockMetals.yellorium") && itemBlock == null) {
-                itemBlock = stack.getItem();
-            }
-
-            if (item != null && itemBlock != null)
-                break;
-        }
-
         registerMetal("yellorium_sign", null, "yellorium",  new ItemStack(item, 1, 0), new ItemStack(itemBlock, 1, 0));
         registerMetal("cyanite_sign",   null, "cyanite",    new ItemStack(item, 1, 1), new ItemStack(itemBlock, 1, 1));
         registerMetal("graphite_sign",  null, "graphite",   new ItemStack(item, 1, 2), new ItemStack(itemBlock, 1, 2));
@@ -50,7 +43,7 @@ public class BigReactorsIntegration implements ISignRegistration {
     }
 
     private void registerMetal(String name, SignSpecialProperty property, String materialName, ItemStack material, ItemStack block) throws IntegrationException {
-        SignRegistry.register(name, property, materialName, PATH, false, material, block, Reference.MODID, BIGREACTORS_ID).setMetal();
+        SignRegistry.register(name, property, materialName, PATH, false, ItemStack.EMPTY, material, block, Reference.MODID, BIGREACTORS_ID).setMetal();
     }
 
 

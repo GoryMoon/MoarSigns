@@ -9,13 +9,15 @@ public class MaterialInfo {
     public String path;
     public boolean gotNugget;
 
+    public ItemStack materialNugget;
     public ItemStack material;
     public ItemStack materialBlock;
 
-    public MaterialInfo(String materialName, String path, boolean gotNugget, ItemStack material, ItemStack materialBlock) {
+    public MaterialInfo(String materialName, String path, boolean gotNugget, ItemStack nugget, ItemStack material, ItemStack materialBlock) {
         this.materialName = materialName;
         this.path = path;
         this.gotNugget = gotNugget;
+        this.materialNugget = nugget;
         this.material = material;
         this.materialBlock = materialBlock;
     }
@@ -27,7 +29,7 @@ public class MaterialInfo {
      * @param materialName Name of material
      */
     public MaterialInfo(String materialName) {
-        this(materialName, null, false, null, null);
+        this(materialName, null, false, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY);
     }
 
 }

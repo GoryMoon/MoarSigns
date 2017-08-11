@@ -151,7 +151,7 @@ public class GuiMoarSign extends GuiBase {
                 textButtons.add(btnSha);
             }
 
-            guiTextFields[i] = new GuiSignTextField(i, fontRendererObj, guiLeft + TEXT_EDIT_AREA + 17, row, 90, 16);
+            guiTextFields[i] = new GuiSignTextField(i, fontRenderer, guiLeft + TEXT_EDIT_AREA + 17, row, 90, 16);
             guiTextFields[i].setText(text[i] != null ? text[i] : "");
             k++;
         }
@@ -190,7 +190,7 @@ public class GuiMoarSign extends GuiBase {
 
         for (int i = 0; i < styleButtons.length; i++) {
             styleButtons[i] = new GuiTextStyleButton(guiLeft + 150 + 5, guiTop + 30 + 5 + 18 * i, 50, 16, i);
-            int width = fontRendererObj.getStringWidth(styleButtons[i].getDrawnString(this));
+            int width = fontRenderer.getStringWidth(styleButtons[i].getDrawnString(this));
             if (width > textStyleMaxWidth) {
                 textStyleMaxWidth = width + 12;
             }
@@ -216,7 +216,7 @@ public class GuiMoarSign extends GuiBase {
 
         for (int i = 0; i < entitySign.signText.length; i++) {
             int maxLength = Utils.getMaxLength(rowSizes[i]);
-            String s = fontRendererObj.trimStringToWidth(entitySign.signText[i].getUnformattedText(), Math.min(fontRendererObj.getStringWidth(entitySign.signText[i].getUnformattedText()), maxLength - toPixelWidth(getStyleOffset(i))));
+            String s = fontRenderer.trimStringToWidth(entitySign.signText[i].getUnformattedText(), Math.min(fontRenderer.getStringWidth(entitySign.signText[i].getUnformattedText()), maxLength - toPixelWidth(getStyleOffset(i))));
             entitySign.signText[i] = new TextComponentString(s);
         }
 
@@ -227,7 +227,7 @@ public class GuiMoarSign extends GuiBase {
     protected void actionPerformed(net.minecraft.client.gui.GuiButton btn) {
         if (btn.enabled && btn.id == 0) {
             this.entitySign.markDirty();
-            mc.thePlayer.closeScreen();
+            mc.player.closeScreen();
         }
     }
 
@@ -267,7 +267,7 @@ public class GuiMoarSign extends GuiBase {
 
         if (key == 1) {
             this.entitySign.markDirty();
-            mc.thePlayer.closeScreen();
+            mc.player.closeScreen();
         }
     }
 
@@ -351,7 +351,7 @@ public class GuiMoarSign extends GuiBase {
             for (GuiColorButton button : colorButtons) {
                 if (button.inRect(x, y)) {
                     Localization.GUI.COLORS s = Localization.GUI.COLORS.values()[button.getId(this, x, y)];
-                    drawHoveringText(Lists.asList(s.translate(), new String[0]), x, y, fontRendererObj);
+                    drawHoveringText(Lists.asList(s.translate(), new String[0]), x, y, fontRenderer);
                 }
             }
         }
@@ -384,7 +384,7 @@ public class GuiMoarSign extends GuiBase {
 
             for (GuiTextStyleButton button : styleButtons) {
                 if (button.inRect(x, y))
-                    drawHoveringText(Arrays.asList(button.getName().split("\n")), x, y, fontRendererObj);
+                    drawHoveringText(Arrays.asList(button.getName().split("\n")), x, y, fontRenderer);
             }
         }
 
@@ -539,7 +539,7 @@ public class GuiMoarSign extends GuiBase {
     }
 
     public int toPixelWidth(int i) {
-        return Utils.toPixelWidth(fontRendererObj, i);
+        return Utils.toPixelWidth(fontRenderer, i);
     }
 
 }

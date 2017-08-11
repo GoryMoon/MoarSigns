@@ -1,6 +1,5 @@
 package gory_moon.moarsigns.tileentites;
 
-import com.google.gson.JsonParseException;
 import gory_moon.moarsigns.api.SignInfo;
 import gory_moon.moarsigns.api.SignRegistry;
 import gory_moon.moarsigns.util.Utils;
@@ -69,11 +68,11 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
 
     @Override
     public void update() {
-        if (worldObj.isRemote) {
+        if (world.isRemote) {
             if (!textureReq) {
                 textureReq = true;
-                Block block = worldObj.getBlockState(pos).getBlock();
-                worldObj.addBlockEvent(pos, block, 0, 0);
+                Block block = world.getBlockState(pos).getBlock();
+                world.addBlockEvent(pos, block, 0, 0);
             }
             SignInfo sign = SignRegistry.get(texture_name);
             if (sign != null && sign.property != null)
@@ -132,6 +131,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             /**
              * Get the name of this object. For players this returns their username
              */
+            @Override
             public String getName() {
                 return "Sign";
             }
@@ -139,6 +139,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             /**
              * Get the formatted ChatComponent that will be used for the sender's username in chat
              */
+            @Override
             public ITextComponent getDisplayName() {
                 return new TextComponentString(this.getName());
             }
@@ -146,14 +147,16 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             /**
              * Send a chat message to the CommandSender
              */
-            public void addChatMessage(ITextComponent component) {
+            @Override
+            public void sendMessage(ITextComponent component) {
                 // Dummy method
             }
 
             /**
              * Returns {@code true} if the CommandSender is allowed to execute the command, {@code false} if not
              */
-            public boolean canCommandSenderUseCommand(int permLevel, String commandName) {
+            @Override
+            public boolean canUseCommand(int permLevel, String commandName) {
                 return permLevel <= 2; //Forge: Fixes  MC-75630 - Exploit with signs and command blocks
             }
 
@@ -161,6 +164,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
              * Get the position in the world. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return the coordinates 0, 0, 0
              */
+            @Override
             public BlockPos getPosition() {
                 return pos;
             }
@@ -169,6 +173,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
              * Get the position vector. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return 0.0D, 0.0D, 0.0D
              */
+            @Override
             public Vec3d getPositionVector() {
                 return new Vec3d((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D);
             }
@@ -177,13 +182,15 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
              * Get the world, if available. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return the overworld
              */
+            @Override
             public World getEntityWorld() {
-                return worldObj;
+                return world;
             }
 
             /**
              * Returns the entity associated with the command sender. MAY BE NULL!
              */
+            @Override
             public Entity getCommandSenderEntity() {
                 return null;
             }
@@ -191,16 +198,18 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             /**
              * Returns true if the command sender should be sent feedback about executed commands
              */
+            @Override
             public boolean sendCommandFeedback() {
                 return false;
             }
 
+            @Override
             public void setCommandStat(CommandResultStats.Type type, int amount) {
             }
 
             @Override
             public MinecraftServer getServer() {
-                return worldObj.getMinecraftServer();
+                return world.getMinecraftServer();
             }
         };
 
@@ -256,17 +265,12 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
 
         for (int i = 0; i < 4; ++i) {
             String s = compound.getString("Text" + (i + 1));
+            ITextComponent ichatcomponent = ITextComponent.Serializer.jsonToComponent(s);
 
             try {
-                ITextComponent ichatcomponent = ITextComponent.Serializer.jsonToComponent(s);
-
-                try {
-                    this.signText[i] = TextComponentUtils.processComponent(icommandsender, ichatcomponent, (Entity) null);
-                } catch (CommandException var7) {
-                    this.signText[i] = ichatcomponent;
-                }
-            } catch (JsonParseException var8) {
-                this.signText[i] = new TextComponentString(s);
+                this.signText[i] = TextComponentUtils.processComponent(icommandsender, ichatcomponent, (Entity) null);
+            } catch (CommandException var7) {
+                this.signText[i] = ichatcomponent;
             }
         }
 
@@ -322,7 +326,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
     }
 
     public void setResourceLocation(String texture) {
-        if (worldObj != null && !worldObj.isRemote) {
+        if (world != null && !world.isRemote) {
             texture_name = texture;
         } else if (resourceLocation == null) {
             texture_name = texture;
@@ -351,6 +355,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             /**
              * Get the name of this object. For players this returns their username
              */
+            @Override
             public String getName() {
                 return playerIn.getName();
             }
@@ -358,6 +363,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             /**
              * Get the formatted ChatComponent that will be used for the sender's username in chat
              */
+            @Override
             public ITextComponent getDisplayName() {
                 return playerIn.getDisplayName();
             }
@@ -365,13 +371,16 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             /**
              * Send a chat message to the CommandSender
              */
-            public void addChatMessage(ITextComponent component) {
+            @Override
+            public void sendMessage(ITextComponent component) {
+                // No message needed
             }
 
             /**
              * Returns {@code true} if the CommandSender is allowed to execute the command, {@code false} if not
              */
-            public boolean canCommandSenderUseCommand(int permLevel, String commandName) {
+            @Override
+            public boolean canUseCommand(int permLevel, String commandName) {
                 return permLevel <= 2;
             }
 
@@ -379,6 +388,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
              * Get the position in the world. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return the coordinates 0, 0, 0
              */
+            @Override
             public BlockPos getPosition() {
                 return pos;
             }
@@ -387,6 +397,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
              * Get the position vector. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return 0.0D, 0.0D, 0.0D
              */
+            @Override
             public Vec3d getPositionVector() {
                 return new Vec3d((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D);
             }
@@ -395,6 +406,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
              * Get the world, if available. <b>{@code null} is not allowed!</b> If you are not an entity in the world,
              * return the overworld
              */
+            @Override
             public World getEntityWorld() {
                 return playerIn.getEntityWorld();
             }
@@ -402,6 +414,7 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             /**
              * Returns the entity associated with the command sender. MAY BE NULL!
              */
+            @Override
             public Entity getCommandSenderEntity() {
                 return playerIn;
             }
@@ -409,19 +422,22 @@ public class TileEntityMoarSign extends TileEntitySign implements ITickable {
             /**
              * Returns true if the command sender should be sent feedback about executed commands
              */
+            @Override
             public boolean sendCommandFeedback() {
                 return false;
             }
 
+            @Override
             public void setCommandStat(CommandResultStats.Type type, int amount) {
-                if (worldObj != null && !worldObj.isRemote) {
-                    stats.setCommandStatForSender(worldObj.getMinecraftServer(), this, type, amount);
+                if (world != null && !world.isRemote) {
+                    stats.setCommandStatForSender(world.getMinecraftServer(), this, type, amount);
                 }
             }
 
             /**
              * Get the Minecraft server instance
              */
+            @Override
             public MinecraftServer getServer() {
                 return playerIn.getServer();
             }

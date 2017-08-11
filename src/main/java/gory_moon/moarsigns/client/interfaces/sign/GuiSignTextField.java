@@ -18,8 +18,8 @@ public class GuiSignTextField extends GuiTextField {
     @Override
     public void setText(String text) {
 
-        if (fontRendererInstance.getStringWidth(text) > this.maxRowLength + getSpecialsWidth(text)) {
-            this.text = fontRendererInstance.trimStringToWidth(text, this.maxRowLength + getSpecialsWidth(text));
+        if (fontRenderer.getStringWidth(text) > this.maxRowLength + getSpecialsWidth(text)) {
+            this.text = fontRenderer.trimStringToWidth(text, this.maxRowLength + getSpecialsWidth(text));
         } else {
             this.text = text;
         }
@@ -34,7 +34,7 @@ public class GuiSignTextField extends GuiTextField {
         String s2 = ChatAllowedCharacters.filterAllowedCharacters(text);
         int i = cursorPosition < this.selectionEnd ? cursorPosition : this.selectionEnd;
         int j = cursorPosition < this.selectionEnd ? this.selectionEnd : cursorPosition;
-        int k = this.maxRowLength - fontRendererInstance.getStringWidth(GuiMoarSign.getSignTextWithColor(new String[]{this.text})[0].getUnformattedText()) - (fontRendererInstance.getStringWidth(this.text.substring(0, i)) - fontRendererInstance.getStringWidth(this.text.substring(0, j)));
+        int k = this.maxRowLength - fontRenderer.getStringWidth(GuiMoarSign.getSignTextWithColor(new String[]{this.text})[0].getUnformattedText()) - (fontRenderer.getStringWidth(this.text.substring(0, i)) - fontRenderer.getStringWidth(this.text.substring(0, j)));
 
         if (this.text.length() > 0) {
             s1 = s1 + this.text.substring(0, i);
@@ -42,8 +42,8 @@ public class GuiSignTextField extends GuiTextField {
 
         int l;
 
-        if (k < fontRendererInstance.getStringWidth(s2) && !isSpecial(s2)) {
-            String temp = fontRendererInstance.trimStringToWidth(s2, k);
+        if (k < fontRenderer.getStringWidth(s2) && !isSpecial(s2)) {
+            String temp = fontRenderer.trimStringToWidth(s2, k);
             s1 = s1 + temp;
             l = temp.length();
         } else {
@@ -122,7 +122,7 @@ public class GuiSignTextField extends GuiTextField {
         int i = 0;
 
         while (m.find())
-            i += fontRendererInstance.getStringWidth(m.group(1));
+            i += fontRenderer.getStringWidth(m.group(1));
         return i;
     }
 

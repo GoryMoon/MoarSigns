@@ -6,8 +6,10 @@ import gory_moon.moarsigns.api.SignSpecialProperty;
 import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 import java.util.ArrayList;
 
@@ -16,28 +18,27 @@ public class ForestryIntegration implements ISignRegistration {
     private static final String FORESTRY_TAG = "forestry";
     private static final String FORESTRY_NAME = "Forestry for Minecraft";
     private static final String PATH = "for/";
-    private Item item = null;
-    private Item item2 = null;
-    private Item itemIngot1 = null;
-    private Item itemIngot2 = null;
-    private Item itemIngot3 = null;
-    private Item blockMetal = null;
+
+    @ObjectHolder("forestry:planks.0")
+    public static Item item = null;
+
+    @ObjectHolder("forestry:planks.1")
+    public static Item item2 = null;
+
+    @ObjectHolder("forestry:ingot_copper")
+    public static Item ingotCopper = null;
+
+    @ObjectHolder("forestry:ingot_tin")
+    public static Item ingotTin = null;
+
+    @ObjectHolder("forestry:ingot_bronze")
+    public static Item ingotBronze = null;
+
+    @ObjectHolder("forestry:resource_storage")
+    public static Block blockMetal = null;
 
     @Override
     public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
-        for (ItemStack plank : planks) {
-            if (item == null && plank.getItem().getUnlocalizedName().equals("tile.for.planks.0")) {
-                item = plank.copy().getItem();
-            }
-
-            if (item2 == null && plank.getItem().getUnlocalizedName().equals("tile.for.planks.1")) {
-                item2 = plank.copy().getItem();
-            }
-
-            if (item != null && item2 != null)
-                break;
-        }
-
         registerWood("larch_sign",          null, "larch",          new ItemStack(item, 1, 0));
         registerWood("teak_sign",           null, "teak",           new ItemStack(item, 1, 1));
         registerWood("acacia_sign",         null, "acacia",         new ItemStack(item, 1, 2));
@@ -70,35 +71,14 @@ public class ForestryIntegration implements ISignRegistration {
     }
 
     private void registerWood(String name, SignSpecialProperty property, String materialName, ItemStack material) throws IntegrationException {
-        SignRegistry.register(name, property, materialName, PATH, false, material, Reference.MODID, FORESTRY_TAG);
+        SignRegistry.register(name, property, materialName, PATH, false, ItemStack.EMPTY, material, Reference.MODID, FORESTRY_TAG);
     }
 
     @Override
     public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
-        for (ItemStack stack : metals) {
-            if (stack.getUnlocalizedName().equals("item.for.ingotTin") && itemIngot1 == null) {
-                itemIngot1 = stack.getItem();
-            }
-
-            if (stack.getUnlocalizedName().equals("item.for.ingotBronze") && itemIngot2 == null) {
-                itemIngot2 = stack.getItem();
-            }
-
-            if (stack.getUnlocalizedName().equals("item.for.ingotCopper") && itemIngot3 == null) {
-                itemIngot3 = stack.getItem();
-            }
-
-            if (stack.getUnlocalizedName().equals("tile.for.resourceStorage.1") && blockMetal == null) {
-                blockMetal = stack.getItem();
-            }
-
-            if (itemIngot1 != null && itemIngot2 != null && itemIngot3 != null && blockMetal != null)
-                break;
-        }
-
-        SignRegistry.register("tin_sign", null, "tin", PATH, false, new ItemStack(itemIngot1), new ItemStack(blockMetal, 1, 2), Reference.MODID, FORESTRY_TAG).setMetal();
-        SignRegistry.register("bronze_sign", null, "bronze", PATH, false, new ItemStack(itemIngot2), new ItemStack(blockMetal, 1, 3), Reference.MODID, FORESTRY_TAG).setMetal();
-        SignRegistry.register("copper_sign", null, "copper", PATH, false, new ItemStack(itemIngot3), new ItemStack(blockMetal, 1, 1), Reference.MODID, FORESTRY_TAG).setMetal();
+        SignRegistry.register("tin_sign",    null, "tin",    PATH, false, ItemStack.EMPTY, new ItemStack(ingotTin),    new ItemStack(blockMetal, 1, 2), Reference.MODID, FORESTRY_TAG).setMetal();
+        SignRegistry.register("bronze_sign", null, "bronze", PATH, false, ItemStack.EMPTY, new ItemStack(ingotBronze), new ItemStack(blockMetal, 1, 3), Reference.MODID, FORESTRY_TAG).setMetal();
+        SignRegistry.register("copper_sign", null, "copper", PATH, false, ItemStack.EMPTY, new ItemStack(ingotCopper), new ItemStack(blockMetal, 1, 1), Reference.MODID, FORESTRY_TAG).setMetal();
     }
 
     @Override

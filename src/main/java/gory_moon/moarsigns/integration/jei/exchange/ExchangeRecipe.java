@@ -23,13 +23,4 @@ public class ExchangeRecipe extends BlankRecipeWrapper {
         ingredients.setOutputs(ItemStack.class, outputs);
     }
 
-    @Override
-    public List getInputs() {
-        return Collections.singletonList(input);
-    }
-
-    @Override
-    public List<ItemStack> getOutputs() {
-        return outputs;
-    }
 }

@@ -13,9 +13,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
+//TODO update when 1.11 version is out, change to object holders
 public class EnderIOIntegration implements ISignRegistration {
 
-    private static final String ENDERIO_ID = "EnderIO";
+    private static final String ENDERIO_ID = "enderio";
     private static final String ENDERIO_NAME = "Ender IO";
     private Item item;
     private Item itemBlock;
@@ -51,7 +52,7 @@ public class EnderIOIntegration implements ISignRegistration {
     }
 
     private void registerMetal(String name, SignSpecialProperty property, String materialName, boolean nugget,int meta, int blockMeta) throws IntegrationException {
-        SignRegistry.register(name, property, materialName, "enderio/", nugget, new ItemStack(item, 1, meta), new ItemStack(itemBlock, 1, blockMeta), Reference.MODID, ENDERIO_ID).setMetal();
+        SignRegistry.register(name, property, materialName, "enderio/", nugget, ItemStack.EMPTY, new ItemStack(item, 1, meta), new ItemStack(itemBlock, 1, blockMeta), Reference.MODID, ENDERIO_ID).setMetal();
     }
 
     @Nonnull
