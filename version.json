@@ -55,11 +55,11 @@
 		},
 		{
 			"mcVersion": "Minecraft 1.11.2",
-			"modVersion": "5.0.0.9",
+			"modVersion": "5.0.1.10",
 			"changeLog": [
-				"Updated to minecraft 1.11.2"
+				"Fixed crash with Bookshelf mod"
 			],
-			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2463337/download",
+			"updateURL": "https://minecraft.curseforge.com/projects/moarsigns/files/2464029/download",
 			"isDirectLink": "true",
 			"newFileName": ""
 		}

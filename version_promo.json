@@ -23,6 +23,7 @@
     "4.0.0.2": "Updated to Minecraft 1.10.2\nFixed JEI integration"
   },
   "1.11.2": {
-    "5.0.0.9": "Updated to Minecraft 1.11.2"
+    "5.0.0.9": "Updated to Minecraft 1.11.2",
+    "5.0.0.10": "Fixed crash with Bookshelf mod"
   }
 }

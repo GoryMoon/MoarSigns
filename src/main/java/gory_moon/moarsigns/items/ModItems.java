@@ -188,7 +188,7 @@ public class ModItems {
     }
 
     private static void replaceRecipes() {
-        ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
+        List recipes = CraftingManager.getInstance().getRecipeList();
         ItemStack signStack = new ItemStack(Items.SIGN);
         for (int scan = 0; scan < recipes.size(); scan++) {
             IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
@@ -226,7 +226,7 @@ public class ModItems {
 
 
     private static void removeRecipesWithResult(ItemStack resultItem) {
-        ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
+        List recipes = CraftingManager.getInstance().getRecipeList();
 
         for (int scan = 0; scan < recipes.size(); scan++) {
             IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
