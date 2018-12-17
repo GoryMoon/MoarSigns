@@ -156,6 +156,7 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public boolean addHitEffects(IBlockState state, World world, RayTraceResult target, ParticleManager effectRenderer) {
         BlockPos pos = target.getBlockPos();
         EnumFacing side = target.sideHit;
