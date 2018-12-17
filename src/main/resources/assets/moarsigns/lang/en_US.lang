@@ -257,6 +257,7 @@ item.moarsigns.sign.natura.willow_sign.name=Willow Sign
 item.moarsigns.sign.ic2.copper_sign.name=Copper Sign
 item.moarsigns.sign.ic2.tin_sign.name=Tin Sign
 item.moarsigns.sign.ic2.bronze_sign.name=Bronze Sign
+item.moarsigns.sign.ic2.silver_sign.name=Silver Sign
 item.moarsigns.sign.ic2.lead_sign.name=Lead Sign
 item.moarsigns.sign.ic2.steel_sign.name=Steel Sign
 
@@ -290,7 +291,7 @@ item.moarsigns.sign.tf.aluminum_sign.name=Aluminum Sign
 item.moarsigns.sign.tf.nickel_sign.name=Nickel Sign
 item.moarsigns.sign.tf.platinum_sign.name=Platinum Sign
 item.moarsigns.sign.tf.iridium_sign.name=Iridium Sign
-item.moarsigns.sign.tf.mithril_sign.name=Mana Infused Sign
+item.moarsigns.sign.tf.mana_metal_sign.name=Mana Infused Sign
 item.moarsigns.sign.tf.steel_sign.name=Steel Sign
 item.moarsigns.sign.tf.electrum_sign.name=Electrum Sign
 item.moarsigns.sign.tf.invar_sign.name=Invar Sign
@@ -319,10 +320,14 @@ item.moarsigns.sign.basemetals.starsteel_sign.name=Star-Steel Sign
 item.moarsigns.sign.basemetals.aquarium_sign.name=Aquarium Sign
 item.moarsigns.sign.basemetals.cupronickel_sign.name=Cupronickel Sign
 item.moarsigns.sign.basemetals.platinum_sign.name=Platinum Sign
+item.moarsigns.sign.basemetals.antimony_sign.name=Antimony Sign
+item.moarsigns.sign.basemetals.bismuth_sign.name=Bismuth Sign
+item.moarsigns.sign.basemetals.pewter_sign.name=Pewter Sign
 
 #TechReborn
 item.moarsigns.sign.techreborn.aluminium_sign.name=Aluminium Sign
 item.moarsigns.sign.techreborn.brass_sign.name=Brass Sign
+item.moarsigns.sign.techreborn.bronze_sign.name=Bronze Sign
 item.moarsigns.sign.techreborn.chrome_sign.name=Chrome Sign
 item.moarsigns.sign.techreborn.copper_sign.name=Copper Sign
 item.moarsigns.sign.techreborn.electrum_sign.name=Electrum Sign
@@ -379,6 +384,8 @@ item.moarsigns.sign.enderio.conductiveiron_sign.name=Conductive Iron Sign
 item.moarsigns.sign.enderio.pulsatingiron_sign.name=Pulsating Iron Sign
 item.moarsigns.sign.enderio.darksteel_sign.name=Dark Steel Sign
 item.moarsigns.sign.enderio.soularium_sign.name=Soularium Sign
+item.moarsigns.sign.enderio.endsteel_sign.name=End Steel Sign
+item.moarsigns.sign.enderio.ironalloy_sign.name=Iron Alloy Sign
 
 #Factorization
 item.moarsigns.sign.factorization.silver_sign.name=Silver Sign

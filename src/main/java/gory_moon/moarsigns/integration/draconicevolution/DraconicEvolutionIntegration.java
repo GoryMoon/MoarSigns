@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 public class DraconicEvolutionIntegration implements ISignRegistration {
 
@@ -36,12 +35,7 @@ public class DraconicEvolutionIntegration implements ISignRegistration {
     public static Block itemBlock2;
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
-        // No wood to register
-    }
-
-    @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
+    public void registerSigns() throws IntegrationException {
         SignRegistry.register("draconium_sign", null, "draconium", PATH, true, new ItemStack(nugget, 1, 0), new ItemStack(ingot1, 1, 0), new ItemStack(itemBlock1, 1, 0), Reference.MODID, DR_ID).setMetal();
         SignRegistry.register("draconic_sign", null, "draconic", PATH, true, new ItemStack(nugget, 1, 1), new ItemStack(ingot2, 1, 0), new ItemStack(itemBlock2, 1, 0), Reference.MODID, DR_ID).setMetal();
     }

@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 
 public class NaturaIntegration implements ISignRegistration {
 
@@ -26,7 +25,7 @@ public class NaturaIntegration implements ISignRegistration {
     public static Item naturaNeth = null;
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
+    public void registerSigns() throws IntegrationException {
         registerWood("maple_sign",      null, "maple",      new ItemStack(naturaOver, 1, 0));
         registerWood("silverbell_sign", null, "silverbell", new ItemStack(naturaOver, 1, 1));
         registerWood("amaranth_sign",   null, "amaranth",   new ItemStack(naturaOver, 1, 2));
@@ -46,11 +45,6 @@ public class NaturaIntegration implements ISignRegistration {
 
     private void registerWood(String name, SignSpecialProperty property, String materialName, ItemStack material) throws IntegrationException {
         SignRegistry.register(name, property, materialName, PATH, false, ItemStack.EMPTY, material, Reference.MODID, NATURA_TAG);
-    }
-
-    @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
-        // No metal to register
     }
 
     @Override

@@ -49,7 +49,7 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
     public BlockMoarSign(Material material, SoundType stepSound, float hardness, float resistance, String registryname, String harvestLevel, int level) {
         super(material);
         setRegistryName(registryname);
-        setUnlocalizedName("moarsign.sign");
+        setTranslationKey("moarsign.sign");
         setSoundType(stepSound);
         setHardness(hardness);
         setResistance(resistance);
@@ -111,7 +111,7 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+    public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
         SignInfo signInfo = getSignInfo(world, pos);
         if (signInfo != null && signInfo.property != null) {
             signInfo.property.onEntityCollidedWithBlock(world, pos, state, entity);
@@ -240,7 +240,7 @@ public class BlockMoarSign extends BlockContainer implements IProbeInfoAccessor 
         return !this.hasInvalidNeighbor(world, pos) && super.canPlaceBlockAt(world, pos);
     }
 
-    public SignInfo getSignInfo(World world, BlockPos pos) {
+    public static SignInfo getSignInfo(World world, BlockPos pos) {
 
         TileEntity tileEntity = world.getTileEntity(pos);
         if (tileEntity instanceof TileEntityMoarSign) {

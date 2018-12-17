@@ -25,8 +25,8 @@ public class EntityDiggingFXMoarSigns extends ParticleDigging {
                 if (info != null && info.material != null && info.material.material.getItem() != null && (!info.isMetal || info.material.materialBlock != null)) {
                     Block Mblock = Block.getBlockFromItem(info.isMetal ? info.material.materialBlock.getItem() : info.material.material.getItem());
 
-                    if (Mblock != null && !Mblock.getUnlocalizedName().equals("tile.air") && !Mblock.getUnlocalizedName().equals("tile.ForgeFiller")) {
-                        IBlockState state1 = ((ItemBlock) (info.isMetal ? info.material.materialBlock.getItem() : info.material.material.getItem())).block.getStateFromMeta(info.isMetal ? info.material.materialBlock.getItemDamage() : info.material.material.getItemDamage());
+                    if (Mblock != null && !Mblock.getTranslationKey().equals("tile.air") && !Mblock.getTranslationKey().equals("tile.ForgeFiller")) {
+                        IBlockState state1 = ((ItemBlock) (info.isMetal ? info.material.materialBlock.getItem() : info.material.material.getItem())).getBlock().getStateFromMeta(info.isMetal ? info.material.materialBlock.getItemDamage() : info.material.material.getItemDamage());
                         setParticleTexture(Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(state1));
                     } else {
                         Item item = info.material.material.getItem();

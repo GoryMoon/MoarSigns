@@ -25,7 +25,7 @@ public class MoarSignRenderer extends TileEntitySpecialRenderer<TileEntityMoarSi
     }
 
     @Override
-    public void renderTileEntityAt(TileEntityMoarSign te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void render(TileEntityMoarSign te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         ResourceLocation texture = te.getResourceLocation();
 
         Block block = te.getBlockType();

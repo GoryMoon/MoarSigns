@@ -1,9 +1,9 @@
 package gory_moon.moarsigns.integration.tweaker;
 
-import gory_moon.moarsigns.api.ShapedMoarSignRecipe.MatchType;
-import minetweaker.IBracketHandler;
-import minetweaker.annotations.BracketHandler;
-import minetweaker.runtime.GlobalRegistry;
+import crafttweaker.annotations.BracketHandler;
+import crafttweaker.zenscript.GlobalRegistry;
+import crafttweaker.zenscript.IBracketHandler;
+import gory_moon.moarsigns.integration.tweaker.Signs.MatchType;
 import stanhebben.zenscript.compiler.IEnvironmentGlobal;
 import stanhebben.zenscript.expression.ExpressionCallStatic;
 import stanhebben.zenscript.expression.ExpressionString;
@@ -60,11 +60,11 @@ public class MatchTypeBracket implements IBracketHandler {
         @Override
         public IPartialExpression instance(ZenPosition position) {
             if (modID == null) {
-                IJavaMethod method = JavaMethod.get(GlobalRegistry.getTypeRegistry(), MatchTypeBracket.class, "getMatchType", String.class);
+                IJavaMethod method = JavaMethod.get(GlobalRegistry.getTypes(), MatchTypeBracket.class, "getMatchType", String.class);
 
                 return new ExpressionCallStatic(position, environment, method, new ExpressionString(position, match));
             } else {
-                IJavaMethod method = JavaMethod.get(GlobalRegistry.getTypeRegistry(), MatchTypeBracket.class, "getMatchType", String.class, String.class);
+                IJavaMethod method = JavaMethod.get(GlobalRegistry.getTypes(), MatchTypeBracket.class, "getMatchType", String.class, String.class);
 
                 return new ExpressionCallStatic(position, environment, method, new ExpressionString(position, match), new ExpressionString(position, modID));
             }

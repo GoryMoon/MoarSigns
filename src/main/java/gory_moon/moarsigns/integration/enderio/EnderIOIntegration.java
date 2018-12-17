@@ -6,53 +6,44 @@ import gory_moon.moarsigns.api.SignSpecialProperty;
 import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.util.IntegrationException;
 import gory_moon.moarsigns.util.Utils;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
-//TODO update when 1.11 version is out, change to object holders
 public class EnderIOIntegration implements ISignRegistration {
 
     private static final String ENDERIO_ID = "enderio";
     private static final String ENDERIO_NAME = "Ender IO";
-    private Item item;
-    private Item itemBlock;
+
+    @GameRegistry.ObjectHolder("enderio:item_alloy_ingot")
+    public static Item ingot = null;
+
+    @GameRegistry.ObjectHolder("enderio:item_alloy_nugget")
+    public static Item nugget = null;
+
+    @GameRegistry.ObjectHolder("enderio:block_alloy")
+    public static Block block = null;
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
-        // No wood to register
+    public void registerSigns() throws IntegrationException {
+        registerMetal("electricalsteel_sign",   null, "electricalsteel", 0);
+        registerMetal("energeticalloy_sign",    null, "energeticalloy",  1);
+        registerMetal("vibrantalloy_sign",      null, "vibrantalloy",    2);
+        registerMetal("redstonealloy_sign",     null, "redstonealloy",   3);
+        registerMetal("conductiveiron_sign",    null, "conductiveiron",  4);
+        registerMetal("pulsatingiron_sign",     null, "pulsatingiron",   5);
+        registerMetal("darksteel_sign",         null, "darksteel",       6);
+        registerMetal("soularium_sign",         null, "soularium",       7);
+        registerMetal("endsteel_sign",          null, "endsteel",        8);
+        registerMetal("ironalloy_sign",         null, "ironalloy",       9);
     }
 
-    @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
-        for (ItemStack stack: metals) {
-            if (stack.getUnlocalizedName().equals("enderio.electricalSteel") && item == null) {
-                item = stack.getItem();
-            }
-
-            if (stack.getUnlocalizedName().equals("tile.enderio.electricalSteel") && itemBlock == null) {
-                itemBlock = stack.getItem();
-            }
-
-            if (item != null && itemBlock != null)
-                break;
-        }
-
-        registerMetal("electricalsteel_sign",   null, "electricalsteel",    false, 0, 0);
-        registerMetal("energeticalloy_sign",    null, "energeticalloy",     false, 1, 1);
-        registerMetal("vibrantalloy_sign",      null, "vibrantalloy",       true,  2, 2);
-        registerMetal("redstonealloy_sign",     null, "redstonealloy",      false, 3, 3);
-        registerMetal("conductiveiron_sign",    null, "conductiveiron",     false, 4, 4);
-        registerMetal("pulsatingiron_sign",     null, "pulsatingiron",      true,  5, 5);
-        registerMetal("darksteel_sign",         null, "darksteel",          false, 6, 6);
-        registerMetal("soularium_sign",         null, "soularium",          false, 7, 7);
-    }
-
-    private void registerMetal(String name, SignSpecialProperty property, String materialName, boolean nugget,int meta, int blockMeta) throws IntegrationException {
-        SignRegistry.register(name, property, materialName, "enderio/", nugget, ItemStack.EMPTY, new ItemStack(item, 1, meta), new ItemStack(itemBlock, 1, blockMeta), Reference.MODID, ENDERIO_ID).setMetal();
+    private void registerMetal(String name, SignSpecialProperty property, String materialName,int meta) throws IntegrationException {
+        SignRegistry.register(name, property, materialName, "enderio/", true, new ItemStack(nugget, 1, meta), new ItemStack(ingot, 1, meta), new ItemStack(block, 1, meta), Reference.MODID, ENDERIO_ID).setMetal();
     }
 
     @Nonnull

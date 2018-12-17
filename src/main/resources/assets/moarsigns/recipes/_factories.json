@@ -1,0 +1,7 @@
+{
+    "ingredients": {
+        "match_all": "gory_moon.moarsigns.api.ingredients.MatchFactories$MatchAllFactory",
+        "match_metal": "gory_moon.moarsigns.api.ingredients.MatchFactories$MatchMetalFactory",
+        "match_wood": "gory_moon.moarsigns.api.ingredients.MatchFactories$MatchWoodFactory"
+    }
+}

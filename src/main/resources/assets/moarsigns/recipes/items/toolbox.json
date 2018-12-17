@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "rxr",
+        "xsx",
+        "rxr"
+    ],
+    "key": {
+        "r": {
+            "type": "forge:ore_dict",
+            "ore": "dyeRed"
+        },
+        "x": {
+            "type": "forge:ore_dict",
+            "ore": "ingotIron"
+        },
+        "s":{
+            "type": "moarsigns:match_all"
+        }
+    },
+    "result": {
+        "item": "moarsigns:sign_toolbox",
+        "count": 1,
+        "data": 0
+    }
+}

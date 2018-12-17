@@ -71,7 +71,7 @@ public class GuiMoarSign extends GuiBase {
     public static ITextComponent[] getSignTextWithColor(String[] array) {
         ITextComponent[] result = new ITextComponent[array.length];
 
-        Pattern p = Pattern.compile("([" + ((char) 8747) + "]([a-z0-9])(?=\\}))+");
+        Pattern p = Pattern.compile("([" + ((char) 8747) + "]([a-z0-9])(?=}))+");
         for (int i = 0; i < array.length; i++) {
             String s = array[i];
             if (!s.equals("")) {
@@ -90,7 +90,7 @@ public class GuiMoarSign extends GuiBase {
     public static String[] getSignTextWithCode(ITextComponent[] array) {
         String[] result = new String[array.length];
 
-        Pattern p = Pattern.compile("([" + ((char) 167) + "]([a-z0-9]))+");
+        Pattern p = Pattern.compile("([" + ((char) 167) + "]([a-z0-9]))");
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
                 String s = array[i].getUnformattedText();
@@ -203,7 +203,7 @@ public class GuiMoarSign extends GuiBase {
             b.setX(textStyleDialogPos + guiLeft + 5);
         }
 
-        buttonList.add(new net.minecraft.client.gui.GuiButton(0, guiLeft + 12, guiTop + 174, I18n.format("gui.done", new Object[0])));
+        buttonList.add(new net.minecraft.client.gui.GuiButton(0, guiLeft + 12, guiTop + 174, I18n.format("gui.done")));
 
         update();
         initied = true;
@@ -315,7 +315,7 @@ public class GuiMoarSign extends GuiBase {
         GlStateManager.rotate(180, 0.0F, 1.0F, 0.0F);
         GlStateManager.translate(0.0F, -0.8F, 0.0F);
 
-        TileEntityRendererDispatcher.instance.renderTileEntityAt(entitySign, -0.5D, -0.75D, -0.5D, 0.0F);
+        TileEntityRendererDispatcher.instance.render(entitySign, -0.5D, -0.75D, -0.5D, 0.0F);
         GlStateManager.popMatrix();
         entitySign.showInGui = false;
 

@@ -19,20 +19,20 @@ public class BlockMoarSignWall extends BlockMoarSign implements IPassable {
 
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
-    protected static final AxisAlignedBB SIGN_EAST_AABB = new AxisAlignedBB(0.0D, 0.28125D, 0.0D, 0.125D, 0.78125D, 1.0D);
-    protected static final AxisAlignedBB SIGN_WEST_AABB = new AxisAlignedBB(0.875D, 0.28125D, 0.0D, 1.0D, 0.78125D, 1.0D);
-    protected static final AxisAlignedBB SIGN_SOUTH_AABB = new AxisAlignedBB(0.0D, 0.28125D, 0.0D, 1.0D, 0.78125D, 0.125D);
-    protected static final AxisAlignedBB SIGN_NORTH_AABB = new AxisAlignedBB(0.0D, 0.28125D, 0.875D, 1.0D, 0.78125D, 1.0D);
+    private static final AxisAlignedBB SIGN_EAST_AABB = new AxisAlignedBB(0.0D, 0.28125D, 0.0D, 0.125D, 0.78125D, 1.0D);
+    private static final AxisAlignedBB SIGN_WEST_AABB = new AxisAlignedBB(0.875D, 0.28125D, 0.0D, 1.0D, 0.78125D, 1.0D);
+    private static final AxisAlignedBB SIGN_SOUTH_AABB = new AxisAlignedBB(0.0D, 0.28125D, 0.0D, 1.0D, 0.78125D, 0.125D);
+    private static final AxisAlignedBB SIGN_NORTH_AABB = new AxisAlignedBB(0.0D, 0.28125D, 0.875D, 1.0D, 0.78125D, 1.0D);
 
-    protected static final AxisAlignedBB SIGN_GROUND0_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.27125D, 1.0D, 0.125D, 0.77125D);
-    protected static final AxisAlignedBB SIGN_GROUND1_AABB = new AxisAlignedBB(0.23125D, 0.0D, 0.0D, 0.73125D, 0.125D, 1.0D);
-    protected static final AxisAlignedBB SIGN_GROUND2_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.23125D, 1.0D, 0.125D, 0.73125D);
-    protected static final AxisAlignedBB SIGN_GROUND3_AABB = new AxisAlignedBB(0.27125D, 0.0D, 0.0D, 0.77125D, 0.125D, 1.0D);
+    private static final AxisAlignedBB SIGN_GROUND0_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.27125D, 1.0D, 0.125D, 0.77125D);
+    private static final AxisAlignedBB SIGN_GROUND1_AABB = new AxisAlignedBB(0.23125D, 0.0D, 0.0D, 0.73125D, 0.125D, 1.0D);
+    private static final AxisAlignedBB SIGN_GROUND2_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.23125D, 1.0D, 0.125D, 0.73125D);
+    private static final AxisAlignedBB SIGN_GROUND3_AABB = new AxisAlignedBB(0.27125D, 0.0D, 0.0D, 0.77125D, 0.125D, 1.0D);
 
-    protected static final AxisAlignedBB SIGN_ROOF0_AABB = new AxisAlignedBB(0.0D, 0.875D, 0.23125D, 1.0D, 1.0D, 0.73125D);
-    protected static final AxisAlignedBB SIGN_ROOF1_AABB = new AxisAlignedBB(0.27125D, 0.875D, 0.0D, 0.77125D, 1.0D, 1.0D);
-    protected static final AxisAlignedBB SIGN_ROOF2_AABB = new AxisAlignedBB(0.0D, 0.875D, 0.27125D, 1.0D, 1.0D, 0.77125D);
-    protected static final AxisAlignedBB SIGN_ROOF3_AABB = new AxisAlignedBB(0.23125D, 0.875D, 0.0D, 0.23125D, 1.0D, 1.0D);
+    private static final AxisAlignedBB SIGN_ROOF0_AABB = new AxisAlignedBB(0.0D, 0.875D, 0.23125D, 1.0D, 1.0D, 0.73125D);
+    private static final AxisAlignedBB SIGN_ROOF1_AABB = new AxisAlignedBB(0.27125D, 0.875D, 0.0D, 0.77125D, 1.0D, 1.0D);
+    private static final AxisAlignedBB SIGN_ROOF2_AABB = new AxisAlignedBB(0.0D, 0.875D, 0.27125D, 1.0D, 1.0D, 0.77125D);
+    private static final AxisAlignedBB SIGN_ROOF3_AABB = new AxisAlignedBB(0.23125D, 0.875D, 0.0D, 0.73125D, 1.0D, 1.0D);
 
     public BlockMoarSignWall(Material material, SoundType stepSound, float hardness, float resistance, String registryname, String harvestLevel, int level) {
         super(material, stepSound, hardness, resistance, registryname, harvestLevel, level);
@@ -53,7 +53,7 @@ public class BlockMoarSignWall extends BlockMoarSign implements IPassable {
         int meta = getMetaFromState(state);
         boolean flatSign = ((meta & 8) >> 3) == 1;
         int facing = flatSign ? (meta & 1) : (meta & 7);
-        return state.withProperty(FACING, EnumFacing.getFront(facing));
+        return state.withProperty(FACING, EnumFacing.byIndex(facing));
     }
 
     @Override
@@ -65,7 +65,7 @@ public class BlockMoarSignWall extends BlockMoarSign implements IPassable {
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         int l = state.getBlock().getMetaFromState(state);
 
-        EnumFacing side = EnumFacing.getFront(l & 7);
+        EnumFacing side = EnumFacing.byIndex(l & 7);
         boolean flatSign = ((l & 8) >> 3) == 1;
         boolean groundSign;
 
@@ -115,7 +115,7 @@ public class BlockMoarSignWall extends BlockMoarSign implements IPassable {
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
         boolean flag;
         int rotation = world.getBlockState(pos).getValue(ROTATION);
-        EnumFacing facing = EnumFacing.getFront(rotation & 7);
+        EnumFacing facing = EnumFacing.byIndex(rotation & 7);
 
 
         boolean flatSign = ((rotation & 8) >> 3) == 1;

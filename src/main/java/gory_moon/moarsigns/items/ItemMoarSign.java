@@ -12,6 +12,7 @@ import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
 import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.Utils;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -29,6 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 import static gory_moon.moarsigns.items.ItemSignToolbox.SIGN_MOVING_TAG;
@@ -39,7 +41,7 @@ public class ItemMoarSign extends Item {
         maxStackSize = 16;
         setCreativeTab(MoarSignsCreativeTab.tabMS);
         setRegistryName(Constants.SIGN_ITEM_KEY);
-        setUnlocalizedName("moarsigns");
+        setTranslationKey("moarsigns");
         hasSubtypes = true;
     }
 
@@ -62,16 +64,19 @@ public class ItemMoarSign extends Item {
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getTranslationKey(ItemStack stack) {
         SignInfo info = SignRegistry.get(getTextureFromNBTFull(stack.getTagCompound()));
         if (info == null)
-            return super.getUnlocalizedName() + ".sign.error";
-        return super.getUnlocalizedName() + ".sign." + (info.material.path.equals("") ? "" : info.material.path.replace("/", "") + ".") + getTextureFromNBT(stack.getTagCompound());
+            return super.getTranslationKey() + ".sign.error";
+        return super.getTranslationKey() + ".sign." + (info.material.path.equals("") ? "" : info.material.path.replace("/", "") + ".") + getTextureFromNBT(stack.getTagCompound());
     }
 
+
     @Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
-        getSubItemStacks(subItems);
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+        if (isInCreativeTab(tab)) {
+            getSubItemStacks(items);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -169,16 +174,16 @@ public class ItemMoarSign extends Item {
 
 
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean extraInfo) {
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag extraInfo) {
         SignInfo info = getInfo(stack.getTagCompound());
         if (info != null) {
             String modName = info.activateTag.equals(SignRegistry.ALWAYS_ACTIVE_TAG) ? "Minecraft" : info.activateTag;
-            list.add(Localization.ITEM.SIGN.MATERIAL_ORIGIN.translate(Colors.WHITE + Utils.getModName(modName)));
-            if (extraInfo) {
-                list.add(Localization.ITEM.SIGN.MATERIAL.translate(Colors.WHITE + info.material.materialName));
+            tooltip.add(Localization.ITEM.SIGN.MATERIAL_ORIGIN.translate(Colors.WHITE + Utils.getModName(modName)));
+            if (extraInfo.isAdvanced()) {
+                tooltip.add(Localization.ITEM.SIGN.MATERIAL.translate(Colors.WHITE + info.material.materialName));
             }
         } else {
-            list.add(Colors.RED + Localization.ITEM.SIGN.ERROR.translate(Colors.RED.toString()));
+            tooltip.add(Colors.RED + Localization.ITEM.SIGN.ERROR.translate(Colors.RED.toString()));
         }
     }
 }

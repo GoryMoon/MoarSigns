@@ -1,10 +1,9 @@
 package gory_moon.moarsigns.integration.tweaker;
 
-
+import crafttweaker.api.item.*;
+import crafttweaker.api.liquid.ILiquidStack;
+import crafttweaker.api.player.IPlayer;
 import gory_moon.moarsigns.api.MaterialInfo;
-import minetweaker.api.item.*;
-import minetweaker.api.liquid.ILiquidStack;
-import minetweaker.api.player.IPlayer;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +38,11 @@ public class MaterialEntry implements IIngredient {
     }
 
     @Override
+    public IItemStack[] getItemArray() {
+        return new IItemStack[0];
+    }
+
+    @Override
     public List<ILiquidStack> getLiquids() {
         return Collections.emptyList();
     }
@@ -51,6 +55,11 @@ public class MaterialEntry implements IIngredient {
     @Override
     public IIngredient or(IIngredient iIngredient) {
         return new IngredientOr(this, iIngredient);
+    }
+
+    @Override
+    public IIngredient transformNew(IItemTransformerNew transformer) {
+        return null;
     }
 
     @Override
@@ -94,6 +103,16 @@ public class MaterialEntry implements IIngredient {
     }
 
     @Override
+    public IItemStack applyNewTransform(IItemStack item) {
+        return null;
+    }
+
+    @Override
+    public boolean hasNewTransformers() {
+        return false;
+    }
+
+    @Override
     public boolean hasTransformers() {
         return false;
     }
@@ -101,6 +120,11 @@ public class MaterialEntry implements IIngredient {
     @Override
     public Object getInternal() {
         return material;
+    }
+
+    @Override
+    public String toCommandString() {
+        return null;
     }
 
     public String getModID() {

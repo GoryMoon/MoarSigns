@@ -54,6 +54,13 @@ public class GuiDebug extends GuiContainer {
     }
 
     @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
         GL11.glColor4f(1, 1, 1, 1);
 
@@ -72,7 +79,7 @@ public class GuiDebug extends GuiContainer {
 
         if (blockInWorld) {
             if (block != null) {
-                Un = block.getUnlocalizedName();
+                Un = block.getTranslationKey();
                 x = 10;
                 y1 = 12;
                 y2 = 20;
@@ -83,7 +90,7 @@ public class GuiDebug extends GuiContainer {
                 y1 = 12;
                 y2 = 20;
                 ItemStack stack = inventory.getStackInSlot(0);
-                Un = stack.getUnlocalizedName();
+                Un = stack.getTranslationKey();
                 meta = stack.getItemDamage();
             }
         }

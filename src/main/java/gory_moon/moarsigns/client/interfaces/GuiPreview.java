@@ -62,6 +62,7 @@ public class GuiPreview extends GuiContainer {
 
     @Override
     public void drawScreen(int x, int y, float renderPartialTicks) {
+        this.drawDefaultBackground();
         if (!firstDraw) {
             this.currentScroll = 0.0F;
             ((ContainerPreview) inventorySlots).scrollTo(0.0F);
@@ -99,6 +100,7 @@ public class GuiPreview extends GuiContainer {
             String s = Localization.GUI.PREVIEW.DRAG.translate();
             drawHoveringText(Arrays.asList(s.split("\n")), x, y, fontRenderer);
         }
+        this.renderHoveredToolTip(x, y);
     }
 
     @Override
@@ -123,7 +125,7 @@ public class GuiPreview extends GuiContainer {
             GL11.glRotatef(roll, 1, 0, 0);
             GL11.glRotatef(yaw, 0, 1, 0);
 
-            TileEntityRendererDispatcher.instance.renderTileEntityAt(sign, -0.5D, -0.75D, -0.5D, 0.0F);
+            TileEntityRendererDispatcher.instance.render(sign, -0.5D, -0.75D, -0.5D, 0.0F);
             GL11.glPopMatrix();
 
             if (isSpinning) {

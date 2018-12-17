@@ -1,9 +1,10 @@
 package gory_moon.moarsigns.integration.tweaker;
 
-import gory_moon.moarsigns.api.ShapedMoarSignRecipe.MatchType;
-import minetweaker.api.item.*;
-import minetweaker.api.liquid.ILiquidStack;
-import minetweaker.api.player.IPlayer;
+import com.google.common.collect.Lists;
+import crafttweaker.api.item.*;
+import crafttweaker.api.liquid.ILiquidStack;
+import crafttweaker.api.player.IPlayer;
+import gory_moon.moarsigns.integration.tweaker.Signs.MatchType;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +35,12 @@ public class MatchTypeEntry implements IIngredient {
 
     @Override
     public List<IItemStack> getItems() {
-        return Collections.emptyList();
+        return Lists.newArrayList(getItemArray());
+    }
+
+    @Override
+    public IItemStack[] getItemArray() {
+        return Signs.getSigns(this);
     }
 
     @Override
@@ -50,6 +56,11 @@ public class MatchTypeEntry implements IIngredient {
     @Override
     public IIngredient or(IIngredient iIngredient) {
         return new IngredientOr(this, iIngredient);
+    }
+
+    @Override
+    public IIngredient transformNew(IItemTransformerNew transformer) {
+        return null;
     }
 
     @Override
@@ -93,6 +104,16 @@ public class MatchTypeEntry implements IIngredient {
     }
 
     @Override
+    public IItemStack applyNewTransform(IItemStack item) {
+        return null;
+    }
+
+    @Override
+    public boolean hasNewTransformers() {
+        return false;
+    }
+
+    @Override
     public boolean hasTransformers() {
         return false;
     }
@@ -100,6 +121,11 @@ public class MatchTypeEntry implements IIngredient {
     @Override
     public Object getInternal() {
         return matchType;
+    }
+
+    @Override
+    public String toCommandString() {
+        return null;
     }
 
     public String getModID() {

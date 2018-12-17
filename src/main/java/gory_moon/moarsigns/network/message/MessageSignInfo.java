@@ -16,7 +16,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 public class MessageSignInfo implements IMessage {
 
@@ -59,8 +58,7 @@ public class MessageSignInfo implements IMessage {
         text = new ITextComponent[4];
 
         if (packetBuf.readBoolean()) {
-            int textureLength = packetBuf.readInt();
-            this.texture = new String(packetBuf.readBytes(textureLength).array(), Charset.forName("utf-8"));
+            this.texture = packetBuf.readString(32767);
             this.isMetal = packetBuf.readBoolean();
 
             for (int i = 0; i < 4; i++)
@@ -90,8 +88,7 @@ public class MessageSignInfo implements IMessage {
 
         if (texture != null && rowLocations != null && rowSizes != null && visibleRows != null && text != null) {
             packetBuf.writeBoolean(true);
-            packetBuf.writeInt(texture.length());
-            packetBuf.writeBytes(texture.getBytes(Charset.forName("utf-8")));
+            packetBuf.writeString(texture);
             packetBuf.writeBoolean(isMetal);
 
             for (int i = 0; i < 4; i++)

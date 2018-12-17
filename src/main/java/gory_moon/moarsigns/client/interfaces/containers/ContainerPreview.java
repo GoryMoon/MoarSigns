@@ -8,7 +8,6 @@ import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,12 +42,9 @@ public class ContainerPreview extends Container {
             j = 0;
         }
 
-
         for (int k = 0; k < 7; ++k) {
             for (int l = 0; l < 5; ++l) {
                 int i1 = l + (k + j) * 5;
-
-
                 if (i1 >= 0 && i1 < this.itemList.size()) {
                     inventory.setInventorySlotContents(l + k * 5, (ItemStack) this.itemList.get(i1));
                 } else {
@@ -60,10 +56,6 @@ public class ContainerPreview extends Container {
 
     public boolean needsScrollBars() {
         return this.itemList.size() > 35;
-    }
-
-    @Override
-    protected void retrySlotClick(int p_75133_1_, int p_75133_2_, boolean p_75133_3_, EntityPlayer p_75133_4_) {
     }
 
     @Override

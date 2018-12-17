@@ -44,13 +44,13 @@ public class NuggetRegistry {
         registerNugget(31, "soularium_nugget_enderio",          "nuggetSoularium",      "enderio/",         "enderio.soularium"                     );
     }
 
-    public static void registerNugget(int id, String unlocName, String oreName, String modId, String ingotName, boolean needed) {
-        nuggets.put(ingotName, new NuggetInfo(id, unlocName, oreName, modId, ingotName, needed));
+    public static void registerNugget(int id, String regName, String oreName, String modId, String ingotName, boolean needed) {
+        nuggets.put(ingotName, new NuggetInfo(id, regName, oreName, modId, ingotName, needed));
         idMap.put(id, ingotName);
     }
 
-    public static void registerNugget(int id, String unlocName, String oreName, String modId, String ingotName) {
-        registerNugget(id, unlocName, oreName, modId, ingotName, false);
+    public static void registerNugget(int id, String regName, String oreName, String modId, String ingotName) {
+        registerNugget(id, regName, oreName, modId, ingotName, false);
     }
 
     public static HashMap<String, NuggetInfo> getNuggets() {
@@ -58,7 +58,7 @@ public class NuggetRegistry {
     }
 
     public static String getUnlocName(int i) {
-        return (idMap.get(i) != null) && nuggets.get(idMap.get(i)) != null ? nuggets.get(idMap.get(i)).unlocName: "error_" + i;
+        return (idMap.get(i) != null) && nuggets.get(idMap.get(i)) != null ? nuggets.get(idMap.get(i)).regName : "error_" + i;
     }
 
     public static NuggetInfo getNuggetInfo(String ingotName) {
@@ -68,15 +68,15 @@ public class NuggetRegistry {
     public static class NuggetInfo implements Comparable<NuggetInfo> {
 
         public String modId;
-        public String unlocName;
+        public String regName;
         public String oreName;
         public String ingotName;
         public boolean needed;
         public int id;
 
-        public NuggetInfo(int id, String unlocName, String oreName, String modId, String ingotName, boolean needed) {
+        public NuggetInfo(int id, String regName, String oreName, String modId, String ingotName, boolean needed) {
             this.id = id;
-            this.unlocName = unlocName;
+            this.regName = regName;
             this.oreName = oreName;
             this.modId = modId;
             this.ingotName = ingotName;

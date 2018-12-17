@@ -13,8 +13,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.nio.charset.Charset;
-
 public class MessageSignOpenGui implements IMessage {
 
     public BlockPos pos;
@@ -46,8 +44,7 @@ public class MessageSignOpenGui implements IMessage {
         PacketBuffer packetBuf = new PacketBuffer(buf);
 
         this.pos = packetBuf.readBlockPos();
-        int textureLength = packetBuf.readInt();
-        this.texture = new String(packetBuf.readBytes(textureLength).array(), Charset.forName("utf-8"));
+        this.texture = packetBuf.readString(32767);
         this.isMetal = packetBuf.readBoolean();
         this.isMoving = packetBuf.readBoolean();
     }
@@ -57,8 +54,7 @@ public class MessageSignOpenGui implements IMessage {
         PacketBuffer packetBuf = new PacketBuffer(buf);
 
         packetBuf.writeBlockPos(pos);
-        packetBuf.writeInt(texture.length());
-        packetBuf.writeBytes(texture.getBytes(Charset.forName("utf-8")));
+        packetBuf.writeString(texture);
         packetBuf.writeBoolean(isMetal);
         packetBuf.writeBoolean(isMoving);
     }

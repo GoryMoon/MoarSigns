@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 public class PsiIntegration implements ISignRegistration {
 
@@ -25,12 +24,7 @@ public class PsiIntegration implements ISignRegistration {
     public static Item itemBlock = null;
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
-        // No wood to register
-    }
-
-    @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
+    public void registerSigns() throws IntegrationException {
         registerMetal("psimetal_sign",      "psimetal",       new ItemStack(item, 1, 1), new ItemStack(itemBlock, 1, 1));
         registerMetal("psigem_sign",        "psigem",         new ItemStack(item, 1, 2), new ItemStack(itemBlock, 1, 2));
         registerMetal("ebonypsimetal_sign", "ebonypsimetal",  new ItemStack(item, 1, 3), new ItemStack(itemBlock, 1, 7));

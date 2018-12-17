@@ -71,7 +71,7 @@ public class ModModelManager {
         registerItemModel(ModItems.SIGN, new MoarSignsItemMeshDefenition());
 
         for (Map.Entry<String, NuggetRegistry.NuggetInfo> entry : Utils.entriesSortedByValues(NuggetRegistry.getNuggets()))
-            registerItemModelForMeta(ModItems.NUGGET, entry.getValue().id, getModel("nuggets/" + entry.getValue().modId + entry.getValue().unlocName));
+            registerItemModelForMeta(ModItems.NUGGET, entry.getValue().id, getModel("nuggets/" + entry.getValue().modId + entry.getValue().regName));
 
         registerVariantItems(ModItems.SIGN_TOOLBOX, "mode");
 

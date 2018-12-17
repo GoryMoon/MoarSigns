@@ -10,7 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 
 public class BiomesOPlentyIntegration implements ISignRegistration {
 
@@ -22,7 +22,7 @@ public class BiomesOPlentyIntegration implements ISignRegistration {
     public static Block bopItem = null;
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
+    public void registerSigns() throws IntegrationException {
         registerWood("sacred_oak_sign",    null, "sacred_oak",  new ItemStack(bopItem, 1, 0));
         registerWood("cherry_sign",        null, "cherry",      new ItemStack(bopItem, 1, 1));
         registerWood("umbran_sign",        null, "umbran",      new ItemStack(bopItem, 1, 2));
@@ -45,16 +45,13 @@ public class BiomesOPlentyIntegration implements ISignRegistration {
         SignRegistry.register(name, property, materialName, PATH, false, ItemStack.EMPTY, material, Reference.MODID, BOP_TAG);
     }
 
-    @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
-        // No metal to register
-    }
-
+    @Nonnull
     @Override
     public String getActivateTag() {
         return BOP_TAG;
     }
 
+    @Nonnull
     @Override
     public String getIntegrationName() {
         return Utils.getModName(BOP_TAG);

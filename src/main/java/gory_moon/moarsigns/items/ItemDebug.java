@@ -18,7 +18,7 @@ public class ItemDebug extends Item {
 
     public ItemDebug() {
         setRegistryName(Constants.DEBUG_ITEM_KEY);
-        setUnlocalizedName("moarsigns.debug");
+        setTranslationKey("moarsigns.debug");
     }
 
     @Override

@@ -7,8 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 
-import java.util.ArrayList;
-
 public class Api {
 
     /**
@@ -129,23 +127,5 @@ public class Api {
      */
     public static void registerSignIntegration(ISignRegistration registration) {
         IntegrationRegistry.registerIntegration(registration);
-    }
-
-    /**
-     * Adds a name of wood to list that is given in {@link ISignRegistration#registerWoodenSigns(ArrayList)}
-     *
-     * @param name Name in ore dictionary
-     */
-    public static void registerPlankOreName(String name) {
-        IntegrationRegistry.registerPlankOreName(name);
-    }
-
-    /**
-     * Adds a name of metal, MetalBlock or gem to list that is given in {@link ISignRegistration#registerMetalSigns(ArrayList)}
-     *
-     * @param name Name in ore dictionary
-     */
-    public static void registerMetalGemOreName(String name) {
-        IntegrationRegistry.registerMetalGemOreName(name);
     }
 }

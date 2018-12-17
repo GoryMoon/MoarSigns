@@ -13,6 +13,7 @@ import gory_moon.moarsigns.util.Colors;
 import gory_moon.moarsigns.util.Localization;
 import gory_moon.moarsigns.util.RotationHandler;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -32,6 +33,7 @@ import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class ItemSignToolbox extends VariantItem {
 
     public ItemSignToolbox() {
         setRegistryName(Constants.SIGN_TOOLBOX_ITEM_KEY);
-        setUnlocalizedName("moarsigns.signtoolbox");
+        setTranslationKey("moarsigns.signtoolbox");
         setCreativeTab(MoarSignsCreativeTab.tabMS);
         setHasSubtypes(true);
         setMaxStackSize(1);
@@ -99,7 +101,7 @@ public class ItemSignToolbox extends VariantItem {
         return EnumActionResult.PASS;
     }
 
-    public static void doRotate(World world, BlockPos pos, EntityPlayer player) {
+    private void doRotate(World world, BlockPos pos, EntityPlayer player) {
         if (world.getBlockState(pos).getBlock() instanceof BlockMoarSign) {
             RotationHandler.rotate((TileEntityMoarSign) world.getTileEntity(pos), player.isSneaking());
         }
@@ -152,8 +154,8 @@ public class ItemSignToolbox extends VariantItem {
                 signInfo = new NBTTagCompound();
                 tileEntity.writeToNBT(signInfo);
                 ItemStack signStack = ModItems.SIGN.createMoarItemStack(tileEntityMoarSign.texture_name, tileEntityMoarSign.isMetal);
-                String unlocalizedName = signStack.getUnlocalizedName() + ".name";
-                signInfo.setString(NBT_UNLOCALIZED_NAME, unlocalizedName);
+                String name = signStack.getTranslationKey() + ".name";
+                signInfo.setString(NBT_UNLOCALIZED_NAME, name);
 
                 stack = toggleMoving(stack);
                 tileEntityMoarSign.removeNoDrop = true;
@@ -195,18 +197,19 @@ public class ItemSignToolbox extends VariantItem {
         return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
     }
 
+
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
+    public String getTranslationKey(ItemStack stack) {
         if (stack.getItemDamage() > 5 && !isMoving(stack.getItemDamage()))
             stack.setItemDamage(0);
         int mode = isMoving(stack.getItemDamage()) ? 2 : stack.getItemDamage();
-        return super.getUnlocalizedName(stack) + "." + values()[mode].toString();
+        return super.getTranslationKey(stack) + "." + values()[mode].toString();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean extraInfo) {
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         GameSettings gameSettings = FMLClientHandler.instance().getClient().gameSettings;
         String str = Colors.GRAY + Localization.ITEM.SIGNTOOLBOX.CHANGE.translate(Colors.LIGHTGRAY + "[" + GameSettings.getKeyDisplayString(gameSettings.keyBindSneak.getKeyCode()) + "]" + Colors.GRAY.toString());
 
@@ -243,7 +246,7 @@ public class ItemSignToolbox extends VariantItem {
         String[] strList = str.split("\n");
         for (int i = 0; i < strList.length; i++)
             strList[i] = strList[i].trim();
-        Collections.addAll(list, strList);
+        Collections.addAll(tooltip, strList);
     }
 
     private String getFormattedData(NBTTagCompound compound) {

@@ -9,12 +9,7 @@ public abstract class ServerMessageHandler<R extends IMessage> implements IMessa
 
     @Override
     public IMessage onMessage(final R message, final MessageContext ctx) {
-        FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(new Runnable() {
-            @Override
-            public void run() {
-                handle(message, ctx);
-            }
-        });
+        FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> handle(message, ctx));
         return null;
     }
 

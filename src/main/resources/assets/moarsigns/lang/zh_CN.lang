@@ -116,7 +116,7 @@ item.moarsigns.bronze_nugget_ic2.name=青铜粒
 item.moarsigns.copper_nugget_ic2.name=铜粒
 item.moarsigns.tin_nugget_ic2.name=锡粒
 item.moarsigns.lead_nugget_ic2.name=铅粒
-item.moarsigns.refined_iron_nugget_ic2.name=精炼铁粒
+item.moarsigns.steel_nugget_ic2.name=精炼铁粒
 item.moarsigns.tin_nugget_forestry.name=锡粒
 item.moarsigns.bronze_nugget_forestry.name=青铜粒
 item.moarsigns.copper_nugget_forestry.name=铜粒
@@ -142,10 +142,10 @@ item.moarsigns.sign.quartz_sign.name=石英告示牌
 # Mod Signs
 #Biomes O' Plenty
 item.moarsigns.sign.bop.cherry_sign.name=樱桃树告示牌
-item.moarsigns.sign.bop.dark_sign.name=黑暗树告示牌
+item.moarsigns.sign.bop.umbran_sign.name=黑暗树告示牌
 item.moarsigns.sign.bop.fir_sign.name=杉树告示牌
 item.moarsigns.sign.bop.hellbark_sign.name=地狱皮树告示牌
-item.moarsigns.sign.bop.holy_sign.name=天域树告示牌
+item.moarsigns.sign.bop.ethereal_sign.name=天域树告示牌
 item.moarsigns.sign.bop.jacaranda_sign.name=蓝花楹木告示牌
 item.moarsigns.sign.bop.magic_sign.name=魔法树告示牌
 item.moarsigns.sign.bop.mahogany_sign.name=桃花心树告示牌
@@ -203,11 +203,11 @@ item.moarsigns.sign.natura.fusewood_sign.name=熔融树告示牌
 item.moarsigns.sign.natura.ghostwood_sign.name=幽魂树告示牌
 item.moarsigns.sign.natura.hopseed_sign.name=车桑子树告示牌
 item.moarsigns.sign.natura.maple_sign.name=枫树告示牌
-item.moarsigns.sign.natura.purpleheart_sign.name=紫檀树告示牌
+item.moarsigns.sign.natura.amaranth_sign.name=紫檀树告示牌
 item.moarsigns.sign.natura.redwood_sign.name=红木树告示牌
 item.moarsigns.sign.natura.sakura_sign.name=樱花树告示牌
 item.moarsigns.sign.natura.silverbell_sign.name=银铃树告示牌
-item.moarsigns.sign.natura.tiger_sign.name=核桃树告示牌
+item.moarsigns.sign.natura.tigerwood_sign.name=核桃树告示牌
 item.moarsigns.sign.natura.willow_sign.name=柳树告示牌
 
 #IndustrailCraft 2
@@ -215,7 +215,7 @@ item.moarsigns.sign.ic2.copper_sign.name=铜制告示牌
 item.moarsigns.sign.ic2.tin_sign.name=锡制告示牌
 item.moarsigns.sign.ic2.bronze_sign.name=青铜告示牌
 item.moarsigns.sign.ic2.lead_sign.name=铅制告示牌
-item.moarsigns.sign.ic2.refinediron_sign.name=精炼铁告示牌
+item.moarsigns.sign.ic2.steel_sign.name=精炼铁告示牌
 
 #Tinkers Construct
 item.moarsigns.sign.tconstruct.cobalt_sign.name=钴制告示牌
@@ -244,7 +244,7 @@ item.moarsigns.sign.tf.silver_sign.name=银制告示牌
 item.moarsigns.sign.tf.lead_sign.name=铅制告示牌
 item.moarsigns.sign.tf.nickel_sign.name=镍制告示牌
 item.moarsigns.sign.tf.platinum_sign.name=铂制告示牌
-item.moarsigns.sign.tf.mithril_sign.name=秘银告示牌
+item.moarsigns.sign.tf.mana_metal_sign.name=秘银告示牌
 item.moarsigns.sign.tf.electrum_sign.name=琥珀金告示牌
 item.moarsigns.sign.tf.invar_sign.name=因瓦合金告示牌
 item.moarsigns.sign.tf.bronze_sign.name=青铜告示牌

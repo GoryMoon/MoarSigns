@@ -34,7 +34,7 @@ public class LayerMoarSign implements LayerRenderer {
             float f = 0.3333334F;
             GlStateManager.scale(f, -f, -f);
             if (sneak > 0) {
-                GlStateManager.rotate(30, 0, 0, 0);
+                GlStateManager.rotate(30, 1, 0, 0);
                 GlStateManager.translate(0.0F, 0.0F, 0.12F);
             }
             Minecraft.getMinecraft().renderEngine.bindTexture(texture);
@@ -51,7 +51,7 @@ public class LayerMoarSign implements LayerRenderer {
             GlStateManager.translate(0.0F, 0.043F + sneak, 0.1709F);
             GlStateManager.scale(-f1, f1, f1);
             if (sneak > 0) {
-                GlStateManager.rotate(30, 0, 0, 0);
+                GlStateManager.rotate(30, 1, 0, 0);
                 GlStateManager.translate(0.0F, 0.0F, 0.12F);
             }
             GL11.glNormal3f(0.0F, 0.0F, -1.0F * f1);
@@ -63,8 +63,8 @@ public class LayerMoarSign implements LayerRenderer {
 
             String s = ((char) 167) + "eMoar";
             String s1 = ((char) 167) + "6Signs";
-            fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2, 2, 0, true);
-            fontRenderer.drawString(s1, -fontRenderer.getStringWidth(s1) / 2, 12, 0, true);
+            fontRenderer.drawString(s, -fontRenderer.getStringWidth(s) / 2F, 2, 0, true);
+            fontRenderer.drawString(s1, -fontRenderer.getStringWidth(s1) / 2F, 12, 0, true);
 
             GlStateManager.enableLighting();
 

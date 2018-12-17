@@ -9,11 +9,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -64,21 +65,12 @@ public class ModBlocks {
         }
     }
 
-
     public static void registerTileEntities() {
-        registerTileEntityNoPrefix(TileEntityMoarSign.class, TileEntityMoarSign.class.getSimpleName().replaceFirst("TileEntity", ""), Constants.SIGN_TE_ID);
+        registerTileEntityNoPrefix(TileEntityMoarSign.class, TileEntityMoarSign.class.getSimpleName().replaceFirst("TileEntity", ""));
     }
 
-   /* private static void registerTileEntity(Class<? extends TileEntity> tileEntityClass) {
-        GameRegistry.registerTileEntity(tileEntityClass, Reference.RESOURCE_PREFIX + tileEntityClass.getSimpleName().replaceFirst("TileEntity", ""));
-    }
-
-    private static void registerTileEntity(Class<? extends TileEntity> tileEntityClass, String name, String legacyName) {
-        GameRegistry.registerTileEntityWithAlternatives(tileEntityClass, Reference.RESOURCE_PREFIX + name, Reference.RESOURCE_PREFIX + legacyName);
-    }*/
-
-    private static void registerTileEntityNoPrefix(Class<? extends TileEntity> tileEntityClass, String name, String legacyName) {
-        GameRegistry.registerTileEntityWithAlternatives(tileEntityClass, Reference.RESOURCE_PREFIX + name, legacyName);
+    private static void registerTileEntityNoPrefix(Class<? extends TileEntity> tileEntityClass, String name) {
+        GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(Reference.MODID, name));
     }
 
 }

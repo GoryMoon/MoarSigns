@@ -1,6 +1,5 @@
 package gory_moon.moarsigns.util;
 
-import gory_moon.moarsigns.blocks.BlockMoarSign;
 import gory_moon.moarsigns.blocks.BlockMoarSignStanding;
 import gory_moon.moarsigns.blocks.ModBlocks;
 import gory_moon.moarsigns.tileentites.TileEntityMoarSign;
@@ -63,7 +62,7 @@ public class RotationHandler {
                 flatSign = ((side & 8) >> 3) == 1;
                 int enumSide = flatSign ? side & 1 : side & 7;
 
-                if (((BlockMoarSign) ModBlocks.SIGN_STANDING_METAL).canPlaceBlockAt(world, tileEntity.getPos().offset(EnumFacing.getFront(enumSide).getOpposite()))) {
+                if (ModBlocks.SIGN_STANDING_METAL.canPlaceBlockAt(world, tileEntity.getPos().offset(EnumFacing.byIndex(enumSide).getOpposite()))) {
                     testing = false;
                 }
             }

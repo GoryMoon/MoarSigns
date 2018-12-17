@@ -2,7 +2,10 @@ package gory_moon.moarsigns.items;
 
 import com.google.common.collect.Maps;
 import gory_moon.moarsigns.MoarSigns;
-import gory_moon.moarsigns.api.*;
+import gory_moon.moarsigns.api.MaterialInfo;
+import gory_moon.moarsigns.api.SignInfo;
+import gory_moon.moarsigns.api.SignRegistry;
+import gory_moon.moarsigns.integration.IntegrationHandler;
 import gory_moon.moarsigns.lib.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -14,17 +17,21 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ModContainer;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.IForgeRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -61,12 +68,21 @@ public class ModItems {
                 ITEMS.add(item);
             }
         }
+
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        public static void preregisterRecipes(RegistryEvent.Register<IRecipe> event) {
+            new IntegrationHandler().setupSigns();
+        }
+
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
+            IForgeRegistry<IRecipe> registry = event.getRegistry();
+            ModItems.registerRecipes(registry);
+        }
     }
 
-    public static void registerRecipes() {
-        RecipeSorter.register("moarsigns:shaped", ShapedMoarSignRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped before:minecraft:shapeless");
-        RecipeSorter.register("moarsigns:shapeless", ShapelessMoarSignRecipe.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shapeless");
-        removeRecipesWithResult(new ItemStack(Items.SIGN, 3));
+    private static void registerRecipes(IForgeRegistry<IRecipe> registry) {
+        removeRecipesWithResult(registry, new ItemStack(Items.SIGN, 3));
 
         ArrayList<ItemStack> list = new ArrayList<ItemStack>();
         SIGN.getSubItemStacks(list);
@@ -88,27 +104,29 @@ public class ModItems {
 
             MaterialInfo material = s != null ? s.material : null;
             materials.add(0, material);
-            for (MaterialInfo infos : materials) {
-                ItemStack mat = infos.material;
+            for (MaterialInfo info : materials) {
+                ItemStack mat = info.material;
                 if (mat != null && material != null) {
                     if (isMetal) {
-                        handleMetalSign(mat, material, stack);
+                        handleMetalSign(registry, mat, info, stack);
                         stack.setCount(9);
                     }
-                    registerSignRecipe(mat, stack);
+                    registerSignRecipe(registry, mat, info, stack, isMetal);
                 }
             }
         }
 
-        GameRegistry.addRecipe(new ShapedMoarSignRecipe(generalSign, true, true, "###", "###", " X ", '#', "plankWood", 'X', "stickWood"));
-        GameRegistry.addRecipe(new ShapedMoarSignRecipe(SIGN_TOOLBOX, "rxr", "xsx", "rxr", 'x', "ingotIron", 's', ShapedMoarSignRecipe.MatchType.ALL, 'r', "dyeRed"));
+        ModContainer mc = Loader.instance().activeModContainer();
+        Loader.instance().setActiveModContainer(null);
+        registry.register(new ShapedOreRecipe(null, generalSign, true, "###", "###", " X ", '#', "plankWood", 'X', "stickWood").setRegistryName(new ResourceLocation( "sign")));
+        Loader.instance().setActiveModContainer(mc);
 
         if (replaceRecipes) {
-            replaceRecipes();
+            replaceRecipes(registry);
         }
     }
 
-    private static void handleMetalSign(ItemStack mat, MaterialInfo material, ItemStack stack) {
+    private static void handleMetalSign(IForgeRegistry<IRecipe> registry, ItemStack mat, MaterialInfo material, ItemStack stack) {
         Container dummyContainer = new Container() {
             @Override
             public boolean canInteractWith(EntityPlayer entityplayer) {
@@ -124,116 +142,105 @@ public class ModItems {
         mat.setCount(1);
         if (mat.getItem() instanceof ItemBlock) {
             crafting.setInventorySlotContents(0, mat);
-            mat = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
+            mat = CraftingManager.findMatchingResult(crafting, null);
         }
         ItemStack recNugget = null;
         mat.setCount(1);
 
         if (!material.gotNugget) {
-            String unlocName = mat.getUnlocalizedName();
-            NuggetRegistry.NuggetInfo nuggetInfo = NuggetRegistry.getNuggetInfo(unlocName);
+            String key = mat.getTranslationKey();
+            NuggetRegistry.NuggetInfo nuggetInfo = NuggetRegistry.getNuggetInfo(key);
             if (nuggetInfo != null) {
                 nuggetInfo.needed = true;
                 recNugget = new ItemStack(NUGGET, 1, nuggetInfo.id);
                 OreDictionary.registerOre(nuggetInfo.oreName, recNugget.copy());
 
                 recNugget.setCount(9);
-                GameRegistry.addShapelessRecipe(recNugget.copy(), mat);
-                GameRegistry.addRecipe(new ShapedOreRecipe(mat, "xxx", "xxx", "xxx", 'x', nuggetInfo.oreName));
+                ResourceLocation loc1 = new ResourceLocation(Reference.MODID, nuggetInfo.regName);
+                ResourceLocation loc2 = new ResourceLocation(Reference.MODID, nuggetInfo.regName + "_reverse");
+                registry.register(new ShapelessOreRecipe(null, recNugget.copy(), mat).setRegistryName(loc1));
+                registry.register(new ShapedOreRecipe(null, mat, true, "xxx", "xxx", "xxx", 'x', nuggetInfo.oreName).setRegistryName(loc2));
             }
         } else {
             if (material.materialNugget.isEmpty()) {
                 crafting.setInventorySlotContents(0, mat);
-                recNugget = CraftingManager.getInstance().findMatchingRecipe(crafting, null);
+                recNugget = CraftingManager.findMatchingResult(crafting, null);
             } else
                 recNugget = material.materialNugget.copy();
         }
 
         if (recNugget != null) {
-            registerNuggetSign(recNugget, stack);
+            registerNuggetSign(registry, recNugget, stack, material);
         }
     }
 
-    private static void registerNuggetSign(ItemStack nuggetMaterial, ItemStack stack) {
+    private static void registerNuggetSign(IForgeRegistry<IRecipe> registry, ItemStack nuggetMaterial, ItemStack stack, MaterialInfo material) {
         ItemStack result = stack.copy();
         result.setCount(1);
         nuggetMaterial.setCount(1);
-        if (isItem(nuggetMaterial, "ingot.moarsigns.diamond_nugget"))
-            GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "nuggetDiamond", '/', "stickWood"));
-        else if (isItem(nuggetMaterial, Items.field_191525_da.getUnlocalizedName()))
-            GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "nuggetIron", '/', "stickWood"));
-        else if (isItem(nuggetMaterial, "ingot.moarsigns.emerald_nugget"))
-            GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "nuggetEmerald", '/', "stickWood"));
-        else if (isItem(nuggetMaterial, "ingot.moarsigns.lapis_nugget"))
-            GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "nuggetLapis", '/', "stickWood"));
-        else if (isItem(nuggetMaterial, "ingot.moarsigns.quartz_nugget"))
-            GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "nuggetQuartz", '/', "stickWood"));
-        else
-            GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', nuggetMaterial, '/', "stickWood"));
+
+        Object ingredient = nuggetMaterial;
+        if (isItem(nuggetMaterial, "item.moarsigns.diamond_nugget"))
+            ingredient = "nuggetDiamond";
+        else if (isItem(nuggetMaterial, Items.IRON_NUGGET.getRegistryName().toString()))
+            ingredient = "nuggetIron";
+        else if (isItem(nuggetMaterial, "item.moarsigns.emerald_nugget"))
+            ingredient = "nuggetEmerald";
+        else if (isItem(nuggetMaterial, "item.moarsigns.lapis_nugget"))
+            ingredient = "nuggetLapis";
+        else if (isItem(nuggetMaterial, "item.moarsigns.quartz_nugget"))
+            ingredient = "nuggetQuartz";
+
+        ResourceLocation group = new ResourceLocation(Reference.MODID, material.path.replace("/", "_") + material.materialName);
+        ResourceLocation location = new ResourceLocation(Reference.MODID, "nugget_sign_" + (ingredient instanceof String ? ingredient: material.path.replaceAll("/", "_") + material.materialName));
+        registry.register(new ShapedOreRecipe(group, result, true, "XXX", "XXX", " / ", 'X', ingredient, '/' , "stickWood").setRegistryName(location));
     }
 
     private static boolean isItem(ItemStack stack, @Nonnull String name) {
-        return name.equals(stack.getUnlocalizedName());
+        return name.equals(stack.getTranslationKey());
     }
 
-    private static void registerSignRecipe(ItemStack material, ItemStack result) {
-        if (isItem(material, Items.DIAMOND.getUnlocalizedName()))
-            GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "gemDiamond", '/', "stickWood"));
-        else if (isItem(material, Items.EMERALD.getUnlocalizedName()))
-            GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "gemEmerald", '/', "stickWood"));
-        else if (isItem(material, Items.IRON_INGOT.getUnlocalizedName()))
-            GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', "ingotIron", '/', "stickWood"));
+    private static void registerSignRecipe(IForgeRegistry<IRecipe> registry, ItemStack material, MaterialInfo materialInfo, ItemStack result, boolean isMetal) {
+        Object ingredient;
+        if ("diamond".equals(materialInfo.materialName))
+            ingredient = "gemDiamond";
+        else if ("emerald".equals(materialInfo.materialName))
+            ingredient = "gemEmerald";
+        else if ("iron".equals(materialInfo.materialName))
+            ingredient = "ingotIron";
         else
-            GameRegistry.addRecipe(new ShapedMoarSignRecipe(result, true, true, "XXX", "XXX", " / ", 'X', material, '/', "stickWood"));
+            ingredient = material;
+
+        ResourceLocation location = new ResourceLocation(Reference.MODID, "sign_" + materialInfo.path.replaceAll("/", "_") + materialInfo.materialName);
+        ResourceLocation group = null;
+        if (isMetal)
+            group = new ResourceLocation(Reference.MODID, materialInfo.path.replace("/", "_") + materialInfo.materialName);
+
+        registry.register(new ShapedOreRecipe(group, result, true, "XXX", "XXX", " / ", 'X', ingredient, '/', "stickWood").setRegistryName(location));
     }
 
-    private static void replaceRecipes() {
-        List recipes = CraftingManager.getInstance().getRecipeList();
+    private static void replaceRecipes(IForgeRegistry<IRecipe> registry) {
+        Collection<IRecipe> recipes = registry.getValuesCollection();
         ItemStack signStack = new ItemStack(Items.SIGN);
-        for (int scan = 0; scan < recipes.size(); scan++) {
-            IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
-            List input = null;
+        for (IRecipe tmpRecipe : recipes) {
+            NonNullList<Ingredient> ingredients = tmpRecipe.getIngredients();
 
-            if (tmpRecipe instanceof ShapedRecipes) {
-                input = Arrays.asList(((ShapedRecipes) tmpRecipe).recipeItems);
-            } else if (tmpRecipe instanceof ShapelessRecipes) {
-                input = ((ShapelessRecipes) tmpRecipe).recipeItems;
-            } else if (tmpRecipe instanceof ShapedOreRecipe) {
-                input = Arrays.asList(((ShapedOreRecipe) tmpRecipe).getInput());
-            } else if (tmpRecipe instanceof ShapelessOreRecipe) {
-                input = ((ShapelessOreRecipe) tmpRecipe).getInput();
-            }
-
-            if (input != null) {
-                for (Object stack : input) {
-                    if (stack instanceof ItemStack && OreDictionary.itemMatches((ItemStack) stack, signStack, false)) {
-                        HashMap<ItemStack, Object> map = Maps.newHashMap();
-                        map.put(signStack, ShapedMoarSignRecipe.MatchType.ALL);
-
-                        IRecipe replacement = null;
-                        if (tmpRecipe instanceof ShapedRecipes || tmpRecipe instanceof ShapedOreRecipe)
-                            GameRegistry.addRecipe(replacement = new ShapedMoarSignRecipe(tmpRecipe, map));
-                        if (tmpRecipe instanceof ShapelessRecipes || tmpRecipe instanceof ShapelessOreRecipe)
-                            GameRegistry.addRecipe(replacement = new ShapelessMoarSignRecipe(tmpRecipe, map));
-
-                        MoarSigns.logger.info("Replacing Recipe: " + tmpRecipe + " (containing " + stack + ") -> " + replacement);
-                        recipes.remove(scan);
-                    }
+            for (Ingredient stack : ingredients) {
+                if (stack.apply(signStack)) {
+                    HashMap<ItemStack, Object> map = Maps.newHashMap();
+                    MoarSigns.logger.info("Found recipe with sign: " + tmpRecipe.getRegistryName());
                 }
             }
         }
     }
 
 
-    private static void removeRecipesWithResult(ItemStack resultItem) {
-        List recipes = CraftingManager.getInstance().getRecipeList();
-
-        for (int scan = 0; scan < recipes.size(); scan++) {
-            IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
+    private static void removeRecipesWithResult(IForgeRegistry<IRecipe> registry, ItemStack resultItem) {
+        for (IRecipe tmpRecipe : registry) {
             ItemStack recipeResult = tmpRecipe.getRecipeOutput();
             if (ItemStack.areItemStacksEqual(resultItem, recipeResult)) {
-                MoarSigns.logger.debug("Removing Recipe: " + recipes.get(scan) + " -> " + recipeResult);
-                recipes.remove(scan);
+                MoarSigns.logger.debug("Removing Recipe: " + tmpRecipe + " -> " + recipeResult);
+                ((ForgeRegistry<IRecipe>) registry).remove(tmpRecipe.getRegistryName());
             }
         }
     }

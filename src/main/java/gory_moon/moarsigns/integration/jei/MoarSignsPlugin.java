@@ -1,30 +1,25 @@
 package gory_moon.moarsigns.integration.jei;
 
 import gory_moon.moarsigns.MoarSigns;
-import gory_moon.moarsigns.api.ShapedMoarSignRecipe;
-import gory_moon.moarsigns.api.ShapelessMoarSignRecipe;
-import gory_moon.moarsigns.integration.jei.crafting.MoarSignsRecipeWrapper;
-import gory_moon.moarsigns.integration.jei.crafting.ShapedMoarSignsRecipeWrapper;
 import gory_moon.moarsigns.integration.jei.exchange.ExchangeRecipeMaker;
 import gory_moon.moarsigns.integration.jei.exchange.MoarSignsExchangeCategory;
 import gory_moon.moarsigns.items.ItemMoarSign;
 import gory_moon.moarsigns.items.ModItems;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
-import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 @JEIPlugin
-public class MoarSignsPlugin extends BlankModPlugin {
+public class MoarSignsPlugin implements IModPlugin {
 
-    public static ArrayList<ItemStack> moarSigns = new ArrayList<ItemStack>();
+    public static ArrayList<ItemStack> moarSigns = new ArrayList<>();
     public static final String EXCHANGE = "moarsigns.exchange";
 
     public static IJeiHelpers jeiHelpers;
@@ -33,10 +28,7 @@ public class MoarSignsPlugin extends BlankModPlugin {
     public void register(@Nonnull IModRegistry registry) {
         jeiHelpers = registry.getJeiHelpers();
 
-        registry.handleRecipes(ShapedMoarSignRecipe.class, ShapedMoarSignsRecipeWrapper::new, VanillaRecipeCategoryUid.CRAFTING);
-        registry.handleRecipes(ShapelessMoarSignRecipe.class, MoarSignsRecipeWrapper::new, VanillaRecipeCategoryUid.CRAFTING);
-
-        for (ItemStack stack : registry.getIngredientRegistry().getIngredients(ItemStack.class)) {
+        for (ItemStack stack : registry.getIngredientRegistry().getAllIngredients(VanillaTypes.ITEM)) {
             if (stack != null && stack.getItem() instanceof ItemMoarSign) {
                 moarSigns.add(stack);
             }
@@ -58,25 +50,15 @@ public class MoarSignsPlugin extends BlankModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
-        subtypeRegistry.registerSubtypeInterpreter(ModItems.SIGN, new ISubtypeRegistry.ISubtypeInterpreter() {
-            @Nullable
-            @Override
-            public String getSubtypeInfo(ItemStack itemStack) {
-                if(itemStack.getMetadata() != OreDictionary.WILDCARD_VALUE) {
-                    NBTTagCompound nbtTagCompound = itemStack.getTagCompound();
-                    if (nbtTagCompound != null && !nbtTagCompound.hasNoTags()) {
-                        return nbtTagCompound.toString();
-                    }
+        subtypeRegistry.registerSubtypeInterpreter(ModItems.SIGN, itemStack -> {
+            if(itemStack.getMetadata() != OreDictionary.WILDCARD_VALUE) {
+                NBTTagCompound nbtTagCompound = itemStack.getTagCompound();
+                if (nbtTagCompound != null && !nbtTagCompound.isEmpty()) {
+                    return nbtTagCompound.toString();
                 }
-                return null;
             }
+            return null;
         });
-        subtypeRegistry.registerSubtypeInterpreter(ModItems.SIGN_TOOLBOX, new ISubtypeRegistry.ISubtypeInterpreter() {
-            @Nullable
-            @Override
-            public String getSubtypeInfo(ItemStack itemStack) {
-                return "";
-            }
-        });
+        subtypeRegistry.registerSubtypeInterpreter(ModItems.SIGN_TOOLBOX, itemStack -> "");
     }
 }

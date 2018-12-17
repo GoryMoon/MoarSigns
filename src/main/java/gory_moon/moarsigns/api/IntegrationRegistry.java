@@ -3,14 +3,10 @@ package gory_moon.moarsigns.api;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 
 public class IntegrationRegistry {
 
     private static ArrayList<ISignRegistration> signReg = new ArrayList<>();
-    private static HashSet<String> woodNames = new HashSet<>();
-    private static HashSet<String> metalNames = new HashSet<>();
 
     /**
      * Registers a class that implements {@link ISignRegistration}
@@ -37,48 +33,12 @@ public class IntegrationRegistry {
     }
 
     /**
-     * Adds a name of wood to list that is given in {@link ISignRegistration#registerWoodenSigns(ArrayList)}
-     *
-     * @param name Name in ore dictionary
-     */
-    public static void registerPlankOreName(String name) {
-        woodNames.add(name);
-    }
-
-    /**
-     * Adds a name of metal or gem to list that is given in {@link ISignRegistration#registerMetalSigns(ArrayList)}
-     *
-     * @param names Name in ore dictionary
-     */
-    public static void registerMetalGemOreName(String... names) {
-        Collections.addAll(metalNames, names);
-    }
-
-    /**
      * Gets a clone of the registry
      *
      * @return List of {@link ISignRegistration}
      */
     public static ArrayList<ISignRegistration> getSignReg() {
         return (ArrayList<ISignRegistration>) signReg.clone();
-    }
-
-    /**
-     * Gets the registered list of ore dictionary names for metal and gems
-     *
-     * @return List of ore dictionary names
-     */
-    public static ArrayList<String> getMetalNames() {
-        return new ArrayList<>(metalNames);
-    }
-
-    /**
-     * Gets the registered list of ore dictionary names for wood
-     *
-     * @return List of ore dictionary names
-     */
-    public static ArrayList<String> getWoodNames() {
-        return new ArrayList<>(woodNames);
     }
 
     public static ISignRegistration getWithTag(String tag) {

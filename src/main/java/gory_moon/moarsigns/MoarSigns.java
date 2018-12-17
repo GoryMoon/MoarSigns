@@ -2,9 +2,7 @@ package gory_moon.moarsigns;
 
 import gory_moon.moarsigns.blocks.ModBlocks;
 import gory_moon.moarsigns.client.interfaces.GuiHandler;
-import gory_moon.moarsigns.integration.IntegrationHandler;
-import gory_moon.moarsigns.integration.tweaker.MineTweakerIntegration;
-import gory_moon.moarsigns.items.ModItems;
+import gory_moon.moarsigns.integration.tweaker.CraftTweakerIntegration;
 import gory_moon.moarsigns.lib.Reference;
 import gory_moon.moarsigns.network.PacketHandler;
 import gory_moon.moarsigns.proxy.CommonProxy;
@@ -19,7 +17,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, certificateFingerprint = Reference.FINGERPRINT, acceptedMinecraftVersions = "[1.11.2]", guiFactory = Reference.GUI_FACTORY_CLASS, updateJSON = MoarSigns.FORGE_PROMO,
+@Mod(modid = Reference.MODID, name = Reference.NAME, version = Reference.VERSION, certificateFingerprint = Reference.FINGERPRINT, acceptedMinecraftVersions = "[1.12.2]", guiFactory = Reference.GUI_FACTORY_CLASS, updateJSON = MoarSigns.FORGE_PROMO,
         dependencies =
                 "after:biomesoplenty;" +
                 "after:forestry;" +
@@ -28,7 +26,6 @@ import org.apache.logging.log4j.Logger;
                 "after:tconstruct;" +
                 "after:railcraft;" +
                 "after:thermalfoundation;" +
-                "after:factorization;" +
                 "after:basemetals;" +
                 "after:techreborn;" +
                 "after:psi;" +
@@ -42,13 +39,14 @@ import org.apache.logging.log4j.Logger;
                 "after:jei;" +
                 "after:waila;" +
                 "after:theoneprobe;" +
+                "after:tumat;" +
                 "after:crafttweaker;"
         )
 public class MoarSigns {
 
     private static final String WAILA_PROVIDER = "gory_moon.moarsigns.integration.waila.Provider.callbackRegister";
-    private static final String LINK = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/master/version.json";
-    static final String FORGE_PROMO = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/master/version_promo.json";
+    private static final String LINK = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/version/version.json";
+    static final String FORGE_PROMO = "https://raw.githubusercontent.com/GoryMoon/MoarSigns/version/version_promo.json";
 
     @Instance(Reference.MODID)
     public static MoarSigns instance;
@@ -83,15 +81,12 @@ public class MoarSigns {
     @EventHandler
     @SuppressWarnings("unused")
     public void modsLoaded(FMLPostInitializationEvent event) {
-        new IntegrationHandler().setupSigns();
-        ModItems.registerRecipes();
-
         if (Loader.isModLoaded("quark")) {
             MoarSigns.logger.warn("Quark is loaded, MoarSigns sign editing might not work as intended");
         }
 
         if (Loader.isModLoaded("crafttweaker")) {
-            MineTweakerIntegration.register();
+            CraftTweakerIntegration.register();
         }
     }
 

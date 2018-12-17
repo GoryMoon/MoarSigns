@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 public class RandomThingsIntegration implements ISignRegistration {
 
@@ -22,13 +21,8 @@ public class RandomThingsIntegration implements ISignRegistration {
     public static Item item = null;
 
     @Override
-    public void registerWoodenSigns(ArrayList<ItemStack> planks) throws IntegrationException {
+    public void registerSigns() throws IntegrationException {
         SignRegistry.register("spectre_sign", null, "spectre", "randomthings/", false, ItemStack.EMPTY, new ItemStack(item, 1, 0), Reference.MODID, RT_ID);
-    }
-
-    @Override
-    public void registerMetalSigns(ArrayList<ItemStack> metals) throws IntegrationException {
-        // No metal to register
     }
 
     @Nonnull

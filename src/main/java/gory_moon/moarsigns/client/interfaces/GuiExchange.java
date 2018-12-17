@@ -35,6 +35,13 @@ public class GuiExchange extends GuiContainer {
     }
 
     @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    @Override
     public void updateScreen() {
         super.updateScreen();
 
@@ -54,7 +61,6 @@ public class GuiExchange extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
-        drawDefaultBackground();
         GL11.glColor4f(1, 1, 1, 1);
 
         Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
