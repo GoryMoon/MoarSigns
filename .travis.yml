@@ -25,7 +25,6 @@ cache:
 
 before_install:
   - chmod +x gradlew
-  - ./download-libs.sh
 install:
   - ./gradlew setupCIWorkspace -S
 script:
